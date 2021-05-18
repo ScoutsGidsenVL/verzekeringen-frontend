@@ -1,0 +1,13 @@
+{
+  "api": {
+    "baseUrl": "http://localhost:8011",
+    "apiSuffix": "api/"
+  },
+  "oidc": {
+    "baseUrl": "https://idp-dev.inuits.io/auth/realms/scouts-dev",
+    "serverBaseUrl": "http://localhost:8011/api/oidc",
+    "authEndpoint": "protocol/openid-connect/auth",
+    "logoutEndpoint": "protocol/openid-connect/logout",
+    "clientId": "scouts-workflows"
+  }
+}
