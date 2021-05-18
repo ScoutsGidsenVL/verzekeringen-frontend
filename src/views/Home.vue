@@ -2,10 +2,10 @@
   <div class="pt-10 pb-20 px-10 bg-lightGray">
     <custom-button text="Vraag nieuwe verzekering aan" />
   </div>
-  <div>
+  <div class="mt-5">
     <custom-list title="Nog te voltooien" />
   </div>
-  <div>
+  <div class="mt-5">
     <custom-list title="Recent aangevraagd" />
   </div>
 </template>

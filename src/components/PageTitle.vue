@@ -1,5 +1,5 @@
 <template>
-  <h1>{{ $route.meta.title }}</h1>
+  <h1 class="text-4xl py-5">{{ $route.meta.title }}</h1>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
