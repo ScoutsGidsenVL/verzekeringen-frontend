@@ -1,17 +1,12 @@
 ### Development stage
 FROM node:lts-alpine as development-stage
-
 ARG NPM_AUTH_TOKEN
 # We need to set NPM_AUTH_TOKEN build ARG to ENV because we need valid .npmrc file for development aswell
 ENV NPM_AUTH_TOKEN=$NPM_AUTH_TOKEN
-
 WORKDIR /app
-
-COPY .npmrc .yarnrc package.json package-lock.json ./
-COPY packages/frontend/package.json  packages/frontend/package-lock.json* ./packages/frontend/
-
-RUN yarn dash install
-CMD yarn dash run serve --port 80
+COPY .npmrc package.json package-lock.json ./
+RUN npm install
+CMD npm run dev --port 80
 EXPOSE 80
 
 ### Build stage
