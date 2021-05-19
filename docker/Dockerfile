@@ -4,4 +4,4 @@ WORKDIR /app
 COPY inuits-vuejs-oidc-1.0.0.tgz package.json ./
 RUN apk add --no-cache git
 CMD npm install && npm run docker-dev
-EXPOSE 3000
+EXPOSE 8080
