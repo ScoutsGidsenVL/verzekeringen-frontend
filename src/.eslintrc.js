@@ -1,17 +1,11 @@
 module.exports = {
   root: true,
   env: {
-    node: true
+    node: true,
   },
-  extends: [
-    'plugin:vue/vue3-recommended',
-    'eslint:recommended',
-    'prettier',
-    'prettier/vue',
-    '@vue/typescript'
-  ],
+  extends: ['plugin:vue/vue3-recommended', 'eslint:recommended', 'prettier', '@vue/typescript'],
   rules: {
-    'vue/no-multiple-template-root': 0
+    'vue/no-multiple-template-root': 0,
   },
-  plugins: ['vue']
+  plugins: ['vue'],
 }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <request-bread-crumb insuranceType="Eenmalige activiteit" />
+    <request-bread-crumb insurance-type="Eenmalige activiteit" />
   </div>
   <div>
     <request-insurance-general />
@@ -13,7 +13,7 @@ import RequestBreadCrumb from '@/components/requestInsurance/requestBreadCrumb/R
 import RequestInsuranceGeneral from '@/components/requestInsurance/RequestInusranceGeneral.vue'
 
 export default defineComponent({
-  name: 'Request Insurance',
+  name: 'RequestInsurance',
   components: {
     'request-bread-crumb': RequestBreadCrumb,
     'request-insurance-general': RequestInsuranceGeneral,

@@ -1,7 +1,7 @@
 <template>
   <form>
     <label for="favcolor">{{ text }}</label>
-    <input :type="type" id="favcolor" name="favcolor" />
+    <input id="favcolor" :type="type" name="favcolor" />
   </form>
 </template>
 <script lang="ts">
