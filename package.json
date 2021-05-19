@@ -3,13 +3,14 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
+    "docker-dev": "vite --host 0.0.0.0",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",
     "test": "jest"
   },
   "dependencies": {
     "axios": "^0.21.1",
-    "inuits-vuejs-oidc": "inuits-vuejs-oidc-1.0.0.tgz",
+    "inuits-vuejs-oidc": "git+https://github.com/inuits/inuits-vuejs-oidc.git#next",
     "tailwind": "^4.0.0",
     "vue": "^3.0.5",
     "vue-router": "^4.0.8",
