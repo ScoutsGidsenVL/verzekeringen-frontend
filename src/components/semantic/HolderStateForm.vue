@@ -21,12 +21,12 @@ import { defineComponent, computed } from 'vue'
 import { useStore } from 'vuex'
 
 export default defineComponent({
+  name: 'HolderStateForm',
   components: {
     'request-inusrance-general': RequestInusranceGeneral,
     'request-inusrance-detail': RequestInusranceDetail,
     'request-inusrance-type': RequestInusranceType,
   },
-  name: 'HolderStateForm',
   setup() {
     const store = useStore()
     const holderState = computed((): HolderStates => {

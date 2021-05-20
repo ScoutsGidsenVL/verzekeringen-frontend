@@ -1,5 +1,5 @@
 <template>
-  <div class="py-5">
+  <div class="py-3">
     <strong>{{ label }}</strong>
     <p class="mt-2">{{ text }}</p>
   </div>

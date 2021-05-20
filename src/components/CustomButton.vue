@@ -1,5 +1,5 @@
 <template>
-  <button class="bg-black text-white h-10 px-16 font-extrabold">{{ text }}</button>
+  <button class="btn btn-blob">{{ text }}</button>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'

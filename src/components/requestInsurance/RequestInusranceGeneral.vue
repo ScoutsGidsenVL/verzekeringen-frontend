@@ -1,10 +1,10 @@
 <template>
-  <div class="mb-10">
+  <div class="mb-5">
     <custom-headline-2 text="Welke" />
     <insurance-type-menu />
   </div>
 
-  <div class="mb-10">
+  <div class="mb-5">
     <custom-headline-2 text="Wanneer" />
     <div class="px-5 flex gap-4">
       <custom-input :type="InputTypes.DATE" text="Start datum" />
@@ -12,23 +12,23 @@
     </div>
   </div>
 
-  <div class="mb-10">
+  <div class="mb-5">
     <custom-headline-2 text="Groep" />
     <div class="px-5">
       <p>De factuur wordt naar de financieel verantwoordelijke van deze groep gestuurd.</p>
     </div>
   </div>
 
-  <div class="mb-10">
+  <div class="mb-5">
     <custom-headline-2 text="Aanvrager" />
     <div class="px-5">
       <insurance-applicant />
     </div>
   </div>
 
-  <div class="mb-10">
-    <div class="px-5 mt-10">
-      <custom-button @click="setHolderState()" text="Volgende" />
+  <div class="mb-5">
+    <div class="px-5">
+      <custom-button text="Volgende" @click="setHolderState()" />
     </div>
   </div>
 </template>
