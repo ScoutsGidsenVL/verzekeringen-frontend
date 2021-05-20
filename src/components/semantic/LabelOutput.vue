@@ -1,24 +1,20 @@
 <template>
-  <form>
-    <strong>
-      <label :for="type">{{ text }}</label>
-    </strong>
-    <br />
-    <input :id="type" :type="type" :name="type" class="bg-lightGray p-2 w-80 min-w-0" />
-  </form>
+  <div class="py-5">
+    <strong>{{ label }}</strong>
+    <p class="mt-2">{{ text }}</p>
+  </div>
 </template>
-
 <script lang="ts">
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'CustomInput',
+  name: 'LabelOutput',
   props: {
-    text: {
+    label: {
       type: String,
       required: true,
     },
-    type: {
+    text: {
       type: String,
       required: true,
     },

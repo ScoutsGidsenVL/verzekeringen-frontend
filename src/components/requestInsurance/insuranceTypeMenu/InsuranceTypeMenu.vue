@@ -1,11 +1,13 @@
 <template>
-  <form action="">
-    <div v-for="(insuranceType, index) in insuranceTypes" :key="insuranceType.id" class="py-1">
-      <input :id="index" v-model="selection" type="radio" :name="index" :value="index" class="cursor-pointer" />
-      <label :for="index" class="ml-2">{{ insuranceType }}</label>
-    </div>
-  </form>
-  selection: {{ selection }}
+  <div class="px-5">
+    <form action="">
+      <div v-for="(insuranceType, index) in insuranceTypes" :key="insuranceType.id" class="py-1">
+        <input :id="index" v-model="selection" type="radio" :name="index" :value="index" class="cursor-pointer" />
+        <label :for="index" class="ml-2">{{ insuranceType }}</label>
+      </div>
+    </form>
+  </div>
+  <!-- selection: {{ selection }} -->
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue'

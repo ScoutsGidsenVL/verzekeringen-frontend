@@ -3,20 +3,20 @@
     <request-bread-crumb insurance-type="Eenmalige activiteit" />
   </div>
   <div>
-    <request-insurance-general />
+    <state-form-holder />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
 import RequestBreadCrumb from '@/components/requestInsurance/requestBreadCrumb/RequestBreadCrumb.vue'
-import RequestInsuranceGeneral from '@/components/requestInsurance/RequestInusranceGeneral.vue'
+import StateFormHolder from '@/components/semantic/HolderStateForm.vue'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'RequestInsurance',
   components: {
     'request-bread-crumb': RequestBreadCrumb,
-    'request-insurance-general': RequestInsuranceGeneral,
+    'state-form-holder': StateFormHolder,
   },
 })
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex pt-5">
+  <div class="flex pt-10 pb-5">
     <bread-crumb-item :index="'1'" :text="'Algemeen'" />
     <bread-crumb-item :index="'2'" :text="insuranceType" />
     <bread-crumb-item :index="'3'" :text="'Overzicht'" />

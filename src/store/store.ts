@@ -1,14 +1,16 @@
-import { createStore } from 'vuex'
-import config from './modules/config'
 import notifications from './modules/notifications'
+import insurance from './modules/insurance'
+import config from './modules/config'
+import { createStore } from 'vuex'
 import user from './modules/user'
 
 const store = createStore({
   modules: {
-    config,
     notifications,
-    user
-  }
+    insurance,
+    config,
+    user,
+  },
 })
 
 export default store
