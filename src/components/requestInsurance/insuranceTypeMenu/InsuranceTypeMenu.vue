@@ -7,7 +7,6 @@
       </div>
     </form>
   </div>
-  <!-- selection: {{ selection }} -->
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
@@ -15,7 +14,7 @@ import { defineComponent, ref } from 'vue'
 export default defineComponent({
   name: 'InsuranceTypeMenu',
   setup() {
-    const selection = ref<string>()
+    const selection = ref<any>(0)
     const insuranceTypes = ref<string[]>(['Eenmalige activiteit', 'Tijdelijk verzekering niet-leden', 'Reisbijstand', 'Tijdelijke autoverzekering', 'Evenementen verzekering', 'Materiaal verzekering'])
     return {
       selection,

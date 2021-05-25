@@ -1,5 +1,5 @@
 <template>
-  <h2 class="font-semibold text-xl leading-9 py-5">{{ text }}</h2>
+  <h2 class="font-semibold text-xl leading-9 pt-3 pb-3">{{ text }}</h2>
 </template>
 
 <script lang="ts">

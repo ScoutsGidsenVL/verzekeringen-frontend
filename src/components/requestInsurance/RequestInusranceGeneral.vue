@@ -1,36 +1,40 @@
 <template>
-  <div class="mb-5">
-    <custom-headline-2 text="Welke" />
-    <insurance-type-menu />
-  </div>
+  <vee-form @submit="setHolderState(values)" :validation-schema="schema">
+    <!-- <custom-input :type="InputTypes.TEXT" name="test" label="test" success-message="Nice to meet you!" /> -->
 
-  <div class="mb-5">
-    <custom-headline-2 text="Wanneer" />
-    <div class="px-5 flex gap-4">
-      <custom-input :type="InputTypes.DATE" text="Start datum" />
-      <custom-input :type="InputTypes.DATE" text="Eind datum" />
+    <div class="mb-5">
+      <custom-headline-2 text="Welke" />
+      <insurance-type-menu />
     </div>
-  </div>
 
-  <div class="mb-5">
-    <custom-headline-2 text="Groep" />
-    <div class="px-5">
-      <p>De factuur wordt naar de financieel verantwoordelijke van deze groep gestuurd.</p>
+    <div class="mb-5">
+      <custom-headline-2 text="Wanneer" />
+      <div class="px-5 flex gap-4">
+        <custom-input :type="InputTypes.DATE" name="start" label="Start datum" />
+        <custom-input :type="InputTypes.DATE" name="end" label="Eind datum" />
+      </div>
     </div>
-  </div>
 
-  <div class="mb-5">
-    <custom-headline-2 text="Aanvrager" />
-    <div class="px-5">
-      <insurance-applicant />
+    <div class="mb-5">
+      <custom-headline-2 text="Groep" />
+      <div class="px-5">
+        <p>De factuur wordt naar de financieel verantwoordelijke van deze groep gestuurd.</p>
+      </div>
     </div>
-  </div>
 
-  <div class="mb-5">
-    <div class="px-5">
-      <custom-button text="Volgende" @click="setHolderState()" />
+    <div class="mb-5">
+      <custom-headline-2 text="Aanvrager" />
+      <div class="px-5">
+        <insurance-applicant />
+      </div>
     </div>
-  </div>
+
+    <div class="mb-5">
+      <div class="px-5">
+        <custom-button text="Volgende" />
+      </div>
+    </div>
+  </vee-form>
 </template>
 
 <script lang="ts">
@@ -44,6 +48,9 @@ import { InputTypes } from '@/enums/inputTypes'
 import { defineComponent } from 'vue'
 import { useStore } from 'vuex'
 
+import { Form } from 'vee-validate'
+import * as Yup from 'yup'
+
 export default defineComponent({
   name: 'RequestInsuranceGeneral',
   components: {
@@ -52,15 +59,24 @@ export default defineComponent({
     'custom-headline-2': CustomHeadline2,
     'custom-button': CustomButton,
     'custom-input': CustomInput,
+    'vee-form': Form,
   },
   setup() {
     const store = useStore()
     const setHolderState = () => {
       store.dispatch('setHolderState', HolderStates.TYPE)
     }
+
+    const schema = Yup.object().shape({
+      start: Yup.string().required(),
+      end: Yup.string().required(),
+      gsm: Yup.string().required(),
+    })
+
     return {
       setHolderState,
       InputTypes,
+      schema,
     }
   },
 })
