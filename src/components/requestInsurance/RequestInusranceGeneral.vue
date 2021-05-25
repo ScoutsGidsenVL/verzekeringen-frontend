@@ -2,7 +2,15 @@
   <vee-form :validation-schema="schema" @submit="setHolderState(values)">
     <div class="mb-5">
       <custom-headline-2 text="Welke" />
+
       <insurance-type-menu />
+
+      <div class="px-5">
+        <info-alert v-show="insuranceTypeState === InsuranceTypes.TIJDELIJKE_VERZEKERING_NIET_LEDEN">
+          <strong>OPGELET! Via deze verzekering kan je geen nieuwe leden verzekeren. </strong>
+          <p>Gelieve dit via de groepsadministratie te doen.</p>
+        </info-alert>
+      </div>
     </div>
 
     <div class="mb-5">
@@ -39,11 +47,13 @@
 import InsuranceTypeMenu from '@/components/requestInsurance/insuranceTypeMenu/InsuranceTypeMenu.vue'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
 import InsuranceApplicant from './insuranceApplicant/insuranceApplicant.vue'
+import InfoAlert from '@/components/requestInsurance/InfoAlert.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import CustomButton from '@/components/CustomButton.vue'
+import { InsuranceTypes } from '@/enums/insuranceTypes'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 import { useStore } from 'vuex'
 
 import { Form } from 'vee-validate'
@@ -57,10 +67,16 @@ export default defineComponent({
     'custom-headline-2': CustomHeadline2,
     'custom-button': CustomButton,
     'custom-input': CustomInput,
+    'info-alert': InfoAlert,
     'vee-form': Form,
   },
   setup() {
     const store = useStore()
+
+    const insuranceTypeState = computed((): InsuranceTypes => {
+      return store.state.insurance.insuranceTypeState
+    })
+
     const setHolderState = (values: any) => {
       console.log('values:', values)
       store.dispatch('setHolderState', HolderStates.TYPE)
@@ -73,6 +89,8 @@ export default defineComponent({
     })
 
     return {
+      insuranceTypeState,
+      InsuranceTypes,
       setHolderState,
       InputTypes,
       schema,

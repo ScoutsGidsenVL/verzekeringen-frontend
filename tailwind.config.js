@@ -15,6 +15,9 @@ module.exports = {
       lightGreen: {
         DEFAULT: "#C7D121",
       },
+      lighterGreen: {
+        DEFAULT: "#F4F5D4",
+      },
       red: {
         DEFAULT: "#E00A1E",
       },
