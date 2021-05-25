@@ -4,17 +4,21 @@
       <label :for="type">{{ label }}</label>
     </strong>
     <br />
-    <input :id="type" :type="type" :name="type" @input="handleChange" @blur="handleBlur" class="bg-lightGray p-2 w-80 min-w-0" />
-    <p class="text-sm text-red" v-show="errorMessage || meta.valid">{{ errorMessage || successMessage }}</p>
+    <Field :type="type" :name="name" :label="label" :rules="rules" class="bg-lightGray p-2 w-80 min-w-0" />
+    <ErrorMessage :name="name" class="text-red text-sm block" />
   </form>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { useField } from 'vee-validate'
+import { Field, ErrorMessage, useField } from 'vee-validate'
 
 export default defineComponent({
   name: 'CustomInput',
+  components: {
+    Field,
+    ErrorMessage,
+  },
   props: {
     name: {
       type: String,
@@ -32,9 +36,10 @@ export default defineComponent({
       type: String,
       default: '',
     },
-    successMessage: {
-      type: String,
-      default: '',
+    rules: {
+      type: [Object, String, Function],
+      default: 'required',
+      required: false,
     },
   },
   setup(props) {

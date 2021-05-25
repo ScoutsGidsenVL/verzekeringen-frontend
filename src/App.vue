@@ -9,13 +9,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
 import basePage from './components/semantic/BasePage.vue'
+import { required } from '@vee-validate/rules'
+import { defineRule } from 'vee-validate'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'App',
   components: {
     'base-page': basePage,
+  },
+  setup() {
+    defineRule('required', required)
+    return {}
   },
 })
 </script>

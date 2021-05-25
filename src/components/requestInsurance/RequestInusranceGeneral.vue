@@ -1,7 +1,5 @@
 <template>
-  <vee-form @submit="setHolderState(values)" :validation-schema="schema">
-    <!-- <custom-input :type="InputTypes.TEXT" name="test" label="test" success-message="Nice to meet you!" /> -->
-
+  <vee-form :validation-schema="schema" @submit="setHolderState(values)">
     <div class="mb-5">
       <custom-headline-2 text="Welke" />
       <insurance-type-menu />
@@ -10,8 +8,8 @@
     <div class="mb-5">
       <custom-headline-2 text="Wanneer" />
       <div class="px-5 flex gap-4">
-        <custom-input :type="InputTypes.DATE" name="start" label="Start datum" />
-        <custom-input :type="InputTypes.DATE" name="end" label="Eind datum" />
+        <custom-input :type="InputTypes.DATE" rules="required" name="start" label="Start datum" />
+        <custom-input :type="InputTypes.DATE" rules="required" name="end" label="Eind datum" />
       </div>
     </div>
 
@@ -63,7 +61,8 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
-    const setHolderState = () => {
+    const setHolderState = (values: any) => {
+      console.log('values:', values)
       store.dispatch('setHolderState', HolderStates.TYPE)
     }
 

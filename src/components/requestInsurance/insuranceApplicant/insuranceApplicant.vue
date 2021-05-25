@@ -2,7 +2,7 @@
   <label-output label="Naam" text="Ricardo" />
   <label-output label="Lidnummer" text="68488752402489" />
   <label-output label="E-mailadres" text="ricardo@inuits.eu" />
-  <custom-input :type="InputTypes.TEXT" name="gsm" label="Gsm" class="mt-3" />
+  <custom-input :type="InputTypes.TEXT" rules="required" name="gsm" label="Gsm" class="mt-3" />
 </template>
 
 <script lang="ts">
