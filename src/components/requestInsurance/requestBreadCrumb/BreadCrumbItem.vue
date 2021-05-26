@@ -1,7 +1,8 @@
 <template>
   <div class="flex mr-20">
     <div :class="['h-10 w-10 text-center p-2 rounded-full border-2 border-lightGray', visibleOnState === holderState ? 'bg-lightGreen' : '']">{{ index }}</div>
-    <div class="pt-2 pl-3">{{ text }}</div>
+    <div v-if="isChangeStatePossible" class="pt-2 pl-3 cursor-pointer" @click="changeState()">{{ text }}</div>
+    <div v-else class="pt-2 pl-3">{{ text }}</div>
   </div>
 </template>
 <script lang="ts">
@@ -24,13 +25,21 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    isChangeStatePossible: {
+      type: Boolean,
+      Required: true,
+    },
   },
-  setup() {
+  setup(props) {
     const store = useStore()
     const holderState = computed((): HolderStates => {
       return store.state.insurance.holderState
     })
+    const changeState = () => {
+      store.dispatch('setHolderState', props.visibleOnState)
+    }
     return {
+      changeState,
       holderState,
     }
   },

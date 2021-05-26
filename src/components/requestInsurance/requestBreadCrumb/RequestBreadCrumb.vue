@@ -1,8 +1,8 @@
 <template>
   <div class="flex pt-5 pb-4">
-    <bread-crumb-item :visible-on-state="HolderStates.GENERAL" :index="'1'" :text="'Algemeen'" />
-    <bread-crumb-item :visible-on-state="HolderStates.TYPE" :index="'2'" :text="displayCorrectTypeLabel(insuranceTypeState)" />
-    <bread-crumb-item :visible-on-state="HolderStates.DETAIL" :index="'3'" :text="'Overzicht'" />
+    <bread-crumb-item :isChangeStatePossible="holderState === HolderStates.TYPE || holderState === HolderStates.DETAIL" :visible-on-state="HolderStates.GENERAL" :index="'1'" :text="'Algemeen'" />
+    <bread-crumb-item :isChangeStatePossible="holderState === HolderStates.DETAIL" :visible-on-state="HolderStates.TYPE" :index="'2'" :text="displayCorrectTypeLabel(insuranceTypeState)" />
+    <bread-crumb-item :isChangeStatePossible="false" :visible-on-state="HolderStates.DETAIL" :index="'3'" :text="'Overzicht'" />
   </div>
 </template>
 
@@ -24,10 +24,15 @@ export default defineComponent({
     const insuranceTypeState = computed((): InsuranceTypes => {
       return store.state.insurance.insuranceTypeState
     })
+
+    const holderState = computed((): HolderStates => {
+      return store.state.insurance.holderState
+    })
     return {
       displayCorrectTypeLabel,
       insuranceTypeState,
       HolderStates,
+      holderState,
     }
   },
 })
