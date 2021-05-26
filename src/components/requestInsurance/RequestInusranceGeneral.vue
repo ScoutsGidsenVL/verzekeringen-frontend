@@ -1,5 +1,5 @@
 <template>
-  <vee-form @submit="setHolderState(values)">
+  <vee-form @submit="setHolderState()">
     <div class="mb-5">
       <custom-headline-2 text="Welke" />
 
@@ -76,8 +76,7 @@ export default defineComponent({
       return store.state.insurance.insuranceTypeState
     })
 
-    const setHolderState = (values: any) => {
-      console.log('values:', values)
+    const setHolderState = () => {
       store.dispatch('setHolderState', HolderStates.TYPE)
     }
 

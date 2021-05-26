@@ -4,11 +4,12 @@
       <label>{{ label }}</label>
     </strong>
     <div class="w-80 min-w-0">
-      <vee-field v-slot="{ field }" :name="id" :rules="rules" :label="label">
+      <Field v-slot="{ field }" :name="id" :rules="rules" :label="label">
         <multi-select
           :name="id"
           value-prop="value"
           v-bind="field"
+          v-model="selected"
           :filter-results="false"
           :min-chars="1"
           :resolve-on-load="false"
@@ -19,7 +20,7 @@
           :search="true"
           :options="options"
         />
-      </vee-field>
+      </Field>
       <error-message class="text-red font-light ml-1 mt-1 text-sm inline-block" :name="id" />
     </div>
   </div>
@@ -36,7 +37,7 @@ export default defineComponent({
   components: {
     'error-message': ErrorMessage,
     'multi-select': Multiselect,
-    'vee-field': Field,
+    Field,
   },
   props: {
     id: {
@@ -69,9 +70,13 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    value: {
+      type: String,
+      default: '',
+    },
   },
   setup() {
-    const selected = ref<any>()
+    const selected = ref<any>('')
     return { selected }
   },
 })

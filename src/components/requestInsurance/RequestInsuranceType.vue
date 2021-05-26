@@ -1,5 +1,5 @@
 <template>
-  <vee-form @submit="setHolderState(values)">
+  <vee-form @submit="setHolderState()">
     <custom-headline-2 text="Activiteit" />
     <div class="px-5">
       <div class="flex gap-4">
@@ -7,7 +7,7 @@
         <custom-input :type="InputTypes.DATE" rules="required" name="end" label="Eind datum" />
       </div>
       <div>
-        <multi-select id="location" track-by="name" :options="fetchLocations" label="Locations" rules="required" placeholder="Zoek op naam/postcode" />
+        <multi-select id="location" track-by="name" :options="fetchLocations" label="Location" rules="required" placeholder="Zoek op naam/postcode" />
         <!-- <multi-select id="extra" track-by="range" :options="fetchAditionalPersonsToBeInsured()" label="Aantal extra te verzekeren personen" rules="required" placeholder="Aantal" /> -->
       </div>
     </div>
