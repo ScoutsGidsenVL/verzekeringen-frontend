@@ -1,5 +1,5 @@
 <template>
-  <vee-form :validation-schema="schema" @submit="setHolderState(values)">
+  <vee-form @submit="setHolderState(values)">
     <div class="mb-5">
       <custom-headline-2 text="Welke" />
 
@@ -25,6 +25,7 @@
       <custom-headline-2 text="Groep" />
       <div class="px-5">
         <p>De factuur wordt naar de financieel verantwoordelijke van deze groep gestuurd.</p>
+        <multi-select id="groups" track-by="value" :options="fetchGroups()" label="Selecteer groep" rules="required" placeholder="Group" />
       </div>
     </div>
 
@@ -35,10 +36,8 @@
       </div>
     </div>
 
-    <div class="mb-5">
-      <div class="px-5">
-        <custom-button text="Volgende" />
-      </div>
+    <div class="mt-5 px-5">
+      <custom-button text="Volgende" />
     </div>
   </vee-form>
 </template>
@@ -49,15 +48,14 @@ import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
 import InsuranceApplicant from './insuranceApplicant/insuranceApplicant.vue'
 import InfoAlert from '@/components/requestInsurance/InfoAlert.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
+import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomButton from '@/components/CustomButton.vue'
 import { InsuranceTypes } from '@/enums/insuranceTypes'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { defineComponent, computed } from 'vue'
-import { useStore } from 'vuex'
-
 import { Form } from 'vee-validate'
-import * as Yup from 'yup'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'RequestInsuranceGeneral',
@@ -67,6 +65,7 @@ export default defineComponent({
     'custom-headline-2': CustomHeadline2,
     'custom-button': CustomButton,
     'custom-input': CustomInput,
+    'multi-select': MultiSelect,
     'info-alert': InfoAlert,
     'vee-form': Form,
   },
@@ -82,18 +81,16 @@ export default defineComponent({
       store.dispatch('setHolderState', HolderStates.TYPE)
     }
 
-    const schema = Yup.object().shape({
-      start: Yup.string().required(),
-      end: Yup.string().required(),
-      gsm: Yup.string().required(),
-    })
+    const fetchGroups = () => {
+      return [{ value: 'Group 1' }, { value: 'Group 2' }, { value: 'Group 3' }, { value: 'Group 4' }, { value: 'Group 5' }]
+    }
 
     return {
       insuranceTypeState,
       InsuranceTypes,
       setHolderState,
+      fetchGroups,
       InputTypes,
-      schema,
     }
   },
 })

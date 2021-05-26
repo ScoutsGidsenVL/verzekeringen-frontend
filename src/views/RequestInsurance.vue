@@ -1,6 +1,6 @@
 <template>
   <div>
-    <request-bread-crumb insurance-type="Eenmalige activiteit" />
+    <request-bread-crumb />
   </div>
   <div>
     <state-form-holder />

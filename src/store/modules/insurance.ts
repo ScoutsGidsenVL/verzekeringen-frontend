@@ -3,7 +3,7 @@ import { InsuranceTypes } from '@/enums/insuranceTypes'
 
 export default {
   state: () => ({
-    holderState: HolderStates.GENERAL,
+    holderState: HolderStates.TYPE,
     insuranceTypeState: InsuranceTypes.EENMALIGE_ACTIVITEIT,
   }),
   getters: {

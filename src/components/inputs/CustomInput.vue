@@ -1,7 +1,7 @@
 <template>
   <form>
     <strong>
-      <label :for="type">{{ label }}</label>
+      <label>{{ label }}</label>
     </strong>
     <br />
     <Field :type="type" :name="name" :label="label" :rules="rules" class="bg-lightGray p-2 w-80 min-w-0" />
