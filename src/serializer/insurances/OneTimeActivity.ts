@@ -1,8 +1,8 @@
 import { Activity, ActivitySerializer } from '../Activity'
-import { Applicant, ApplicantSerializer } from '../Applicant'
+import { ResponsibleMember, ResponsibleMemberSerializer } from '../ResponsibleMember'
 
 export interface OneTimeActivity {
-  readonly applicant: Applicant
+  readonly responsibleMember: ResponsibleMember
   readonly activity: Activity
   readonly startDate: string
   readonly endDate: string
@@ -11,7 +11,7 @@ export interface OneTimeActivity {
 
 export const insuranceSerializer = (input: any): OneTimeActivity => {
   const single: OneTimeActivity = {
-    applicant: ApplicantSerializer(input.applicant),
+    responsibleMember: ResponsibleMemberSerializer(input.responsibleMember),
     activity: ActivitySerializer(input.activity),
     startDate: input.startDate,
     endDate: input.endDate,

@@ -1,5 +1,5 @@
 <template>
-  <vee-form @submit="setHolderState(values)" v-slot="{ values }">
+  <Form @submit="setHolderState(values)" v-slot="{ values }">
     {{ values }}
     <div class="mb-5">
       <custom-headline-2 text="Welke" />
@@ -40,7 +40,7 @@
     <div class="mt-5 px-5">
       <custom-button text="Volgende" />
     </div>
-  </vee-form>
+  </Form>
 </template>
 
 <script lang="ts">
@@ -68,7 +68,7 @@ export default defineComponent({
     'custom-input': CustomInput,
     'multi-select': MultiSelect,
     'info-alert': InfoAlert,
-    'vee-form': Form,
+    Form,
   },
   setup() {
     const store = useStore()
@@ -76,13 +76,6 @@ export default defineComponent({
     const { handleSubmit } = useForm<any>()
     const onSubmit = handleSubmit(async (values: any) => {
       console.log('values:', values)
-
-      // await doCall(values)
-      // if (error) {
-      //   console.error('Post to update todo failed')
-      // } else {
-      //   updateDocumentModal && updateDocumentModal({ state: 'hide' })
-      // }
     })
 
     const insuranceTypeState = computed((): InsuranceTypes => {

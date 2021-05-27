@@ -4,16 +4,17 @@
       <custom-button text="Vraag nieuwe verzekering aan" />
     </router-link>
   </div>
-
   <div class="mt-5">
-    <custom-list title="Recent aangevraagd" />
+    <custom-list :items="results" title="Recent aangevraagd" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import customButton from '../components/CustomButton.vue'
 import customList from '../components/semantic/CustomList.vue'
+import { insuranceSerializer } from '@/serializer/Insurance'
+import customButton from '../components/CustomButton.vue'
+import { get } from '@/composable/apiCalls'
+import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   name: 'Home',
@@ -22,7 +23,11 @@ export default defineComponent({
     'custom-list': customList,
   },
   setup: () => {
-    return {}
+    const results = ref<any>([])
+    get('/insurances/', insuranceSerializer).then((res) => {
+      results.value = res
+    })
+    return { results }
   },
 })
 </script>

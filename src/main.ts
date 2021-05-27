@@ -47,7 +47,13 @@ new StaticFileRepository().getFile('config.json').then((result: any) => {
                   next()
                 })
               })
-              .catch(() => {})
+              .catch(() => {
+                // Temporary solution, because dispatch refreshTokens doe snot work.
+                console.log('REFRESH TOKENS')
+                sessionStorage.clear()
+                next()
+                // store.dispatch('refreshTokens')
+              })
           : next()
       } else {
         next()
