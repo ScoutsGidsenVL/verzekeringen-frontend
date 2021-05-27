@@ -1,5 +1,6 @@
 <template>
-  <vee-form @submit="setHolderState()">
+  <vee-form @submit="setHolderState(values)" v-slot="{ values }">
+    {{ values }}
     <div class="mb-5">
       <custom-headline-2 text="Welke" />
 
@@ -25,7 +26,7 @@
       <custom-headline-2 text="Groep" />
       <div class="px-5">
         <p>De factuur wordt naar de financieel verantwoordelijke van deze groep gestuurd.</p>
-        <multi-select id="groups" track-by="value" :options="fetchGroups()" label="Selecteer groep" rules="required" placeholder="Group" />
+        <multi-select id="group" track-by="value" :options="fetchGroups()" label="Selecteer groep" rules="required" placeholder="Group" />
       </div>
     </div>
 
@@ -54,7 +55,7 @@ import { InsuranceTypes } from '@/enums/insuranceTypes'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { defineComponent, computed } from 'vue'
-import { Form } from 'vee-validate'
+import { Form, useForm } from 'vee-validate'
 import { useStore } from 'vuex'
 
 export default defineComponent({
@@ -72,16 +73,29 @@ export default defineComponent({
   setup() {
     const store = useStore()
 
+    const { handleSubmit } = useForm<any>()
+    const onSubmit = handleSubmit(async (values: any) => {
+      console.log('values:', values)
+
+      // await doCall(values)
+      // if (error) {
+      //   console.error('Post to update todo failed')
+      // } else {
+      //   updateDocumentModal && updateDocumentModal({ state: 'hide' })
+      // }
+    })
+
     const insuranceTypeState = computed((): InsuranceTypes => {
       return store.state.insurance.insuranceTypeState
     })
 
-    const setHolderState = () => {
+    const setHolderState = (values: any) => {
+      console.log('values:', values)
       store.dispatch('setHolderState', HolderStates.TYPE)
     }
 
     const fetchGroups = () => {
-      return [{ value: 'Group 1' }, { value: 'Group 2' }, { value: 'Group 3' }, { value: 'Group 4' }, { value: 'Group 5' }]
+      return [{ value: 'Group 1' }, { value: 'Group 2' }]
     }
 
     return {
@@ -90,6 +104,7 @@ export default defineComponent({
       setHolderState,
       fetchGroups,
       InputTypes,
+      onSubmit,
     }
   },
 })

@@ -1,13 +1,13 @@
 <template>
-  <div v-if="holderState === HolderStates.GENERAL">
+  <div v-show="holderState === HolderStates.GENERAL">
     <request-inusrance-general />
   </div>
 
-  <div v-if="holderState === HolderStates.TYPE">
+  <div v-show="holderState === HolderStates.TYPE">
     <request-inusrance-type />
   </div>
 
-  <div v-if="holderState === HolderStates.DETAIL">
+  <div v-show="holderState === HolderStates.DETAIL">
     <request-inusrance-detail />
   </div>
 </template>
