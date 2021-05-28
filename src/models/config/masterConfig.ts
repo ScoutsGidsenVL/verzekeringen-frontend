@@ -1,7 +1,6 @@
 import Serializable from '../../interfaces/serializable'
 import ApiConfig from './apiConfig'
 import OidcConfig from './oidcConfig'
-
 export default class MasterConfig implements Serializable<MasterConfig> {
   api!: ApiConfig
   oidc!: OidcConfig

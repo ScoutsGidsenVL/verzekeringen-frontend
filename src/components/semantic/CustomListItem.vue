@@ -13,16 +13,19 @@
       <p>{{ item.type.description }}</p>
     </div>
     <div class="pt-3">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" />
-      </svg>
+      <router-link :to="routeLinkBasedOnType(item.type.name) + '/' + item.id">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" />
+        </svg>
+      </router-link>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { routeLinkBasedOnType } from '@/helpers/routerHelper'
 import { Insurance } from '@/serializer/Insurance'
+import { defineComponent, PropType } from 'vue'
 import moment from 'moment'
 
 export default defineComponent({
@@ -37,7 +40,7 @@ export default defineComponent({
     const formatDate = (startDate: string, endDate: string): string => {
       return moment(startDate).format('DD MMM') + ' - ' + moment(endDate).format('DD MMM YYYY')
     }
-    return { formatDate }
+    return { routeLinkBasedOnType, formatDate }
   },
 })
 </script>

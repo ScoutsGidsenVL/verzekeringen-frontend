@@ -6,10 +6,10 @@
     <div class="w-80 min-w-0">
       <Field v-slot="{ field }" :name="id" :rules="rules" :label="label">
         <multi-select
+          v-model="selected"
           :name="id"
           value-prop="value"
           v-bind="field"
-          v-model="selected"
           :filter-results="false"
           :min-chars="1"
           :resolve-on-load="false"

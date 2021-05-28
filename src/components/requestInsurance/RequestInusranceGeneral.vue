@@ -1,5 +1,5 @@
 <template>
-  <Form @submit="setHolderState(values)" v-slot="{ values }">
+  <Form v-slot="{ values }" @submit="setHolderState(values)">
     {{ values }}
     <div class="mb-5">
       <custom-headline-2 text="Welke" />

@@ -10,10 +10,10 @@
 </template>
 
 <script lang="ts">
+import { InsuranceRepository } from '@/repositories/insuranceRepository'
+import RepositoryFactory from '@/repositories/repositoryFactory'
 import customList from '../components/semantic/CustomList.vue'
-import { insuranceSerializer } from '@/serializer/Insurance'
 import customButton from '../components/CustomButton.vue'
-import { get } from '@/composable/apiCalls'
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
@@ -24,9 +24,11 @@ export default defineComponent({
   },
   setup: () => {
     const results = ref<any>([])
-    get('/insurances/', insuranceSerializer).then((res) => {
-      results.value = res
-    })
+    RepositoryFactory.get(InsuranceRepository)
+      .getArray()
+      .then((res) => {
+        results.value = res
+      })
     return { results }
   },
 })

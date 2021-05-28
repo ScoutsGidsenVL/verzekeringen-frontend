@@ -1,5 +1,5 @@
 <template>
-  <vee-form @submit="setHolderState()" v-slot="{ values }">
+  <vee-form v-slot="{ values }" @submit="setHolderState()">
     <one-time-activity />
     {{ values }}
     <div class="px-5 mt-5">

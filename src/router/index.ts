@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import RequestInsurance from '../views/RequestInsurance.vue'
+import oneTimeActivityDetail from '@/components/insurances/oneTimeActivity/oneTimeActivityDetail.vue'
 
 const routes: any[] = [
   {
@@ -23,6 +24,15 @@ const routes: any[] = [
     meta: {
       requiresOpenIdAuth: true,
       title: 'Verzekering aanvragen',
+    },
+  },
+  {
+    path: '/one-time-activity-detail/:id?',
+    name: 'Detail',
+    component: oneTimeActivityDetail,
+    meta: {
+      requiresOpenIdAuth: true,
+      title: 'Verzekering',
     },
   },
 ]
