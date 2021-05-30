@@ -24,10 +24,9 @@
 
 <script lang="ts">
 import { routeLinkBasedOnType } from '@/helpers/routerHelper'
+import { formatDate } from '@/helpers/formatHelper'
 import { Insurance } from '@/serializer/Insurance'
 import { defineComponent, PropType } from 'vue'
-import moment from 'moment'
-
 export default defineComponent({
   name: 'CustomListItem',
   props: {
@@ -37,9 +36,6 @@ export default defineComponent({
     },
   },
   setup() {
-    const formatDate = (startDate: string, endDate: string): string => {
-      return moment(startDate).format('DD MMM') + ' - ' + moment(endDate).format('DD MMM YYYY')
-    }
     return { routeLinkBasedOnType, formatDate }
   },
 })

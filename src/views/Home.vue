@@ -1,5 +1,5 @@
 <template>
-  <div class="w-auto h-32 pl-5 pb-48 bg-lightGray">
+  <div class="w-auto pl-5 bg-lightGray pt-5 pb-5">
     <router-link to="/aanvraag">
       <custom-button text="Vraag nieuwe verzekering aan" />
     </router-link>
@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { InsuranceRepository } from '@/repositories/insuranceRepository'
+import { InsuranceRepository } from '@/repositories/insurances/insuranceRepository'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import customList from '../components/semantic/CustomList.vue'
 import customButton from '../components/CustomButton.vue'
@@ -26,7 +26,7 @@ export default defineComponent({
     const results = ref<any>([])
     RepositoryFactory.get(InsuranceRepository)
       .getArray()
-      .then((res) => {
+      .then((res: any) => {
         results.value = res
       })
     return { results }

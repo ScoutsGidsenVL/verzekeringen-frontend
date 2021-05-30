@@ -12,15 +12,18 @@
       </p>
     </div>
     <slot :details="details" />
-    <!-- PRICE -->
+    <div v-if="details" class="mt-5 cw-auto pl-5 pt-5 pb-5 bg-lightGray">
+      <h1 class="text-6xl font-extrabold">€{{ details.totalCost }}</h1>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import NavigationArrow from '@/components/semantic/NavigationArrow.vue'
-import BaseApiRepository from '@/repositories/baseApiRepository'
 import RepositoryFactory from '@/repositories/repositoryFactory'
+import { BaseRepository } from '@/repositories/baseRepository'
 import { defineComponent, PropType, ref } from 'vue'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'BaseDetail',
@@ -33,16 +36,24 @@ export default defineComponent({
       required: true,
     },
     repository: {
-      type: Function as unknown as PropType<new () => BaseApiRepository>,
+      type: Function as unknown as PropType<new () => BaseRepository>,
       required: true,
     },
   },
   setup(props) {
-    const details = ref<any>('ricardo')
+    const route = useRoute()
+    const isIdUrl = !!route.params.id
 
-    // const isIdUrl =
+    const details = ref<any>()
 
-    RepositoryFactory.get(props.repository)
+    if (isIdUrl) {
+      RepositoryFactory.get(props.repository)
+        .getById(route.params.id.toString())
+        .then((result: any) => {
+          details.value = result
+        })
+    }
+
     return { details }
   },
 })

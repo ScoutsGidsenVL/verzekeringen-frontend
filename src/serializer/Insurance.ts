@@ -13,6 +13,20 @@ export interface Insurance {
   readonly type: Type
 }
 
+export const insuranceDeserializer = (input: any): Insurance => {
+  const single: Insurance = {
+    id: input.id,
+    startDate: input.start_date,
+    endDate: input.end_date,
+    responsibleMember: ResponsibleMemberSerializer(input.responsible_member),
+    group: GroupSerializer(input.group),
+    status: StatusSerializer(input.status),
+    type: TypeSerializer(input.type),
+  }
+
+  return single
+}
+
 export const insuranceSerializer = (input: any): Insurance => {
   const single: Insurance = {
     id: input.id,

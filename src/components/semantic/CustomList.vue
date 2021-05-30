@@ -2,7 +2,7 @@
   <h2 class="py-5 text-2xl">{{ title }}</h2>
   <custom-list-item v-for="item in items" :key="item.id" :item="item" />
   <hr class="border-t-2 border-black" />
-  <p class="text-lightGreen cursor-pointer mt-5">bekijk alle</p>
+  <!-- <p class="text-lightGreen cursor-pointer mt-5">bekijk alle</p> -->
 </template>
 
 <script lang="ts">
