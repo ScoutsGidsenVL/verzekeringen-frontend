@@ -3,8 +3,9 @@ import { InsuranceTypes } from '@/enums/insuranceTypes'
 
 export default {
   state: () => ({
-    holderState: HolderStates.GENERAL,
+    holderState: HolderStates.TYPE,
     insuranceTypeState: InsuranceTypes.EENMALIGE_ACTIVITEIT,
+    oneTimeActivityState: {},
   }),
   getters: {
     holderState(state: any): HolderStates {
@@ -21,6 +22,9 @@ export default {
     SET_INSURANCE_TYPE_STATE(state: any, insuranceTypeState: InsuranceTypes) {
       state.insuranceTypeState = insuranceTypeState
     },
+    SET_ONE_TIME_ACTIVITY_STATE(state: any, oneTimeActivityState: any) {
+      state.oneTimeActivityState = oneTimeActivityState
+    },
   },
   actions: {
     setHolderState({ commit }: any, holderState: HolderStates) {
@@ -28,6 +32,9 @@ export default {
     },
     setInsuranceTypeState({ commit }: any, insuranceTypeState: InsuranceTypes) {
       commit('SET_INSURANCE_TYPE_STATE', insuranceTypeState)
+    },
+    setOneTimeActivityState({ commit }: any, oneTimeActivityState: any) {
+      commit('SET_ONE_TIME_ACTIVITY_STATE', oneTimeActivityState)
     },
   },
 }

@@ -1,13 +1,16 @@
-import UserModel from '../../models/userModel'
+import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 
 export default {
   state: () => ({
-    user: new UserModel(),
+    user: {},
     loaded: false,
   }),
   getters: {
     isLoaded(state: any): boolean {
       return state.loaded
+    },
+    user(state: any): ResponsibleMember {
+      return state.user
     },
   },
   mutations: {

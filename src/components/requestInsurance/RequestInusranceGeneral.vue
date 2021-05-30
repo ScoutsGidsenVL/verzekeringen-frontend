@@ -1,6 +1,5 @@
 <template>
-  <Form v-slot="{ values }" @submit="setHolderState(values)">
-    {{ values }}
+  <Form @submit="setHolderState()">
     <div class="mb-5">
       <custom-headline-2 text="Welke" />
 
@@ -17,8 +16,8 @@
     <div class="mb-5">
       <custom-headline-2 text="Wanneer" />
       <div class="px-5 flex gap-4">
-        <custom-input :type="InputTypes.DATE" rules="required" name="start" label="Start datum" />
-        <custom-input :type="InputTypes.DATE" rules="required" name="end" label="Eind datum" />
+        <custom-input :value="startDate" :type="InputTypes.DATE" rules="required" name="start" label="Start datum" @onChange="startDateChanged($event)" />
+        <custom-input :value="endDate" :type="InputTypes.DATE" rules="required" name="end" label="Eind datum" @onChange="endDateChanged($event)" />
       </div>
     </div>
 
@@ -26,7 +25,7 @@
       <custom-headline-2 text="Groep" />
       <div class="px-5">
         <p>De factuur wordt naar de financieel verantwoordelijke van deze groep gestuurd.</p>
-        <multi-select id="group" track-by="value" :options="fetchGroups()" label="Selecteer groep" rules="required" placeholder="Group" />
+        <multi-select id="group" rules="required" placeholder="Group" :value="group" track-by="value" :options="fetchGroups()" label="Selecteer groep" @onChange="groupChanged($event)" />
       </div>
     </div>
 
@@ -52,10 +51,10 @@ import CustomInput from '@/components/inputs/CustomInput.vue'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomButton from '@/components/CustomButton.vue'
 import { InsuranceTypes } from '@/enums/insuranceTypes'
+import { defineComponent, computed, ref } from 'vue'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
-import { defineComponent, computed } from 'vue'
-import { Form, useForm } from 'vee-validate'
+import { Form } from 'vee-validate'
 import { useStore } from 'vuex'
 
 export default defineComponent({
@@ -73,22 +72,38 @@ export default defineComponent({
   setup() {
     const store = useStore()
 
-    const { handleSubmit } = useForm<any>()
-    const onSubmit = handleSubmit(async (values: any) => {
-      console.log('values:', values)
-    })
+    const startDate = ref<string>('')
+    const endDate = ref<string>('')
+    const group = ref<string>('')
+
+    const startDateChanged = (event: any) => {
+      startDate.value = event
+    }
+
+    const endDateChanged = (event: any) => {
+      endDate.value = event
+    }
+
+    const groupChanged = (event: any) => {
+      group.value = event
+    }
+
+    const fetchGroups = () => {
+      return [{ value: 'X9002G' }, { value: 'ASDFGEH' }]
+    }
 
     const insuranceTypeState = computed((): InsuranceTypes => {
       return store.state.insurance.insuranceTypeState
     })
 
-    const setHolderState = (values: any) => {
-      console.log('values:', values)
-      store.dispatch('setHolderState', HolderStates.TYPE)
-    }
+    const setHolderState = () => {
+      store.dispatch('setOneTimeActivityState', {
+        startDate: startDate.value,
+        endDate: endDate.value,
+        group: group.value,
+      })
 
-    const fetchGroups = () => {
-      return [{ value: 'Group 1' }, { value: 'Group 2' }]
+      store.dispatch('setHolderState', HolderStates.TYPE)
     }
 
     return {
@@ -97,7 +112,12 @@ export default defineComponent({
       setHolderState,
       fetchGroups,
       InputTypes,
-      onSubmit,
+      startDate,
+      endDate,
+      group,
+      startDateChanged,
+      endDateChanged,
+      groupChanged,
     }
   },
 })

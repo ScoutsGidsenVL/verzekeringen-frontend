@@ -21,6 +21,7 @@ export default defineComponent({
   props: {
     responsibleMember: {
       type: Object as PropType<ResponsibleMember>,
+      default: Object as PropType<ResponsibleMember>,
     },
   },
 })

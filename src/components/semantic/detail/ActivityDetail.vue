@@ -20,12 +20,15 @@ export default defineComponent({
   props: {
     nature: {
       type: String,
+      default: '',
     },
     groupAmount: {
       type: Number,
+      default: 0,
     },
     location: {
       type: Object as PropType<Location>,
+      default: Object as PropType<Location>,
     },
   },
 })

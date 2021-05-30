@@ -1,7 +1,6 @@
 <template>
-  <vee-form v-slot="{ values }" @submit="setHolderState()">
+  <vee-form @submit="setHolderState()">
     <one-time-activity />
-    {{ values }}
     <div class="px-5 mt-5">
       <custom-button text="Volgende" />
     </div>

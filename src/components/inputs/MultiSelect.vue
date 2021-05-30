@@ -6,7 +6,7 @@
     <div class="w-80 min-w-0">
       <Field v-slot="{ field }" :name="id" :rules="rules" :label="label">
         <multi-select
-          v-model="selected"
+          v-model="input"
           :name="id"
           value-prop="value"
           v-bind="field"
@@ -30,7 +30,7 @@
 import { defineComponent } from '@vue/runtime-core'
 import { Field, ErrorMessage } from 'vee-validate'
 import Multiselect from '@vueform/multiselect'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 export default defineComponent({
   name: 'AppMultiSelect',
@@ -75,9 +75,18 @@ export default defineComponent({
       default: '',
     },
   },
-  setup() {
-    const selected = ref<any>('')
-    return { selected }
+  setup(props, context) {
+    const input = ref<any>(props.value)
+
+    watch(
+      () => input.value,
+      () => {
+        context.emit('onChange', input.value)
+      }
+    )
+    return {
+      input,
+    }
   },
 })
 </script>

@@ -2,7 +2,7 @@
   <base-detail :repository="OneTimeActivityRepository" title="Eenmalige activiteit">
     <template #default="{ details }">
       <div v-if="details" class="mt-1">
-        <responsible-member-detail :responsibleMember="details.responsibleMember" />
+        <responsible-member-detail :responsible-member="details.responsibleMember" />
 
         <div>
           <p class="font-semibold">Datum</p>
@@ -11,7 +11,7 @@
           </div>
         </div>
 
-        <activity-detail :nature="details.nature" :groupAmount="details.groupAmount" :location="details.location" />
+        <activity-detail :nature="details.nature" :group-amount="details.groupAmount" :location="details.location" />
 
         <custom-text-area :disabled="true" label="Opmerkingen" :text="details.comment" />
       </div>

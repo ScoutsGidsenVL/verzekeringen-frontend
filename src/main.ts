@@ -43,7 +43,7 @@ new StaticFileRepository().getFile('config.json').then((result: any) => {
           ? RepositoryFactory.get(AuthRepository)
               .me()
               .then((user: any) => {
-                store.dispatch('setUser', user.result).then(() => {
+                store.dispatch('setUser', user).then(() => {
                   next()
                 })
               })
