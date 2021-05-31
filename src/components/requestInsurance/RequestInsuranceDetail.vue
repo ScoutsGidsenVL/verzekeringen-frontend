@@ -1,12 +1,13 @@
 <template>
-  <div>DETAIL SCREEN</div>
-  <router-link to="/home">
-    <custom-button text="Bevestig" @click="setHolderState()" />
-  </router-link>
+  <div>
+    <div v-if="true">
+      <one-time-activity-detail />
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
-import CustomButton from '@/components/CustomButton.vue'
+import OneTimeActivityDetail from '@/components/insurances/oneTimeActivity/oneTimeActivityDetail.vue'
 import { HolderStates } from '@/enums/holderStates'
 import { defineComponent } from 'vue'
 import { useStore } from 'vuex'
@@ -14,7 +15,7 @@ import { useStore } from 'vuex'
 export default defineComponent({
   name: 'RequestInsuranceDetail',
   components: {
-    'custom-button': CustomButton,
+    'one-time-activity-detail': OneTimeActivityDetail,
   },
   setup() {
     const store = useStore()

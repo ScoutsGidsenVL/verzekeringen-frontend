@@ -11,3 +11,12 @@ export const LocationDeserializer = (input: any): Location => {
 
   return single
 }
+
+export const LocationSerializer = (input: any): Location => {
+  const single: any = {
+    city: input.city,
+    postcode: input.postalCode,
+  }
+
+  return single
+}

@@ -1,7 +1,7 @@
-import { ResponsibleMember, ResponsibleMemberSerializer } from '@/serializer/ResponsibleMember'
-import { Group, GroupSerializer } from '@/serializer/Group'
-import { Status, StatusSerializer } from '@/serializer/Status'
-import { Type, TypeSerializer } from '@/serializer/Type'
+import { ResponsibleMember, ResponsibleMemberDeserializer } from '@/serializer/ResponsibleMember'
+import { Group, GroupDeserializer } from '@/serializer/Group'
+import { Status, StatusDeserializer } from '@/serializer/Status'
+import { Type, TypeDeserializer } from '@/serializer/Type'
 
 export interface Insurance {
   readonly id: number
@@ -18,10 +18,10 @@ export const insuranceDeserializer = (input: any): Insurance => {
     id: input.id,
     startDate: input.start_date,
     endDate: input.end_date,
-    responsibleMember: ResponsibleMemberSerializer(input.responsible_member),
-    group: GroupSerializer(input.group),
-    status: StatusSerializer(input.status),
-    type: TypeSerializer(input.type),
+    responsibleMember: ResponsibleMemberDeserializer(input.responsible_member),
+    group: GroupDeserializer(input.group),
+    status: StatusDeserializer(input.status),
+    type: TypeDeserializer(input.type),
   }
 
   return single
@@ -32,10 +32,10 @@ export const insuranceSerializer = (input: any): Insurance => {
     id: input.id,
     startDate: input.start_date,
     endDate: input.end_date,
-    responsibleMember: ResponsibleMemberSerializer(input.responsible_member),
-    group: GroupSerializer(input.group),
-    status: StatusSerializer(input.status),
-    type: TypeSerializer(input.type),
+    responsibleMember: ResponsibleMemberDeserializer(input.responsible_member),
+    group: GroupDeserializer(input.group),
+    status: StatusDeserializer(input.status),
+    type: TypeDeserializer(input.type),
   }
 
   return single

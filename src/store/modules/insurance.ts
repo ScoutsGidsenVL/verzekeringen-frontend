@@ -1,9 +1,9 @@
 import { HolderStates } from '@/enums/holderStates'
 import { InsuranceTypes } from '@/enums/insuranceTypes'
-
+import { OneTimeActivity } from '@/serializer/insurances/OneTimeActivity'
 export default {
   state: () => ({
-    holderState: HolderStates.TYPE,
+    holderState: HolderStates.GENERAL,
     insuranceTypeState: InsuranceTypes.EENMALIGE_ACTIVITEIT,
     oneTimeActivityState: {},
   }),
@@ -22,7 +22,7 @@ export default {
     SET_INSURANCE_TYPE_STATE(state: any, insuranceTypeState: InsuranceTypes) {
       state.insuranceTypeState = insuranceTypeState
     },
-    SET_ONE_TIME_ACTIVITY_STATE(state: any, oneTimeActivityState: any) {
+    SET_ONE_TIME_ACTIVITY_STATE(state: any, oneTimeActivityState: OneTimeActivity) {
       state.oneTimeActivityState = oneTimeActivityState
     },
   },
@@ -33,7 +33,7 @@ export default {
     setInsuranceTypeState({ commit }: any, insuranceTypeState: InsuranceTypes) {
       commit('SET_INSURANCE_TYPE_STATE', insuranceTypeState)
     },
-    setOneTimeActivityState({ commit }: any, oneTimeActivityState: any) {
+    setOneTimeActivityState({ commit }: any, oneTimeActivityState: OneTimeActivity) {
       commit('SET_ONE_TIME_ACTIVITY_STATE', oneTimeActivityState)
     },
   },

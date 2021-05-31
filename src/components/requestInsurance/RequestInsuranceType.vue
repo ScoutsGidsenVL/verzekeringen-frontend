@@ -1,24 +1,15 @@
 <template>
-  <vee-form @submit="setHolderState()">
-    <one-time-activity />
-    <div class="px-5 mt-5">
-      <custom-button text="Volgende" />
-    </div>
-  </vee-form>
+  <one-time-activity />
 </template>
 
 <script lang="ts">
 import OneTimeActivity from '@/components/insurances/oneTimeActivity/oneTimeActivity.vue'
-import CustomButton from '@/components/CustomButton.vue'
 import { defineComponent } from 'vue'
-import { Form } from 'vee-validate'
 
 export default defineComponent({
   name: 'RequestInsuranceType',
   components: {
     'one-time-activity': OneTimeActivity,
-    'custom-button': CustomButton,
-    'vee-form': Form,
   },
 })
 </script>

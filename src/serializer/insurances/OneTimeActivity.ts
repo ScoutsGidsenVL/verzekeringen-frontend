@@ -1,23 +1,23 @@
-import { ResponsibleMember, ResponsibleMemberSerializer } from '../ResponsibleMember'
-import { Location, LocationDeserializer } from '@/serializer/Location'
-import { Group, GroupSerializer } from '@/serializer/Group'
-import { Status, StatusSerializer } from '@/serializer/Status'
-import { Type, TypeSerializer } from '@/serializer/Type'
+import { ResponsibleMember, ResponsibleMemberDeserializer, ResponsibleMemberSerializer } from '../ResponsibleMember'
+import { Location, LocationDeserializer, LocationSerializer } from '@/serializer/Location'
+import { Status, StatusDeserializer } from '@/serializer/Status'
+import { Group, GroupDeserializer, GroupSerializer } from '@/serializer/Group'
+import { Type, TypeDeserializer, TypeSerializer } from '@/serializer/Type'
 export interface OneTimeActivity {
-  readonly id: number
-  readonly startDate: string
-  readonly endDate: string
-  readonly createdOn: string
-  readonly comment: string
-  readonly group: Group
-  readonly groupAmount: number
-  readonly location: Location
-  readonly nature: string
-  readonly responsibleMember: ResponsibleMember
-  readonly status: Status
-  readonly totalCost: string
-  readonly type: Type
-  readonly vvksComment: string
+  readonly id?: number
+  readonly startDate?: string
+  readonly endDate?: string
+  readonly createdOn?: string
+  readonly comment?: string
+  readonly group?: Group
+  readonly groupAmount?: number
+  readonly location?: Location
+  readonly nature?: string
+  readonly responsibleMember?: ResponsibleMember
+  readonly status?: Status
+  readonly totalCost?: string
+  readonly type?: Type
+  readonly vvksComment?: string
 }
 
 export const oneTimeActivityDeserializer = (input: any): OneTimeActivity => {
@@ -27,36 +27,32 @@ export const oneTimeActivityDeserializer = (input: any): OneTimeActivity => {
     endDate: input.end_date,
     createdOn: input.created_on,
     comment: input.comment,
-    group: GroupSerializer(input.group),
+    group: GroupDeserializer(input.group),
     groupAmount: input.group_amount,
     location: LocationDeserializer(input.location),
     nature: input.nature,
-    responsibleMember: ResponsibleMemberSerializer(input.responsible_member),
-    status: StatusSerializer(input.status),
+    responsibleMember: ResponsibleMemberDeserializer(input.responsible_member),
+    status: StatusDeserializer(input.status),
     totalCost: input.total_cost,
-    type: TypeSerializer(input.type),
+    type: TypeDeserializer(input.type),
     vvksComment: input.vvks_comment,
   }
 
   return single
 }
 
-export const oneTimeActivitySerializer = (input: any): OneTimeActivity => {
-  const single: OneTimeActivity = {
-    id: input.id,
-    startDate: input.start_date,
-    endDate: input.end_date,
-    createdOn: input.created_on,
+export const oneTimeActivitySerializer = (input: OneTimeActivity): OneTimeActivity => {
+  const single: any = {
+    start_date: input.startDate,
+    end_date: input.endDate,
+    created_on: input.createdOn,
     comment: input.comment,
-    group: GroupSerializer(input.group),
-    groupAmount: input.group_amount,
-    location: LocationDeserializer(input.location),
+    group: GroupSerializer(input.group).name,
+    group_amount: input.groupAmount,
+    location: LocationSerializer(input.location),
     nature: input.nature,
-    responsibleMember: ResponsibleMemberSerializer(input.responsible_member),
-    status: StatusSerializer(input.status),
-    totalCost: input.total_cost,
-    type: TypeSerializer(input.type),
-    vvksComment: input.vvks_comment,
+    responsible_phone_number: ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number,
+    total_cost: input.totalCost,
   }
 
   return single

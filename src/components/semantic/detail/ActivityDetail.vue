@@ -23,7 +23,7 @@ export default defineComponent({
       default: '',
     },
     groupAmount: {
-      type: Number,
+      type: [String, Number],
       default: 0,
     },
     location: {

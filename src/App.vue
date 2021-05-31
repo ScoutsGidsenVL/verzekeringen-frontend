@@ -21,6 +21,15 @@ export default defineComponent({
   },
   setup() {
     defineRule('required', required)
+
+    defineRule('startDateBeforeEndDate', (value, target: any, ctx) => {
+      if (value === ctx.form[target]) {
+        return 'Start datum moet voor eind datum zijn'
+      }
+
+      return true
+    })
+
     return {}
   },
 })

@@ -8,7 +8,7 @@
         <multi-select
           v-model="input"
           :name="id"
-          value-prop="value"
+          :value-prop="valueProp"
           v-bind="field"
           :filter-results="false"
           :min-chars="1"
@@ -90,6 +90,10 @@ export default defineComponent({
       type: Function as unknown as PropType<new () => BaseRepository>,
       required: false,
       default: Function as unknown as PropType<new () => BaseRepository>,
+    },
+    valueProp: {
+      type: String,
+      required: true,
     },
   },
   setup(props, context) {

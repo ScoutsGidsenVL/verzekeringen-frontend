@@ -4,16 +4,16 @@
       <navigation-arrow to="/home" text="Terug naar overzicht" />
     </div>
     <div class="mt-4">
-      <p style="font-size: 30px">
-        Overzicht aangevraagde verzekering
+      <p v-if="titelText" style="font-size: 30px">
+        {{ titelText }}
         <strong class="font-semibold">
           {{ title }}
         </strong>
       </p>
     </div>
-    <slot :details="details" />
+    <slot :details="details" :isIdUrl="isIdUrl" />
     <div v-if="details" class="mt-5 cw-auto pl-5 pt-5 pb-5 bg-lightGray">
-      <h1 class="text-6xl font-extrabold">€{{ details.totalCost }}</h1>
+      <h1 class="text-2xl font-extrabold">€{{ details.totalCost }}</h1>
     </div>
   </div>
 </template>
@@ -39,12 +39,16 @@ export default defineComponent({
       type: Function as unknown as PropType<new () => BaseRepository>,
       required: true,
     },
+    data: {
+      type: Object as PropType<any>,
+      required: true,
+    },
   },
   setup(props) {
     const route = useRoute()
     const isIdUrl = !!route.params.id
-
-    const details = ref<any>()
+    const titelText = ref<string>('Overzicht aangevraag verzekering')
+    const details = ref<any>(isIdUrl ? null : props.data)
 
     if (isIdUrl) {
       RepositoryFactory.get(props.repository)
@@ -52,9 +56,15 @@ export default defineComponent({
         .then((result: any) => {
           details.value = result
         })
+
+      titelText.value = 'Overzicht aangevraagde verzekering'
     }
 
-    return { details }
+    return {
+      titelText,
+      isIdUrl,
+      details,
+    }
   },
 })
 </script>

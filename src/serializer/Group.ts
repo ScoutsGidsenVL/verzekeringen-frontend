@@ -1,14 +1,22 @@
 export interface Group {
-  readonly id: number
-  readonly location: string
-  readonly name: string
+  readonly id?: number
+  readonly location?: string
+  readonly name?: string
 }
 
-export const GroupSerializer = (input: any): Group => {
+export const GroupDeserializer = (input: any): Group => {
   const single: Group = {
     id: input.id,
     location: input.location,
     name: input.name,
+  }
+
+  return single
+}
+
+export const GroupSerializer = (input: any): any => {
+  const single: any = {
+    name: input.name ? input.name : undefined,
   }
 
   return single

@@ -17,7 +17,7 @@
       <custom-headline-2 text="Wanneer" />
       <div class="px-5 flex gap-4">
         <custom-input :value="startDate" :type="InputTypes.DATE" rules="required" name="start" label="Start datum" @onChange="startDateChanged($event)" />
-        <custom-input :value="endDate" :type="InputTypes.DATE" rules="required" name="end" label="Eind datum" @onChange="endDateChanged($event)" />
+        <custom-input :value="endDate" :type="InputTypes.DATE" rules="required|startDateBeforeEndDate:start" name="end" label="Eind datum" @onChange="endDateChanged($event)" />
       </div>
     </div>
 
@@ -25,7 +25,18 @@
       <custom-headline-2 text="Groep" />
       <div class="px-5">
         <p>De factuur wordt naar de financieel verantwoordelijke van deze groep gestuurd.</p>
-        <multi-select id="group" rules="required" placeholder="Group" :value="group" track-by="value" :options="fetchGroups()" label="Selecteer groep" @onChange="groupChanged($event)" />
+
+        <multi-select
+          id="group"
+          rules="required"
+          placeholder="Group"
+          :value="group"
+          track-by="value"
+          value-prop="value"
+          :options="fetchGroups()"
+          label="Selecteer groep"
+          @onChange="groupChanged($event)"
+        />
       </div>
     </div>
 
@@ -46,6 +57,7 @@
 import InsuranceTypeMenu from '@/components/requestInsurance/insuranceTypeMenu/InsuranceTypeMenu.vue'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
 import InsuranceApplicant from './insuranceApplicant/insuranceApplicant.vue'
+import { OneTimeActivity } from '@/serializer/insurances/OneTimeActivity'
 import InfoAlert from '@/components/requestInsurance/InfoAlert.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
@@ -76,6 +88,8 @@ export default defineComponent({
     const endDate = ref<string>('')
     const group = ref<string>('')
 
+    const user = ref<any>(store.getters.user)
+
     const startDateChanged = (event: any) => {
       startDate.value = event
     }
@@ -89,7 +103,7 @@ export default defineComponent({
     }
 
     const fetchGroups = () => {
-      return [{ value: 'X9002G' }, { value: 'ASDFGEH' }]
+      return [{ value: 'X9002G' }]
     }
 
     const insuranceTypeState = computed((): InsuranceTypes => {
@@ -97,27 +111,29 @@ export default defineComponent({
     })
 
     const setHolderState = () => {
-      store.dispatch('setOneTimeActivityState', {
+      const oneTimeActivity = ref<OneTimeActivity>({
         startDate: startDate.value,
         endDate: endDate.value,
-        group: group.value,
+        group: { name: group.value },
+        responsibleMember: user.value,
+        totalCost: '1.00',
       })
-
+      store.dispatch('setOneTimeActivityState', oneTimeActivity)
       store.dispatch('setHolderState', HolderStates.TYPE)
     }
 
     return {
       insuranceTypeState,
+      startDateChanged,
+      endDateChanged,
       InsuranceTypes,
       setHolderState,
+      groupChanged,
       fetchGroups,
       InputTypes,
       startDate,
       endDate,
       group,
-      startDateChanged,
-      endDateChanged,
-      groupChanged,
     }
   },
 })
