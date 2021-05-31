@@ -17,8 +17,15 @@
           :placeholder="placeholder"
           :track-by="trackBy"
           :label="trackBy"
+          :searchable="searchable"
           :search="true"
-          :options="options"
+          :options="
+            searchable
+              ? async function (query) {
+                  return fetchSearchData(query)
+                }
+              : options
+          "
         />
       </Field>
       <error-message class="text-red font-light ml-1 mt-1 text-sm inline-block" :name="id" />
@@ -30,8 +37,9 @@
 import { defineComponent } from '@vue/runtime-core'
 import { Field, ErrorMessage } from 'vee-validate'
 import Multiselect from '@vueform/multiselect'
-import { ref, watch } from 'vue'
-
+import { PropType, ref, watch } from 'vue'
+import RepositoryFactory from '@/repositories/repositoryFactory'
+import { BaseRepository } from '@/repositories/baseRepository'
 export default defineComponent({
   name: 'AppMultiSelect',
   components: {
@@ -74,10 +82,28 @@ export default defineComponent({
       type: String,
       default: '',
     },
+    searchable: {
+      type: Boolean,
+      default: false,
+    },
+    repository: {
+      type: Function as unknown as PropType<new () => BaseRepository>,
+      required: false,
+      default: Function as unknown as PropType<new () => BaseRepository>,
+    },
   },
   setup(props, context) {
     const input = ref<any>(props.value)
+    const fetchSearchData = async (query: string) => {
+      const data: any = []
+      await RepositoryFactory.get(props.repository)
+        .search(query)
+        .then((res: any) => {
+          data.value = res
+        })
 
+      return data.value
+    }
     watch(
       () => input.value,
       () => {
@@ -86,6 +112,7 @@ export default defineComponent({
     )
     return {
       input,
+      fetchSearchData,
     }
   },
 })

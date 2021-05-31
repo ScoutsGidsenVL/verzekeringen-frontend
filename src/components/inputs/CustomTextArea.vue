@@ -29,7 +29,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const comment = ref<string>(props.text + 'asdasdasd')
+    const comment = ref<string>(props.text)
     return { comment }
   },
 })
