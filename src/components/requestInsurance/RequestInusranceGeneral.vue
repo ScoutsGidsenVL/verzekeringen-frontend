@@ -16,8 +16,16 @@
     <div class="mb-5">
       <custom-headline-2 text="Wanneer" />
       <div class="px-5 flex gap-4">
-        <custom-input :value="startDate" :type="InputTypes.DATE" rules="required" name="start" label="Start datum" @onChange="startDateChanged($event)" />
-        <custom-input :value="endDate" :type="InputTypes.DATE" rules="required|startDateBeforeEndDate:start" name="end" label="Eind datum" @onChange="endDateChanged($event)" />
+        <custom-input :min="minDate" :value="startDate" :type="InputTypes.DATE" rules="required" name="start" label="Start datum" @onChange="startDateChanged($event)" />
+        <custom-input
+          :min="minDate"
+          :value="endDate"
+          :type="InputTypes.DATE"
+          :rules="dateRuleToInsuranceType('start', insuranceTypeState)"
+          name="end"
+          label="Eind datum"
+          @onChange="endDateChanged($event)"
+        />
       </div>
     </div>
 
@@ -59,6 +67,7 @@ import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
 import InsuranceApplicant from './insuranceApplicant/insuranceApplicant.vue'
 import { OneTimeActivity } from '@/serializer/insurances/OneTimeActivity'
 import InfoAlert from '@/components/requestInsurance/InfoAlert.vue'
+import { dateRuleToInsuranceType } from '@/helpers/formatHelper'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomButton from '@/components/CustomButton.vue'
@@ -68,6 +77,7 @@ import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { Form } from 'vee-validate'
 import { useStore } from 'vuex'
+import moment from 'moment'
 
 export default defineComponent({
   name: 'RequestInsuranceGeneral',
@@ -87,6 +97,8 @@ export default defineComponent({
     const startDate = ref<string>('')
     const endDate = ref<string>('')
     const group = ref<string>('')
+
+    const minDate = moment().add(1, 'days').format('YYYY-MM-DD')
 
     const user = ref<any>(store.getters.user)
 
@@ -123,6 +135,7 @@ export default defineComponent({
     }
 
     return {
+      dateRuleToInsuranceType,
       insuranceTypeState,
       startDateChanged,
       endDateChanged,
@@ -133,6 +146,7 @@ export default defineComponent({
       InputTypes,
       startDate,
       endDate,
+      minDate,
       group,
     }
   },

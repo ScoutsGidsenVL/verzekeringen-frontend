@@ -5,17 +5,17 @@
     </strong>
     <br />
     <Field v-slot="{ field }" :name="name" :type="type" :value="input" :rules="rules">
-      <input v-if="type !== InputTypes.TEXT_AREA" v-model="input" class="bg-lightGray p-2 w-80 min-w-0" :type="type" :name="name" :value="input" v-bind="field" @input="emit" />
+      <input v-if="type !== InputTypes.TEXT_AREA" v-model="input" class="bg-lightGray p-2 w-80 min-w-0" :min="min" :type="type" :name="name" :value="input" v-bind="field" @input="emit" />
       <textarea v-if="type === InputTypes.TEXT_AREA" v-model="input" class="bg-lightGray p-2 w-80 min-w-0" :type="'text'" :name="name" v-bind="field" :disabled="disabled" @input="emit" />
     </Field>
-    <ErrorMessage :name="name" class="text-red text-sm block" />
+    <ErrorMessage :name="name" class="text-red text-sm block mt-1 w-80" />
   </form>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
 import { Field, ErrorMessage, useField } from 'vee-validate'
 import { InputTypes } from '@/enums/inputTypes'
+import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   name: 'CustomInput',
@@ -48,6 +48,11 @@ export default defineComponent({
     disabled: {
       type: Boolean,
       default: false,
+    },
+    min: {
+      type: String,
+      required: false,
+      default: '',
     },
   },
   setup(props, context) {

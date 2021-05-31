@@ -10,8 +10,7 @@
 
 <script lang="ts">
 import basePage from './components/semantic/BasePage.vue'
-import { required } from '@vee-validate/rules'
-import { defineRule } from 'vee-validate'
+import { defineRules } from '@/veeValidate/rules'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -20,17 +19,7 @@ export default defineComponent({
     'base-page': basePage,
   },
   setup() {
-    defineRule('required', required)
-
-    defineRule('startDateBeforeEndDate', (value, target: any, ctx) => {
-      if (value === ctx.form[target]) {
-        return 'Start datum moet voor eind datum zijn'
-      }
-
-      return true
-    })
-
-    return {}
+    defineRules()
   },
 })
 </script>
