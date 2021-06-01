@@ -8,7 +8,7 @@ export interface ResponsibleMember {
   readonly email: string
   readonly membershipNumber: number
   readonly phoneNumber: string
-  readonly scoutsGroups: Group[]
+  readonly scoutsGroups?: Group[]
 }
 
 export const ResponsibleMemberDeserializer = (input: any): ResponsibleMember => {
@@ -20,7 +20,7 @@ export const ResponsibleMemberDeserializer = (input: any): ResponsibleMember => 
     email: input.email,
     membershipNumber: input.membership_number,
     phoneNumber: input.phone_number,
-    scoutsGroups: input.scouts_groups.map((group: any) => GroupDeserializer(group)),
+    scoutsGroups: input.scouts_group ? input.scouts_groups.map((group: any) => GroupDeserializer(group)) : undefined,
   }
 
   return single

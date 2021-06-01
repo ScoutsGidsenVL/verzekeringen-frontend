@@ -1,4 +1,4 @@
-import { oneTimeActivityDeserializer, oneTimeActivitySerializer } from '@/serializer/insurances/OneTimeActivity'
+import { OneTimeActivity, oneTimeActivityDeserializer, oneTimeActivitySerializer } from '@/serializer/insurances/OneTimeActivity'
 import { BaseRepository } from '@/repositories/baseRepository'
 
 export class OneTimeActivityRepository extends BaseRepository {
@@ -7,7 +7,7 @@ export class OneTimeActivityRepository extends BaseRepository {
   deserializer = oneTimeActivityDeserializer
   serializer = oneTimeActivitySerializer
 
-  create(data: any) {
+  create(data: OneTimeActivity) {
     return this.post(this.endpoint + 'activity/', this.serializer(data)).then((response: any) => {
       return this.deserializer(response)
     })
