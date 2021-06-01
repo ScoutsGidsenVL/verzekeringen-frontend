@@ -62,7 +62,6 @@ export default defineComponent({
     const fetchAditionalPersonsToBeInsured = ref<any[]>([{ value: '1-50' }, { value: '51 - 100' }])
 
     const setHolderState = () => {
-      console.log('GENERAL STATE: ', generalInsuranceState.value)
       const oneTimeActivity = ref<OneTimeActivity>({ ...generalInsuranceState.value, ...{ nature: nature.value, location: location.value, groupAmount: groupAmount.value } })
       store.dispatch('setOneTimeActivityState', oneTimeActivity)
       store.dispatch('setHolderState', HolderStates.DETAIL)

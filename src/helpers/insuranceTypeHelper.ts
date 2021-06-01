@@ -1,3 +1,4 @@
+import { HolderStates } from '@/enums/holderStates'
 import { InsuranceTypes } from '@/enums/insuranceTypes'
 
 export const displayCorrectTypeLabel = (type: string): string => {
@@ -16,5 +17,13 @@ export const displayCorrectTypeLabel = (type: string): string => {
       return 'Materiaal verzekering'
     default:
       return 'No correct type selected'
+  }
+}
+
+export const isCurrentType = (type: string, state: HolderStates): boolean => {
+  if (type === state) {
+    return true
+  } else {
+    return false
   }
 }
