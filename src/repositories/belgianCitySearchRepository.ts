@@ -12,7 +12,7 @@ export class BelgianCitySearchRepository extends BaseRepository {
       const array: any[] = []
       response.forEach((result: Location) => {
         result = LocationDeserializer(result)
-        array.push({ value: result, location: result.city + ' ' + result.postalCode })
+        array.push({ value: result, location: result.postalCode + ' ' + result.city })
       })
       return array
     })

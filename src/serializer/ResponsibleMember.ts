@@ -1,3 +1,5 @@
+import { Group, GroupDeserializer } from './Group'
+
 export interface ResponsibleMember {
   readonly id: number
   readonly firstName: string
@@ -6,6 +8,7 @@ export interface ResponsibleMember {
   readonly email: string
   readonly membershipNumber: number
   readonly phoneNumber: string
+  readonly scoutsGroups: Group[]
 }
 
 export const ResponsibleMemberDeserializer = (input: any): ResponsibleMember => {
@@ -17,6 +20,7 @@ export const ResponsibleMemberDeserializer = (input: any): ResponsibleMember => 
     email: input.email,
     membershipNumber: input.membership_number,
     phoneNumber: input.phone_number,
+    scoutsGroups: input.scouts_groups.map((group: any) => GroupDeserializer(group)),
   }
 
   return single

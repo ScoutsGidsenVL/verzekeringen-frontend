@@ -3,7 +3,7 @@
     <custom-headline-2 text="Activiteit" />
     <div class="px-5">
       <custom-input :value="nature" :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" @onChange="natureChanged($event)" />
-      <div>
+      <div class="w-80">
         <multi-select
           id="location"
           track-by="location"
@@ -55,14 +55,15 @@ export default defineComponent({
     const location = ref<Location>()
     const store = useStore()
 
-    const oneTimeActivityState = computed(() => {
-      return store.state.insurance.oneTimeActivityState
+    const generalInsuranceState = computed(() => {
+      return store.state.insurance.generalInsuranceState
     })
 
     const fetchAditionalPersonsToBeInsured = ref<any[]>([{ value: '1-50' }, { value: '51 - 100' }])
 
     const setHolderState = () => {
-      const oneTimeActivity = ref<OneTimeActivity>({ ...oneTimeActivityState.value, ...{ nature: nature.value, location: location.value, groupAmount: groupAmount.value } })
+      console.log('GENERAL STATE: ', generalInsuranceState.value)
+      const oneTimeActivity = ref<OneTimeActivity>({ ...generalInsuranceState.value, ...{ nature: nature.value, location: location.value, groupAmount: groupAmount.value } })
       store.dispatch('setOneTimeActivityState', oneTimeActivity)
       store.dispatch('setHolderState', HolderStates.DETAIL)
     }
@@ -82,7 +83,6 @@ export default defineComponent({
     return {
       fetchAditionalPersonsToBeInsured,
       BelgianCitySearchRepository,
-      oneTimeActivityState,
       groupAmountChanged,
       locationChanged,
       setHolderState,

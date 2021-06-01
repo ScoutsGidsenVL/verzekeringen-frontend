@@ -80,7 +80,14 @@ export default defineComponent({
     }
 
     const postOneTimeActivity = () => {
-      RepositoryFactory.get(OneTimeActivityRepository).create(oneTimeActivityState.value)
+      RepositoryFactory.get(OneTimeActivityRepository)
+        .create(oneTimeActivityState.value)
+        .then((result: any) => {
+          console.log('result: ', result)
+          router.push('/home').then(() => {
+            store.dispatch('setHolderState', HolderStates.GENERAL)
+          })
+        })
     }
 
     const asd = () => {

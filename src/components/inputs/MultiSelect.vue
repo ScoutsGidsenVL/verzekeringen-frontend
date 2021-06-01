@@ -3,7 +3,7 @@
     <strong>
       <label>{{ label }}</label>
     </strong>
-    <div class="w-80 min-w-0">
+    <div class="min-w-0">
       <Field v-slot="{ field }" :name="id" :rules="rules" :label="label">
         <multi-select
           v-model="input"

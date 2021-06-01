@@ -2,6 +2,7 @@ export interface Group {
   readonly id?: number
   readonly location?: string
   readonly name?: string
+  readonly fullInfo?: string
 }
 
 export const GroupDeserializer = (input: any): Group => {
@@ -9,6 +10,7 @@ export const GroupDeserializer = (input: any): Group => {
     id: input.id,
     location: input.location,
     name: input.name,
+    fullInfo: `${input.name} ${input.location} (${input.id}).`,
   }
 
   return single

@@ -34,17 +34,19 @@
       <div class="px-5">
         <p>De factuur wordt naar de financieel verantwoordelijke van deze groep gestuurd.</p>
 
-        <multi-select
-          id="group"
-          rules="required"
-          placeholder="Group"
-          :value="group"
-          track-by="value"
-          value-prop="value"
-          :options="fetchGroups()"
-          label="Selecteer groep"
-          @onChange="groupChanged($event)"
-        />
+        <div style="width: 65%">
+          <multi-select
+            id="group"
+            rules="required"
+            placeholder="Group"
+            :value="group"
+            track-by="fullInfo"
+            value-prop="id"
+            :options="user.scoutsGroups"
+            label="Selecteer groep"
+            @onChange="groupChanged($event)"
+          />
+        </div>
       </div>
     </div>
 
@@ -65,8 +67,9 @@
 import InsuranceTypeMenu from '@/components/requestInsurance/insuranceTypeMenu/InsuranceTypeMenu.vue'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
 import InsuranceApplicant from './insuranceApplicant/insuranceApplicant.vue'
-import { OneTimeActivity } from '@/serializer/insurances/OneTimeActivity'
+import { BaseInsurance } from '@/serializer/insurances/BaseInsurance'
 import InfoAlert from '@/components/requestInsurance/InfoAlert.vue'
+import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 import { dateRuleToInsuranceType } from '@/helpers/formatHelper'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
@@ -94,14 +97,17 @@ export default defineComponent({
   setup() {
     const store = useStore()
 
+    const insuranceTypeState = computed((): InsuranceTypes => {
+      return store.state.insurance.insuranceTypeState
+    })
+
     const startDate = ref<string>('')
     const endDate = ref<string>('')
     const group = ref<string>('')
 
     const minDate = moment().add(1, 'days').format('YYYY-MM-DD')
 
-    const user = ref<any>(store.getters.user)
-
+    const user = ref<ResponsibleMember>(store.getters.user)
     const startDateChanged = (event: any) => {
       startDate.value = event
     }
@@ -114,23 +120,15 @@ export default defineComponent({
       group.value = event
     }
 
-    const fetchGroups = () => {
-      return [{ value: 'X9002G' }]
-    }
-
-    const insuranceTypeState = computed((): InsuranceTypes => {
-      return store.state.insurance.insuranceTypeState
-    })
-
     const setHolderState = () => {
-      const oneTimeActivity = ref<OneTimeActivity>({
+      const generalInsuranceState = ref<BaseInsurance>({
         startDate: startDate.value,
         endDate: endDate.value,
         group: { name: group.value },
         responsibleMember: user.value,
         totalCost: '1.00',
       })
-      store.dispatch('setOneTimeActivityState', oneTimeActivity)
+      store.dispatch('setGeneralInsuranceState', generalInsuranceState)
       store.dispatch('setHolderState', HolderStates.TYPE)
     }
 
@@ -142,12 +140,12 @@ export default defineComponent({
       InsuranceTypes,
       setHolderState,
       groupChanged,
-      fetchGroups,
       InputTypes,
       startDate,
       endDate,
       minDate,
       group,
+      user,
     }
   },
 })
