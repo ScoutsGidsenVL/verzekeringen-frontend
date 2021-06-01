@@ -16,16 +16,20 @@
     <div class="mb-5">
       <custom-headline-2 text="Wanneer" />
       <div class="px-5 flex gap-4">
-        <custom-input :min="minDate" :value="startDate" :type="InputTypes.DATE" rules="required" name="start" label="Start datum" @onChange="startDateChanged($event)" />
-        <custom-input
-          :min="minDate"
-          :value="endDate"
-          :type="InputTypes.DATE"
-          :rules="dateRuleToInsuranceType('start', insuranceTypeState)"
-          name="end"
-          label="Eind datum"
-          @onChange="endDateChanged($event)"
-        />
+        <div class="w-80">
+          <custom-input :min="minDate" :value="startDate" :type="InputTypes.DATE" rules="required" name="start" label="Start datum" @onChange="startDateChanged($event)" />
+        </div>
+        <div class="w-80">
+          <custom-input
+            :min="minDate"
+            :value="endDate"
+            :type="InputTypes.DATE"
+            :rules="dateRuleToInsuranceType('start', insuranceTypeState)"
+            name="end"
+            label="Eind datum"
+            @onChange="endDateChanged($event)"
+          />
+        </div>
       </div>
     </div>
 

@@ -5,8 +5,18 @@
     </strong>
     <br />
     <Field v-slot="{ field }" :name="name" :type="type" :value="input" :rules="rules">
-      <input v-if="type !== InputTypes.TEXT_AREA" v-model="input" class="bg-lightGray p-2 w-80 min-w-0" :min="min" :type="type" :name="name" :value="input" v-bind="field" @input="emit" />
-      <textarea v-if="type === InputTypes.TEXT_AREA" v-model="input" class="bg-lightGray p-2 w-80 min-w-0" :type="'text'" :name="name" v-bind="field" :disabled="disabled" @input="emit" />
+      <input v-if="type !== InputTypes.TEXT_AREA" v-model="input" class="bg-lightGray p-2 min-w-0 w-100" :min="min" :type="type" :name="name" :value="input" v-bind="field" @input="emit" />
+      <textarea
+        v-if="type === InputTypes.TEXT_AREA"
+        v-model="input"
+        class="bg-lightGray p-2 w-96 h-32 min-w-0"
+        :type="'text'"
+        :name="name"
+        v-bind="field"
+        :disabled="disabled"
+        maxlength="500"
+        @input="emit"
+      />
     </Field>
     <ErrorMessage :name="name" class="text-red text-sm block mt-1 w-80" />
   </form>

@@ -3,7 +3,7 @@
     <custom-headline-2 text="Activiteit" />
     <div class="px-5">
       <custom-input :value="nature" :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" @onChange="natureChanged($event)" />
-      <div class="w-80">
+      <div class="w-96">
         <multi-select
           id="location"
           track-by="location"
@@ -17,7 +17,7 @@
           @onChange="locationChanged($event)"
         />
       </div>
-      <div class="mt-5">
+      <div class="mt-5 w-96">
         <custom-input :value="groupAmount" :type="InputTypes.TEXT" rules="required" name="groupAmount" label="Aantal extra te verzekeren personen" @onChange="groupAmountChanged($event)" />
       </div>
     </div>

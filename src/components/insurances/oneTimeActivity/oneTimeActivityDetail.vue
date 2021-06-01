@@ -14,12 +14,11 @@
 
           <activity-detail :nature="details.nature" :group-amount="details.groupAmount" :location="details.location" />
 
-          <div v-if="isIdUrl">
-            <custom-text-area :disabled="true" label="Opmerkingen" :text="details.comment" />
-          </div>
-
-          <div v-else>
-            <custom-input :value="comment" :type="InputTypes.TEXT_AREA" name="comment" label="Opmerkingen" @onChange="commentChanged($event)" />
+          <div>
+            <p class="font-semibold">Opmerkingen</p>
+            <div class="px-5">
+              <custom-input :disabled="isIdUrl" :value="comment" :type="InputTypes.TEXT_AREA" name="comment" label="" @onChange="commentChanged($event)" />
+            </div>
           </div>
         </div>
 
@@ -37,7 +36,6 @@ import ResponsibleMemberDetail from '@/components/semantic/detail/ResponsibleMem
 import ActivityDetail from '@/components/semantic/detail/ActivityDetail.vue'
 import { OneTimeActivity } from '@/serializer/insurances/OneTimeActivity'
 import BaseDetail from '@/components/semantic/detail/BaseDetail.vue'
-import CustomTextArea from '@/components/inputs/CustomTextArea.vue'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import LabelOutput from '@/components/semantic/LabelOutput.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
@@ -54,7 +52,6 @@ export default defineComponent({
   name: 'OneTimeActivityDetail',
   components: {
     'responsible-member-detail': ResponsibleMemberDetail,
-    'custom-text-area': CustomTextArea,
     'activity-detail': ActivityDetail,
     'custom-button': CustomButton,
     'custom-input': CustomInput,

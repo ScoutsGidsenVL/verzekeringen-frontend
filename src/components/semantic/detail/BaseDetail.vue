@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="mt-4">
+    <div v-if="isIdUrl" class="mt-4">
       <navigation-arrow to="/home" text="Terug naar overzicht" />
     </div>
-    <div class="mt-4">
+    <div class="mt-3">
       <p v-if="titelText" style="font-size: 30px">
         {{ titelText }}
         <strong class="font-semibold">
