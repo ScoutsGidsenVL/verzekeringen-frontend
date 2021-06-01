@@ -34,6 +34,12 @@ export default {
     SET_ONE_TIME_ACTIVITY_STATE(state: any, oneTimeActivityState: OneTimeActivity) {
       state.oneTimeActivityState = oneTimeActivityState
     },
+    RESET_STATES(state: any) {
+      state.holderState = HolderStates.GENERAL
+      state.insuranceTypeState = InsuranceTypes.EENMALIGE_ACTIVITEIT
+      state.generalInsuranceState = {}
+      state.oneTimeActivityState = {}
+    },
   },
   actions: {
     setHolderState({ commit }: any, holderState: HolderStates) {
@@ -47,6 +53,9 @@ export default {
     },
     setOneTimeActivityState({ commit }: any, oneTimeActivityState: OneTimeActivity) {
       commit('SET_ONE_TIME_ACTIVITY_STATE', oneTimeActivityState)
+    },
+    resetStates({ commit }: any) {
+      commit('RESET_STATES')
     },
   },
 }

@@ -16,14 +16,26 @@
       <h1 class="text-2xl font-extrabold">€{{ details.totalCost }}</h1>
     </div>
   </div>
+
+  <div v-if="holderState === HolderStates.COMPLETED" class="mt-4 inline-block">
+    <div @click="resetStates()" class="flex text-lg cursor-pointer">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mt-1 mr-2" fill="none" viewBox="0 0 20 20" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 15l-5-5 5-5" />
+      </svg>
+      <p>Terug naar overzicht</p>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
 import NavigationArrow from '@/components/semantic/NavigationArrow.vue'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import { BaseRepository } from '@/repositories/baseRepository'
-import { defineComponent, PropType, ref } from 'vue'
+import { computed, defineComponent, PropType, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
+import { HolderStates } from '@/enums/holderStates'
+import router from '@/router'
 
 export default defineComponent({
   name: 'BaseDetail',
@@ -45,10 +57,30 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const store = useStore()
     const route = useRoute()
     const isIdUrl = !!route.params.id
-    const titelText = ref<string>('Overzicht aangevraag verzekering')
+    const titelText = ref<string>('Overzicht aanvraag verzekering')
     const details = ref<any>(isIdUrl ? null : props.data)
+
+    const holderState = computed((): HolderStates => {
+      return store.state.insurance.holderState
+    })
+
+    watch(
+      () => holderState.value,
+      () => {
+        if (holderState.value === HolderStates.COMPLETED) {
+          titelText.value = 'Overzicht aangevraagde verzekering'
+        }
+      }
+    )
+
+    const resetStates = () => {
+      router.push('/home').then(() => {
+        store.dispatch('resetStates')
+      })
+    }
 
     if (isIdUrl) {
       RepositoryFactory.get(props.repository)
@@ -61,6 +93,9 @@ export default defineComponent({
     }
 
     return {
+      HolderStates,
+      resetStates,
+      holderState,
       titelText,
       isIdUrl,
       details,

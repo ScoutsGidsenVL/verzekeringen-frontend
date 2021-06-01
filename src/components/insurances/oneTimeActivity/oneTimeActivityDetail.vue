@@ -1,8 +1,11 @@
 <template>
   <Form @submit="setHolderState()">
     <base-detail :data="oneTimeActivityState" :repository="OneTimeActivityRepository" title="Eenmalige activiteit">
-      <template #default="{ details, isIdUrl }">
-        <div v-if="details" class="mt-1">
+      <template #default="{ details }">
+        <div v-if="error">
+          <p class="text-red">Er is iets mis gegaan.</p>
+        </div>
+        <div v-if="details && !error" class="mt-1">
           <responsible-member-detail :responsible-member="details.responsibleMember" />
 
           <div>
@@ -17,16 +20,16 @@
           <div>
             <p class="font-semibold">Opmerkingen</p>
             <div class="px-5">
-              <custom-input :disabled="isIdUrl" :value="comment" :type="InputTypes.TEXT_AREA" name="comment" label="" @onChange="commentChanged($event)" />
+              <custom-input :disabled="holderState === HolderStates.COMPLETED" :value="comment" :type="InputTypes.TEXT_AREA" name="comment" label="" @onChange="commentChanged($event)" />
             </div>
           </div>
         </div>
-
-        <div v-if="!isIdUrl" class="mt-5">
-          <custom-button text="Bevestig" />
-        </div>
       </template>
     </base-detail>
+
+    <div v-if="holderState === HolderStates.DETAIL" class="mt-5">
+      <custom-button text="Bevestig" />
+    </div>
   </Form>
 </template>
 
@@ -62,8 +65,14 @@ export default defineComponent({
   setup() {
     const store = useStore()
     const comment = ref<string>('')
+    const error = ref<boolean>(false)
+
     const oneTimeActivityState = computed(() => {
       return store.state.insurance.oneTimeActivityState
+    })
+
+    const holderState = computed((): HolderStates => {
+      return store.state.insurance.holderState
     })
 
     const commentChanged = (event: any) => {
@@ -79,17 +88,18 @@ export default defineComponent({
     const postOneTimeActivity = () => {
       RepositoryFactory.get(OneTimeActivityRepository)
         .create(oneTimeActivityState.value)
-        .then((result: any) => {
-          console.log('result: ', result)
-          router.push('/home').then(() => {
-            store.dispatch('setHolderState', HolderStates.GENERAL)
-          })
+        .then((completed: OneTimeActivity) => {
+          store.dispatch('setHolderState', HolderStates.COMPLETED)
+          store.dispatch('setOneTimeActivityState', completed)
+          window.scrollTo(0, 0)
+        })
+        .catch(() => {
+          error.value = true
         })
     }
 
     const asd = () => {
-      store.dispatch('setHolderState', HolderStates.GENERAL)
-      router.push('/home')
+      router.push('/home').then(() => {})
     }
     return {
       OneTimeActivityRepository,
@@ -100,6 +110,9 @@ export default defineComponent({
       InputTypes,
       comment,
       asd,
+      holderState,
+      HolderStates,
+      error,
     }
   },
 })

@@ -7,7 +7,7 @@
     <request-inusrance-type />
   </div>
 
-  <div v-if="holderState === HolderStates.DETAIL">
+  <div v-if="holderState === HolderStates.DETAIL || holderState === HolderStates.COMPLETED">
     <request-inusrance-detail />
   </div>
 </template>
