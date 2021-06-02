@@ -28,7 +28,7 @@ import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
 import RequestInsuranceDetail from './RequestInsuranceDetail.vue'
-import { InsuranceTypeRepos, InsuranceTypeStoreNames } from '@/enums/insuranceTypes'
+import { InsuranceTypeRepos, InsuranceTypeStoreSetters } from '@/enums/insuranceTypes'
 
 export default defineComponent({
   name: 'RequestInsuranceSubmit',
@@ -44,9 +44,8 @@ export default defineComponent({
 
     const onSubmit = handleSubmit(async (values: any) => {
       console.log(values)
-      console.log()
       //@ts-ignore
-      store.dispatch(`set${InsuranceTypeStoreNames[store.getters.insuranceTypeState]}`, { ...store.getters.getCurrentInsuranceState, ...{ comment: values.comment } })
+      store.dispatch(InsuranceTypeStoreSetters[store.getters.insuranceTypeState], { ...store.getters.getCurrentInsuranceState, ...{ comment: values.comment } })
       postOneTimeActivity()
     })
 
@@ -58,7 +57,7 @@ export default defineComponent({
         .then((completed: OneTimeActivity) => {
           store.dispatch('setHolderState', HolderStates.COMPLETED)
           //@ts-ignore
-          store.dispatch(`set${InsuranceTypeStoreNames[store.getters.insuranceTypeState]}`, completed)
+          store.dispatch(InsuranceTypeStoreSetters[store.getters.insuranceTypeState], completed)
         })
         .catch(() => {
           error.value = true
