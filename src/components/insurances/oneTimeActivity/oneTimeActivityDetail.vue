@@ -15,12 +15,18 @@
             </div>
           </div>
 
-          <activity-detail :nature="details.nature" :group-amount="details.groupAmount" :location="details.location" />
+          <activity-detail :nature="details.nature" :group-size="details.groupSize" :location="details.location" />
 
-          <div>
+          <div v-if="holderState === HolderStates.DETAIL">
             <p class="font-semibold">Opmerkingen</p>
             <div class="px-5">
-              <custom-input :disabled="holderState === HolderStates.COMPLETED" :value="comment" :type="InputTypes.TEXT_AREA" name="comment" label="" @onChange="commentChanged($event)" />
+              <custom-input :value="comment" :type="InputTypes.TEXT_AREA" name="comment" label="" @onChange="commentChanged($event)" />
+            </div>
+          </div>
+
+          <div v-if="holderState === HolderStates.COMPLETED">
+            <div class="px-5">
+              <label-output label="Opmerkingen" :text="comment" />
             </div>
           </div>
         </div>

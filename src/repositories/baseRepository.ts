@@ -1,4 +1,5 @@
 import BaseApiRepository from '@/repositories/baseApiRepository'
+import { ArrayResult } from '@/serializer/ArrayResult'
 
 export abstract class BaseRepository extends BaseApiRepository {
   abstract id: string
@@ -6,8 +7,21 @@ export abstract class BaseRepository extends BaseApiRepository {
   abstract deserializer: any
   abstract serializer: any
 
+  private previous: string | null = null
+  private next: string | null = ''
+
   getArray(): Promise<any> {
-    return this.get(this.endpoint, {}).then((response: any) => {
+    return this.get(this.endpoint, {}).then((response: ArrayResult) => {
+      const array: any[] = []
+      response.results.forEach((result: any) => {
+        array.push(this.deserializer(result))
+      })
+      return array
+    })
+  }
+
+  getPrevious(): Promise<any> {
+    return this.get(this.endpoint, {}).then((response: ArrayResult) => {
       const array: any[] = []
       response.results.forEach((result: any) => {
         array.push(this.deserializer(result))
@@ -36,5 +50,9 @@ export abstract class BaseRepository extends BaseApiRepository {
     return this.post(this.endpoint, this.serializer(data)).then((response: any) => {
       return this.deserializer(response)
     })
+  }
+
+  formatPaginationUrl = (url: string) => {
+    return url
   }
 }

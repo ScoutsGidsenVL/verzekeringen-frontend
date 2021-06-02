@@ -4,12 +4,7 @@
       <navigation-arrow to="/home" text="Terug naar overzicht" />
     </div>
     <div class="mt-3">
-      <p v-if="titelText" style="font-size: 30px">
-        {{ titelText }}
-        <strong class="font-semibold">
-          {{ title }}
-        </strong>
-      </p>
+      <div v-html="titelText"></div>
     </div>
     <slot :details="details" :isIdUrl="isIdUrl" />
     <div v-if="details" class="mt-5 cw-auto pl-5 pt-5 pb-5 bg-lightGray">
@@ -60,7 +55,7 @@ export default defineComponent({
     const store = useStore()
     const route = useRoute()
     const isIdUrl = !!route.params.id
-    const titelText = ref<string>('Overzicht aanvraag verzekering')
+    const titelText = ref<string>('<p style="font-size: 30px">Overzicht <strong class="font-semibold">' + props.title + '</strong> verzekering</p>')
     const details = ref<any>(isIdUrl ? null : props.data)
 
     const holderState = computed((): HolderStates => {
@@ -71,7 +66,7 @@ export default defineComponent({
       () => holderState.value,
       () => {
         if (holderState.value === HolderStates.COMPLETED) {
-          titelText.value = 'Overzicht aangevraagde verzekering'
+          titelText.value = '<p style="font-size: 30px">Uw <strong class="font-semibold">' + props.title + '</strong> verzekering is aangevraagd </p>'
         }
       }
     )
@@ -88,8 +83,7 @@ export default defineComponent({
         .then((result: any) => {
           details.value = result
         })
-
-      titelText.value = 'Overzicht aangevraagde verzekering'
+      titelText.value = '<p style="font-size: 30px">Overzicht aangevraagde verzekering <strong class="font-semibold">' + props.title + '</strong></p>'
     }
 
     return {

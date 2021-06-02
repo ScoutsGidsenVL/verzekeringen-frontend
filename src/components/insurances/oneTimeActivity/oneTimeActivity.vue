@@ -17,8 +17,18 @@
           @onChange="locationChanged($event)"
         />
       </div>
-      <div class="mt-5 w-96">
-        <custom-input :value="groupAmount" :type="InputTypes.TEXT" rules="required" name="groupAmount" label="Aantal extra te verzekeren personen" @onChange="groupAmountChanged($event)" />
+      <div class="mt-2 w-96">
+        <multi-select
+          id="location"
+          track-by="label"
+          value-prop="value"
+          :options="groupSizes"
+          :searchable="false"
+          label="Aantal extra te verzekeren personen"
+          rules="required"
+          placeholder="Aantal"
+          @onChange="groupSizeChanged($event)"
+        />
       </div>
     </div>
     <div class="px-5 mt-5">
@@ -26,6 +36,7 @@
     </div>
   </Form>
 </template>
+
 <script lang="ts">
 import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRepository'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
@@ -39,6 +50,8 @@ import { Location } from '@/serializer/Location'
 import { InputTypes } from '@/enums/inputTypes'
 import { Form } from 'vee-validate'
 import { useStore } from 'vuex'
+import RepositoryFactory from '@/repositories/repositoryFactory'
+import { InsuranceGroupSizesRepository } from '@/repositories/insuranceGroupSizes'
 
 export default defineComponent({
   name: 'OneTimeActivity',
@@ -51,18 +64,27 @@ export default defineComponent({
   },
   setup() {
     const nature = ref<string>('')
-    const groupAmount = ref<number>()
+    const groupSize = ref<number>()
     const location = ref<Location>()
     const store = useStore()
+    const groupSizes = ref<any[]>([])
 
     const generalInsuranceState = computed(() => {
       return store.state.insurance.generalInsuranceState
     })
 
-    const fetchAditionalPersonsToBeInsured = ref<any[]>([{ value: '1-50' }, { value: '51 - 100' }])
+    const fetchGroupSizes = () => {
+      RepositoryFactory.get(InsuranceGroupSizesRepository)
+        .getArray()
+        .then((result: any) => {
+          groupSizes.value = result
+        })
+    }
+
+    fetchGroupSizes()
 
     const setHolderState = () => {
-      const oneTimeActivity = ref<OneTimeActivity>({ ...generalInsuranceState.value, ...{ nature: nature.value, location: location.value, groupAmount: groupAmount.value } })
+      const oneTimeActivity = ref<OneTimeActivity>({ ...generalInsuranceState.value, ...{ nature: nature.value, location: location.value, groupSize: groupSize.value } })
       store.dispatch('setOneTimeActivityState', oneTimeActivity)
       store.dispatch('setHolderState', HolderStates.DETAIL)
     }
@@ -75,21 +97,23 @@ export default defineComponent({
       location.value = event
     }
 
-    const groupAmountChanged = (event: any) => {
-      groupAmount.value = event
+    const groupSizeChanged = (event: any) => {
+      groupSize.value = event
     }
 
     return {
-      fetchAditionalPersonsToBeInsured,
+      groupSizes,
       BelgianCitySearchRepository,
-      groupAmountChanged,
+      groupSizeChanged,
       locationChanged,
       setHolderState,
       natureChanged,
-      groupAmount,
+      groupSize,
       InputTypes,
       nature,
     }
   },
 })
 </script>
+
+function InsuranceGroupSizesRepository(InsuranceGroupSizesRepository: any) { throw new Error('Function not implemented.') }

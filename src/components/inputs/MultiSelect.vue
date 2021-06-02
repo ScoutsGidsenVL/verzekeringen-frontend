@@ -67,7 +67,7 @@ export default defineComponent({
     },
     rules: {
       type: [Object, String, Function],
-      default: 'required',
+      default: '',
       required: false,
     },
     trackBy: {

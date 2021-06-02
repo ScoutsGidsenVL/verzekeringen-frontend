@@ -1,34 +1,33 @@
 <template>
   <p class="font-semibold">Activiteit</p>
   <div class="px-5">
-    <div class="mt-3">
-      <custom-input :value="nature" :type="InputTypes.TEXT_AREA" name="nature" label="Aard van activiteit" :disabled="true" />
-    </div>
+    <label-output label="Aard van activiteit" :text="nature" />
     <label-output label="Locatie" :text="location.postalCode + ' ' + location.city" />
-    <label-output label="Aantal personen" :text="groupAmount" />
+    <label-output v-if="size" label="Aantal extra te verzekeren personen" :text="size.label" />
   </div>
 </template>
 
 <script lang="ts">
 import LabelOutput from '@/components/semantic/LabelOutput.vue'
-import CustomInput from '@/components/inputs/CustomInput.vue'
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, ref } from 'vue'
 import { InputTypes } from '@/enums/inputTypes'
 import { Location } from '@/serializer/Location'
+import RepositoryFactory from '@/repositories/repositoryFactory'
+import { InsuranceGroupSizesRepository } from '@/repositories/insuranceGroupSizes'
+import { InsuranceGroupSize } from '@/serializer/InsuranceGroupSizes'
 
 export default defineComponent({
   name: 'ActivityDetail',
   components: {
     'label-output': LabelOutput,
-    'custom-input': CustomInput,
   },
   props: {
     nature: {
       type: String,
       default: '',
     },
-    groupAmount: {
-      type: [String, Number],
+    groupSize: {
+      type: Number,
       default: 0,
     },
     location: {
@@ -36,9 +35,26 @@ export default defineComponent({
       default: Object as PropType<Location>,
     },
   },
-  setup() {
+  setup(props) {
+    const size = ref<InsuranceGroupSize>()
+
+    const fetchGroupSizes = () => {
+      RepositoryFactory.get(InsuranceGroupSizesRepository)
+        .getArray()
+        .then((result: InsuranceGroupSize[]) => {
+          getGroupSize(props.groupSize, result)
+        })
+    }
+
+    const getGroupSize = (groupSize: number, groupSizes: InsuranceGroupSize[]) => {
+      size.value = groupSizes.find((x: InsuranceGroupSize) => x.value === groupSize)
+    }
+
+    fetchGroupSizes()
+
     return {
       InputTypes,
+      size,
     }
   },
 })

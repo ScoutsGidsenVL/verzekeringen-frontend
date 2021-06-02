@@ -2,7 +2,7 @@
   <div class="py-3">
     <strong>{{ label }}</strong>
     <div class="w-96">
-      <p class="mt-2">{{ text }}</p>
+      <p class="mt-2 w-96">{{ text }}</p>
     </div>
   </div>
 </template>

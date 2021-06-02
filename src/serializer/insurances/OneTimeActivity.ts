@@ -2,7 +2,7 @@ import { ResponsibleMember, ResponsibleMemberDeserializer, ResponsibleMemberSeri
 import { Location, LocationDeserializer, LocationSerializer } from '@/serializer/Location'
 import { Status, StatusDeserializer } from '@/serializer/Status'
 import { Group, GroupDeserializer, GroupSerializer } from '@/serializer/Group'
-import { Type, TypeDeserializer, TypeSerializer } from '@/serializer/Type'
+import { Type, TypeDeserializer } from '@/serializer/Type'
 export interface OneTimeActivity {
   readonly id?: number
   readonly startDate?: string
@@ -10,7 +10,7 @@ export interface OneTimeActivity {
   readonly createdOn?: string
   readonly comment?: string
   readonly group?: Group
-  readonly groupAmount?: number
+  readonly groupSize?: number
   readonly location?: Location
   readonly nature?: string
   readonly responsibleMember?: ResponsibleMember
@@ -28,7 +28,7 @@ export const oneTimeActivityDeserializer = (input: any): OneTimeActivity => {
     createdOn: input.created_on,
     comment: input.comment,
     group: GroupDeserializer(input.group),
-    groupAmount: input.group_amount,
+    groupSize: input.group_size,
     location: LocationDeserializer(input.location),
     nature: input.nature,
     responsibleMember: ResponsibleMemberDeserializer(input.responsible_member),
@@ -48,7 +48,7 @@ export const oneTimeActivitySerializer = (input: OneTimeActivity): OneTimeActivi
     created_on: input.createdOn,
     comment: input.comment,
     group: GroupSerializer(input.group).name,
-    group_amount: input.groupAmount,
+    group_size: input.groupSize,
     location: LocationSerializer(input.location),
     nature: input.nature,
     responsible_phone_number: ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number,
