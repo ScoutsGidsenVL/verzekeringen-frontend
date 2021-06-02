@@ -8,17 +8,11 @@
 </template>
 
 <script lang="ts">
-import { Params } from '@/serializer/Params'
-import { defineComponent, PropType } from 'vue'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'Pagination',
-  props: {
-    params: {
-      type: Object as PropType<Params>,
-      required: true,
-    },
-  },
+  props: {},
   setup() {
     return {}
   },
