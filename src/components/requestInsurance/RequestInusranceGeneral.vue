@@ -1,5 +1,5 @@
 <template>
-  <Form @submit="setHolderState()">
+  <form @submit="onSubmit">
     <div class="mb-5">
       <custom-headline-2 text="Welke" />
 
@@ -17,18 +17,10 @@
       <custom-headline-2 text="Wanneer" />
       <div class="px-5 flex gap-4">
         <div class="w-80">
-          <custom-input :min="minDate" :value="startDate" :type="InputTypes.DATE" rules="required" name="start" label="Start datum" @onChange="startDateChanged($event)" />
+          <custom-input :min="minDate" :type="InputTypes.DATE" rules="required" name="start" label="Start datum" />
         </div>
         <div class="w-80">
-          <custom-input
-            :min="minDate"
-            :value="endDate"
-            :type="InputTypes.DATE"
-            :rules="dateRuleToInsuranceType('start', insuranceTypeState)"
-            name="end"
-            label="Eind datum"
-            @onChange="endDateChanged($event)"
-          />
+          <custom-input :min="minDate" :type="InputTypes.DATE" :rules="dateRuleToInsuranceType('start', insuranceTypeState)" name="end" label="Eind datum" />
         </div>
       </div>
     </div>
@@ -39,17 +31,7 @@
         <p>De factuur wordt naar de financieel verantwoordelijke van deze groep gestuurd.</p>
 
         <div style="width: 65%">
-          <multi-select
-            id="group"
-            rules="required"
-            placeholder="Group"
-            :value="group"
-            track-by="fullInfo"
-            value-prop="id"
-            :options="user.scoutsGroups"
-            label="Selecteer groep"
-            @onChange="groupChanged($event)"
-          />
+          <multi-select id="group" rules="required" placeholder="Group" track-by="fullInfo" value-prop="id" :options="user.scoutsGroups" label="Selecteer groep" />
         </div>
       </div>
     </div>
@@ -64,7 +46,7 @@
     <div class="mt-5 px-5">
       <custom-button text="Volgende" />
     </div>
-  </Form>
+  </form>
 </template>
 
 <script lang="ts">
@@ -82,7 +64,7 @@ import { InsuranceTypes } from '@/enums/insuranceTypes'
 import { defineComponent, computed, ref } from 'vue'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
-import { Form } from 'vee-validate'
+import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
 import moment from 'moment'
 
@@ -96,60 +78,39 @@ export default defineComponent({
     'custom-input': CustomInput,
     'multi-select': MultiSelect,
     'info-alert': InfoAlert,
-    Form,
   },
   setup() {
     const store = useStore()
+    const { handleSubmit } = useForm()
 
     const insuranceTypeState = computed((): InsuranceTypes => {
       return store.state.insurance.insuranceTypeState
     })
 
-    const startDate = ref<string>('')
-    const endDate = ref<string>('')
-    const group = ref<string>('')
-
     const minDate = moment().add(1, 'days').format('YYYY-MM-DD')
 
     const user = ref<ResponsibleMember>(store.getters.user)
-    const startDateChanged = (event: any) => {
-      startDate.value = event
-    }
 
-    const endDateChanged = (event: any) => {
-      endDate.value = event
-    }
-
-    const groupChanged = (event: any) => {
-      group.value = event
-    }
-
-    const setHolderState = () => {
+    const onSubmit = handleSubmit(async (values: any) => {
       const generalInsuranceState = ref<BaseInsurance>({
-        startDate: startDate.value,
-        endDate: endDate.value,
-        group: { name: group.value },
+        startDate: values.start,
+        endDate: values.end,
+        group: { name: values.group },
         responsibleMember: user.value,
         totalCost: '1.00',
       })
       store.dispatch('setGeneralInsuranceState', generalInsuranceState)
       store.dispatch('setHolderState', HolderStates.TYPE)
-    }
+    })
 
     return {
       dateRuleToInsuranceType,
       insuranceTypeState,
-      startDateChanged,
-      endDateChanged,
       InsuranceTypes,
-      setHolderState,
-      groupChanged,
       InputTypes,
-      startDate,
-      endDate,
       minDate,
-      group,
       user,
+      onSubmit,
     }
   },
 })

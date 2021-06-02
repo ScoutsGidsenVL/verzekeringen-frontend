@@ -4,30 +4,28 @@
       <label>{{ label }}</label>
     </strong>
     <div class="min-w-0">
-      <Field v-slot="{ field }" :name="id" :rules="rules" :label="label">
-        <multi-select
-          v-model="input"
-          :name="id"
-          :value-prop="valueProp"
-          v-bind="field"
-          :filter-results="false"
-          :min-chars="1"
-          :resolve-on-load="false"
-          :delay="0"
-          :placeholder="placeholder"
-          :track-by="trackBy"
-          :label="trackBy"
-          :searchable="searchable"
-          :search="true"
-          :options="
-            searchable
-              ? async function (query) {
-                  return fetchSearchData(query)
-                }
-              : options
-          "
-        />
-      </Field>
+      <multi-select
+        v-model="inputValue"
+        :name="id"
+        :value-prop="valueProp"
+        v-bind="field"
+        :filter-results="false"
+        :min-chars="1"
+        :resolve-on-load="false"
+        :delay="0"
+        :placeholder="placeholder"
+        :track-by="trackBy"
+        :label="trackBy"
+        :searchable="searchable"
+        :search="true"
+        :options="
+          searchable
+            ? async function (query) {
+                return fetchSearchData(query)
+              }
+            : options
+        "
+      />
       <error-message class="text-red font-light ml-1 mt-1 text-sm inline-block" :name="id" />
     </div>
   </div>
@@ -35,9 +33,9 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/runtime-core'
-import { Field, ErrorMessage } from 'vee-validate'
+import { ErrorMessage, useField } from 'vee-validate'
 import Multiselect from '@vueform/multiselect'
-import { PropType, ref, watch } from 'vue'
+import { PropType } from 'vue'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import { BaseRepository } from '@/repositories/baseRepository'
 export default defineComponent({
@@ -45,7 +43,6 @@ export default defineComponent({
   components: {
     'error-message': ErrorMessage,
     'multi-select': Multiselect,
-    Field,
   },
   props: {
     id: {
@@ -96,8 +93,11 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props, context) {
-    const input = ref<any>(props.value)
+  setup(props) {
+    const { value: inputValue } = useField(props.id, props.rules, {
+      initialValue: props.value,
+    })
+
     const fetchSearchData = async (query: string) => {
       const data: any = []
       await RepositoryFactory.get(props.repository)
@@ -108,14 +108,9 @@ export default defineComponent({
 
       return data.value
     }
-    watch(
-      () => input.value,
-      () => {
-        context.emit('onChange', input.value)
-      }
-    )
+
     return {
-      input,
+      inputValue,
       fetchSearchData,
     }
   },

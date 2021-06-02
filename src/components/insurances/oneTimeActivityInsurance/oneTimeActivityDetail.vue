@@ -1,5 +1,5 @@
 <template>
-  <Form @submit="setHolderState()">
+  <form @submit="onSubmit">
     <base-detail :data="oneTimeActivityState" :repository="OneTimeActivityRepository" title="Eenmalige activiteit">
       <template #default="{ details }">
         <div v-if="error">
@@ -20,7 +20,7 @@
           <div v-if="holderState === HolderStates.DETAIL">
             <p class="font-semibold">Opmerkingen</p>
             <div class="px-5">
-              <custom-input :value="comment" :type="InputTypes.TEXT_AREA" name="comment" label="" @onChange="commentChanged($event)" />
+              <custom-input :type="InputTypes.TEXT_AREA" name="comment" label="" />
             </div>
           </div>
 
@@ -36,7 +36,7 @@
     <div v-if="holderState === HolderStates.DETAIL" class="mt-5">
       <custom-button text="Bevestig" />
     </div>
-  </Form>
+  </form>
 </template>
 
 <script lang="ts">
@@ -53,9 +53,8 @@ import { computed, defineComponent, ref } from 'vue'
 import { formatDate } from '@/helpers/formatHelper'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
-import { Form } from 'vee-validate'
+import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
-import router from '@/router'
 
 export default defineComponent({
   name: 'OneTimeActivityDetail',
@@ -66,11 +65,10 @@ export default defineComponent({
     'custom-input': CustomInput,
     'label-output': LabelOutput,
     'base-detail': BaseDetail,
-    Form,
   },
   setup() {
     const store = useStore()
-    const comment = ref<string>('')
+    const { handleSubmit } = useForm()
     const error = ref<boolean>(false)
 
     const oneTimeActivityState = computed(() => {
@@ -81,15 +79,11 @@ export default defineComponent({
       return store.state.insurance.holderState
     })
 
-    const commentChanged = (event: any) => {
-      comment.value = event
-    }
-
-    const setHolderState = () => {
-      const oneTimeActivity = ref<OneTimeActivity>({ ...oneTimeActivityState.value, ...{ comment: comment.value } })
+    const onSubmit = handleSubmit(async (values: any) => {
+      const oneTimeActivity = ref<OneTimeActivity>({ ...oneTimeActivityState.value, ...{ comment: values.comment } })
       store.dispatch('setOneTimeActivityState', oneTimeActivity)
       postOneTimeActivity()
-    }
+    })
 
     const postOneTimeActivity = () => {
       RepositoryFactory.get(OneTimeActivityRepository)
@@ -104,18 +98,12 @@ export default defineComponent({
         })
     }
 
-    const asd = () => {
-      router.push('/home').then(() => {})
-    }
     return {
       OneTimeActivityRepository,
       oneTimeActivityState,
-      commentChanged,
-      setHolderState,
+      onSubmit,
       formatDate,
       InputTypes,
-      comment,
-      asd,
       holderState,
       HolderStates,
       error,

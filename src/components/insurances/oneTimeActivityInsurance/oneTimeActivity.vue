@@ -1,8 +1,8 @@
 <template>
-  <Form @submit="setHolderState()">
+  <form @submit="onSubmit">
     <custom-headline-2 text="Activiteit" />
     <div class="px-5">
-      <custom-input :value="nature" :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" @onChange="natureChanged($event)" />
+      <custom-input :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" />
       <div class="w-96">
         <multi-select
           id="location"
@@ -14,27 +14,16 @@
           label="Location"
           rules="required"
           placeholder="Zoek op naam/postcode"
-          @onChange="locationChanged($event)"
         />
       </div>
       <div class="mt-2 w-96">
-        <multi-select
-          id="location"
-          track-by="label"
-          value-prop="value"
-          :options="groupSizes"
-          :searchable="false"
-          label="Aantal extra te verzekeren personen"
-          rules="required"
-          placeholder="Aantal"
-          @onChange="groupSizeChanged($event)"
-        />
+        <multi-select id="groupSize" track-by="label" value-prop="value" :options="groupSizes" :searchable="false" label="Aantal extra te verzekeren personen" rules="required" placeholder="Aantal" />
       </div>
     </div>
     <div class="px-5 mt-5">
       <custom-button text="Volgende" />
     </div>
-  </Form>
+  </form>
 </template>
 
 <script lang="ts">
@@ -48,9 +37,8 @@ import CustomInput from '@/components/inputs/CustomInput.vue'
 import CustomButton from '@/components/CustomButton.vue'
 import { computed, defineComponent, ref } from 'vue'
 import { HolderStates } from '@/enums/holderStates'
-import { Location } from '@/serializer/Location'
 import { InputTypes } from '@/enums/inputTypes'
-import { Form } from 'vee-validate'
+import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
 
 export default defineComponent({
@@ -60,13 +48,10 @@ export default defineComponent({
     'custom-button': CustomButton,
     'multi-select': MultiSelect,
     'custom-input': CustomInput,
-    Form,
   },
   setup() {
-    const nature = ref<string>('')
-    const groupSize = ref<number>()
-    const location = ref<Location>()
     const store = useStore()
+    const { handleSubmit } = useForm()
     const groupSizes = ref<any[]>([])
 
     const generalInsuranceState = computed(() => {
@@ -83,34 +68,24 @@ export default defineComponent({
 
     fetchGroupSizes()
 
-    const setHolderState = () => {
-      const oneTimeActivity = ref<OneTimeActivity>({ ...generalInsuranceState.value, ...{ nature: nature.value, location: location.value, groupSize: groupSize.value } })
+    const onSubmit = handleSubmit(async (values: any) => {
+      const oneTimeActivity = ref<OneTimeActivity>({
+        ...generalInsuranceState.value,
+        ...{
+          nature: values.nature,
+          location: values.location,
+          groupSize: values.groupSize,
+        },
+      })
       store.dispatch('setOneTimeActivityState', oneTimeActivity)
       store.dispatch('setHolderState', HolderStates.DETAIL)
-    }
-
-    const natureChanged = (event: any) => {
-      nature.value = event
-    }
-
-    const locationChanged = (event: any) => {
-      location.value = event
-    }
-
-    const groupSizeChanged = (event: any) => {
-      groupSize.value = event
-    }
+    })
 
     return {
       groupSizes,
       BelgianCitySearchRepository,
-      groupSizeChanged,
-      locationChanged,
-      setHolderState,
-      natureChanged,
       InputTypes,
-      groupSize,
-      nature,
+      onSubmit,
     }
   },
 })
