@@ -2,7 +2,7 @@ import { OneTimeActivity } from '@/serializer/insurances/OneTimeActivity'
 import { BaseInsurance } from '@/serializer/insurances/BaseInsurance'
 import { InsuranceTypes } from '@/enums/insuranceTypes'
 import { HolderStates } from '@/enums/holderStates'
-import { NonMember } from '@/serializer/insurances/NonMember'
+import { NonMemberInsurance } from '@/serializer/insurances/NonMemberInsurance'
 
 export default {
   state: () => ({
@@ -36,7 +36,7 @@ export default {
     SET_ONE_TIME_ACTIVITY_STATE(state: any, oneTimeActivityState: OneTimeActivity) {
       state.oneTimeActivityState = oneTimeActivityState
     },
-    SET_NON_MEMBER_STATE(state: any, nonMemberState: NonMember) {
+    SET_NON_MEMBER_STATE(state: any, nonMemberState: NonMemberInsurance) {
       state.nonMemberState = nonMemberState
     },
     RESET_STATES(state: any) {
@@ -60,7 +60,7 @@ export default {
     setOneTimeActivityState({ commit }: any, oneTimeActivityState: OneTimeActivity) {
       commit('SET_ONE_TIME_ACTIVITY_STATE', oneTimeActivityState)
     },
-    setNonMemberState({ commit }: any, nonMemberState: NonMember) {
+    setNonMemberState({ commit }: any, nonMemberState: NonMemberInsurance) {
       commit('SET_NON_MEMBER_STATE', nonMemberState)
     },
     resetStates({ commit }: any) {

@@ -32,8 +32,8 @@
       </div>
     </div>
     <custom-headline-2 text="Niet leden" />
-    <div>
-      <!-- component -->
+    <div class="px-5">
+      <non-members-list />
     </div>
     <div class="px-5 mt-5">
       <custom-button text="Volgende" />
@@ -42,13 +42,14 @@
 </template>
 
 <script lang="ts">
+import NonMembersList from '@/components/insurances/nonMembersInsurance/nonMembersList.vue'
 import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRepository'
 import { InsuranceGroupSizesRepository } from '@/repositories/insuranceGroupSizes'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
-import { NonMember } from '@/serializer/insurances/NonMember'
+import { NonMemberInsurance } from '@/serializer/insurances/NonMemberInsurance'
 import CustomButton from '@/components/CustomButton.vue'
 import { computed, defineComponent, ref } from 'vue'
 import { HolderStates } from '@/enums/holderStates'
@@ -60,6 +61,7 @@ import { useStore } from 'vuex'
 export default defineComponent({
   name: 'NonMember',
   components: {
+    'non-members-list': NonMembersList,
     'custom-headline-2': CustomHeadline2,
     'custom-button': CustomButton,
     'multi-select': MultiSelect,
@@ -88,7 +90,7 @@ export default defineComponent({
     fetchGroupSizes()
 
     const setHolderState = () => {
-      const nonMember = ref<NonMember>({ ...generalInsuranceState.value, ...{ nature: nature.value, location: location.value, groupSize: groupSize.value } })
+      const nonMember = ref<NonMemberInsurance>({ ...generalInsuranceState.value, ...{ nature: nature.value, location: location.value, groupSize: groupSize.value } })
       store.dispatch('setNonMemberState', nonMember)
       store.dispatch('setHolderState', HolderStates.DETAIL)
     }
