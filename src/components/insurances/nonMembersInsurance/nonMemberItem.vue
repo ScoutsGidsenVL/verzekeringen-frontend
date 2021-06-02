@@ -1,9 +1,9 @@
 <template>
-  <div class="w-96">
+  <div v-if="nonMember" class="w-96">
     <hr class="border-t-2 border-black" />
-    <label-output label="Naam" :text="'Jeroen'" />
-    <label-output label="Adres" :text="'Jeroen'" />
-    <label-output label="Geboortedatum" :text="'Jeroen'" />
+    <label-output label="Naam" :text="nonMember.lastName" />
+    <label-output label="Adres" :text="nonMember.firstName" />
+    <label-output label="Geboortedatum" :text="nonMember.birthDate" />
     <hr class="border-t-2 border-black" />
   </div>
 </template>

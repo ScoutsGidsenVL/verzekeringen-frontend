@@ -43,7 +43,6 @@ export default defineComponent({
     const error = ref<boolean>(false)
 
     const onSubmit = handleSubmit(async (values: any) => {
-      console.log(values)
       //@ts-ignore
       store.dispatch(InsuranceTypeStoreSetters[store.getters.insuranceTypeState], { ...store.getters.getCurrentInsuranceState, ...{ comment: values.comment } })
       postOneTimeActivity()

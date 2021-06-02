@@ -3,6 +3,9 @@
     <strong>
       <label>{{ label }}</label>
     </strong>
+    <div>
+      <slot />
+    </div>
     <br />
     <input v-if="type !== InputTypes.TEXT_AREA" v-model="inputValue" class="bg-lightGray p-2 min-w-0 w-100" :min="min" :type="type" :name="name" />
     <textarea v-if="type === InputTypes.TEXT_AREA" v-model="inputValue" class="bg-lightGray p-2 w-96 h-32 min-w-0" :type="'text'" :name="name" :disabled="disabled" maxlength="500" />

@@ -7,18 +7,19 @@
   <div class="mt-2 cursor-pointer text-lightGreen" @click="openSideBar()">
     <strong> + voeg niet-lid toe </strong>
   </div>
-  <base-side-bar v-model:isDisplay="isDisplay" />
+  <non-member-side-bar v-model:isDisplay="isDisplay" title="Niet lid" @addCreatedNonMemberToList="addCreatedNonMemberToList($event)" />
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import NonMemberSideBar from '@/components/insurances/nonMembersInsurance/nonMemberSideBar.vue'
 import NonMemberItem from '@/components/insurances/nonMembersInsurance/nonMemberItem.vue'
-import BaseSideBar from '@/components/semantic/BaseSideBar.vue'
+import { defineComponent, ref } from 'vue'
+import { NonMember } from '@/serializer/NonMember'
 
 export default defineComponent({
   name: 'NonMembersList',
   components: {
     'non-member-item': NonMemberItem,
-    'base-side-bar': BaseSideBar,
+    'non-member-side-bar': NonMemberSideBar,
   },
   props: {},
   setup() {
@@ -29,8 +30,12 @@ export default defineComponent({
       console.log('openSideBar')
       isDisplay.value = true
     }
+    const addCreatedNonMemberToList = (nonMember: NonMember) => {
+      nonMembers.value.push(nonMember)
+    }
 
     return {
+      addCreatedNonMemberToList,
       openSideBar,
       nonMembers,
       isDisplay,
