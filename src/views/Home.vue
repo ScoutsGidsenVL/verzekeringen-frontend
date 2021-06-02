@@ -6,7 +6,7 @@
   </div>
   <div class="mt-5">
     <custom-list :items="results" title="Recent aangevraagd" />
-    <div class="mt-3">
+    <div v-if="false" class="mt-3">
       <pagination />
     </div>
   </div>

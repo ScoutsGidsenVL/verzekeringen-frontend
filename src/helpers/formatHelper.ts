@@ -9,6 +9,10 @@ export const dateRuleToInsuranceType = (name: string, insuranceTypeState: Insura
   switch (insuranceTypeState) {
     case InsuranceTypes.EENMALIGE_ACTIVITEIT:
       return 'required|startDateBeforeEndDate:' + name + '|maximumDateTermOneTimeActivity:' + name
+
+    case InsuranceTypes.TIJDELIJKE_VERZEKERING_NIET_LEDEN:
+      return 'required|startDateBeforeEndDate:' + name + '|maximumDateTermNonMember:' + name
+
     default:
       return 'required|startDateBeforeEndDate:' + name + '|maximumDateTermOneTimeActivity:' + name
   }

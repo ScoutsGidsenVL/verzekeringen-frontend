@@ -39,8 +39,10 @@
 
 <script lang="ts">
 import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRepository'
+import { InsuranceGroupSizesRepository } from '@/repositories/insuranceGroupSizes'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
 import { OneTimeActivity } from '@/serializer/insurances/OneTimeActivity'
+import RepositoryFactory from '@/repositories/repositoryFactory'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import CustomButton from '@/components/CustomButton.vue'
@@ -50,8 +52,6 @@ import { Location } from '@/serializer/Location'
 import { InputTypes } from '@/enums/inputTypes'
 import { Form } from 'vee-validate'
 import { useStore } from 'vuex'
-import RepositoryFactory from '@/repositories/repositoryFactory'
-import { InsuranceGroupSizesRepository } from '@/repositories/insuranceGroupSizes'
 
 export default defineComponent({
   name: 'OneTimeActivity',
@@ -108,12 +108,10 @@ export default defineComponent({
       locationChanged,
       setHolderState,
       natureChanged,
-      groupSize,
       InputTypes,
+      groupSize,
       nature,
     }
   },
 })
 </script>
-
-function InsuranceGroupSizesRepository(InsuranceGroupSizesRepository: any) { throw new Error('Function not implemented.') }

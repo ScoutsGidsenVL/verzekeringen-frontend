@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="flex justify-center">
-    <main class="py-4 w-6/12">
+    <main class="py-4 w-7/12">
       <base-page>
         <router-view />
       </base-page>

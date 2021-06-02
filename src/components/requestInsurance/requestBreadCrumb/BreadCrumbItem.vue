@@ -1,5 +1,5 @@
 <template>
-  <div class="flex mr-20">
+  <div class="flex" style="margin-right: 2em">
     <div :class="['h-10 w-10 text-center p-2 rounded-full border-2 border-lightGray', visibleOnState === holderState ? 'bg-lightGreen' : '']">{{ index }}</div>
     <div v-if="isChangeStatePossible" class="pt-2 pl-3 cursor-pointer" @click="changeState()">{{ text }}</div>
     <div v-else class="pt-2 pl-3">{{ text }}</div>

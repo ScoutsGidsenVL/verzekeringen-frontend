@@ -4,28 +4,29 @@
   </div>
 
   <div v-if="isCurrentType(InsuranceTypes.TIJDELIJKE_VERZEKERING_NIET_LEDEN, insuranceTypeState)">
-    <one-time-activity />
+    <non-member />
   </div>
 
   <div v-if="isCurrentType(InsuranceTypes.REIS_BIJSTAND, insuranceTypeState)">
-    <one-time-activity />
+    <div>nothing</div>
   </div>
 
   <div v-if="isCurrentType(InsuranceTypes.TIJDELIJKE_AUTO_VERZEKERING, insuranceTypeState)">
-    <one-time-activity />
+    <div>nothing</div>
   </div>
 
   <div v-if="isCurrentType(InsuranceTypes.EVENEMENTEN_VERZEKERING, insuranceTypeState)">
-    <one-time-activity />
+    <div>nothing</div>
   </div>
 
   <div v-if="isCurrentType(InsuranceTypes.MATERIAAL_VERZEKERING, insuranceTypeState)">
-    <one-time-activity />
+    <div>nothing</div>
   </div>
 </template>
 
 <script lang="ts">
-import OneTimeActivity from '@/components/insurances/oneTimeActivity/oneTimeActivity.vue'
+import OneTimeActivity from '@/components/insurances/oneTimeActivityInsurance/oneTimeActivity.vue'
+import NonMember from '@/components/insurances/nonMembersInsurance/nonMember.vue'
 import { isCurrentType } from '@/helpers/insuranceTypeHelper'
 import { InsuranceTypes } from '@/enums/insuranceTypes'
 import { computed, defineComponent } from 'vue'
@@ -35,6 +36,7 @@ export default defineComponent({
   name: 'RequestInsuranceType',
   components: {
     'one-time-activity': OneTimeActivity,
+    'non-member': NonMember,
   },
   setup() {
     const store = useStore()

@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import OneTimeActivityDetail from '@/components/insurances/oneTimeActivity/oneTimeActivityDetail.vue'
+import OneTimeActivityDetail from '@/components/insurances/oneTimeActivityInsurance/oneTimeActivityDetail.vue'
 import { isCurrentType } from '@/helpers/insuranceTypeHelper'
 import { InsuranceTypes } from '@/enums/insuranceTypes'
 import { HolderStates } from '@/enums/holderStates'

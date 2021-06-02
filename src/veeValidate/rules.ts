@@ -24,4 +24,14 @@ export const defineRules = () => {
     }
     return true
   })
+
+  defineRule('maximumDateTermNonMember', (value: string, target: any, ctx: any) => {
+    const endDate = moment(value)
+    const startDate = moment(ctx.form[target])
+    const diff = endDate.diff(startDate, 'days')
+    if (diff > 30) {
+      return 'Deze verzekering heeft een maximumtermijn van 31 dagen.'
+    }
+    return true
+  })
 }

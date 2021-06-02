@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import RequestInsurance from '../views/RequestInsurance.vue'
-import oneTimeActivityDetail from '@/components/insurances/oneTimeActivity/oneTimeActivityDetail.vue'
+import oneTimeActivityDetail from '@/components/insurances/oneTimeActivityInsurance/oneTimeActivityDetail.vue'
 
 const routes: any[] = [
   {
