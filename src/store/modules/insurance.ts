@@ -1,6 +1,6 @@
 import { OneTimeActivity } from '@/serializer/insurances/OneTimeActivity'
 import { BaseInsurance } from '@/serializer/insurances/BaseInsurance'
-import { InsuranceTypes } from '@/enums/insuranceTypes'
+import { InsuranceTypes, InsuranceTypeStoreNames } from '@/enums/insuranceTypes'
 import { HolderStates } from '@/enums/holderStates'
 import { NonMemberInsurance } from '@/serializer/insurances/NonMemberInsurance'
 
@@ -21,6 +21,10 @@ export default {
     },
     insuranceTypeState(state: any): InsuranceTypes {
       return state.insuranceTypeState
+    },
+    getCurrentInsuranceState(state: any, getters: any): any {
+      //@ts-ignore
+      return state[InsuranceTypeStoreNames[getters.insuranceTypeState]]
     },
   },
   mutations: {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="isCurrentType(InsuranceTypes.EENMALIGE_ACTIVITEIT, insuranceTypeState)">
-      <one-time-activity-detail />
+      <one-time-activity-detail><slot></slot></one-time-activity-detail>
     </div>
 
     <div v-if="isCurrentType(InsuranceTypes.TIJDELIJKE_VERZEKERING_NIET_LEDEN, insuranceTypeState)">
@@ -28,7 +28,6 @@
 import OneTimeActivityDetail from '@/components/insurances/oneTimeActivityInsurance/oneTimeActivityDetail.vue'
 import { isCurrentType } from '@/helpers/insuranceTypeHelper'
 import { InsuranceTypes } from '@/enums/insuranceTypes'
-import { HolderStates } from '@/enums/holderStates'
 import { computed, defineComponent } from 'vue'
 import { useStore } from 'vuex'
 
@@ -44,13 +43,9 @@ export default defineComponent({
       return store.state.insurance.insuranceTypeState
     })
 
-    const setHolderState = () => {
-      store.dispatch('setHolderState', HolderStates.GENERAL)
-    }
     return {
       insuranceTypeState,
       InsuranceTypes,
-      setHolderState,
       isCurrentType,
     }
   },

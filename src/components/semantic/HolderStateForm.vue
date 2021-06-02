@@ -7,7 +7,11 @@
     <request-inusrance-type />
   </div>
 
-  <div v-if="holderState === HolderStates.DETAIL || holderState === HolderStates.COMPLETED">
+  <div v-if="holderState === HolderStates.DETAIL">
+    <request-inusrance-submit />
+  </div>
+
+  <div v-if="holderState === HolderStates.COMPLETED">
     <request-inusrance-detail />
   </div>
 </template>
@@ -16,6 +20,7 @@
 import RequestInusranceGeneral from '@/components/requestInsurance/RequestInusranceGeneral.vue'
 import RequestInusranceDetail from '@/components/requestInsurance/RequestInsuranceDetail.vue'
 import RequestInusranceType from '@/components/requestInsurance/RequestInsuranceType.vue'
+import RequestInusranceSubmit from '@/components/requestInsurance/RequestInsuranceSubmit.vue'
 import { HolderStates } from '@/enums/holderStates'
 import { defineComponent, computed } from 'vue'
 import { useStore } from 'vuex'
@@ -25,6 +30,7 @@ export default defineComponent({
   components: {
     'request-inusrance-general': RequestInusranceGeneral,
     'request-inusrance-detail': RequestInusranceDetail,
+    'request-inusrance-submit': RequestInusranceSubmit,
     'request-inusrance-type': RequestInusranceType,
   },
   setup() {

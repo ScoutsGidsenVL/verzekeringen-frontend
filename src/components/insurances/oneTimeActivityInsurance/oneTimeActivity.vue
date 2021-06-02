@@ -41,6 +41,12 @@ import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
 
+type oneTimeActivityFormType = {
+  nature: string
+  location: Location
+  groupSize: number
+}
+
 export default defineComponent({
   name: 'OneTimeActivity',
   components: {
@@ -51,7 +57,7 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
-    const { handleSubmit } = useForm()
+    const { handleSubmit } = useForm<oneTimeActivityFormType>()
     const groupSizes = ref<any[]>([])
 
     const generalInsuranceState = computed(() => {
@@ -68,7 +74,7 @@ export default defineComponent({
 
     fetchGroupSizes()
 
-    const onSubmit = handleSubmit(async (values: any) => {
+    const onSubmit = handleSubmit(async (values: oneTimeActivityFormType) => {
       const oneTimeActivity = ref<OneTimeActivity>({
         ...generalInsuranceState.value,
         ...{
