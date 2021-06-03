@@ -11,7 +11,6 @@ export class NonMemberRepository extends BaseRepository {
   search(query: string): Promise<any> {
     return this.get(this.endpoint + '?term=' + query, {}).then((response: ArrayResult) => {
       const array: any[] = []
-      console.log('response: ', response)
       response.results.forEach((result: NonMember) => {
         result = NonMemberDeserializer(result)
         array.push({ value: result, name: result.firstName + ' ' + result.lastName })

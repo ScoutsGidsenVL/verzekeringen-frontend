@@ -1,8 +1,11 @@
 <template>
   <div v-if="nonMember" class="w-96">
-    <hr class="border-t-2 border-black" />
-    <label-output label="Naam" :text="nonMember.lastName" />
-    <label-output label="Adres" :text="nonMember.firstName" />
+    <!-- <hr class="border-t-2 border-black" /> -->
+    <label-output label="Naam" :text="nonMember.firstName + ' ' + nonMember.lastName" />
+    <label-output
+      label="Adres"
+      :text="nonMember.street + ' ' + nonMember.number + (nonMember.letterBox ? nonMember.letterBox : '') + ', ' + nonMember.postCodeCity.postalCode + ' ' + nonMember.postCodeCity.city"
+    />
     <label-output label="Geboortedatum" :text="nonMember.birthDate" />
     <hr class="border-t-2 border-black" />
   </div>

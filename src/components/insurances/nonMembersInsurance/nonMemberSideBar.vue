@@ -20,7 +20,7 @@
           </div>
 
           <div class="w-96 mt-4">
-            <custom-input :type="InputTypes.TEXT" rules="required" name="letterBox" label="Bus" />
+            <custom-input :type="InputTypes.TEXT" name="letterBox" label="Bus" />
           </div>
 
           <div class="w-96">
@@ -37,10 +37,6 @@
             />
           </div>
 
-          <div class="w-96">
-            <multi-select id="group" rules="required" placeholder="Group" track-by="name" value-prop="id" :options="user.scoutsGroups" label="Selecteer groep" />
-          </div>
-
           <div class="w-96 mt-4">
             <custom-input :type="InputTypes.DATE" rules="required" name="birthDate" label="Geboortendatum" />
           </div>
@@ -50,7 +46,7 @@
           </div>
 
           <div class="w-96 mt-4">
-            <custom-input :type="InputTypes.TEXT_AREA" rules="required" name="comment" label="Opmerking">
+            <custom-input :type="InputTypes.TEXT_AREA" name="comment" label="Opmerking">
               <p>
                 Indien je niet-leden wil verzekeren die in het buitenland wonen moet je in dit tekstvak de buitenlands gemeente, postcode en land opgeven. En bij adres, het belgisch adres van de
                 persoon die de verzekering aanvraagt.
@@ -142,6 +138,8 @@ export default defineComponent({
     )
 
     const onSubmit = handleSubmit(async (values: NonMember) => {
+      const generalInsuranceState = ref<any>(store.getters.generalInsuranceState)
+
       const nonMember = ref<NonMember>({
         lastName: values.lastName,
         firstName: values.firstName,
@@ -152,7 +150,7 @@ export default defineComponent({
         letterBox: values.letterBox,
         comment: values.comment,
         postCodeCity: values.postCodeCity,
-        group: values.group,
+        group: generalInsuranceState.value.group.name,
       })
 
       postNonMember(nonMember.value)

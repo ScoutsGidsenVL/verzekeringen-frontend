@@ -59,10 +59,8 @@
 <script lang="ts">
 import NonMembersList from '@/components/insurances/nonMembersInsurance/nonMembersList.vue'
 import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRepository'
-import { InsuranceGroupSizesRepository } from '@/repositories/insuranceGroupSizes'
 import { NonMemberInsurance } from '@/serializer/insurances/NonMemberInsurance'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
-import RepositoryFactory from '@/repositories/repositoryFactory'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import CustomButton from '@/components/CustomButton.vue'
@@ -84,32 +82,29 @@ export default defineComponent({
   setup() {
     const store = useStore()
     const { handleSubmit } = useForm()
-    const groupSizes = ref<any[]>([])
     const selected = ref<string>('option-2')
 
     const generalInsuranceState = computed(() => {
       return store.state.insurance.generalInsuranceState
     })
 
-    const fetchGroupSizes = () => {
-      RepositoryFactory.get(InsuranceGroupSizesRepository)
-        .getArray()
-        .then((result: any) => {
-          groupSizes.value = result
-        })
-    }
-
-    fetchGroupSizes()
-
     const onSubmit = handleSubmit(async (values: any) => {
-      const nonMember = ref<NonMemberInsurance>({ ...generalInsuranceState.value, ...{ nature: values.nature, location: values.location, groupSize: values.groupSize } })
+      const nonMember = ref<NonMemberInsurance>({
+        ...generalInsuranceState.value,
+        ...{
+          nature: values.nature,
+          location: values.location,
+          Location: values.location ? values.location : undefined,
+          country: values.country ? values.country : undefined,
+          nonMembers: values.nonMembers,
+        },
+      })
       store.dispatch('setNonMemberState', nonMember)
       store.dispatch('setHolderState', HolderStates.DETAIL)
     })
 
     return {
       BelgianCitySearchRepository,
-      groupSizes,
       InputTypes,
       selected,
       onSubmit,
