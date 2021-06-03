@@ -11,7 +11,7 @@
           </div>
         </div>
 
-        <activity-detail :nature="details.nature" :location="details.location" />
+        <activity-detail :nature="details.nature" :location="details.location" :country="details.country" />
 
         <div v-if="details.comment" class="px-5">
           <label-output label="Opmerkingen" :text="details.comment" />

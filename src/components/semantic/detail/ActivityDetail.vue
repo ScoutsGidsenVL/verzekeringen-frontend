@@ -2,7 +2,8 @@
   <p class="font-semibold">Activiteit</p>
   <div class="px-5">
     <label-output label="Aard van activiteit" :text="nature" />
-    <label-output label="Locatie" :text="location.postalCode + ' ' + location.city" />
+    <label-output v-if="location" label="Locatie" :text="location.postalCode + ' ' + location.city" />
+    <label-output v-if="country" label="Land" :text="country" />
     <label-output v-if="size" label="Aantal extra te verzekeren personen" :text="size.label" />
   </div>
 </template>
@@ -30,10 +31,8 @@ export default defineComponent({
       type: Number,
       default: 0,
     },
-    location: {
-      type: Object as PropType<Location>,
-      default: Object as PropType<Location>,
-    },
+    location: Object as PropType<Location>,
+    country: String,
   },
   setup(props) {
     const size = ref<InsuranceGroupSize>()
