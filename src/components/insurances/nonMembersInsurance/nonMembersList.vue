@@ -12,8 +12,8 @@
 <script lang="ts">
 import NonMemberSideBar from '@/components/insurances/nonMembersInsurance/nonMemberSideBar.vue'
 import NonMemberItem from '@/components/insurances/nonMembersInsurance/nonMemberItem.vue'
-import { defineComponent, ref } from 'vue'
 import { NonMember } from '@/serializer/NonMember'
+import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   name: 'NonMembersList',
@@ -23,15 +23,14 @@ export default defineComponent({
   },
   props: {},
   setup() {
-    const nonMembers = ref<Array<any>>([])
+    const nonMembers = ref<Array<NonMember>>([])
     const isDisplay = ref<boolean>(false)
 
     const openSideBar = () => {
-      console.log('openSideBar')
       isDisplay.value = true
     }
-    const addCreatedNonMemberToList = (nonMember: NonMember) => {
-      nonMembers.value.push(nonMember)
+    const addCreatedNonMemberToList = (nonMembersEvent: NonMember[]) => {
+      nonMembers.value = { ...nonMembers.value, ...nonMembersEvent }
     }
 
     return {

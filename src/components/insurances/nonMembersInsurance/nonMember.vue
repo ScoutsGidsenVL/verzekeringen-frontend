@@ -3,7 +3,27 @@
     <custom-headline-2 text="Activiteit" />
     <div class="px-5">
       <custom-input :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" />
-      <div class="w-96">
+
+      <div class="mt-5">
+        <strong>
+          <label>Ga je naar het buitenland?</label>
+        </strong>
+        <form action="">
+          <div class="flex gap-7">
+            <div>
+              <input :id="1" v-model="selected" class="cursor-pointer" type="radio" :name="1" value="option-1" />
+              <label :for="index" class="ml-2">ja</label>
+            </div>
+
+            <div>
+              <input :id="2" v-model="selected" class="cursor-pointer" type="radio" :name="2" value="option-2" />
+              <label :for="index" class="ml-2">nee</label>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div v-if="selected === 'option-2'" class="w-96">
         <multi-select
           id="location"
           track-by="location"
@@ -16,14 +36,20 @@
           placeholder="Zoek op naam/postcode"
         />
       </div>
-      <div class="mt-2 w-96">
-        <multi-select id="groupSize" track-by="label" value-prop="value" :options="groupSizes" :searchable="false" label="Aantal extra te verzekeren personen" rules="required" placeholder="Aantal" />
+
+      <div v-if="selected === 'option-1'" class="w-96 mt-4">
+        <custom-input :type="InputTypes.TEXT" rules="required" name="country" label="Land" value="België" />
       </div>
     </div>
-    <custom-headline-2 text="Niet leden" />
+
+    <div class="mt-3">
+      <custom-headline-2 text="Niet leden" />
+    </div>
+
     <div class="px-5">
       <non-members-list />
     </div>
+
     <div class="px-5 mt-5">
       <custom-button text="Volgende" />
     </div>
@@ -59,6 +85,7 @@ export default defineComponent({
     const store = useStore()
     const { handleSubmit } = useForm()
     const groupSizes = ref<any[]>([])
+    const selected = ref<string>('option-2')
 
     const generalInsuranceState = computed(() => {
       return store.state.insurance.generalInsuranceState
@@ -84,6 +111,7 @@ export default defineComponent({
       BelgianCitySearchRepository,
       groupSizes,
       InputTypes,
+      selected,
       onSubmit,
     }
   },

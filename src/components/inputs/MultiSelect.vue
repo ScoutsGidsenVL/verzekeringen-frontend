@@ -25,6 +25,7 @@
               }
             : options
         "
+        @change="addSelection(inputValue)"
       />
       <error-message class="text-red font-light ml-1 mt-1 text-sm inline-block" :name="id" />
     </div>
@@ -93,7 +94,7 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
+  setup(props, context) {
     const { value: inputValue } = useField(props.id, props.rules, {
       initialValue: props.value,
     })
@@ -109,9 +110,14 @@ export default defineComponent({
       return data.value
     }
 
+    const addSelection = (inputValue: any) => {
+      context.emit('addSelection', inputValue)
+    }
+
     return {
       inputValue,
       fetchSearchData,
+      addSelection,
     }
   },
 })

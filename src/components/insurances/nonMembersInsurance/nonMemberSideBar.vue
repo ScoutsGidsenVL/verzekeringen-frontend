@@ -63,7 +63,25 @@
         </form>
       </div>
 
-      <div v-if="selected === 'option-2'">BESTAAND</div>
+      <div v-if="selected === 'option-2'">
+        <div class="w-96">
+          <multi-select
+            id="nonMember"
+            track-by="name"
+            value-prop="value"
+            :repository="NonMemberRepository"
+            :options="[]"
+            :searchable="true"
+            label="Zoek"
+            rules="required"
+            placeholder="Zoek op naam"
+            @addSelection="addNonMember($event)"
+          />
+        </div>
+        <div>
+          {{ selectedNonMembers }}
+        </div>
+      </div>
     </base-side-bar>
   </div>
 </template>
@@ -107,6 +125,7 @@ export default defineComponent({
     const display = ref<boolean>(props.isDisplay)
     const { handleSubmit } = useForm<NonMember>()
     const selected = ref<string>('option-1')
+    const selectedNonMembers = ref<NonMember[]>([])
 
     watch(
       () => props.isDisplay,
@@ -139,16 +158,26 @@ export default defineComponent({
       postNonMember(nonMember.value)
     })
 
+    const addNonMember = (nonMember: NonMember) => {
+      // enkel toevoegen als deze er nog niet instaat
+      selectedNonMembers.value.push(nonMember)
+    }
+
     const postNonMember = (data: NonMember) => {
       RepositoryFactory.get(NonMemberRepository)
         .create(data)
         .then((completed: NonMember) => {
-          context.emit('addCreatedNonMemberToList', completed)
+          selectedNonMembers.value.push(completed)
+          context.emit('addCreatedNonMemberToList', selectedNonMembers.value)
+          selectedNonMembers.value = []
         })
     }
 
     return {
       BelgianCitySearchRepository,
+      NonMemberRepository,
+      selectedNonMembers,
+      addNonMember,
       InputTypes,
       selected,
       display,
@@ -158,5 +187,3 @@ export default defineComponent({
   },
 })
 </script>
-
-function NonMemberRepository(NonMemberRepository: any) { throw new Error('Function not implemented.') }

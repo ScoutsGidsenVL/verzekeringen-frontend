@@ -18,7 +18,9 @@
 </template>
 
 <script lang="ts">
+import { InsuranceTypeRepos, InsuranceTypeStoreSetters } from '@/enums/insuranceTypes'
 import { OneTimeActivity } from '@/serializer/insurances/OneTimeActivity'
+import RequestInsuranceDetail from './RequestInsuranceDetail.vue'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import CustomButton from '@/components/CustomButton.vue'
@@ -27,8 +29,6 @@ import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
-import RequestInsuranceDetail from './RequestInsuranceDetail.vue'
-import { InsuranceTypeRepos, InsuranceTypeStoreSetters } from '@/enums/insuranceTypes'
 
 export default defineComponent({
   name: 'RequestInsuranceSubmit',
