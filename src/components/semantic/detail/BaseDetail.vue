@@ -87,6 +87,10 @@ export default defineComponent({
       titelText.value = '<p style="font-size: 30px">Overzicht aangevraagde verzekering <strong class="font-semibold">' + props.title + '</strong></p>'
     }
 
+    if (props.title === 'Niet leden') {
+      titelText.value = '<p style="font-size: 30px">Overzicht tijdelijke verzekering <strong class="font-semibold">' + props.title + '</strong></p>'
+    }
+
     return {
       HolderStates,
       resetStates,

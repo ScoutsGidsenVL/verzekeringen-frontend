@@ -96,7 +96,7 @@ export default defineComponent({
           location: values.location,
           Location: values.location ? values.location : undefined,
           country: values.country ? values.country : undefined,
-          nonMembers: values.nonMembers,
+          nonMembers: values.nonMembers ? values.nonMembers : [],
         },
       })
       store.dispatch('setNonMemberState', nonMember)

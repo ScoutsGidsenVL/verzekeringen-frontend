@@ -23,7 +23,7 @@ export interface NonMemberInsurance {
   readonly country?: string
 }
 
-export const nonMemberDeserializer = (input: any): NonMemberInsurance => {
+export const nonMemberInsuranceDeserializer = (input: any): NonMemberInsurance => {
   const single: NonMemberInsurance = {
     id: input.id,
     startDate: input.start_date,
@@ -45,7 +45,7 @@ export const nonMemberDeserializer = (input: any): NonMemberInsurance => {
   return single
 }
 
-export const nonMemberSerializer = (input: NonMemberInsurance): NonMemberInsurance => {
+export const nonMemberInsuranceSerializer = (input: NonMemberInsurance): NonMemberInsurance => {
   const single: any = {
     start_date: input.startDate,
     end_date: input.endDate,

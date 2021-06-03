@@ -3,7 +3,6 @@
     <div v-if="nonMembers.length > 0" class="w-96">
       <hr class="border-t-2 border-black" />
     </div>
-
     <div v-if="nonMembers.length > 1" class="w-96">
       <hr class="border-t-2 border-black" />
     </div>
