@@ -9,6 +9,7 @@
         :name="id"
         :value-prop="valueProp"
         v-bind="field"
+        :disabled="disabled"
         :filter-results="false"
         :min-chars="1"
         :resolve-on-load="false"
@@ -92,6 +93,10 @@ export default defineComponent({
     valueProp: {
       type: String,
       required: true,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
   setup(props, context) {

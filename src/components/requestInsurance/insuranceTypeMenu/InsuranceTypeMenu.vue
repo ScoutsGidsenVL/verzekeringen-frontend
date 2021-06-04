@@ -2,7 +2,16 @@
   <div class="px-5">
     <form action="">
       <div v-for="(insuranceType, index) in insuranceTypes" :key="insuranceType.id" class="py-1">
-        <input :id="index" v-model="selection" class="cursor-pointer" type="radio" :name="index" :value="insuranceType.value" @change="setInsuranceTypeState(insuranceType.value)" />
+        <input
+          :disabled="disabled"
+          :id="index"
+          v-model="selection"
+          class="cursor-pointer"
+          type="radio"
+          :name="index"
+          :value="insuranceType.value"
+          @change="setInsuranceTypeState(insuranceType.value)"
+        />
         <label :for="index" class="ml-2">{{ insuranceType.name }}</label>
       </div>
     </form>
@@ -15,9 +24,15 @@ import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'InsuranceTypeMenu',
+  props: {
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+  },
   setup() {
     const store = useStore()
-    const selection = ref<string>(InsuranceTypes.EENMALIGE_ACTIVITEIT)
+    const selection = ref<string>(store.getters.insuranceTypeState)
     const insuranceTypes = ref<Object[]>([
       { name: 'Eenmalige activiteit', value: InsuranceTypes.EENMALIGE_ACTIVITEIT },
       { name: 'Tijdelijke verzekering niet-leden', value: InsuranceTypes.TIJDELIJKE_VERZEKERING_NIET_LEDEN },

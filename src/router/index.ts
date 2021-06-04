@@ -28,6 +28,15 @@ const routes: any[] = [
     },
   },
   {
+    path: '/verzekering-bewerken/:id',
+    name: 'Bewerken',
+    component: RequestInsurance,
+    meta: {
+      requiresOpenIdAuth: true,
+      title: 'Verzekering Bewerken',
+    },
+  },
+  {
     path: '/eenmalige-activiteit-detail/:id?',
     name: 'ActivityDetail',
     component: oneTimeActivityDetail,

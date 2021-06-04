@@ -1,4 +1,4 @@
-export const routeLinkBasedOnType = (insuranceType: any) => {
+export const routeDetailLinkBasedOnType = (insuranceType: any) => {
   switch (insuranceType) {
     case 'TypeEenmaligeActiviteit':
       return '/eenmalige-activiteit-detail'

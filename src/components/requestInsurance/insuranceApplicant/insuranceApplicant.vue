@@ -6,8 +6,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 import LabelOutput from '@/components/semantic/LabelOutput.vue'
+import { defineComponent, PropType, ref } from 'vue'
 import { InputTypes } from '@/enums/inputTypes'
 import store from '@/store/store'
 
@@ -16,8 +17,13 @@ export default defineComponent({
   components: {
     'label-output': LabelOutput,
   },
-  setup() {
-    const user = ref<any>(store.getters.user)
+  props: {
+    applicant: {
+      type: Object as PropType<ResponsibleMember>,
+    },
+  },
+  setup(props) {
+    const user = ref<any>(props.applicant ? props.applicant : store.getters.user)
     return {
       InputTypes,
       user,

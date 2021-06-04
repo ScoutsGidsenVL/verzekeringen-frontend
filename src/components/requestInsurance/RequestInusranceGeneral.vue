@@ -3,7 +3,7 @@
     <div class="mb-5">
       <custom-headline-2 text="Welke" />
 
-      <insurance-type-menu />
+      <insurance-type-menu :disabled="isIdUrl" />
 
       <div class="px-5">
         <info-alert v-show="insuranceTypeState === InsuranceTypes.TIJDELIJKE_VERZEKERING_NIET_LEDEN">
@@ -17,10 +17,10 @@
       <custom-headline-2 text="Wanneer" />
       <div class="px-5 flex gap-4">
         <div class="w-80">
-          <custom-input :min="minDate" :type="InputTypes.DATE" rules="required" name="start" label="Start datum" />
+          <custom-input :value="generalData.startDate" :min="minDate" :type="InputTypes.DATE" rules="required" name="start" label="Start datum" />
         </div>
         <div class="w-80">
-          <custom-input :min="minDate" :type="InputTypes.DATE" :rules="dateRuleToInsuranceType('start', insuranceTypeState)" name="end" label="Eind datum" />
+          <custom-input :value="generalData.endDate" :min="minDate" :type="InputTypes.DATE" :rules="dateRuleToInsuranceType('start', insuranceTypeState)" name="end" label="Eind datum" />
         </div>
       </div>
     </div>
@@ -29,9 +29,18 @@
       <custom-headline-2 text="Groep" />
       <div class="px-5">
         <p>De factuur wordt naar de financieel verantwoordelijke van deze groep gestuurd.</p>
-
         <div style="width: 65%">
-          <multi-select id="group" rules="required" placeholder="Group" track-by="fullInfo" value-prop="id" :options="user.scoutsGroups" label="Selecteer groep" />
+          <multi-select
+            :disabled="isIdUrl"
+            :value="generalData.group.id"
+            id="group"
+            rules="required"
+            placeholder="Group"
+            track-by="fullInfo"
+            value-prop="id"
+            :options="user.scoutsGroups"
+            label="Selecteer groep"
+          />
         </div>
       </div>
     </div>
@@ -39,7 +48,7 @@
     <div class="mb-5">
       <custom-headline-2 text="Aanvrager" />
       <div class="px-5">
-        <insurance-applicant />
+        <insurance-applicant :applicant="generalData.responsibleMember" />
       </div>
     </div>
 
@@ -67,6 +76,7 @@ import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
 import moment from 'moment'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'RequestInsuranceGeneral',
@@ -80,16 +90,24 @@ export default defineComponent({
     'info-alert': InfoAlert,
   },
   setup() {
+    const route = useRoute()
     const store = useStore()
-    const { handleSubmit } = useForm()
+    const isIdUrl = !!route.params.id
 
+    const { handleSubmit } = useForm()
     const insuranceTypeState = computed((): InsuranceTypes => {
       return store.state.insurance.insuranceTypeState
     })
-
     const minDate = moment().add(1, 'days').format('YYYY-MM-DD')
-
     const user = ref<ResponsibleMember>(store.getters.user)
+
+    const data: any = store.getters.getCurrentInsuranceState
+
+    const generalData = ref<BaseInsurance>({
+      startDate: data.startDate ? data.startDate : '',
+      endDate: data.endDate ? data.endDate : '',
+      group: data.group ? data.group : '',
+    })
 
     const onSubmit = handleSubmit(async (values: any) => {
       const generalInsuranceState = ref<BaseInsurance>({
@@ -111,6 +129,9 @@ export default defineComponent({
       minDate,
       user,
       onSubmit,
+      generalData,
+      data,
+      isIdUrl,
     }
   },
 })
