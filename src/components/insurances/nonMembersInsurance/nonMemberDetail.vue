@@ -11,10 +11,16 @@
           </div>
         </div>
 
-        <activity-detail :nature="details.nature" :location="details.location" :country="details.country" />
+        <activity-detail :nature="details.nature" :location="details.postCodeCity" :country="details.country" />
 
         <div v-if="details.comment" class="px-5">
           <label-output label="Opmerkingen" :text="details.comment" />
+        </div>
+        <div class="mb-3">
+          <p class="font-semibold">Deelnemers</p>
+          <div class="px-5 mt-3">
+            <non-members-list :nonMembersList="details.nonMembers" />
+          </div>
         </div>
 
         <slot></slot>
@@ -25,6 +31,7 @@
 
 <script lang="ts">
 import { NonMemberInsuranceRepository } from '@/repositories/insurances/nonMemberInsuranceRepository'
+
 import ResponsibleMemberDetail from '@/components/semantic/detail/ResponsibleMemberDetail.vue'
 import ActivityDetail from '@/components/semantic/detail/ActivityDetail.vue'
 import BaseDetail from '@/components/semantic/detail/BaseDetail.vue'
@@ -34,6 +41,7 @@ import { formatDate } from '@/helpers/formatHelper'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { useStore } from 'vuex'
+import NonMembersList from '@/components/insurances/nonMembersInsurance/nonMembersList.vue'
 
 export default defineComponent({
   name: 'NonMemnerInsuranceDetail',
@@ -42,6 +50,7 @@ export default defineComponent({
     'activity-detail': ActivityDetail,
     'label-output': LabelOutput,
     'base-detail': BaseDetail,
+    'non-members-list': NonMembersList,
   },
   setup() {
     const store = useStore()

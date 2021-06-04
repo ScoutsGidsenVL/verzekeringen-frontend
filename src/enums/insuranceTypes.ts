@@ -1,4 +1,5 @@
 import { BaseRepository } from '@/repositories/baseRepository'
+import { NonMemberInsuranceRepository } from '@/repositories/insurances/nonMemberInsuranceRepository'
 import { OneTimeActivityRepository } from '@/repositories/insurances/oneTimeActivityRepository'
 
 export enum InsuranceTypes {
@@ -12,7 +13,7 @@ export enum InsuranceTypes {
 
 export const InsuranceTypeStoreNames: Record<InsuranceTypes, string> = {
   EENMALIGE_ACTIVITEIT: 'oneTimeActivityState',
-  TIJDELIJKE_VERZEKERING_NIET_LEDEN: 'NonMemberState',
+  TIJDELIJKE_VERZEKERING_NIET_LEDEN: 'nonMemberState',
   REIS_BIJSTAND: 'REIS_BIJSTAND',
   TIJDELIJKE_AUTO_VERZEKERING: 'TIJDELIJKE_AUTO_VERZEKERING',
   EVENEMENTEN_VERZEKERING: 'EVENEMENTEN_VERZEKERING',
@@ -30,7 +31,7 @@ export const InsuranceTypeStoreSetters: Record<InsuranceTypes, string> = {
 
 export const InsuranceTypeRepos: Record<InsuranceTypes, new (...params: any[]) => BaseRepository> = {
   EENMALIGE_ACTIVITEIT: OneTimeActivityRepository,
-  TIJDELIJKE_VERZEKERING_NIET_LEDEN: OneTimeActivityRepository,
+  TIJDELIJKE_VERZEKERING_NIET_LEDEN: NonMemberInsuranceRepository,
   REIS_BIJSTAND: OneTimeActivityRepository,
   TIJDELIJKE_AUTO_VERZEKERING: OneTimeActivityRepository,
   EVENEMENTEN_VERZEKERING: OneTimeActivityRepository,

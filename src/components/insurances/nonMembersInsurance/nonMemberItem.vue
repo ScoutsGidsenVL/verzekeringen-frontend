@@ -1,30 +1,43 @@
 <template>
   <div v-if="nonMember" class="w-96">
-    <!-- <hr class="border-t-2 border-black" /> -->
-    <label-output label="Naam" :text="nonMember.firstName + ' ' + nonMember.lastName" />
-    <label-output
-      label="Adres"
-      :text="nonMember.street + ' ' + nonMember.number + (nonMember.letterBox ? nonMember.letterBox : '') + ', ' + nonMember.postCodeCity.postalCode + ' ' + nonMember.postCodeCity.city"
-    />
-    <label-output label="Geboortedatum" :text="nonMember.birthDate" />
+    <div>
+      <strong>Naam</strong>
+      <p>{{ nonMember.firstName + ' ' + nonMember.lastName }}</p>
+    </div>
+
+    <div class="mt-3">
+      <strong>Gsm</strong>
+      <p>{{ nonMember.phoneNumber }}</p>
+    </div>
+
+    <div class="mt-3">
+      <strong>Adres</strong>
+      <p>{{ nonMember.street + ' ' + nonMember.number + (nonMember.letterBox ? ' Bus ' + nonMember.letterBox : '') + ', ' + nonMember.postCodeCity.postalCode + ' ' + nonMember.postCodeCity.city }}</p>
+    </div>
+
+    <div class="mt-3">
+      <strong>Geboortendatum</strong>
+      <p>{{ nonMember.birthDate }}</p>
+    </div>
+
+    <div class="mt-3">
+      <strong>Opmerking</strong>
+      <p>{{ nonMember.comment }}</p>
+    </div>
     <hr class="border-t-2 border-black" />
   </div>
 </template>
+
 <script lang="ts">
+import { NonMember } from '@/serializer/NonMember'
 import { defineComponent, PropType } from 'vue'
-import LabelOutput from '@/components/semantic/LabelOutput.vue'
 
 export default defineComponent({
-  name: 'NonMemberItem',
-  components: {
-    'label-output': LabelOutput,
-  },
   props: {
     nonMember: {
-      type: Object as PropType<any>,
+      type: Object as PropType<NonMember>,
       required: true,
     },
   },
-  setup() {},
 })
 </script>

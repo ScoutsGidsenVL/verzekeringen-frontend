@@ -87,8 +87,19 @@ export default defineComponent({
       titelText.value = '<p style="font-size: 30px">Overzicht aangevraagde verzekering <strong class="font-semibold">' + props.title + '</strong></p>'
     }
 
-    if (props.title === 'Niet leden') {
-      titelText.value = '<p style="font-size: 30px">Overzicht tijdelijke verzekering <strong class="font-semibold">' + props.title + '</strong></p>'
+    if (holderState.value === HolderStates.COMPLETED) {
+      if (props.title === 'Eenmalige activiteit') {
+        titelText.value = '<p style="font-size: 30px">Uw <strong class="font-semibold">' + props.title + '</strong> verzekering is aangevraagd </p>'
+      }
+      if (props.title === 'Niet leden') {
+        titelText.value = '<p style="font-size: 30px">Uw <strong class="font-semibold">' + props.title + '</strong> verzekering is aangevraagd </p>'
+      }
+    }
+
+    if (holderState.value === HolderStates.DETAIL) {
+      if (props.title === 'Niet leden') {
+        titelText.value = '<p style="font-size: 30px">Overzicht tijdelijke verzekering <strong class="font-semibold">' + props.title + '</strong></p>'
+      }
     }
 
     return {

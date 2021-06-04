@@ -25,13 +25,13 @@ export interface NonMemberInsurance {
 
 export const nonMemberInsuranceDeserializer = (input: any): NonMemberInsurance => {
   const single: NonMemberInsurance = {
-    id: input.id,
+    id: input.id ? input.id : undefined,
     startDate: input.start_date,
     endDate: input.end_date,
     createdOn: input.created_on,
-    comment: input.comment,
+    comment: input.comment ? input.comment : undefined,
     group: GroupDeserializer(input.group),
-    postCodeCity: LocationDeserializer(input.postcode_city),
+    postCodeCity: input.postcode_city ? LocationDeserializer(input.postcode_city) : undefined,
     nature: input.nature,
     responsibleMember: ResponsibleMemberDeserializer(input.responsible_member),
     status: StatusDeserializer(input.status),
@@ -39,7 +39,7 @@ export const nonMemberInsuranceDeserializer = (input: any): NonMemberInsurance =
     type: TypeDeserializer(input.type),
     vvksComment: input.vvks_comment,
     nonMembers: input.non_members.map((nonMember: any) => NonMemberDeserializer(nonMember)),
-    country: input.country,
+    country: input.country ? input.country : undefined,
   }
 
   return single

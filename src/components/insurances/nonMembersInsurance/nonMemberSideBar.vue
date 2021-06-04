@@ -11,6 +11,20 @@
             <custom-input :type="InputTypes.TEXT" rules="required" name="lastName" label="Achternaam" />
           </div>
 
+          <div class="w-96">
+            <multi-select
+              id="postCodeCity"
+              track-by="location"
+              value-prop="value"
+              :repository="BelgianCitySearchRepository"
+              :options="[]"
+              :searchable="true"
+              label="Gemeenten"
+              rules="required"
+              placeholder="Zoek op naam/postcode"
+            />
+          </div>
+
           <div class="w-96 mt-4">
             <custom-input :type="InputTypes.TEXT" rules="required" name="street" label="Straat" />
           </div>
@@ -21,20 +35,6 @@
 
           <div class="w-96 mt-4">
             <custom-input :type="InputTypes.TEXT" name="letterBox" label="Bus" />
-          </div>
-
-          <div class="w-96">
-            <multi-select
-              id="postCodeCity"
-              track-by="location"
-              value-prop="value"
-              :repository="BelgianCitySearchRepository"
-              :options="[]"
-              :searchable="true"
-              label="Location"
-              rules="required"
-              placeholder="Zoek op naam/postcode"
-            />
           </div>
 
           <div class="w-96 mt-4">

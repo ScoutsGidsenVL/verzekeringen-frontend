@@ -19,7 +19,6 @@
 
 <script lang="ts">
 import { InsuranceTypeRepos, InsuranceTypeStoreSetters } from '@/enums/insuranceTypes'
-import { OneTimeActivity } from '@/serializer/insurances/OneTimeActivity'
 import RequestInsuranceDetail from './RequestInsuranceDetail.vue'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import CustomInput from '@/components/inputs/CustomInput.vue'
@@ -45,15 +44,15 @@ export default defineComponent({
     const onSubmit = handleSubmit(async (values: any) => {
       //@ts-ignore
       store.dispatch(InsuranceTypeStoreSetters[store.getters.insuranceTypeState], { ...store.getters.getCurrentInsuranceState, ...{ comment: values.comment } })
-      postOneTimeActivity()
+      postInsurance()
     })
 
-    const postOneTimeActivity = () => {
+    const postInsurance = () => {
       //@ts-ignore
       RepositoryFactory.get(InsuranceTypeRepos[store.getters.insuranceTypeState])
         //@ts-ignore
         .create(store.getters.getCurrentInsuranceState)
-        .then((completed: OneTimeActivity) => {
+        .then((completed: any) => {
           store.dispatch('setHolderState', HolderStates.COMPLETED)
           //@ts-ignore
           store.dispatch(InsuranceTypeStoreSetters[store.getters.insuranceTypeState], completed)

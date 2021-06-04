@@ -1,17 +1,19 @@
 import { BaseRepository } from '@/repositories/baseRepository'
-import { insuranceGroupSizeDeserializer, insuranceGroupSizeSerializer } from '@/serializer/InsuranceGroupSizes'
+import { GroupSize, GroupSizeDeserializer, GroupSizeSerializer } from '@/serializer/GroupSize'
+import { ref } from 'vue'
 
 export class InsuranceGroupSizesRepository extends BaseRepository {
   id = '/insurance_group_sizes/'
   endpoint = '/insurance_group_sizes/'
-  deserializer = insuranceGroupSizeDeserializer
-  serializer = insuranceGroupSizeSerializer
+  deserializer = GroupSizeDeserializer
+  serializer = GroupSizeSerializer
 
   getArray(): Promise<any> {
     return this.get(this.endpoint, {}).then((response: any) => {
       const array: any[] = []
       response.forEach((result: any) => {
-        array.push(this.deserializer(result))
+        const data = ref<GroupSize>(this.deserializer(result))
+        array.push({ id: data.value.id, value: data.value.value, label: data.value.label, data: data.value })
       })
       return array
     })

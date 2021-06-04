@@ -11,12 +11,11 @@ export interface NonMember {
   readonly letterBox: string
   readonly comment: string
   readonly postCodeCity: Location
-  readonly group: string
+  readonly group?: string
 }
 
 export const NonMemberDeserializer = (input: any): NonMember => {
   const single: NonMember = {
-    id: input.id ? input.id : undefined,
     lastName: input.last_name,
     firstName: input.first_name,
     phoneNumber: input.phone_number,
@@ -26,7 +25,6 @@ export const NonMemberDeserializer = (input: any): NonMember => {
     letterBox: input.letter_box,
     comment: input.comment,
     postCodeCity: LocationDeserializer(input.postcode_city),
-    group: input.group,
   }
 
   return single
@@ -43,7 +41,7 @@ export const NonMemberSerializer = (input: any): any => {
     letter_box: input.letterBox,
     comment: input.comment,
     postcode_city: LocationSerializer(input.postCodeCity),
-    group: input.group,
+    group: input.group ? input.group : null,
   }
 
   return single

@@ -17,7 +17,7 @@
         />
       </div>
       <div class="mt-2 w-96">
-        <multi-select id="groupSize" track-by="label" value-prop="value" :options="groupSizes" :searchable="false" label="Aantal extra te verzekeren personen" rules="required" placeholder="Aantal" />
+        <multi-select id="groupSize" track-by="label" value-prop="data" :options="groupSizes" :searchable="false" label="Aantal extra te verzekeren personen" rules="required" placeholder="Aantal" />
       </div>
     </div>
     <div class="px-5 mt-5">

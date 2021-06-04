@@ -4,18 +4,16 @@
     <label-output label="Aard van activiteit" :text="nature" />
     <label-output v-if="location" label="Locatie" :text="location.postalCode + ' ' + location.city" />
     <label-output v-if="country" label="Land" :text="country" />
-    <label-output v-if="size" label="Aantal extra te verzekeren personen" :text="size.label" />
+    <label-output v-if="groupSize" label="Aantal extra te verzekeren personen" :text="groupSize.label" />
   </div>
 </template>
 
 <script lang="ts">
 import LabelOutput from '@/components/semantic/LabelOutput.vue'
-import { defineComponent, PropType, ref } from 'vue'
-import { InputTypes } from '@/enums/inputTypes'
+import { defineComponent, PropType } from 'vue'
 import { Location } from '@/serializer/Location'
-import RepositoryFactory from '@/repositories/repositoryFactory'
-import { InsuranceGroupSizesRepository } from '@/repositories/insuranceGroupSizes'
-import { InsuranceGroupSize } from '@/serializer/InsuranceGroupSizes'
+import { InputTypes } from '@/enums/inputTypes'
+import { GroupSize } from '@/serializer/GroupSize'
 
 export default defineComponent({
   name: 'ActivityDetail',
@@ -28,32 +26,14 @@ export default defineComponent({
       default: '',
     },
     groupSize: {
-      type: Number,
-      default: 0,
+      type: Object as PropType<GroupSize>,
     },
     location: Object as PropType<Location>,
     country: String,
   },
-  setup(props) {
-    const size = ref<InsuranceGroupSize>()
-
-    const fetchGroupSizes = () => {
-      RepositoryFactory.get(InsuranceGroupSizesRepository)
-        .getArray()
-        .then((result: InsuranceGroupSize[]) => {
-          getGroupSize(props.groupSize, result)
-        })
-    }
-
-    const getGroupSize = (groupSize: number, groupSizes: InsuranceGroupSize[]) => {
-      size.value = groupSizes.find((x: InsuranceGroupSize) => x.value === groupSize)
-    }
-
-    fetchGroupSizes()
-
+  setup() {
     return {
       InputTypes,
-      size,
     }
   },
 })

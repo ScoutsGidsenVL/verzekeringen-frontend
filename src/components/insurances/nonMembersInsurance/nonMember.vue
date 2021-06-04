@@ -25,13 +25,13 @@
 
       <div v-if="selected === 'option-2'" class="w-96">
         <multi-select
-          id="location"
+          id="postCodeCity"
           track-by="location"
           value-prop="value"
           :repository="BelgianCitySearchRepository"
           :options="[]"
           :searchable="true"
-          label="Location"
+          label="Gemeenten"
           rules="required"
           placeholder="Zoek op naam/postcode"
         />
@@ -47,7 +47,7 @@
     </div>
 
     <div class="px-5">
-      <non-members-list />
+      <select-non-member id="nonMembers" rules="required" />
     </div>
 
     <div class="px-5 mt-5">
@@ -57,7 +57,7 @@
 </template>
 
 <script lang="ts">
-import NonMembersList from '@/components/insurances/nonMembersInsurance/nonMembersList.vue'
+import SelectNonMember from '@/components/insurances/nonMembersInsurance//selectNonMember.vue'
 import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRepository'
 import { NonMemberInsurance } from '@/serializer/insurances/NonMemberInsurance'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
@@ -73,7 +73,7 @@ import { useStore } from 'vuex'
 export default defineComponent({
   name: 'NonMember',
   components: {
-    'non-members-list': NonMembersList,
+    'select-non-member': SelectNonMember,
     'custom-headline-2': CustomHeadline2,
     'custom-button': CustomButton,
     'multi-select': MultiSelect,
@@ -93,12 +93,12 @@ export default defineComponent({
         ...generalInsuranceState.value,
         ...{
           nature: values.nature,
-          location: values.location,
-          Location: values.location ? values.location : undefined,
+          postCodeCity: values.postCodeCity ? values.postCodeCity : undefined,
           country: values.country ? values.country : undefined,
           nonMembers: values.nonMembers ? values.nonMembers : [],
         },
       })
+
       store.dispatch('setNonMemberState', nonMember)
       store.dispatch('setHolderState', HolderStates.DETAIL)
     })
