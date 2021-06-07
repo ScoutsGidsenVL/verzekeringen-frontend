@@ -1,6 +1,7 @@
 <template>
   <base-detail :data="oneTimeActivityState" :repository="OneTimeActivityRepository" title="Eenmalige activiteit">
     <template #default="{ details }">
+      {{ details }}
       <div v-if="details" class="mt-1">
         <responsible-member-detail :responsible-member="details.responsibleMember" />
 

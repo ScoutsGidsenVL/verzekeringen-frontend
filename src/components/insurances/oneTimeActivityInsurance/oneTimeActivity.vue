@@ -15,9 +15,11 @@
         <multi-select
           id="location"
           track-by="location"
+          :value="editData.location"
           value-prop="value"
           :repository="BelgianCitySearchRepository"
-          :options="[]"
+          :resolveOnLoad="true"
+          :options="[{ value: editData.location, location: editData.location.postalCode + ' ' + editData.location.city }]"
           :searchable="true"
           label="Location"
           rules="required"
@@ -25,6 +27,9 @@
         />
       </div>
       <div class="mt-2 w-96">
+        <div>{{ editData.groupSize }}</div>
+        <br />
+        <div>{{ groupSizes }}</div>
         <multi-select
           :value="editData.groupSize"
           id="groupSize"
@@ -81,6 +86,7 @@ export default defineComponent({
 
     const editData = ref<OneTimeActivity>({
       nature: data.nature ? data.nature : '',
+      location: data.location ? data.location : '',
       groupSize: data.groupSize ? data.groupSize : '',
     })
 

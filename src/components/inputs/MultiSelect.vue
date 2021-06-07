@@ -20,6 +20,7 @@
         :label="trackBy"
         :searchable="searchable"
         :search="true"
+        :resolveOnLoad="resolveOnLoad"
         :options="
           searchable
             ? async function (query) {
@@ -61,7 +62,7 @@ export default defineComponent({
       default: false,
     },
     options: {
-      type: Array,
+      type: Array as PropType<Array<any>>,
       required: true,
     },
     rules: {
@@ -103,6 +104,11 @@ export default defineComponent({
       default: '',
       required: false,
     },
+    resolveOnLoad: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
   },
   setup(props, context) {
     const { value: inputValue } = useField(props.id, props.rules, {
@@ -110,14 +116,21 @@ export default defineComponent({
     })
 
     const fetchSearchData = async (query: string) => {
-      const data: any = []
-      await RepositoryFactory.get(props.repository)
-        .search(query, props.insuranceTypeId)
-        .then((res: any) => {
-          data.value = res
-        })
+      let data: any = []
 
-      return data.value
+      if (query) {
+        await RepositoryFactory.get(props.repository)
+          .search(query, props.insuranceTypeId)
+          .then((res: any) => {
+            data = res
+          })
+      } else {
+        if (props.resolveOnLoad) {
+          data = props.options
+        }
+      }
+
+      return data
     }
 
     const addSelection = (inputValue: any) => {
