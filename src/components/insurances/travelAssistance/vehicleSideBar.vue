@@ -5,15 +5,22 @@
         <form @submit="onSubmit">
           <div class="mt-5">
             NIEUW
+
+            <div class="w-96">
+              <custom-input :type="InputTypes.TEXT" rules="required" name="firstName" label="Merk" />
+            </div>
+
+            <div class="w-96 mt-4">
+              <custom-input :type="InputTypes.TEXT" rules="required" name="firstName" label="Nummerplaat" />
+            </div>
             <custom-button text="Voeg toe" />
           </div>
         </form>
       </div>
-
       <div v-if="selected === 'option-2'">
         <form @submit="onSubmit">
           <div>
-            <hr v-if="selectedNonMembers.length > 0" class="mt-4 border-t-2 border-black" />
+            <hr v-if="selectedVehicle.licensePlate" class="mt-4 border-t-2 border-black" />
             BETSAAND
           </div>
           <div class="mt-5"><custom-button text="Voeg toe" /></div>
@@ -29,6 +36,7 @@ import { NonMemberRepository } from '@/repositories/nonMemberRepository'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import BaseSideBar from '@/components/semantic/BaseSideBar.vue'
+import CustomInput from '@/components/inputs/CustomInput.vue'
 import CustomButton from '@/components/CustomButton.vue'
 import { defineComponent, ref, watch } from 'vue'
 import { InputTypes } from '@/enums/inputTypes'
@@ -41,6 +49,7 @@ export default defineComponent({
   components: {
     'custom-button': CustomButton,
     'base-side-bar': BaseSideBar,
+    'custom-input': CustomInput,
   },
   props: {
     title: {

@@ -23,6 +23,13 @@
           </div>
         </div>
 
+        <div v-if="!(holderState === HolderStates.DETAIL)">
+          <p class="font-semibold">Opmerkingen</p>
+          <div v-if="details.comment" class="px-5">
+            <label-output :text="details.comment" />
+          </div>
+        </div>
+
         <slot></slot>
       </div>
     </template>
@@ -59,12 +66,17 @@ export default defineComponent({
       return store.state.insurance.nonMemberState
     })
 
+    const holderState = computed((): HolderStates => {
+      return store.state.insurance.holderState
+    })
+
     return {
       NonMemberInsuranceRepository,
       nonMemberState,
       formatDate,
       InputTypes,
       HolderStates,
+      holderState,
     }
   },
 })

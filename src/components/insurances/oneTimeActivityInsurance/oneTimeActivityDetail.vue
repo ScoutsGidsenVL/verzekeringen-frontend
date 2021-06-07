@@ -13,8 +13,11 @@
 
         <activity-detail :nature="details.nature" :group-size="details.groupSize" :location="details.location" />
 
-        <div v-if="details.comment" class="px-5">
-          <label-output label="Opmerkingen" :text="details.comment" />
+        <div v-if="!(holderState === HolderStates.DETAIL)">
+          <p class="font-semibold">Opmerkingen</p>
+          <div v-if="details.comment" class="px-5">
+            <label-output :text="details.comment" />
+          </div>
         </div>
 
         <slot></slot>
@@ -50,12 +53,17 @@ export default defineComponent({
       return store.state.insurance.oneTimeActivityState
     })
 
+    const holderState = computed((): HolderStates => {
+      return store.state.insurance.holderState
+    })
+
     return {
       OneTimeActivityRepository,
       oneTimeActivityState,
       formatDate,
       InputTypes,
       HolderStates,
+      holderState,
     }
   },
 })

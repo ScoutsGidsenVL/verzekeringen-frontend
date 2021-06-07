@@ -8,7 +8,7 @@ export const displayCorrectTypeLabel = (type: string): string => {
     case InsuranceTypes.TIJDELIJKE_VERZEKERING_NIET_LEDEN:
       return 'Tijdelijke verzekering niet-leden'
     case InsuranceTypes.REIS_BIJSTAND:
-      return 'Reis bijstand'
+      return 'Reisbijstand'
     case InsuranceTypes.TIJDELIJKE_AUTO_VERZEKERING:
       return 'Tijdleijke autoverzekering'
     case InsuranceTypes.EVENEMENTEN_VERZEKERING:

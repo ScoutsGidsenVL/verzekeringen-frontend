@@ -4,11 +4,11 @@
       <div v-if="selected === 'option-1'" class="mt-4">
         <form @submit="onSubmit">
           <div class="w-96">
-            <custom-input :type="InputTypes.TEXT" rules="required" name="firstName" label="Voornaam" />
+            <custom-input :type="InputTypes.TEXT" rules="required" name="brand" label="Voornaam" />
           </div>
 
           <div class="w-96 mt-4">
-            <custom-input :type="InputTypes.TEXT" rules="required" name="lastName" label="Achternaam" />
+            <custom-input :type="InputTypes.TEXT" rules="required" name="licensePlate" label="Achternaam" />
           </div>
 
           <div class="w-96">
