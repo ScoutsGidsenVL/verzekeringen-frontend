@@ -5,22 +5,21 @@
     </strong>
     <div class="min-w-0">
       <multi-select
+        ref="multiselect"
         v-model="inputValue"
-        :value="inputValue"
         :name="id"
         :value-prop="valueProp"
-        v-bind="field"
         :disabled="disabled"
         :filter-results="false"
         :min-chars="1"
-        :resolve-on-load="false"
+        :resolve-on-load="true"
         :delay="0"
         :placeholder="placeholder"
         :track-by="trackBy"
         :label="trackBy"
         :searchable="searchable"
         :search="true"
-        :resolveOnLoad="resolveOnLoad"
+        :object="object"
         :options="
           searchable
             ? async function (query) {
@@ -35,10 +34,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch } from '@vue/runtime-core'
+import { defineComponent } from '@vue/runtime-core'
 import { ErrorMessage, useField } from 'vee-validate'
 import Multiselect from '@vueform/multiselect'
-import { PropType } from 'vue'
+import { onMounted, PropType, ref, watch } from 'vue'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import { BaseRepository } from '@/repositories/baseRepository'
 export default defineComponent({
@@ -109,8 +108,14 @@ export default defineComponent({
       default: false,
       required: false,
     },
+    object: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
   },
   setup(props, context) {
+    const multiselect = ref()
     const { value: inputValue } = useField(props.id, props.rules, {
       initialValue: props.value,
     })
@@ -133,9 +138,12 @@ export default defineComponent({
       return data
     }
 
-    const addSelection = (inputValue: any) => {
-      context.emit('addSelection', inputValue)
-    }
+    onMounted(() => {
+      console.log(multiselect.value)
+      if (multiselect.value) {
+        // multiselect.value.select({ id: '2', value: '2', label: '51-100' })
+      }
+    })
 
     watch(
       () => inputValue.value,
@@ -146,8 +154,8 @@ export default defineComponent({
 
     return {
       inputValue,
+      multiselect,
       fetchSearchData,
-      addSelection,
     }
   },
 })

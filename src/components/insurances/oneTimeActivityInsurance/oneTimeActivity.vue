@@ -1,9 +1,8 @@
 <template>
   <form @submit="onSubmit">
-    {{ data }}
     <custom-headline-2 text="Activiteit" />
     <div class="px-5">
-      <custom-input :value="editData.nature" :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" />
+      <custom-input :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" />
 
       <div class="mt-4">
         <strong>Land</strong>
@@ -15,11 +14,10 @@
         <multi-select
           id="location"
           track-by="location"
-          :value="editData.location"
           value-prop="value"
           :repository="BelgianCitySearchRepository"
-          :resolveOnLoad="true"
-          :options="[{ value: editData.location, location: editData.location.postalCode + ' ' + editData.location.city }]"
+          :resolve-on-load="true"
+          :options="[{ value: values.location, location: values.location.postalCode + ' ' + values.location.city }]"
           :searchable="true"
           label="Location"
           rules="required"
@@ -27,14 +25,13 @@
         />
       </div>
       <div class="mt-2 w-96">
-        <div>{{ editData.groupSize }}</div>
         <br />
         <div>{{ groupSizes }}</div>
         <multi-select
-          :value="editData.groupSize"
           id="groupSize"
+          :object="true"
           track-by="label"
-          value-prop="data"
+          value-prop="id"
           :options="groupSizes"
           :searchable="false"
           label="Aantal extra te verzekeren personen"
@@ -80,20 +77,20 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
-    const { handleSubmit } = useForm<oneTimeActivityFormType>()
-    const groupSizes = ref<any[]>([])
     const data: any = store.getters.getCurrentInsuranceState
-
-    const editData = ref<OneTimeActivity>({
-      nature: data.nature ? data.nature : '',
-      location: data.location ? data.location : '',
-      groupSize: data.groupSize ? data.groupSize : '',
+    const { handleSubmit, values } = useForm<oneTimeActivityFormType>({
+      initialValues: {
+        nature: data.nature ? data.nature : '',
+        location: data.location ? data.location : '',
+        groupSize: data.groupSize ? data.groupSize : '',
+      },
     })
 
     const generalInsuranceState = computed(() => {
       return store.state.insurance.generalInsuranceState
     })
 
+    const groupSizes = ref<any[]>([])
     const fetchGroupSizes = () => {
       RepositoryFactory.get(InsuranceGroupSizesRepository)
         .getArray()
@@ -124,7 +121,7 @@ export default defineComponent({
       InputTypes,
       onSubmit,
       generalInsuranceState,
-      editData,
+      values,
     }
   },
 })

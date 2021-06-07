@@ -13,7 +13,7 @@ export class InsuranceGroupSizesRepository extends BaseRepository {
       const array: any[] = []
       response.forEach((result: any) => {
         const data = ref<GroupSize>(this.deserializer(result))
-        array.push({ id: data.value.id, value: data.value.value, label: data.value.label, data: data.value })
+        array.push({ id: data.value.id, value: data.value.value, label: data.value.label })
       })
       return array
     })
