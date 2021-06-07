@@ -3,4 +3,5 @@ export enum InputTypes {
   TEXT = 'text',
   TEXT_AREA = 'textarea',
   TEL = 'tel',
+  CHECK = 'checkbox',
 }

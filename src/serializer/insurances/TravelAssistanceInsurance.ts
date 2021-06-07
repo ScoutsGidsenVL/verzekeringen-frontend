@@ -1,12 +1,12 @@
 import { ResponsibleMember, ResponsibleMemberDeserializer, ResponsibleMemberSerializer } from '../ResponsibleMember'
-import { NonMember, NonMemberDeserializer, NonMemberSerializer } from '@/serializer/NonMember'
+import { Member, MemberDeserializer, MemberSerializer } from '@/serializer/Member'
 import { Location, LocationDeserializer, LocationSerializer } from '@/serializer/Location'
 import { Group, GroupDeserializer, GroupSerializer } from '@/serializer/Group'
 import { Status, StatusDeserializer } from '@/serializer/Status'
 import { Type, TypeDeserializer } from '@/serializer/Type'
 import { Country, CountryDeserializer, CountrySerializer } from '../Country'
 
-export interface NonMemberInsurance {
+export interface TravelAssistanceInsurance {
   readonly id?: number
   readonly startDate?: string
   readonly endDate?: string
@@ -20,12 +20,12 @@ export interface NonMemberInsurance {
   readonly totalCost?: string
   readonly type?: Type
   readonly vvksComment?: string
-  readonly nonMembers?: NonMember[]
+  readonly participants?: Member[]
   readonly country?: Country
 }
 
-export const nonMemberInsuranceDeserializer = (input: any): NonMemberInsurance => {
-  const single: NonMemberInsurance = {
+export const TravelAssistanceInsuranceDeserializer = (input: any): TravelAssistanceInsurance => {
+  const single: TravelAssistanceInsurance = {
     id: input.id ? input.id : undefined,
     startDate: input.start_date,
     endDate: input.end_date,
@@ -39,14 +39,14 @@ export const nonMemberInsuranceDeserializer = (input: any): NonMemberInsurance =
     totalCost: input.total_cost,
     type: TypeDeserializer(input.type),
     vvksComment: input.vvks_comment,
-    nonMembers: input.non_members.map((nonMember: any) => NonMemberDeserializer(nonMember)),
+    participants: input.participants.map((member: any) => MemberDeserializer(member)),
     country: input.country ? CountryDeserializer(input.country) : undefined,
   }
 
   return single
 }
 
-export const nonMemberInsuranceSerializer = (input: NonMemberInsurance): NonMemberInsurance => {
+export const TravelAssistanceInsuranceSerializer = (input: TravelAssistanceInsurance): TravelAssistanceInsurance => {
   const single: any = {
     start_date: input.startDate,
     end_date: input.endDate,
@@ -57,7 +57,7 @@ export const nonMemberInsuranceSerializer = (input: NonMemberInsurance): NonMemb
     nature: input.nature,
     responsible_phone_number: ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number,
     total_cost: input.totalCost,
-    non_members: input.nonMembers ? input.nonMembers.map((nonMember: any) => NonMemberSerializer(nonMember)) : undefined,
+    participants: input.participants ? input.participants.map((member: any) => MemberSerializer(member)) : undefined,
     country: input.country ? CountrySerializer(input.country).id : undefined,
   }
 

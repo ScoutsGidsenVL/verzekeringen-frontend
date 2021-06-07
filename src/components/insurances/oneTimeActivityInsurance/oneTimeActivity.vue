@@ -1,8 +1,16 @@
 <template>
   <form @submit="onSubmit">
+    {{ data }}
     <custom-headline-2 text="Activiteit" />
     <div class="px-5">
-      <custom-input :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" />
+      <custom-input :value="editData.nature" :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" />
+
+      <div class="mt-4">
+        <strong>Land</strong>
+        <div class="w-96">
+          <p class="mt-2 w-96">Belgie</p>
+        </div>
+      </div>
       <div class="w-96">
         <multi-select
           id="location"
@@ -17,7 +25,17 @@
         />
       </div>
       <div class="mt-2 w-96">
-        <multi-select id="groupSize" track-by="label" value-prop="data" :options="groupSizes" :searchable="false" label="Aantal extra te verzekeren personen" rules="required" placeholder="Aantal" />
+        <multi-select
+          :value="editData.groupSize"
+          id="groupSize"
+          track-by="label"
+          value-prop="data"
+          :options="groupSizes"
+          :searchable="false"
+          label="Aantal extra te verzekeren personen"
+          rules="required"
+          placeholder="Aantal"
+        />
       </div>
     </div>
     <div class="px-5 mt-5">
@@ -59,6 +77,12 @@ export default defineComponent({
     const store = useStore()
     const { handleSubmit } = useForm<oneTimeActivityFormType>()
     const groupSizes = ref<any[]>([])
+    const data: any = store.getters.getCurrentInsuranceState
+
+    const editData = ref<OneTimeActivity>({
+      nature: data.nature ? data.nature : '',
+      groupSize: data.groupSize ? data.groupSize : '',
+    })
 
     const generalInsuranceState = computed(() => {
       return store.state.insurance.generalInsuranceState
@@ -83,8 +107,9 @@ export default defineComponent({
           groupSize: values.groupSize,
         },
       })
-      store.dispatch('setOneTimeActivityState', oneTimeActivity)
-      store.dispatch('setHolderState', HolderStates.DETAIL)
+      store.dispatch('setOneTimeActivityState', oneTimeActivity.value).then(() => {
+        store.dispatch('setHolderState', HolderStates.DETAIL)
+      })
     })
 
     return {
@@ -92,6 +117,8 @@ export default defineComponent({
       BelgianCitySearchRepository,
       InputTypes,
       onSubmit,
+      generalInsuranceState,
+      editData,
     }
   },
 })

@@ -2,7 +2,7 @@
   <p class="font-semibold">Activiteit</p>
   <div class="px-5">
     <label-output label="Aard van activiteit" :text="nature" />
-    <label-output v-if="location" label="Locatie" :text="location.postalCode + ' ' + location.city" />
+    <label-output v-if="location.postalCode" label="Locatie" :text="location.postalCode + ' ' + location.city" />
     <label-output v-if="country" label="Land" :text="country" />
     <label-output v-if="groupSize" label="Aantal extra te verzekeren personen" :text="groupSize.label" />
   </div>

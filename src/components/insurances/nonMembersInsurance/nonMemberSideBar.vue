@@ -60,29 +60,42 @@
       </div>
 
       <div v-if="selected === 'option-2'">
-        <div class="w-96">
-          <multi-select
-            id="nonMember"
-            track-by="name"
-            value-prop="value"
-            :repository="NonMemberRepository"
-            :options="[]"
-            :searchable="true"
-            label="Zoek"
-            rules="required"
-            placeholder="Zoek op naam"
-            @addSelection="addNonMember($event)"
-          />
-        </div>
-        <div>
-          {{ selectedNonMembers }}
-        </div>
+        <form @submit="onSubmit">
+          <div class="w-96">
+            <multi-select
+              id="nonMember"
+              track-by="name"
+              value-prop="value"
+              :repository="NonMemberRepository"
+              :options="[]"
+              :searchable="true"
+              label="Zoek"
+              placeholder="Zoek op naam"
+              @addSelection="addNonMember($event)"
+            />
+          </div>
+          <div>
+            <hr v-if="selectedNonMembers.length > 0" class="mt-4 border-t-2 border-black" />
+            <div class="w-96" v-for="(nonMember, index) in selectedNonMembers" :key="nonMember.id">
+              <non-member-item :non-member="nonMember">
+                <div>
+                  <div class="pt-3 pb-4 text-right">
+                    <input type="checkbox" :id="index" v-model="nonMember.isChecked" />
+                    <label class="pl-3" for="">Selecteer</label>
+                  </div>
+                </div>
+              </non-member-item>
+            </div>
+          </div>
+          <div class="mt-5"><custom-button text="Voeg toe" /></div>
+        </form>
       </div>
     </base-side-bar>
   </div>
 </template>
 
 <script lang="ts">
+import NonMemberItem from '@/components/insurances/nonMembersInsurance/nonMemberItem.vue'
 import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRepository'
 import { NonMemberRepository } from '@/repositories/nonMemberRepository'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
@@ -104,6 +117,7 @@ export default defineComponent({
     'base-side-bar': BaseSideBar,
     'custom-input': CustomInput,
     'multi-select': MultiSelect,
+    'non-member-item': NonMemberItem,
   },
   props: {
     title: {
@@ -123,6 +137,14 @@ export default defineComponent({
     const selected = ref<string>('option-1')
     const selectedNonMembers = ref<NonMember[]>([])
 
+    const addSearchedNonMembers = () => {
+      selectedNonMembers.value.forEach((nonMember) => {
+        if (nonMember.isChecked) {
+          addNonMember(nonMember)
+        }
+      })
+    }
+
     watch(
       () => props.isDisplay,
       () => {
@@ -138,27 +160,41 @@ export default defineComponent({
     )
 
     const onSubmit = handleSubmit(async (values: NonMember) => {
-      const generalInsuranceState = ref<any>(store.getters.generalInsuranceState)
+      if (selected.value === 'option-1') {
+        const generalInsuranceState = ref<any>(store.getters.generalInsuranceState)
 
-      const nonMember = ref<NonMember>({
-        lastName: values.lastName,
-        firstName: values.firstName,
-        phoneNumber: values.phoneNumber,
-        birthDate: values.birthDate,
-        street: values.street,
-        number: values.number,
-        letterBox: values.letterBox,
-        comment: values.comment,
-        postCodeCity: values.postCodeCity,
-        group: generalInsuranceState.value.group.name,
-      })
+        const nonMember = ref<NonMember>({
+          lastName: values.lastName,
+          firstName: values.firstName,
+          phoneNumber: values.phoneNumber,
+          birthDate: values.birthDate,
+          street: values.street,
+          number: values.number,
+          letterBox: values.letterBox,
+          comment: values.comment,
+          postCodeCity: values.postCodeCity,
+          group: generalInsuranceState.value.group.name,
+        })
+        postNonMember(nonMember.value)
+      }
 
-      postNonMember(nonMember.value)
+      if (selected.value === 'option-2') {
+        const tempList = ref<Array<NonMember>>([])
+        selectedNonMembers.value.forEach((nonMember) => {
+          if (nonMember.isChecked) {
+            tempList.value.push(nonMember)
+          }
+        })
+        context.emit('addCreatedNonMemberToList', tempList.value)
+      }
+
+      selectedNonMembers.value = []
     })
 
-    const addNonMember = (nonMember: NonMember) => {
-      // enkel toevoegen als deze er nog niet instaat
-      selectedNonMembers.value.push(nonMember)
+    const addNonMember = (nonMember: any) => {
+      if (nonMember) {
+        selectedNonMembers.value.push(nonMember)
+      }
     }
 
     const postNonMember = (data: NonMember) => {
@@ -173,6 +209,7 @@ export default defineComponent({
 
     return {
       BelgianCitySearchRepository,
+      addSearchedNonMembers,
       NonMemberRepository,
       selectedNonMembers,
       addNonMember,

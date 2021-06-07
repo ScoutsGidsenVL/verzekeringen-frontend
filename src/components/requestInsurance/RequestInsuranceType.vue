@@ -8,7 +8,7 @@
   </div>
 
   <div v-if="isCurrentType(InsuranceTypes.REIS_BIJSTAND, insuranceTypeState)">
-    <div>nothing</div>
+    <travel-assistance />
   </div>
 
   <div v-if="isCurrentType(InsuranceTypes.TIJDELIJKE_AUTO_VERZEKERING, insuranceTypeState)">
@@ -26,6 +26,7 @@
 
 <script lang="ts">
 import OneTimeActivity from '@/components/insurances/oneTimeActivityInsurance/oneTimeActivity.vue'
+import TravelAssistance from '@/components/insurances/travelAssistance/travelAssistance.vue'
 import NonMember from '@/components/insurances/nonMembersInsurance/nonMember.vue'
 import { isCurrentType } from '@/helpers/insuranceTypeHelper'
 import { InsuranceTypes } from '@/enums/insuranceTypes'
@@ -36,6 +37,7 @@ export default defineComponent({
   name: 'RequestInsuranceType',
   components: {
     'one-time-activity': OneTimeActivity,
+    'travel-assistance': TravelAssistance,
     'non-member': NonMember,
   },
   setup() {

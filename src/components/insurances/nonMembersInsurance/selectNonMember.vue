@@ -1,5 +1,5 @@
 <template>
-  <non-member-list :nonMembersList="nonMembers" />
+  <non-member-list :canBeDeleted="true" :nonMembersList="nonMembers" @deleteNonMemberFromList="deleteNonMemberFromList($event)" />
 
   <div class="mt-2 cursor-pointer text-lightGreen" @click="openSideBar()">
     <strong> + voeg niet-lid toe </strong>
@@ -16,7 +16,7 @@ import { defineComponent, ref } from 'vue'
 import { useField } from 'vee-validate'
 
 export default defineComponent({
-  name: 'NonMembersList',
+  name: 'SelectNonMembers',
   components: {
     'non-member-side-bar': NonMemberSideBar,
     'non-member-list': NonMemberList,
@@ -46,8 +46,13 @@ export default defineComponent({
       nonMembers.value = nonMembers.value.concat(nonMembersEvent)
     }
 
+    const deleteNonMemberFromList = (id: string) => {
+      nonMembers.value.splice(Number(id), 1)
+    }
+
     return {
       addCreatedNonMemberToList,
+      deleteNonMemberFromList,
       openSideBar,
       nonMembers,
       isDisplay,

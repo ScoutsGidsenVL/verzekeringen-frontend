@@ -19,6 +19,7 @@ import customList from '../components/semantic/CustomList.vue'
 import Pagination from '@/components/semantic/Pagination.vue'
 import customButton from '../components/CustomButton.vue'
 import { defineComponent, ref } from 'vue'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'Home',
@@ -28,6 +29,9 @@ export default defineComponent({
     pagination: Pagination,
   },
   setup: () => {
+    const store = useStore()
+    store.dispatch('resetStates')
+
     const results = ref<any>([])
 
     const getInsurances = () => {

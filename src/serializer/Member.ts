@@ -1,6 +1,6 @@
 import { Location, LocationDeserializer, LocationSerializer } from '@/serializer/Location'
 
-export interface NonMember {
+export interface Member {
   readonly id?: number
   readonly lastName: string
   readonly firstName: string
@@ -15,8 +15,8 @@ export interface NonMember {
   isChecked?: boolean
 }
 
-export const NonMemberDeserializer = (input: any): NonMember => {
-  const single: NonMember = {
+export const MemberDeserializer = (input: any): Member => {
+  const single: Member = {
     lastName: input.last_name,
     firstName: input.first_name,
     phoneNumber: input.phone_number,
@@ -32,7 +32,7 @@ export const NonMemberDeserializer = (input: any): NonMember => {
   return single
 }
 
-export const NonMemberSerializer = (input: any): any => {
+export const MemberSerializer = (input: any): any => {
   const single: any = {
     last_name: input.lastName,
     first_name: input.firstName,

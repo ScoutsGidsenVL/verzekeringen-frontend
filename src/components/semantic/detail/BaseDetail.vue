@@ -6,7 +6,7 @@
     <div class="mt-3">
       <div v-html="titelText"></div>
     </div>
-    <slot :details="details" :isIdUrl="isIdUrl" />
+    <slot :details="details" :isDetail="isDetail" />
 
     <div v-if="details" class="mt-5 cw-auto pl-5 pt-5 pb-5 bg-lightGray">
       <h1 class="text-2xl font-extrabold">€{{ details.totalCost }}</h1>
@@ -14,7 +14,7 @@
   </div>
 
   <div v-if="holderState === HolderStates.COMPLETED" class="mt-4 inline-block">
-    <div class="flex text-lg cursor-pointer" @click="resetStates()">
+    <div class="flex text-lg cursor-pointer" @click="navigateHome()">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mt-1 mr-2" fill="none" viewBox="0 0 20 20" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 15l-5-5 5-5" />
       </svg>
@@ -55,9 +55,9 @@ export default defineComponent({
   setup(props) {
     const store = useStore()
     const route = useRoute()
-    const isIdUrl = !!route.params.id
+    const isDetail = !!route.meta.detail
     const titelText = ref<string>('<p style="font-size: 30px">Overzicht <strong class="font-semibold">' + props.title + '</strong> verzekering</p>')
-    const details = ref<any>(isIdUrl ? null : props.data)
+    const details = ref<any>(isDetail ? null : props.data)
 
     const holderState = computed((): HolderStates => {
       return store.state.insurance.holderState
@@ -72,13 +72,11 @@ export default defineComponent({
       }
     )
 
-    const resetStates = () => {
-      router.push('/home').then(() => {
-        store.dispatch('resetStates')
-      })
+    const navigateHome = () => {
+      router.push('/home')
     }
 
-    if (isIdUrl) {
+    if (isDetail) {
       RepositoryFactory.get(props.repository)
         .getById(route.params.id.toString())
         .then((result: any) => {
@@ -104,10 +102,10 @@ export default defineComponent({
 
     return {
       HolderStates,
-      resetStates,
+      navigateHome,
       holderState,
       titelText,
-      isIdUrl,
+      isDetail,
       details,
     }
   },

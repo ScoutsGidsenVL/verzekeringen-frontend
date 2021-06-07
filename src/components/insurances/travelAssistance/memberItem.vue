@@ -1,31 +1,31 @@
 <template>
-  <div v-if="nonMember" class="w-96">
+  <div v-if="member" class="w-96">
     <div class="py-3">
       <div>
         <strong>Naam</strong>
-        <p>{{ nonMember.firstName + ' ' + nonMember.lastName }}</p>
+        <p>{{ member.firstName + ' ' + member.lastName }}</p>
       </div>
 
       <div class="mt-3">
         <strong>Gsm</strong>
-        <p>{{ nonMember.phoneNumber }}</p>
+        <p>{{ member.phoneNumber }}</p>
       </div>
 
       <div class="mt-3">
         <strong>Adres</strong>
         <p>
-          {{ nonMember.street + ' ' + nonMember.number + (nonMember.letterBox ? ' Bus ' + nonMember.letterBox : '') + ', ' + nonMember.postCodeCity.postalCode + ' ' + nonMember.postCodeCity.city }}
+          {{ member.street + ' ' + member.number + (member.letterBox ? ' Bus ' + member.letterBox : '') + ', ' + member.postCodeCity.postalCode + ' ' + member.postCodeCity.city }}
         </p>
       </div>
 
       <div class="mt-3">
         <strong>Geboortendatum</strong>
-        <p>{{ nonMember.birthDate }}</p>
+        <p>{{ member.birthDate }}</p>
       </div>
 
       <div class="mt-3">
         <strong>Opmerking</strong>
-        <p>{{ nonMember.comment }}</p>
+        <p>{{ member.comment }}</p>
       </div>
     </div>
     <slot />
@@ -34,13 +34,13 @@
 </template>
 
 <script lang="ts">
-import { NonMember } from '@/serializer/NonMember'
+import { Member } from '@/serializer/Member'
 import { defineComponent, PropType } from 'vue'
 
 export default defineComponent({
   props: {
-    nonMember: {
-      type: Object as PropType<NonMember>,
+    member: {
+      type: Object as PropType<Member>,
       required: true,
     },
   },

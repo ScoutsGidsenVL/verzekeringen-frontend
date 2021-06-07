@@ -1,10 +1,8 @@
 <template>
   <form @submit="onSubmit">
-    <custom-headline-2 text="Activiteit" />
-    <div class="px-5">
-      <custom-input :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" />
-
-      <div class="w-96">
+    <div>
+      <custom-headline-2 text="Bestemming" />
+      <div class="px-5 w-96">
         <multi-select
           rules="required"
           insuranceTypeId="2"
@@ -18,45 +16,31 @@
           placeholder="Zoek op naam"
         />
       </div>
+    </div>
 
-      <div class="w-96">
-        <multi-select
-          id="postCodeCity"
-          track-by="location"
-          value-prop="value"
-          :repository="BelgianCitySearchRepository"
-          :options="[]"
-          :searchable="true"
-          label="Gemeenten"
-          rules="required"
-          placeholder="Zoek op naam/postcode"
-        />
+    <div class="mt-3">
+      <custom-headline-2 text="Deelnemers" />
+      <div class="px-5">
+        <select-members id="members" rules="required" />
       </div>
     </div>
 
     <div class="mt-3">
-      <custom-headline-2 text="Niet leden" />
-    </div>
-
-    <div class="px-5">
-      <select-non-member id="nonMembers" rules="required" />
-    </div>
-
-    <div class="px-5 mt-5">
-      <custom-button text="Volgende" />
+      <custom-headline-2 text="Voertuig" />
+      <div class="px-5">
+        <select-vehicle id="vehicle" />
+      </div>
     </div>
   </form>
 </template>
 
 <script lang="ts">
-import SelectNonMember from '@/components/insurances/nonMembersInsurance//selectNonMember.vue'
-import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRepository'
-import { NonMemberInsurance } from '@/serializer/insurances/NonMemberInsurance'
+import { TravelAssistanceInsurance } from '@/serializer/insurances/TravelAssistanceInsurance'
+import SelectMembers from '@/components/insurances/travelAssistance/selectMembers.vue'
+import SelectVehicle from '@/components/insurances/travelAssistance/selectVehicle.vue'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
 import { CountryRepository } from '@/repositories/countriesRepository'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
-import CustomInput from '@/components/inputs/CustomInput.vue'
-import CustomButton from '@/components/CustomButton.vue'
 import { computed, defineComponent, ref } from 'vue'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
@@ -64,13 +48,13 @@ import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
 
 export default defineComponent({
-  name: 'NonMember',
+  name: 'TravelAssistance',
   components: {
-    'select-non-member': SelectNonMember,
     'custom-headline-2': CustomHeadline2,
-    'custom-button': CustomButton,
+    'select-members': SelectMembers,
+    'select-vehicle': SelectVehicle,
+
     'multi-select': MultiSelect,
-    'custom-input': CustomInput,
   },
   setup() {
     const store = useStore()
@@ -82,13 +66,13 @@ export default defineComponent({
     })
 
     const onSubmit = handleSubmit(async (values: any) => {
-      const nonMember = ref<NonMemberInsurance>({
+      const nonMember = ref<TravelAssistanceInsurance>({
         ...generalInsuranceState.value,
         ...{
           nature: values.nature,
           postCodeCity: values.postCodeCity ? values.postCodeCity : undefined,
           country: values.country ? values.country : undefined,
-          nonMembers: values.nonMembers ? values.nonMembers : [],
+          participants: values.Members ? values.Members : [],
         },
       })
 
@@ -97,7 +81,6 @@ export default defineComponent({
     })
 
     return {
-      BelgianCitySearchRepository,
       CountryRepository,
       InputTypes,
       selected,

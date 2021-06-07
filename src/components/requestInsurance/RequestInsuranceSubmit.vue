@@ -7,7 +7,7 @@
       <div>
         <p class="font-semibold">Opmerkingen</p>
         <div class="px-5">
-          <custom-input :type="InputTypes.TEXT_AREA" name="comment" label="" />
+          <custom-input :value="editData.comment" :type="InputTypes.TEXT_AREA" name="comment" label="" />
         </div>
       </div>
     </request-insurance-detail>
@@ -28,6 +28,7 @@ import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'RequestInsuranceSubmit',
@@ -37,14 +38,26 @@ export default defineComponent({
     'request-insurance-detail': RequestInsuranceDetail,
   },
   setup() {
+    const route = useRoute()
     const store = useStore()
     const { handleSubmit } = useForm()
     const error = ref<boolean>(false)
+    const isEdit = !!route.params.id
+
+    const data: any = store.getters.getCurrentInsuranceState
+
+    const editData = ref<any>({
+      comment: data.comment ? data.comment : '',
+    })
 
     const onSubmit = handleSubmit(async (values: any) => {
       //@ts-ignore
       store.dispatch(InsuranceTypeStoreSetters[store.getters.insuranceTypeState], { ...store.getters.getCurrentInsuranceState, ...{ comment: values.comment } })
-      postInsurance()
+      if (isEdit) {
+        editInsurance()
+      } else {
+        postInsurance()
+      }
     })
 
     const postInsurance = () => {
@@ -62,10 +75,26 @@ export default defineComponent({
         })
     }
 
+    const editInsurance = () => {
+      // @ts-ignore
+      RepositoryFactory.get(InsuranceTypeRepos[store.getters.insuranceTypeState])
+        //@ts-ignore
+        .editById(route.params.id, store.getters.getCurrentInsuranceState)
+        .then((completed: any) => {
+          store.dispatch('setHolderState', HolderStates.COMPLETED)
+          //@ts-ignore
+          store.dispatch(InsuranceTypeStoreSetters[store.getters.insuranceTypeState], completed)
+        })
+        .catch(() => {
+          error.value = true
+        })
+    }
+
     return {
       onSubmit,
       InputTypes,
       error,
+      editData,
     }
   },
 })

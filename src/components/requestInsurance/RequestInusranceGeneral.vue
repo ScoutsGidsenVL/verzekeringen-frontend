@@ -3,12 +3,19 @@
     <div class="mb-5">
       <custom-headline-2 text="Welke" />
 
-      <insurance-type-menu :disabled="isIdUrl" />
+      <insurance-type-menu :disabled="isEdit" />
 
       <div class="px-5">
         <info-alert v-show="insuranceTypeState === InsuranceTypes.TIJDELIJKE_VERZEKERING_NIET_LEDEN">
-          <strong>OPGELET! Via deze verzekering kan je geen nieuwe leden verzekeren. </strong>
+          <strong>OPGELET! Via deze verzekering kan je geen nieuwe leden verzekeren.</strong>
           <p>Gelieve dit via de groepsadministratie te doen.</p>
+        </info-alert>
+      </div>
+
+      <div class="px-5">
+        <info-alert v-show="insuranceTypeState === InsuranceTypes.REIS_BIJSTAND">
+          <strong>Wat biedt de reisbijstandsverzekering meer dan de gewone ledenpolis?</strong>
+          <p>Alleen geldig voor leden van Scouts en Gidsen Vlaanderen en personen die via een tijdelijke verzekering verzekerd zijn voor dezelfde periode.</p>
         </info-alert>
       </div>
     </div>
@@ -17,10 +24,10 @@
       <custom-headline-2 text="Wanneer" />
       <div class="px-5 flex gap-4">
         <div class="w-80">
-          <custom-input :value="generalData.startDate" :min="minDate" :type="InputTypes.DATE" rules="required" name="start" label="Start datum" />
+          <custom-input :value="editData.startDate" :min="minDate" :type="InputTypes.DATE" rules="required" name="start" label="Start datum" />
         </div>
         <div class="w-80">
-          <custom-input :value="generalData.endDate" :min="minDate" :type="InputTypes.DATE" :rules="dateRuleToInsuranceType('start', insuranceTypeState)" name="end" label="Eind datum" />
+          <custom-input :value="editData.endDate" :min="minDate" :type="InputTypes.DATE" :rules="dateRuleToInsuranceType('start', insuranceTypeState)" name="end" label="Eind datum" />
         </div>
       </div>
     </div>
@@ -31,8 +38,8 @@
         <p>De factuur wordt naar de financieel verantwoordelijke van deze groep gestuurd.</p>
         <div style="width: 65%">
           <multi-select
-            :disabled="isIdUrl"
-            :value="generalData.group.id"
+            :disabled="isEdit"
+            :value="editData.group.id"
             id="group"
             rules="required"
             placeholder="Group"
@@ -48,7 +55,7 @@
     <div class="mb-5">
       <custom-headline-2 text="Aanvrager" />
       <div class="px-5">
-        <insurance-applicant :applicant="generalData.responsibleMember" />
+        <insurance-applicant :applicant="editData.responsibleMember" />
       </div>
     </div>
 
@@ -92,7 +99,7 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const store = useStore()
-    const isIdUrl = !!route.params.id
+    const isEdit = !!route.params.id
 
     const { handleSubmit } = useForm()
     const insuranceTypeState = computed((): InsuranceTypes => {
@@ -103,7 +110,7 @@ export default defineComponent({
 
     const data: any = store.getters.getCurrentInsuranceState
 
-    const generalData = ref<BaseInsurance>({
+    const editData = ref<BaseInsurance>({
       startDate: data.startDate ? data.startDate : '',
       endDate: data.endDate ? data.endDate : '',
       group: data.group ? data.group : '',
@@ -129,9 +136,9 @@ export default defineComponent({
       minDate,
       user,
       onSubmit,
-      generalData,
+      editData,
       data,
-      isIdUrl,
+      isEdit,
     }
   },
 })

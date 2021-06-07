@@ -29,10 +29,10 @@ import ResponsibleMemberDetail from '@/components/semantic/detail/ResponsibleMem
 import ActivityDetail from '@/components/semantic/detail/ActivityDetail.vue'
 import BaseDetail from '@/components/semantic/detail/BaseDetail.vue'
 import LabelOutput from '@/components/semantic/LabelOutput.vue'
-import { computed, defineComponent } from 'vue'
 import { formatDate } from '@/helpers/formatHelper'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
+import { computed, defineComponent } from 'vue'
 import { useStore } from 'vuex'
 
 export default defineComponent({

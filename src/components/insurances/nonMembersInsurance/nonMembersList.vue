@@ -9,8 +9,12 @@
   </div>
 
   <div class="grid grid-cols-2 gap-1" style="width: 850px">
-    <div class="w-96" v-for="nonMember in nonMembers" :key="nonMember.id">
-      <non-member-item :non-member="nonMember" />
+    <div class="w-96" v-for="(nonMember, index) in nonMembers" :key="nonMember.id">
+      <non-member-item :non-member="nonMember">
+        <div v-if="canBeDeleted" class="text-right">
+          <label @click="deleteNonMemberFromList(index)" class="hover:text-lightGreen cursor-pointer" for="">Verwijder</label>
+        </div>
+      </non-member-item>
     </div>
   </div>
 </template>
@@ -32,8 +36,13 @@ export default defineComponent({
         return []
       },
     },
+    canBeDeleted: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
   },
-  setup(props) {
+  setup(props, context) {
     const nonMembers = ref<NonMember[]>(props.nonMembersList)
 
     watch(
@@ -43,12 +52,12 @@ export default defineComponent({
       }
     )
 
-    const addCreatedNonMemberToList = (nonMembersEvent: NonMember[]) => {
-      nonMembers.value = nonMembers.value.concat(nonMembersEvent)
+    const deleteNonMemberFromList = (id: string) => {
+      context.emit('deleteNonMemberFromList', id)
     }
 
     return {
-      addCreatedNonMemberToList,
+      deleteNonMemberFromList,
       nonMembers,
     }
   },

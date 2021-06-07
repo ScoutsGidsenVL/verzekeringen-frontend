@@ -6,6 +6,7 @@
     <div class="min-w-0">
       <multi-select
         v-model="inputValue"
+        :value="inputValue"
         :name="id"
         :value-prop="valueProp"
         v-bind="field"
@@ -26,7 +27,6 @@
               }
             : options
         "
-        @change="addSelection(inputValue)"
       />
       <error-message class="text-red font-light ml-1 mt-1 text-sm inline-block" :name="id" />
     </div>
@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/runtime-core'
+import { defineComponent, watch } from '@vue/runtime-core'
 import { ErrorMessage, useField } from 'vee-validate'
 import Multiselect from '@vueform/multiselect'
 import { PropType } from 'vue'
@@ -98,6 +98,11 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    insuranceTypeId: {
+      type: String,
+      default: '',
+      required: false,
+    },
   },
   setup(props, context) {
     const { value: inputValue } = useField(props.id, props.rules, {
@@ -107,7 +112,7 @@ export default defineComponent({
     const fetchSearchData = async (query: string) => {
       const data: any = []
       await RepositoryFactory.get(props.repository)
-        .search(query)
+        .search(query, props.insuranceTypeId)
         .then((res: any) => {
           data.value = res
         })
@@ -118,6 +123,13 @@ export default defineComponent({
     const addSelection = (inputValue: any) => {
       context.emit('addSelection', inputValue)
     }
+
+    watch(
+      () => inputValue.value,
+      () => {
+        context.emit('addSelection', inputValue.value)
+      }
+    )
 
     return {
       inputValue,

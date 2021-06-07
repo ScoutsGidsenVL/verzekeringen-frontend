@@ -43,6 +43,7 @@ const routes: any[] = [
     meta: {
       requiresOpenIdAuth: true,
       title: 'Verzekering',
+      detail: true,
     },
   },
   {
@@ -52,6 +53,7 @@ const routes: any[] = [
     meta: {
       requiresOpenIdAuth: true,
       title: 'Verzekering',
+      detail: true,
     },
   },
 ]
