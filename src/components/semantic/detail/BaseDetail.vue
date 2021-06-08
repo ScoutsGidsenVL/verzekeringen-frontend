@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="isIdUrl" class="mt-4">
+    <div v-if="isDetail" class="mt-4">
       <navigation-arrow to="/home" text="Terug naar overzicht" />
     </div>
     <div class="mt-3">
@@ -13,13 +13,8 @@
     </div>
   </div>
 
-  <div v-if="holderState === HolderStates.COMPLETED" class="mt-4 inline-block hover:text-lightGreen">
-    <div class="flex text-lg cursor-pointer" @click="navigateHome()">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mt-1 mr-2" fill="none" viewBox="0 0 20 20" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 15l-5-5 5-5" />
-      </svg>
-      <p>Terug naar overzicht</p>
-    </div>
+  <div v-if="holderState === HolderStates.COMPLETED" class="mt-4 inline-block">
+    <navigation-arrow to="/home" text="Terug naar overzicht" />
   </div>
 </template>
 
@@ -31,7 +26,6 @@ import { computed, defineComponent, PropType, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { HolderStates } from '@/enums/holderStates'
-import router from '@/router'
 
 export default defineComponent({
   name: 'BaseDetail',
@@ -72,10 +66,6 @@ export default defineComponent({
       }
     )
 
-    const navigateHome = () => {
-      router.push('/home')
-    }
-
     if (isDetail) {
       RepositoryFactory.get(props.repository)
         .getById(route.params.id.toString())
@@ -102,7 +92,6 @@ export default defineComponent({
 
     return {
       HolderStates,
-      navigateHome,
       holderState,
       titelText,
       isDetail,

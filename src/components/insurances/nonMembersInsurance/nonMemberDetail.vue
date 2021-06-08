@@ -20,7 +20,7 @@
           </div>
         </div>
 
-        <div v-if="holderState === HolderStates.COMPLETED">
+        <div v-if="!(holderState === HolderStates.DETAIL)">
           <p class="font-semibold">Opmerkingen</p>
           <div v-if="details.comment" class="px-5">
             <label-output :text="details.comment" />
