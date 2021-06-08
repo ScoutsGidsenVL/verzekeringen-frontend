@@ -4,10 +4,11 @@
       <custom-button text="Vraag nieuwe verzekering aan" />
     </router-link>
   </div>
-  <div class="mt-5">
-    <custom-list :items="results" title="Recent aangevraagd" />
-    <div v-if="false" class="mt-3">
-      <pagination />
+  <div v-if="data" class="mt-5">
+    <custom-list :items="data.results" title="Recent aangevraagd" />
+    <div class="flex gap-5 pt-3 float-right">
+      <custom-button v-if="data.previous" @click="getPreviousInsurances(data.previous)" text="Vorige" />
+      <custom-button v-if="data.next" @click="getNextInsurances(data.next)" text="Volgende" />
     </div>
   </div>
 </template>
@@ -16,36 +17,53 @@
 import { InsuranceRepository } from '@/repositories/insurances/insuranceRepository'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import customList from '../components/semantic/CustomList.vue'
-import Pagination from '@/components/semantic/Pagination.vue'
 import customButton from '../components/CustomButton.vue'
 import { defineComponent, ref } from 'vue'
 import { useStore } from 'vuex'
+import { ArrayResult } from '@/serializer/ArrayResult'
 
 export default defineComponent({
   name: 'Home',
   components: {
     'custom-button': customButton,
     'custom-list': customList,
-    pagination: Pagination,
   },
   setup: () => {
     const store = useStore()
     store.dispatch('resetStates')
 
-    const results = ref<any>([])
+    const data = ref<ArrayResult>()
 
     const getInsurances = () => {
       RepositoryFactory.get(InsuranceRepository)
-        .getArray()
-        .then((res: any) => {
-          results.value = res
+        .getArray('/insurances/?page=1&page_size=5')
+        .then((res: ArrayResult) => {
+          data.value = res
+        })
+    }
+
+    const getPreviousInsurances = (previous: string) => {
+      RepositoryFactory.get(InsuranceRepository)
+        .getArray(previous)
+        .then((res: ArrayResult) => {
+          data.value = res
+        })
+    }
+
+    const getNextInsurances = (next: string) => {
+      RepositoryFactory.get(InsuranceRepository)
+        .getArray(next)
+        .then((res: ArrayResult) => {
+          data.value = res
         })
     }
 
     getInsurances()
 
     return {
-      results,
+      getPreviousInsurances,
+      getNextInsurances,
+      data,
     }
   },
 })

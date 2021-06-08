@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-4 py-2 border-t-2 border-black">
+  <div class="custom-grid py-2 border-t-2 border-black">
     <div>
       <p>{{ formatDate(item.startDate, item.endDate) }}</p>
     </div>
@@ -8,6 +8,9 @@
     </div>
     <div>
       <p>{{ item.type.description }}</p>
+    </div>
+    <div>
+      <p>{{ item.status.label }}</p>
     </div>
     <div>
       <div class="float-right flex gap-5">
@@ -85,3 +88,10 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss" scoped>
+.custom-grid {
+  display: grid;
+  grid-template-columns: 25% 20% 35% 15% 5%;
+}
+</style>

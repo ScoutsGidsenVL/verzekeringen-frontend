@@ -5,8 +5,17 @@ import { HolderStates } from '@/enums/holderStates'
 import { NonMemberInsurance } from '@/serializer/insurances/NonMemberInsurance'
 import { TravelAssistanceInsurance } from '@/serializer/insurances/TravelAssistanceInsurance'
 
+export interface InsuranceState {
+  holderState: string
+  insuranceTypeState: string
+  generalInsuranceState: BaseInsurance
+  oneTimeActivityState: OneTimeActivity
+  nonMemberState: NonMemberInsurance
+  travelAssistanceState: TravelAssistanceInsurance
+}
+
 export default {
-  state: () => ({
+  state: (): InsuranceState => ({
     holderState: HolderStates.GENERAL,
     insuranceTypeState: InsuranceTypes.EENMALIGE_ACTIVITEIT,
     generalInsuranceState: {},

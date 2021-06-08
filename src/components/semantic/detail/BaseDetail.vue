@@ -13,7 +13,7 @@
     </div>
   </div>
 
-  <div v-if="holderState === HolderStates.COMPLETED" class="mt-4 inline-block">
+  <div v-if="holderState === HolderStates.COMPLETED" class="mt-4 inline-block hover:text-lightGreen">
     <div class="flex text-lg cursor-pointer" @click="navigateHome()">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mt-1 mr-2" fill="none" viewBox="0 0 20 20" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 15l-5-5 5-5" />

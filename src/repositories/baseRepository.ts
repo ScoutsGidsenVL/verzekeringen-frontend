@@ -10,7 +10,7 @@ export abstract class BaseRepository extends BaseApiRepository {
   private previous: string | null = null
   private next: string | null = ''
 
-  getArray(): Promise<any> {
+  getArray(pagination?: string): Promise<any> {
     return this.get(this.endpoint, {}).then((response: ArrayResult) => {
       const array: any[] = []
       response.results.forEach((result: any) => {
