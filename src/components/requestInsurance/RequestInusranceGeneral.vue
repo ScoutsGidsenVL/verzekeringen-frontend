@@ -24,10 +24,10 @@
       <custom-headline-2 text="Wanneer" />
       <div class="px-5 flex gap-4">
         <div class="w-80">
-          <custom-input :value="editData.startDate" :min="minDate" :type="InputTypes.DATE" rules="required" name="start" label="Start datum" />
+          <custom-input :min="minDate" :type="InputTypes.DATE" rules="required" name="startDate" label="Start datum" />
         </div>
         <div class="w-80">
-          <custom-input :value="editData.endDate" :min="minDate" :type="InputTypes.DATE" :rules="dateRuleToInsuranceType('start', insuranceTypeState)" name="end" label="Eind datum" />
+          <custom-input :min="minDate" :type="InputTypes.DATE" :rules="dateRuleToInsuranceType('start', insuranceTypeState)" name="endDate" label="Eind datum" />
         </div>
       </div>
     </div>
@@ -37,17 +37,7 @@
       <div class="px-5">
         <p>De factuur wordt naar de financieel verantwoordelijke van deze groep gestuurd.</p>
         <div style="width: 65%">
-          <multi-select
-            :disabled="isEdit"
-            :value="editData.group.id"
-            id="group"
-            rules="required"
-            placeholder="Group"
-            track-by="fullInfo"
-            value-prop="id"
-            :options="user.scoutsGroups"
-            label="Selecteer groep"
-          />
+          <multi-select :disabled="isEdit" id="group" rules="required" placeholder="Group" track-by="fullInfo" value-prop="id" :options="user.scoutsGroups" label="Selecteer groep" />
         </div>
       </div>
     </div>
@@ -55,7 +45,7 @@
     <div class="mb-5">
       <custom-headline-2 text="Aanvrager" />
       <div class="px-5">
-        <insurance-applicant :applicant="editData.responsibleMember" />
+        <insurance-applicant :applicant="values.responsibleMember" />
       </div>
     </div>
 
@@ -100,28 +90,29 @@ export default defineComponent({
     const route = useRoute()
     const store = useStore()
     const isEdit = !!route.params.id
+    const user = ref<ResponsibleMember>(store.getters.user)
+    let data: any = store.getters.getCurrentInsuranceState
 
-    const { handleSubmit } = useForm()
+    const { handleSubmit, values } = useForm<BaseInsurance>({
+      initialValues: {
+        startDate: data.startDate ? data.startDate : '',
+        endDate: data.endDate ? data.endDate : '',
+        group: data.group ? data.group.id : '',
+        responsibleMember: data.responsibleMember ? data.responsibleMember : user.value,
+      },
+    })
+
     const insuranceTypeState = computed((): InsuranceTypes => {
       return store.state.insurance.insuranceTypeState
     })
     const minDate = moment().add(1, 'days').format('YYYY-MM-DD')
-    const user = ref<ResponsibleMember>(store.getters.user)
-
-    const data: any = store.getters.getCurrentInsuranceState
-
-    const editData = ref<BaseInsurance>({
-      startDate: data.startDate ? data.startDate : '',
-      endDate: data.endDate ? data.endDate : '',
-      group: data.group ? data.group : '',
-    })
 
     const onSubmit = handleSubmit(async (values: any) => {
       const generalInsuranceState = ref<BaseInsurance>({
-        startDate: values.start,
-        endDate: values.end,
+        startDate: values.startDate,
+        endDate: values.endDate,
         group: { name: values.group },
-        responsibleMember: user.value,
+        responsibleMember: values.responsibleMember ? values.responsibleMember : user.value,
         totalCost: '1.00',
       })
       store.dispatch('setGeneralInsuranceState', generalInsuranceState)
@@ -136,9 +127,9 @@ export default defineComponent({
       minDate,
       user,
       onSubmit,
-      editData,
       data,
       isEdit,
+      values,
     }
   },
 })

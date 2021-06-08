@@ -71,7 +71,7 @@
               :searchable="true"
               label="Zoek"
               placeholder="Zoek op naam"
-              @addSelection="addNonMember($event)"
+              @fetchedOptions="fetchedOptions($event)"
             />
           </div>
           <div>
@@ -137,14 +137,6 @@ export default defineComponent({
     const selected = ref<string>('option-1')
     const selectedNonMembers = ref<NonMember[]>([])
 
-    const addSearchedNonMembers = () => {
-      selectedNonMembers.value.forEach((nonMember) => {
-        if (nonMember.isChecked) {
-          addNonMember(nonMember)
-        }
-      })
-    }
-
     watch(
       () => props.isDisplay,
       () => {
@@ -207,9 +199,15 @@ export default defineComponent({
         })
     }
 
+    const fetchedOptions = (options: any) => {
+      selectedNonMembers.value = []
+      options.forEach((nonMember: any) => {
+        selectedNonMembers.value.push(nonMember.value)
+      })
+    }
+
     return {
       BelgianCitySearchRepository,
-      addSearchedNonMembers,
       NonMemberRepository,
       selectedNonMembers,
       addNonMember,
@@ -218,6 +216,7 @@ export default defineComponent({
       display,
       onSubmit,
       user,
+      fetchedOptions,
     }
   },
 })

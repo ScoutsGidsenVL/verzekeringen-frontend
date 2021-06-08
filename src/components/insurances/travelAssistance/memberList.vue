@@ -19,7 +19,7 @@
   </div>
 </template>
 <script lang="ts">
-import MemberItem from '@/components/insurances/travelAssistance/membersSideBar.vue'
+import MemberItem from '@/components/insurances/travelAssistance/memberItem.vue'
 import { defineComponent, PropType, ref, watch } from 'vue'
 import { Member } from '@/serializer/Member'
 

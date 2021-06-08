@@ -6,14 +6,14 @@
           <div class="w-96">
             <multi-select
               id="member"
-              track-by="name"
-              value-prop="value"
+              track-by="firstName"
+              value-prop="groupAdminId"
               :repository="MemberRepository"
               :options="[]"
               :searchable="true"
               label="Zoek"
               placeholder="Zoek op naam"
-              @addSelection="addMember($event)"
+              @fetchedOptions="fetchedOptions($event)"
             />
           </div>
           <div>
@@ -49,6 +49,7 @@ import { defineComponent, ref, watch } from 'vue'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
+import RepositoryFactory from '@/repositories/repositoryFactory'
 
 export default defineComponent({
   name: 'MemberSideBar',
@@ -101,21 +102,27 @@ export default defineComponent({
       selectedMembers.value = []
     })
 
-    const addMember = (member: any) => {
-      if (member) {
-        selectedMembers.value.push(member)
-      }
+    const fetchedOptions = (options: any) => {
+      selectedMembers.value = []
+      options.forEach((member: Member) => {
+        RepositoryFactory.get(MemberRepository)
+          .getById(member.id)
+          .then((result: Member) => {
+            result.birthDate = member.birthDate
+            selectedMembers.value.push(result)
+          })
+      })
     }
 
     return {
       BelgianCitySearchRepository,
       MemberRepository,
       selectedMembers,
-      addMember,
       InputTypes,
       display,
       onSubmit,
       user,
+      fetchedOptions,
     }
   },
 })

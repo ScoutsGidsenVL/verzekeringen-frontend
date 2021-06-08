@@ -1,12 +1,14 @@
 export interface Location {
-  readonly city: string
-  readonly postalCode: string
+  readonly city?: string
+  readonly postalCode?: string
+  readonly label?: string
 }
 
 export const LocationDeserializer = (input: any): Location => {
   const single: Location = {
-    city: input.city,
-    postalCode: input.postcode,
+    city: input.city ? input.city : undefined,
+    postalCode: input.postcode ? input.postcode : undefined,
+    label: input.postcode ? input.postcode + ' ' + input.city : undefined,
   }
 
   return single

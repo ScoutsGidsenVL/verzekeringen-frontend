@@ -53,12 +53,12 @@ export const nonMemberInsuranceSerializer = (input: NonMemberInsurance): NonMemb
     created_on: input.createdOn,
     comment: input.comment,
     group: GroupSerializer(input.group).name,
-    postcode_city: input.country ? undefined : LocationSerializer(input.postCodeCity),
+    postcode_city: input.country && input.country.name !== 'België' ? undefined : LocationSerializer(input.postCodeCity),
     nature: input.nature,
     responsible_phone_number: ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number,
     total_cost: input.totalCost,
     non_members: input.nonMembers ? input.nonMembers.map((nonMember: any) => NonMemberSerializer(nonMember)) : undefined,
-    country: input.country ? CountrySerializer(input.country).id : undefined,
+    country: input.country && input.country.name !== 'België' ? CountrySerializer(input.country).id : undefined,
   }
 
   return single

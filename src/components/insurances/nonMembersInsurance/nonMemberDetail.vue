@@ -11,11 +11,8 @@
           </div>
         </div>
 
-        <activity-detail :nature="details.nature" :location="details.postCodeCity" :country="details.country.name" />
+        <activity-detail :nature="details.nature" :location="details.postCodeCity" :country="details.country ? details.country.name : undefined" />
 
-        <div v-if="details.comment" class="px-5">
-          <label-output label="Opmerkingen" :text="details.comment" />
-        </div>
         <div class="mb-3">
           <p class="font-semibold">Deelnemers</p>
           <div class="px-5 mt-3">
@@ -23,7 +20,7 @@
           </div>
         </div>
 
-        <div v-if="!(holderState === HolderStates.DETAIL)">
+        <div v-if="holderState === HolderStates.COMPLETED">
           <p class="font-semibold">Opmerkingen</p>
           <div v-if="details.comment" class="px-5">
             <label-output :text="details.comment" />
@@ -51,7 +48,7 @@ import { useStore } from 'vuex'
 import NonMembersList from '@/components/insurances/nonMembersInsurance/nonMembersList.vue'
 
 export default defineComponent({
-  name: 'NonMemnerInsuranceDetail',
+  name: 'NonMemberInsuranceDetail',
   components: {
     'responsible-member-detail': ResponsibleMemberDetail,
     'activity-detail': ActivityDetail,

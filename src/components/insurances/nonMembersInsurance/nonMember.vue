@@ -1,7 +1,7 @@
 <template>
   <form @submit="onSubmit">
     <custom-headline-2 text="Activiteit" />
-    <div class="px-5">
+    <div v-if="values" class="px-5">
       <custom-input :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" />
 
       <div class="w-96">
@@ -9,23 +9,27 @@
           rules="required"
           insuranceTypeId="2"
           id="country"
+          :object="true"
           track-by="name"
-          value-prop="data"
+          value-prop="name"
           :repository="CountryRepository"
-          :options="[]"
+          :resolve-on-load="true"
+          :options="[values.country.city ? values.country : undefined]"
+          :extra-option="{ id: '3232', name: 'België' }"
           :searchable="true"
           label="Land"
           placeholder="Zoek op naam"
         />
       </div>
-
-      <div class="w-96">
+      <div v-if="values.country.name === '' || values.country.name === 'België'" class="w-96">
         <multi-select
           id="postCodeCity"
-          track-by="location"
-          value-prop="value"
+          :object="true"
+          track-by="label"
+          value-prop="label"
           :repository="BelgianCitySearchRepository"
-          :options="[]"
+          :resolve-on-load="true"
+          :options="[values.postCodeCity]"
           :searchable="true"
           label="Gemeenten"
           rules="required"
@@ -62,6 +66,7 @@ import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
+import { Country, CountryDeserializer } from '@/serializer/Country'
 
 export default defineComponent({
   name: 'NonMember',
@@ -74,7 +79,17 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
-    const { handleSubmit } = useForm()
+    const initialCountry = ref<Country>(CountryDeserializer({ id: '3232', name: 'België' }))
+    const data: NonMemberInsurance = store.getters.getCurrentInsuranceState
+    const { handleSubmit, values } = useForm<NonMemberInsurance>({
+      initialValues: {
+        nature: data.nature ? data.nature : '',
+        country: data.country ? data.country : initialCountry.value,
+        postCodeCity: data.postCodeCity ? (data.postCodeCity.city === undefined ? {} : data.postCodeCity) : undefined,
+        nonMembers: data.nonMembers ? data.nonMembers : undefined,
+      },
+    })
+
     const selected = ref<string>('option-2')
 
     const generalInsuranceState = computed(() => {
@@ -89,6 +104,7 @@ export default defineComponent({
           postCodeCity: values.postCodeCity ? values.postCodeCity : undefined,
           country: values.country ? values.country : undefined,
           nonMembers: values.nonMembers ? values.nonMembers : [],
+          comment: data.comment,
         },
       })
 
@@ -102,6 +118,8 @@ export default defineComponent({
       InputTypes,
       selected,
       onSubmit,
+      values,
+      data,
     }
   },
 })

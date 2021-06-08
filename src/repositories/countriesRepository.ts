@@ -13,7 +13,7 @@ export class CountryRepository extends BaseRepository {
       const array: any[] = []
       response.results.forEach((result: Country) => {
         result = CountryDeserializer(result)
-        array.push({ id: result.id, name: result.name, data: result })
+        array.push(result)
       })
       return array
     })

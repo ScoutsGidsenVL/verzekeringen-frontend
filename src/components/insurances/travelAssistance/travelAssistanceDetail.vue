@@ -1,5 +1,5 @@
 <template>
-  <base-detail :data="oneTimeActivityState" :repository="OneTimeActivityRepository" title="Eenmalige activiteit">
+  <base-detail :data="travelAssistanceState" :repository="NonMemberInsuranceRepository" title="Niet leden">
     <template #default="{ details }">
       <div v-if="details" class="mt-1">
         <responsible-member-detail :responsible-member="details.responsibleMember" />
@@ -11,9 +11,19 @@
           </div>
         </div>
 
-        <activity-detail :nature="details.nature" :group-size="details.groupSize" :location="details.location" />
+        <activity-detail :nature="details.nature" :location="details.postCodeCity" :country="details.country.name" />
 
-        <div v-if="holderState === HolderStates.COMPLETED">
+        <div v-if="details.comment" class="px-5">
+          <label-output label="Opmerkingen" :text="details.comment" />
+        </div>
+        <div class="mb-3">
+          <p class="font-semibold">Deelnemers</p>
+          <div class="px-5 mt-3">
+            <non-members-list :nonMembersList="details.nonMembers" />
+          </div>
+        </div>
+
+        <div v-if="!(holderState === HolderStates.COMPLETED)">
           <p class="font-semibold">Opmerkingen</p>
           <div v-if="details.comment" class="px-5">
             <label-output :text="details.comment" />
@@ -27,30 +37,33 @@
 </template>
 
 <script lang="ts">
-import { OneTimeActivityRepository } from '@/repositories/insurances/oneTimeActivityRepository'
+import { NonMemberInsuranceRepository } from '@/repositories/insurances/nonMemberInsuranceRepository'
+
 import ResponsibleMemberDetail from '@/components/semantic/detail/ResponsibleMemberDetail.vue'
 import ActivityDetail from '@/components/semantic/detail/ActivityDetail.vue'
 import BaseDetail from '@/components/semantic/detail/BaseDetail.vue'
 import LabelOutput from '@/components/semantic/LabelOutput.vue'
+import { computed, defineComponent } from 'vue'
 import { formatDate } from '@/helpers/formatHelper'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
-import { computed, defineComponent } from 'vue'
 import { useStore } from 'vuex'
+import NonMembersList from '@/components/insurances/nonMembersInsurance/nonMembersList.vue'
 
 export default defineComponent({
-  name: 'OneTimeActivityDetail',
+  name: 'TarvelAssistanceDetail',
   components: {
     'responsible-member-detail': ResponsibleMemberDetail,
     'activity-detail': ActivityDetail,
     'label-output': LabelOutput,
     'base-detail': BaseDetail,
+    'non-members-list': NonMembersList,
   },
   setup() {
     const store = useStore()
 
-    const oneTimeActivityState = computed(() => {
-      return store.state.insurance.oneTimeActivityState
+    const travelAssistanceState = computed(() => {
+      return store.state.insurance.travelAssistanceState
     })
 
     const holderState = computed((): HolderStates => {
@@ -58,8 +71,8 @@ export default defineComponent({
     })
 
     return {
-      OneTimeActivityRepository,
-      oneTimeActivityState,
+      NonMemberInsuranceRepository,
+      travelAssistanceState,
       formatDate,
       InputTypes,
       HolderStates,

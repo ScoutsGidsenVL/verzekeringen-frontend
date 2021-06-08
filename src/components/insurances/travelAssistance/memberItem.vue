@@ -8,10 +8,15 @@
 
       <div class="mt-3">
         <strong>Gsm</strong>
-        <p>{{ member.phoneNumber }}</p>
+        <p>{{ member.phoneNumber !== '' ? member.phoneNumber : '/' }}</p>
       </div>
 
       <div class="mt-3">
+        <strong>Email</strong>
+        <p>{{ member.email !== '' ? member.email : '/' }}</p>
+      </div>
+
+      <div v-if="member.postCodeCity" class="mt-3">
         <strong>Adres</strong>
         <p>
           {{ member.street + ' ' + member.number + (member.letterBox ? ' Bus ' + member.letterBox : '') + ', ' + member.postCodeCity.postalCode + ' ' + member.postCodeCity.city }}
@@ -21,11 +26,6 @@
       <div class="mt-3">
         <strong>Geboortendatum</strong>
         <p>{{ member.birthDate }}</p>
-      </div>
-
-      <div class="mt-3">
-        <strong>Opmerking</strong>
-        <p>{{ member.comment }}</p>
       </div>
     </div>
     <slot />

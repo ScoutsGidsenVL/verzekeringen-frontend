@@ -3,6 +3,7 @@ import { BaseInsurance } from '@/serializer/insurances/BaseInsurance'
 import { InsuranceTypes, InsuranceTypeStoreNames } from '@/enums/insuranceTypes'
 import { HolderStates } from '@/enums/holderStates'
 import { NonMemberInsurance } from '@/serializer/insurances/NonMemberInsurance'
+import { TravelAssistanceInsurance } from '@/serializer/insurances/TravelAssistanceInsurance'
 
 export default {
   state: () => ({
@@ -11,6 +12,7 @@ export default {
     generalInsuranceState: {},
     oneTimeActivityState: {},
     nonMemberState: {},
+    travelAssistanceState: {},
   }),
   getters: {
     holderState(state: any): HolderStates {
@@ -43,12 +45,16 @@ export default {
     SET_NON_MEMBER_STATE(state: any, nonMemberState: NonMemberInsurance) {
       state.nonMemberState = nonMemberState
     },
+    SET_TRAVEL_ASSISTANCE_STATE(state: any, travelAssistanceState: TravelAssistanceInsurance) {
+      state.travelAssistanceState = travelAssistanceState
+    },
     RESET_STATES(state: any) {
       state.holderState = HolderStates.GENERAL
       state.insuranceTypeState = InsuranceTypes.EENMALIGE_ACTIVITEIT
       state.generalInsuranceState = {}
       state.oneTimeActivityState = {}
       state.nonMemberState = {}
+      state.travelAssistanceState = {}
     },
   },
   actions: {
@@ -66,6 +72,9 @@ export default {
     },
     setNonMemberState({ commit }: any, nonMemberState: NonMemberInsurance) {
       commit('SET_NON_MEMBER_STATE', nonMemberState)
+    },
+    setTravelAssistanceState({ commit }: any, travelAssistanceState: TravelAssistanceInsurance) {
+      commit('SET_TRAVEL_ASSISTANCE_STATE', travelAssistanceState)
     },
     resetStates({ commit }: any) {
       commit('RESET_STATES')

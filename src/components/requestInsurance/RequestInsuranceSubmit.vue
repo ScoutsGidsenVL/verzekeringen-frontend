@@ -7,7 +7,7 @@
       <div>
         <p class="font-semibold">Opmerkingen</p>
         <div class="px-5">
-          <custom-input :value="editData.comment" :type="InputTypes.TEXT_AREA" name="comment" label="" />
+          <custom-input :type="InputTypes.TEXT_AREA" name="comment" label="" />
         </div>
       </div>
     </request-insurance-detail>
@@ -40,14 +40,14 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const store = useStore()
-    const { handleSubmit } = useForm()
     const error = ref<boolean>(false)
     const isEdit = !!route.params.id
 
     const data: any = store.getters.getCurrentInsuranceState
-
-    const editData = ref<any>({
-      comment: data.comment ? data.comment : '',
+    const { handleSubmit } = useForm({
+      initialValues: {
+        comment: data.comment ? data.comment : '',
+      },
     })
 
     const onSubmit = handleSubmit(async (values: any) => {
@@ -94,7 +94,6 @@ export default defineComponent({
       onSubmit,
       InputTypes,
       error,
-      editData,
     }
   },
 })

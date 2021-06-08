@@ -13,7 +13,7 @@
         :filter-results="false"
         :min-chars="1"
         :resolve-on-load="true"
-        :delay="0"
+        :delay="500"
         :placeholder="placeholder"
         :track-by="trackBy"
         :label="trackBy"
@@ -37,7 +37,7 @@
 import { defineComponent } from '@vue/runtime-core'
 import { ErrorMessage, useField } from 'vee-validate'
 import Multiselect from '@vueform/multiselect'
-import { onMounted, PropType, ref, watch } from 'vue'
+import { PropType, ref, watch } from 'vue'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import { BaseRepository } from '@/repositories/baseRepository'
 export default defineComponent({
@@ -113,6 +113,10 @@ export default defineComponent({
       default: false,
       required: false,
     },
+    extraOption: {
+      type: Object as PropType<any>,
+      required: false,
+    },
   },
   setup(props, context) {
     const multiselect = ref()
@@ -127,7 +131,8 @@ export default defineComponent({
         await RepositoryFactory.get(props.repository)
           .search(query, props.insuranceTypeId)
           .then((res: any) => {
-            data = res
+            data = props.extraOption ? [...[props.extraOption], ...res] : res
+            context.emit('fetchedOptions', data)
           })
       } else {
         if (props.resolveOnLoad) {
@@ -137,13 +142,6 @@ export default defineComponent({
 
       return data
     }
-
-    onMounted(() => {
-      console.log(multiselect.value)
-      if (multiselect.value) {
-        // multiselect.value.select({ id: '2', value: '2', label: '51-100' })
-      }
-    })
 
     watch(
       () => inputValue.value,

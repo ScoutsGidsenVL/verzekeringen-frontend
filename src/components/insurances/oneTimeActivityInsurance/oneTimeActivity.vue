@@ -3,7 +3,7 @@
     <custom-headline-2 text="Activiteit" />
     <div class="px-5">
       <custom-input :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" />
-
+      {{ oneTimeActivityState }}
       <div class="mt-4">
         <strong>Land</strong>
         <div class="w-96">
@@ -13,11 +13,12 @@
       <div class="w-96">
         <multi-select
           id="location"
-          track-by="location"
-          value-prop="value"
+          :object="true"
+          track-by="label"
+          value-prop="label"
           :repository="BelgianCitySearchRepository"
           :resolve-on-load="true"
-          :options="[{ value: values.location, location: values.location.postalCode + ' ' + values.location.city }]"
+          :options="[values.location]"
           :searchable="true"
           label="Location"
           rules="required"
@@ -25,8 +26,6 @@
         />
       </div>
       <div class="mt-2 w-96">
-        <br />
-        <div>{{ groupSizes }}</div>
         <multi-select
           id="groupSize"
           :object="true"
@@ -108,6 +107,7 @@ export default defineComponent({
           nature: values.nature,
           location: values.location,
           groupSize: values.groupSize,
+          comment: data.comment,
         },
       })
       store.dispatch('setOneTimeActivityState', oneTimeActivity.value).then(() => {

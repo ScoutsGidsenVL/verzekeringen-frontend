@@ -1,31 +1,35 @@
 import { Location, LocationDeserializer, LocationSerializer } from '@/serializer/Location'
 
 export interface Member {
-  readonly id?: number
+  readonly id: string
   readonly lastName: string
   readonly firstName: string
   readonly phoneNumber: string
-  readonly birthDate: string
-  readonly street: string
-  readonly number: string
-  readonly letterBox: string
+  readonly email: string
+  birthDate: string
+  readonly groupAdminId?: string
+  readonly street?: string
+  readonly number?: string
+  readonly letterBox?: string
+  readonly postCodeCity?: Location
   readonly comment: string
-  readonly postCodeCity: Location
-  readonly group?: string
   isChecked?: boolean
 }
 
 export const MemberDeserializer = (input: any): Member => {
   const single: Member = {
+    id: input.id ? input.id : undefined,
     lastName: input.last_name,
     firstName: input.first_name,
     phoneNumber: input.phone_number,
+    email: input.email ? input.email : undefined,
     birthDate: input.birth_date,
-    street: input.street,
-    number: input.number,
-    letterBox: input.letter_box,
+    groupAdminId: input.group_admin_id,
+    street: input.street ? input.street : undefined,
+    number: input.number ? input.number : undefined,
+    letterBox: input.letter_box ? input.letter_box : undefined,
+    postCodeCity: input.postcode_city ? LocationDeserializer(input.postcode_city) : undefined,
     comment: input.comment,
-    postCodeCity: LocationDeserializer(input.postcode_city),
     isChecked: false,
   }
 
@@ -37,13 +41,12 @@ export const MemberSerializer = (input: any): any => {
     last_name: input.lastName,
     first_name: input.firstName,
     phone_number: input.phoneNumber,
+    email: input.email ? input.email : undefined,
     birth_date: input.birthDate,
-    street: input.street,
-    number: input.number,
-    letter_box: input.letterBox,
-    comment: input.comment,
-    postcode_city: LocationSerializer(input.postCodeCity),
+    groupAdminId: input.group_admin_id,
     group: input.group ? input.group : null,
+    group_admin_id: input.groupAdminId,
+    comment: input.comment ? input.comment : undefined,
   }
 
   return single
