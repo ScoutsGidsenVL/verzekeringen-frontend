@@ -4,6 +4,8 @@ import { InsuranceTypes, InsuranceTypeStoreNames } from '@/enums/insuranceTypes'
 import { HolderStates } from '@/enums/holderStates'
 import { NonMemberInsurance } from '@/serializer/insurances/NonMemberInsurance'
 import { TravelAssistanceInsurance } from '@/serializer/insurances/TravelAssistanceInsurance'
+import { TemporaryVehicleInsurance } from '@/serializer/insurances/TemporaryVehicleInsurance'
+import { EventInsurance } from '@/serializer/insurances/EventInsurance'
 
 export interface InsuranceState {
   holderState: string
@@ -12,6 +14,8 @@ export interface InsuranceState {
   oneTimeActivityState: OneTimeActivity
   nonMemberState: NonMemberInsurance
   travelAssistanceState: TravelAssistanceInsurance
+  temporaryVehicleState: TemporaryVehicleInsurance
+  eventState: EventInsurance
 }
 
 export default {
@@ -22,6 +26,8 @@ export default {
     oneTimeActivityState: {},
     nonMemberState: {},
     travelAssistanceState: {},
+    temporaryVehicleState: {},
+    eventState: {},
   }),
   getters: {
     holderState(state: any): HolderStates {
@@ -57,6 +63,12 @@ export default {
     SET_TRAVEL_ASSISTANCE_STATE(state: any, travelAssistanceState: TravelAssistanceInsurance) {
       state.travelAssistanceState = travelAssistanceState
     },
+    SET_TEMPORARY_VEHICLE_STATE(state: any, temporaryVehicleInsurance: TemporaryVehicleInsurance) {
+      state.temporaryVehicleState = temporaryVehicleInsurance
+    },
+    SET_EVENT_STATE(state: any, eventInsurance: EventInsurance) {
+      state.eventState = eventInsurance
+    },
     RESET_STATES(state: any) {
       state.holderState = HolderStates.GENERAL
       state.insuranceTypeState = InsuranceTypes.EENMALIGE_ACTIVITEIT
@@ -64,6 +76,8 @@ export default {
       state.oneTimeActivityState = {}
       state.nonMemberState = {}
       state.travelAssistanceState = {}
+      state.temporaryVehicleState = {}
+      state.eventState = {}
     },
   },
   actions: {
@@ -84,6 +98,12 @@ export default {
     },
     setTravelAssistanceState({ commit }: any, travelAssistanceState: TravelAssistanceInsurance) {
       commit('SET_TRAVEL_ASSISTANCE_STATE', travelAssistanceState)
+    },
+    setTemporaryVehicleState({ commit }: any, temporaryVehicleInsurance: TemporaryVehicleInsurance) {
+      commit('SET_TEMPORARY_VEHICLE_STATE', temporaryVehicleInsurance)
+    },
+    setEventState({ commit }: any, eventInsurance: EventInsurance) {
+      commit('SET_EVENT_STATE', eventInsurance)
     },
     resetStates({ commit }: any) {
       commit('RESET_STATES')

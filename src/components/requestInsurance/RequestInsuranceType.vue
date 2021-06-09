@@ -12,7 +12,7 @@
   </div>
 
   <div v-if="isCurrentType(InsuranceTypes.TIJDELIJKE_AUTO_VERZEKERING, insuranceTypeState)">
-    <div>nothing</div>
+    <temporary-car />
   </div>
 
   <div v-if="isCurrentType(InsuranceTypes.EVENEMENTEN_VERZEKERING, insuranceTypeState)">
@@ -28,6 +28,7 @@
 import OneTimeActivity from '@/components/insurances/oneTimeActivityInsurance/oneTimeActivity.vue'
 import TravelAssistance from '@/components/insurances/travelAssistance/travelAssistance.vue'
 import NonMember from '@/components/insurances/nonMembersInsurance/nonMember.vue'
+import TemporaryCar from '@/components/insurances/tempCarInsurance/temporaryCar.vue'
 import { isCurrentType } from '@/helpers/insuranceTypeHelper'
 import { InsuranceTypes } from '@/enums/insuranceTypes'
 import { computed, defineComponent } from 'vue'
@@ -38,6 +39,7 @@ export default defineComponent({
   components: {
     'one-time-activity': OneTimeActivity,
     'travel-assistance': TravelAssistance,
+    'temporary-car': TemporaryCar,
     'non-member': NonMember,
   },
   setup() {

@@ -5,6 +5,48 @@
 
       <insurance-type-menu :disabled="isEdit" />
 
+      <div class="mt-3" v-if="insuranceTypeState === InsuranceTypes.TIJDELIJKE_AUTO_VERZEKERING">
+        <div><strong>Keuze hulp</strong></div>
+        <div class="mt-4 px-5">
+          <div>
+            <p style="font-size: 0.7em">
+              Verzekering stoffelijke schade - brand - diefstal van een gehuurd voertuig of een voertuig toebehorend aan leden van Scouts en Gidsen Vlaanderen of vrijwillige medewerkers.
+            </p>
+            <input class="mr-2" type="checkbox" id="choice-1" :value="1" v-model="values.insuranceOptions" />
+            <label for="choice-1">Heb je een auto gehuurd?</label>
+          </div>
+
+          <div class="mt-4">
+            <p style="font-size: 0.7em">Dekking van vrijstelling in stoffelijke schade OF diefstal (voor voertuigen die gebruikt worden door een groep van Scouts en Gidsen Vlaanderen.)</p>
+            <input class="mr-2" type="checkbox" id="choice-2" :value="2" v-model="values.insuranceOptions" />
+            <label for="choice-2">Is de auto omnium verzekerd?</label>
+
+            <div v-if="values.insuranceOptions.includes(2)" class="px-5">
+              <p>Maxiumum vrijstellingsbedrag</p>
+              <p style="font-size: 0.7em">Om de vrijstelling (=franchise) van een reeds afgesloten omnium verzekering af te kopen.</p>
+              <div style="margin-top: -2em" class="w-80">
+                <multi-select
+                  rules="required"
+                  id="maxCoverage"
+                  :object="true"
+                  track-by="label"
+                  value-prop="value"
+                  :repository="maxCoverageRepository"
+                  :options="maxCoverageOptions"
+                  placeholder="Maxiumum vrijstellingsbedrag"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <p style="font-size: 0.7em">Dekking van vrijstelling in burgerlijke aansprakelijkheid (voor voertuigen die gehuurd worden door een groep van Scouts en Gidsen Vlaanderen.)</p>
+            <input class="mr-2" type="checkbox" id="choice-3" :value="3" v-model="values.insuranceOptions" />
+            <label for="choice-3">Wil je de vrijstelling (franchise) van deze verzekering afkopen?</label>
+          </div>
+        </div>
+      </div>
+
       <div class="px-5">
         <info-alert v-show="insuranceTypeState === InsuranceTypes.TIJDELIJKE_VERZEKERING_NIET_LEDEN">
           <strong>OPGELET! Via deze verzekering kan je geen nieuwe leden verzekeren.</strong>
@@ -67,13 +109,16 @@ import CustomInput from '@/components/inputs/CustomInput.vue'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomButton from '@/components/CustomButton.vue'
 import { InsuranceTypes } from '@/enums/insuranceTypes'
-import { defineComponent, computed, ref } from 'vue'
+import { defineComponent, computed, ref, watch } from 'vue'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
 import moment from 'moment'
 import { useRoute } from 'vue-router'
+import { Coverage } from '@/serializer/Coverage'
+import RepositoryFactory from '@/repositories/repositoryFactory'
+import { MaxCoverageRepository } from '@/repositories/maxCoverageRepository'
 
 export default defineComponent({
   name: 'RequestInsuranceGeneral',
@@ -92,6 +137,7 @@ export default defineComponent({
     const isEdit = !!route.params.id
     const user = ref<ResponsibleMember>(store.getters.user)
     let data: any = store.getters.getCurrentInsuranceState
+    const maxCoverageOptions = ref<Array<Coverage>>()
 
     const { handleSubmit, values } = useForm<BaseInsurance>({
       initialValues: {
@@ -99,8 +145,22 @@ export default defineComponent({
         endDate: data.endDate ? data.endDate : '',
         group: data.group ? data.group.id : '',
         responsibleMember: data.responsibleMember ? data.responsibleMember : user.value,
+        insuranceOptions: data.insuranceOptions ? data.insuranceOptions : [],
+        maxCoverage: data.maxCoverage ? data.maxCoverage : undefined,
       },
     })
+
+    watch(
+      () => values.insuranceOptions,
+      (current, old) => {
+        if (old && current && old.includes(2) && current.includes(1)) {
+          values.insuranceOptions = current.filter((item) => ![2].includes(item))
+        }
+        if (old && current && old.includes(1) && current.includes(2)) {
+          values.insuranceOptions = current.filter((item) => ![1].includes(item))
+        }
+      }
+    )
 
     const insuranceTypeState = computed((): InsuranceTypes => {
       return store.state.insurance.insuranceTypeState
@@ -119,8 +179,19 @@ export default defineComponent({
       store.dispatch('setHolderState', HolderStates.TYPE)
     })
 
+    const fetchMaxCoverages = () => {
+      RepositoryFactory.get(MaxCoverageRepository)
+        .getArray()
+        .then((result: any) => {
+          maxCoverageOptions.value = result
+        })
+    }
+
+    fetchMaxCoverages()
+
     return {
       dateRuleToInsuranceType,
+      maxCoverageOptions,
       insuranceTypeState,
       InsuranceTypes,
       InputTypes,
