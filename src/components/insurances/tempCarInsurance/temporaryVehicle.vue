@@ -2,9 +2,9 @@
   <form @submit="onSubmit">
     <div v-if="values">
       <div class="mt-3">
-        <custom-headline-2 text="Deelnemers" />
+        <custom-headline-2 text="Bestuurders" />
         <div class="px-5">
-          <select-participants id="participants" rules="required" />
+          <select-drivers id="drivers" rules="required" />
         </div>
       </div>
 
@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import { TravelAssistanceInsurance } from '@/serializer/insurances/TravelAssistanceInsurance'
-import SelectParticipants from '@/components/insurances/travelAssistance/selectParticipants.vue'
+import SelectDrivers from '@/components/insurances/tempCarInsurance/selectDrivers.vue'
 import SelectVehicle from '@/components/insurances/travelAssistance/selectVehicle.vue'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
 import { CountryRepository } from '@/repositories/countriesRepository'
@@ -35,23 +35,23 @@ import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
 import { BaseInsurance } from '@/serializer/insurances/BaseInsurance'
+import { TemporaryVehicleInsurance } from '@/serializer/insurances/TemporaryVehicleInsurance'
 
 export default defineComponent({
-  name: 'TravelAssistance',
+  name: 'TemporaryVehicle',
   components: {
     'custom-headline-2': CustomHeadline2,
-    'select-participants': SelectParticipants,
+    'select-drivers': SelectDrivers,
     'select-vehicle': SelectVehicle,
     'custom-button': CustomButton,
   },
   setup() {
     const store = useStore()
 
-    const data: TravelAssistanceInsurance = store.getters.getCurrentInsuranceState
-    const { handleSubmit, values } = useForm<TravelAssistanceInsurance>({
+    const data: TemporaryVehicleInsurance = store.getters.getCurrentInsuranceState
+    const { handleSubmit, values } = useForm<TemporaryVehicleInsurance>({
       initialValues: {
-        country: data.country ? data.country : undefined,
-        participants: data.participants ? data.participants : undefined,
+        drivers: data.drivers ? data.drivers : undefined,
         vehicle: data.vehicle ? data.vehicle : undefined,
       },
     })

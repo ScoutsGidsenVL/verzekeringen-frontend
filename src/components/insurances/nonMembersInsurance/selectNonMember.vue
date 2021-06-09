@@ -1,8 +1,8 @@
 <template>
   <non-member-list :canBeDeleted="true" :nonMembersList="nonMembers" @deleteNonMemberFromList="deleteNonMemberFromList($event)" />
 
-  <div class="mt-2 cursor-pointer text-lightGreen">
-    <strong @click="openSideBar()"> + voeg niet-lid toe </strong>
+  <div class="mt-2 text-lightGreen">
+    <strong class="cursor-pointer" @click="openSideBar()"> + Voeg niet-lid toe </strong>
   </div>
 
   <non-member-side-bar v-model:isDisplay="isDisplay" title="Niet lid" @addCreatedNonMemberToList="addCreatedNonMemberToList($event)" />

@@ -1,8 +1,13 @@
 <template>
-  <member-list :canBeDeleted="true" :membersList="members" @deleteMemberFromList="deleteMemberFromList($event)" />
+  <driver-list :canBeDeleted="true" :membersList="members" @deleteMemberFromList="deleteMemberFromList($event)" />
 
   <div class="mt-2 text-lightGreen">
-    <strong class="cursor-pointer" @click="openSideBar()"> + Voeg lid toe </strong>
+    <strong class="cursor-pointer" @click="openSideBar()"> + Voeg bestuurder toe </strong>
+  </div>
+
+  <div>
+    <input class="mr-2 ml-4 cursor-pointer" v-model="selectedDriver" type="radio" id="test" name="gender" :value="member" />
+    <label class="cursor-pointer" :for="index + '-driver'">Eigenaar</label>
   </div>
 
   <members-side-bar v-model:isDisplay="isDisplay" title="Lid" @addCreatedMemberToList="addCreatedMemberToList($event)" />
@@ -10,7 +15,7 @@
 
 <script lang="ts">
 import MemberSiderbar from '@/components/insurances/travelAssistance/membersSideBar.vue'
-import MemberList from '@/components/insurances/travelAssistance/memberList.vue'
+import DriverList from '@/components/insurances/tempCarInsurance/driverList.vue'
 import { NonMember } from '@/serializer/NonMember'
 import { defineComponent, ref } from 'vue'
 import { useField } from 'vee-validate'
@@ -19,7 +24,7 @@ export default defineComponent({
   name: 'SelectParticipant',
   components: {
     'members-side-bar': MemberSiderbar,
-    'member-list': MemberList,
+    'driver-list': DriverList,
   },
   props: {
     id: {

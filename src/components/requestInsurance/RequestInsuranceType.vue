@@ -28,7 +28,7 @@
 import OneTimeActivity from '@/components/insurances/oneTimeActivityInsurance/oneTimeActivity.vue'
 import TravelAssistance from '@/components/insurances/travelAssistance/travelAssistance.vue'
 import NonMember from '@/components/insurances/nonMembersInsurance/nonMember.vue'
-import TemporaryCar from '@/components/insurances/tempCarInsurance/temporaryCar.vue'
+import TemporaryCar from '@/components/insurances/tempCarInsurance/temporaryVehicle.vue'
 import { isCurrentType } from '@/helpers/insuranceTypeHelper'
 import { InsuranceTypes } from '@/enums/insuranceTypes'
 import { computed, defineComponent } from 'vue'
