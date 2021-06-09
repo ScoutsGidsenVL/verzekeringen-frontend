@@ -1,5 +1,6 @@
 import { Group, GroupDeserializer, GroupSerializer } from '@/serializer/Group'
 import { Location, LocationDeserializer, LocationSerializer } from '@/serializer/Location'
+import { EventSize, EventSizeDeserializer, EventSizeSerializer } from '@/serializer/EventSize'
 
 export interface EventInsurance {
   readonly id?: number
@@ -9,7 +10,7 @@ export interface EventInsurance {
   readonly responsiblePhoneNumber?: string
   readonly group?: Group
   readonly nature?: string
-  readonly eventSize?: string
+  readonly eventSize?: EventSize
   readonly location?: Location
   readonly totalCost?: string
 }
@@ -25,6 +26,7 @@ export const EventInsuranceDeserializer = (input: any): EventInsurance => {
     totalCost: input.total_cost,
     nature: input.nature,
     location: LocationDeserializer(input.location),
+    eventSize: input.event_size ? EventSizeDeserializer(input.event_size) : undefined,
   }
 
   return single
@@ -40,6 +42,7 @@ export const EventInsuranceSerializer = (input: EventInsurance): EventInsurance 
     total_cost: input.totalCost,
     nature: input.nature,
     location: LocationSerializer(input.location),
+    event_size: input.eventSize ? EventSizeSerializer(input.eventSize) : undefined,
   }
 
   return single
