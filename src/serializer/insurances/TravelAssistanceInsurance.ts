@@ -1,27 +1,20 @@
-import { ResponsibleMember, ResponsibleMemberDeserializer, ResponsibleMemberSerializer } from '../ResponsibleMember'
 import { Member, MemberDeserializer, MemberSerializer } from '@/serializer/Member'
-import { Location, LocationDeserializer, LocationSerializer } from '@/serializer/Location'
 import { Group, GroupDeserializer, GroupSerializer } from '@/serializer/Group'
-import { Status, StatusDeserializer } from '@/serializer/Status'
-import { Type, TypeDeserializer } from '@/serializer/Type'
-import { Country, CountryDeserializer, CountrySerializer } from '../Country'
+import { Country, CountryDeserializer, CountrySerializer } from '@/serializer/Country'
+import { Vehicle, VehicleDeserializer, VehicleSerializer } from '@/serializer/Vehicle'
+import { ResponsibleMember, ResponsibleMemberDeserializer } from '@/serializer/ResponsibleMember'
 
 export interface TravelAssistanceInsurance {
   readonly id?: number
   readonly startDate?: string
   readonly endDate?: string
-  readonly createdOn?: string
   readonly comment?: string
-  readonly group?: Group
-  readonly postCodeCity?: Location
-  readonly nature?: string
-  readonly responsibleMember?: ResponsibleMember
-  readonly status?: Status
-  readonly totalCost?: string
-  readonly type?: Type
-  readonly vvksComment?: string
-  readonly participants?: Member[]
+  readonly responsiblePhoneNumber?: string
   readonly country?: Country
+  readonly group?: Group
+  readonly vehicle?: Vehicle
+  readonly participants?: Member[]
+  readonly responsibleMember?: ResponsibleMember
 }
 
 export const TravelAssistanceInsuranceDeserializer = (input: any): TravelAssistanceInsurance => {
@@ -29,18 +22,13 @@ export const TravelAssistanceInsuranceDeserializer = (input: any): TravelAssista
     id: input.id ? input.id : undefined,
     startDate: input.start_date,
     endDate: input.end_date,
-    createdOn: input.created_on,
     comment: input.comment ? input.comment : undefined,
-    group: GroupDeserializer(input.group),
-    postCodeCity: input.postcode_city ? LocationDeserializer(input.postcode_city) : undefined,
-    nature: input.nature,
-    responsibleMember: ResponsibleMemberDeserializer(input.responsible_member),
-    status: StatusDeserializer(input.status),
-    totalCost: input.total_cost,
-    type: TypeDeserializer(input.type),
-    vvksComment: input.vvks_comment,
-    participants: input.participants.map((member: any) => MemberDeserializer(member)),
+    responsiblePhoneNumber: input.responsible_phone_number ? input.responsible_phone_number : undefined,
     country: input.country ? CountryDeserializer(input.country) : undefined,
+    group: GroupDeserializer(input.group),
+    vehicle: VehicleDeserializer(input.vehicle),
+    participants: input.participants.map((member: any) => MemberDeserializer(member)),
+    responsibleMember: ResponsibleMemberDeserializer(input.responsible_member),
   }
 
   return single
@@ -50,15 +38,12 @@ export const TravelAssistanceInsuranceSerializer = (input: TravelAssistanceInsur
   const single: any = {
     start_date: input.startDate,
     end_date: input.endDate,
-    created_on: input.createdOn,
     comment: input.comment,
-    group: GroupSerializer(input.group).name,
-    postcode_city: input.country ? undefined : LocationSerializer(input.postCodeCity),
-    nature: input.nature,
-    responsible_phone_number: ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number,
-    total_cost: input.totalCost,
-    participants: input.participants ? input.participants.map((member: any) => MemberSerializer(member)) : undefined,
+    responsible_phone_number: input.responsiblePhoneNumber ? input.responsiblePhoneNumber : undefined,
     country: input.country ? CountrySerializer(input.country).id : undefined,
+    group: GroupSerializer(input.group).name,
+    vehicle: VehicleSerializer(input.vehicle),
+    participants: input.participants ? input.participants.map((member: any) => MemberSerializer(member)) : undefined,
   }
 
   return single

@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import RequestInsurance from '../views/RequestInsurance.vue'
 import oneTimeActivityDetail from '@/components/insurances/oneTimeActivityInsurance/oneTimeActivityDetail.vue'
 import nonMemberDetail from '@/components/insurances/nonMembersInsurance/nonMemberDetail.vue'
+import travelAssistanceDetail from '@/components/insurances/travelAssistance/travelAssistanceDetail.vue'
 
 const routes: any[] = [
   {
@@ -50,6 +51,26 @@ const routes: any[] = [
     path: '/tijdelijke-verzekering-niet-leden-detail/:id?',
     name: 'NonMemberDetail',
     component: nonMemberDetail,
+    meta: {
+      requiresOpenIdAuth: true,
+      title: 'Verzekering',
+      detail: true,
+    },
+  },
+  {
+    path: '/reisbijstand-met-auto-detail/:id?',
+    name: 'TravelAssistanceWithCar',
+    component: travelAssistanceDetail,
+    meta: {
+      requiresOpenIdAuth: true,
+      title: 'Verzekering',
+      detail: true,
+    },
+  },
+  {
+    path: '/reisbijstand-zonder-auto-detail/:id?',
+    name: 'TravelAssistanceWithoutCar',
+    component: travelAssistanceDetail,
     meta: {
       requiresOpenIdAuth: true,
       title: 'Verzekering',

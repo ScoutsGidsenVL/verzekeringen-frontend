@@ -1,7 +1,7 @@
 import { TravelAssistanceInsurance, TravelAssistanceInsuranceDeserializer, TravelAssistanceInsuranceSerializer } from '@/serializer/insurances/TravelAssistanceInsurance'
 import { BaseRepository } from '@/repositories/baseRepository'
 
-export class NonMemberInsuranceRepository extends BaseRepository {
+export class TravelAssistanceRepository extends BaseRepository {
   id = '/insurances/travel_assistance/'
   endpoint = '/insurances/'
   deserializer = TravelAssistanceInsuranceDeserializer

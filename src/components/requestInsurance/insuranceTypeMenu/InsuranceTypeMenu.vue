@@ -34,12 +34,12 @@ export default defineComponent({
     const store = useStore()
     const selection = ref<string>(store.getters.insuranceTypeState)
     const insuranceTypes = ref<Object[]>([
-      { name: 'Eenmalige activiteit', value: InsuranceTypes.EENMALIGE_ACTIVITEIT },
       { name: 'Tijdelijke verzekering niet-leden', value: InsuranceTypes.TIJDELIJKE_VERZEKERING_NIET_LEDEN },
-      { name: 'Reisbijstand', value: InsuranceTypes.REIS_BIJSTAND },
       { name: 'Tijdelijke autoverzekering', value: InsuranceTypes.TIJDELIJKE_AUTO_VERZEKERING },
-      { name: 'Evenementen verzekering', value: InsuranceTypes.EVENEMENTEN_VERZEKERING },
       { name: 'Materiaal verzekering', value: InsuranceTypes.MATERIAAL_VERZEKERING },
+      { name: 'Evenementen verzekering', value: InsuranceTypes.EVENEMENTEN_VERZEKERING },
+      { name: 'Eenmalige activiteit', value: InsuranceTypes.EENMALIGE_ACTIVITEIT },
+      { name: 'Reisbijstand', value: InsuranceTypes.REIS_BIJSTAND },
     ])
     const setInsuranceTypeState = (value: string) => {
       store.dispatch('setInsuranceTypeState', value)

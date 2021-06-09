@@ -40,6 +40,7 @@ import router from '@/router'
 import { useStore } from 'vuex'
 import { InsuranceTypeRepos, InsuranceTypes, InsuranceTypeStoreSetters } from '@/enums/insuranceTypes'
 import RepositoryFactory from '@/repositories/repositoryFactory'
+
 export default defineComponent({
   name: 'CustomListItem',
   props: {

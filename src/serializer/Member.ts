@@ -40,13 +40,15 @@ export const MemberSerializer = (input: any): any => {
   const single: any = {
     last_name: input.lastName,
     first_name: input.firstName,
-    phone_number: input.phoneNumber,
+    phone_number: input.phoneNumber ? input.phoneNumber : '/',
     email: input.email ? input.email : undefined,
     birth_date: input.birthDate,
-    groupAdminId: input.group_admin_id,
-    group: input.group ? input.group : null,
     group_admin_id: input.groupAdminId,
+    street: input.street ? input.street : undefined,
+    number: input.number ? input.number : undefined,
+    group: input.group ? input.group : null,
     comment: input.comment ? input.comment : undefined,
+    postcode_city: input.postCodeCity ? LocationSerializer(input.postCodeCity) : undefined,
   }
 
   return single

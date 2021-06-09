@@ -1,7 +1,11 @@
 <template>
-  <vehicle-item />
+  <div v-if="vehicle.brand">
+    <vehicle-item v-if="vehicle" :vehicle="vehicle" :no-line="true" />
+  </div>
+
   <div class="mt-2 cursor-pointer text-lightGreen" @click="openSideBar()">
-    <strong> + Selecteer voertuig </strong>
+    <strong v-if="!vehicle.brand"> + Selecteer voertuig </strong>
+    <strong v-if="vehicle.brand"> + Selecteer ander voertuig </strong>
   </div>
 
   <vehicle-side-bar v-model:isDisplay="isDisplay" title="Voertuig" @addCreatedVehicle="addCreatedVehicle($event)" />

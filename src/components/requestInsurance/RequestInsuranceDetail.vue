@@ -9,16 +9,12 @@
     </div>
 
     <div v-if="isCurrentType(InsuranceTypes.REIS_BIJSTAND, insuranceTypeState)">
-      <one-time-activity-detail />
+      <travel-assistance-detail><slot></slot></travel-assistance-detail>
     </div>
 
-    <div v-if="isCurrentType(InsuranceTypes.TIJDELIJKE_AUTO_VERZEKERING, insuranceTypeState)">
-      <one-time-activity-detail />
-    </div>
+    <div v-if="isCurrentType(InsuranceTypes.TIJDELIJKE_AUTO_VERZEKERING, insuranceTypeState)">LEEG</div>
 
-    <div v-if="isCurrentType(InsuranceTypes.EVENEMENTEN_VERZEKERING, insuranceTypeState)">
-      <one-time-activity-detail />
-    </div>
+    <div v-if="isCurrentType(InsuranceTypes.EVENEMENTEN_VERZEKERING, insuranceTypeState)">LEEG</div>
 
     <div v-if="isCurrentType(InsuranceTypes.MATERIAAL_VERZEKERING, insuranceTypeState)"></div>
   </div>
@@ -27,7 +23,7 @@
 <script lang="ts">
 import OneTimeActivityDetail from '@/components/insurances/oneTimeActivityInsurance/oneTimeActivityDetail.vue'
 import NonMemberInsuranceDetail from '@/components/insurances/nonMembersInsurance/nonMemberDetail.vue'
-
+import TravelAssistanceDetail from '@/components/insurances/travelAssistance/travelAssistanceDetail.vue'
 import { isCurrentType } from '@/helpers/insuranceTypeHelper'
 import { InsuranceTypes } from '@/enums/insuranceTypes'
 import { computed, defineComponent } from 'vue'
@@ -38,6 +34,7 @@ export default defineComponent({
   components: {
     'one-time-activity-detail': OneTimeActivityDetail,
     'non-member-insurance-detail': NonMemberInsuranceDetail,
+    'travel-assistance-detail': TravelAssistanceDetail,
   },
   setup() {
     const store = useStore()

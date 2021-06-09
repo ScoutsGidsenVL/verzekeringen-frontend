@@ -3,32 +3,24 @@
     <base-side-bar v-model:isDisplay="display" v-model:selection="selected" :title="title">
       <div>
         <form @submit="onSubmit">
-          <div class="w-96">
-            <multi-select
-              id="member"
-              track-by="firstName"
-              value-prop="groupAdminId"
-              :repository="MemberRepository"
-              :options="[]"
-              :searchable="true"
-              label="Zoek"
-              placeholder="Zoek op naam"
-              @fetchedOptions="fetchedOptions($event)"
-            />
-          </div>
           <div>
-            <hr v-if="selectedMembers.length > 0" class="mt-4 border-t-2 border-black" />
+            <search-input name="member" placeholder="Zoek op naam" v-model:loading="loading" :repository="MemberRepository" @fetchedOptions="fetchedOptions($event)" />
+          </div>
+
+          <div class="custom-container mt-4">
+            <hr v-if="selectedMembers.length > 0" class="mt-4 border-t-2 w-96 border-black" />
             <div class="w-96" v-for="(member, index) in selectedMembers" :key="member.id">
               <member-item :member="member">
                 <div>
                   <div class="pt-3 pb-4 text-right">
-                    <input type="checkbox" :id="index" v-model="member.isChecked" />
-                    <label class="pl-3" for="">Selecteer</label>
+                    <input class="cursor-pointer" type="checkbox" :id="index" v-model="member.isChecked" />
+                    <label class="pl-2" for="">Selecteer</label>
                   </div>
                 </div>
               </member-item>
             </div>
           </div>
+
           <div class="mt-5"><custom-button text="Voeg toe" /></div>
         </form>
       </div>
@@ -42,8 +34,8 @@ import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRep
 import { MemberRepository } from '@/repositories/memberRepository'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 import BaseSideBar from '@/components/semantic/BaseSideBar.vue'
-import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomButton from '@/components/CustomButton.vue'
+import SearchInput from '@/components/inputs/SearchInput.vue'
 import { Member } from '@/serializer/Member'
 import { defineComponent, ref, watch } from 'vue'
 import { InputTypes } from '@/enums/inputTypes'
@@ -56,8 +48,8 @@ export default defineComponent({
   components: {
     'custom-button': CustomButton,
     'base-side-bar': BaseSideBar,
-    'multi-select': MultiSelect,
     'member-item': MemberItem,
+    'search-input': SearchInput,
   },
   props: {
     title: {
@@ -75,6 +67,7 @@ export default defineComponent({
     const display = ref<boolean>(props.isDisplay)
     const { handleSubmit } = useForm<Member>()
     const selectedMembers = ref<Member[]>([])
+    const loading = ref<boolean>(false)
 
     watch(
       () => props.isDisplay,
@@ -98,8 +91,8 @@ export default defineComponent({
         }
       })
       context.emit('addCreatedMemberToList', tempList.value)
-
       selectedMembers.value = []
+      display.value = false
     })
 
     const fetchedOptions = (options: any) => {
@@ -112,6 +105,7 @@ export default defineComponent({
             selectedMembers.value.push(result)
           })
       })
+      loading.value = false
     }
 
     return {
@@ -123,7 +117,32 @@ export default defineComponent({
       onSubmit,
       user,
       fetchedOptions,
+      loading,
     }
   },
 })
 </script>
+
+<style lang="scss" scoped>
+.custom-container {
+  max-height: 550px;
+  overflow-y: scroll;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #ececec;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #212529;
+  border-radius: 10px;
+}
+</style>

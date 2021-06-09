@@ -1,44 +1,37 @@
 <template>
-  VEHICLE ITEM
   <div v-if="vehicle" class="w-96">
-    <div>
+    <div v-if="vehicle.brand">
       <strong>Merk</strong>
       <p>{{ vehicle.brand }}</p>
     </div>
 
-    <div class="mt-3">
+    <div v-if="vehicle.licensePlate" class="mt-3">
       <strong>Nummerplaat</strong>
       <p>{{ vehicle.licensePlate }}</p>
     </div>
 
-    <div class="mt-3">
-      <strong>Nummerplaat</strong>
-      <p>{{ vehicle.licensePlate }}</p>
-    </div>
-
-    <div class="mt-3">
+    <div v-if="vehicle.constructionYear" class="mt-3">
       <strong>Bouwjaar</strong>
       <p>{{ vehicle.constructionYear }}</p>
     </div>
 
-    <div class="mt-3">
+    <div v-if="vehicle.chassisNumber" class="mt-3">
       <strong>Chasisnummer</strong>
       <p>{{ vehicle.chassisNumber }}</p>
     </div>
 
-    <div class="mt-3">
+    <div v-if="vehicle.type.label" class="mt-3">
       <strong>Type</strong>
-      <p>{{ vehicle.type }}</p>
+      <p>{{ vehicle.type.label }}</p>
     </div>
 
-    <div class="mt-3">
+    <div v-if="vehicle.trailer.label" class="mt-3">
       <strong>Aanhangwagen</strong>
-      <p v-if="vehicle.trailer">Ja</p>
-      <p v-if="!vehicle.trailer">Nee</p>
+      <p>{{ vehicle.trailer.label }}</p>
     </div>
 
     <slot />
-    <hr class="border-t-2 border-black" />
+    <hr v-if="!noLine" class="border-t-2 border-black mt-3" />
   </div>
 </template>
 
@@ -52,6 +45,7 @@ export default defineComponent({
       type: Object as PropType<Vehicle>,
       required: true,
     },
+    noLine: Boolean,
   },
 })
 </script>

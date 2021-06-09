@@ -16,7 +16,7 @@ import { defineComponent, ref } from 'vue'
 import { useField } from 'vee-validate'
 
 export default defineComponent({
-  name: 'SelectMember',
+  name: 'SelectParticipant',
   components: {
     'members-side-bar': MemberSiderbar,
     'member-list': MemberList,

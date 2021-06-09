@@ -61,27 +61,18 @@
 
       <div v-if="selected === 'option-2'">
         <form @submit="onSubmit">
-          <div class="w-96">
-            <multi-select
-              id="nonMember"
-              track-by="name"
-              value-prop="value"
-              :repository="NonMemberRepository"
-              :options="[]"
-              :searchable="true"
-              label="Zoek"
-              placeholder="Zoek op naam"
-              @fetchedOptions="fetchedOptions($event)"
-            />
-          </div>
           <div>
-            <hr v-if="selectedNonMembers.length > 0" class="mt-4 border-t-2 border-black" />
+            <search-input name="nonMember" placeholder="Zoek op naam" v-model:loading="loading" :repository="NonMemberRepository" @fetchedOptions="fetchedOptions($event)" />
+          </div>
+
+          <div class="custom-container mt-4">
+            <hr v-if="selectedNonMembers.length > 0" class="mt-4 border-t-2 w-96 border-black" />
             <div class="w-96" v-for="(nonMember, index) in selectedNonMembers" :key="nonMember.id">
               <non-member-item :non-member="nonMember">
                 <div>
                   <div class="pt-3 pb-4 text-right">
-                    <input type="checkbox" :id="index" v-model="nonMember.isChecked" />
-                    <label class="pl-3" for="">Selecteer</label>
+                    <input class="cursor-pointer" type="checkbox" :id="index" v-model="nonMember.isChecked" />
+                    <label class="pl-2" for="">Selecteer</label>
                   </div>
                 </div>
               </non-member-item>
@@ -109,6 +100,7 @@ import { defineComponent, ref, watch } from 'vue'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
+import SearchInput from '@/components/inputs/SearchInput.vue'
 
 export default defineComponent({
   name: 'NonMemberSideBar',
@@ -118,6 +110,7 @@ export default defineComponent({
     'custom-input': CustomInput,
     'multi-select': MultiSelect,
     'non-member-item': NonMemberItem,
+    'search-input': SearchInput,
   },
   props: {
     title: {
@@ -136,6 +129,7 @@ export default defineComponent({
     const { handleSubmit } = useForm<NonMember>()
     const selected = ref<string>('option-1')
     const selectedNonMembers = ref<NonMember[]>([])
+    const loading = ref<boolean>(false)
 
     watch(
       () => props.isDisplay,
@@ -181,6 +175,7 @@ export default defineComponent({
       }
 
       selectedNonMembers.value = []
+      display.value = false
     })
 
     const addNonMember = (nonMember: any) => {
@@ -204,6 +199,7 @@ export default defineComponent({
       options.forEach((nonMember: any) => {
         selectedNonMembers.value.push(nonMember.value)
       })
+      loading.value = false
     }
 
     return {
@@ -217,7 +213,32 @@ export default defineComponent({
       onSubmit,
       user,
       fetchedOptions,
+      loading,
     }
   },
 })
 </script>
+
+<style lang="scss" scoped>
+.custom-container {
+  max-height: 550px;
+  overflow-y: scroll;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #ececec;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #212529;
+  border-radius: 10px;
+}
+</style>

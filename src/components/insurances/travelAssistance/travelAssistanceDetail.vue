@@ -1,5 +1,5 @@
 <template>
-  <base-detail :data="travelAssistanceState" :repository="NonMemberInsuranceRepository" title="Niet leden">
+  <base-detail :data="travelAssistanceState" :repository="TravelAssistanceRepository" title="Reisbijstand">
     <template #default="{ details }">
       <div v-if="details" class="mt-1">
         <responsible-member-detail :responsible-member="details.responsibleMember" />
@@ -11,15 +11,19 @@
           </div>
         </div>
 
-        <activity-detail :nature="details.nature" :location="details.postCodeCity" :country="details.country.name" />
+        <activity-detail :country="details.country.name" />
 
-        <div v-if="details.comment" class="px-5">
-          <label-output label="Opmerkingen" :text="details.comment" />
-        </div>
         <div class="mb-3">
           <p class="font-semibold">Deelnemers</p>
           <div class="px-5 mt-3">
-            <non-members-list :nonMembersList="details.nonMembers" />
+            <member-list :members-list="details.participants" />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <p class="font-semibold">Voertuig</p>
+          <div class="px-5 mt-3">
+            <vehicle-item v-if="details.vehicle" :vehicle="details.vehicle" :no-line="true" />
           </div>
         </div>
 
@@ -37,8 +41,7 @@
 </template>
 
 <script lang="ts">
-import { NonMemberInsuranceRepository } from '@/repositories/insurances/nonMemberInsuranceRepository'
-
+import { TravelAssistanceRepository } from '@/repositories/insurances/travelAssistanceRepository'
 import ResponsibleMemberDetail from '@/components/semantic/detail/ResponsibleMemberDetail.vue'
 import ActivityDetail from '@/components/semantic/detail/ActivityDetail.vue'
 import BaseDetail from '@/components/semantic/detail/BaseDetail.vue'
@@ -48,7 +51,8 @@ import { formatDate } from '@/helpers/formatHelper'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { useStore } from 'vuex'
-import NonMembersList from '@/components/insurances/nonMembersInsurance/nonMembersList.vue'
+import MemberList from '@/components/insurances/travelAssistance/memberList.vue'
+import VehicleItem from '@/components/insurances/travelAssistance/vehicleItem.vue'
 
 export default defineComponent({
   name: 'TarvelAssistanceDetail',
@@ -57,7 +61,8 @@ export default defineComponent({
     'activity-detail': ActivityDetail,
     'label-output': LabelOutput,
     'base-detail': BaseDetail,
-    'non-members-list': NonMembersList,
+    'member-list': MemberList,
+    'vehicle-item': VehicleItem,
   },
   setup() {
     const store = useStore()
@@ -71,7 +76,7 @@ export default defineComponent({
     })
 
     return {
-      NonMemberInsuranceRepository,
+      TravelAssistanceRepository,
       travelAssistanceState,
       formatDate,
       InputTypes,
