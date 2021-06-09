@@ -27,7 +27,7 @@ export const TravelAssistanceInsuranceDeserializer = (input: any): TravelAssista
     responsiblePhoneNumber: input.responsible_phone_number ? input.responsible_phone_number : undefined,
     country: input.country ? CountryDeserializer(input.country) : undefined,
     group: GroupDeserializer(input.group),
-    vehicle: VehicleDeserializer(input.vehicle),
+    vehicle: input.vehicle && input.vehicle.license_plate ? VehicleDeserializer(input.vehicle) : undefined,
     participants: input.participants.map((member: any) => MemberDeserializer(member)),
     responsibleMember: ResponsibleMemberDeserializer(input.responsible_member),
     totalCost: input.total_cost,
@@ -44,7 +44,7 @@ export const TravelAssistanceInsuranceSerializer = (input: TravelAssistanceInsur
     responsible_phone_number: input.responsiblePhoneNumber ? input.responsiblePhoneNumber : undefined,
     country: input.country ? CountrySerializer(input.country).id : undefined,
     group: GroupSerializer(input.group).name,
-    vehicle: VehicleSerializer(input.vehicle),
+    vehicle: input.vehicle && input.vehicle.licensePlate ? VehicleSerializer(input.vehicle) : undefined,
     participants: input.participants ? input.participants.map((member: any) => MemberSerializer(member)) : undefined,
     total_cost: input.totalCost,
   }

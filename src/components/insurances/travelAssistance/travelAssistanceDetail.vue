@@ -20,10 +20,10 @@
           </div>
         </div>
 
-        <div class="mb-3">
+        <div v-if="details.vehicle && details.vehicle.licensePlate" class="mb-3">
           <p class="font-semibold">Voertuig</p>
           <div class="px-5 mt-3">
-            <vehicle-item v-if="details.vehicle" :vehicle="details.vehicle" :no-line="true" />
+            <vehicle-item :vehicle="details.vehicle" :no-line="true" />
           </div>
         </div>
 

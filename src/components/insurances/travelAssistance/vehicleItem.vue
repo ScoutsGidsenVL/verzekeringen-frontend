@@ -1,5 +1,5 @@
 <template>
-  <div v-if="vehicle" class="w-96">
+  <div v-if="vehicle && vehicle.licensePlate" class="w-96">
     <div v-if="vehicle.brand">
       <strong>Merk</strong>
       <p>{{ vehicle.brand }}</p>

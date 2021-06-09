@@ -1,6 +1,10 @@
 <template>
   <div v-if="vehicle.brand">
-    <vehicle-item v-if="vehicle" :vehicle="vehicle" :no-line="true" />
+    <vehicle-item v-if="vehicle" :vehicle="vehicle" :no-line="true">
+      <div class="text-right mt-4">
+        <label @click="deleteVehicle()" class="hover:text-lightGreen cursor-pointer" for="">Verwijder</label>
+      </div>
+    </vehicle-item>
   </div>
 
   <div class="mt-2 cursor-pointer text-lightGreen" @click="openSideBar()">
