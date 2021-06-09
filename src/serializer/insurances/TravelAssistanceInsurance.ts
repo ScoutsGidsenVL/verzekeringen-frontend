@@ -15,6 +15,7 @@ export interface TravelAssistanceInsurance {
   readonly vehicle?: Vehicle
   readonly participants?: Member[]
   readonly responsibleMember?: ResponsibleMember
+  readonly totalCost?: string
 }
 
 export const TravelAssistanceInsuranceDeserializer = (input: any): TravelAssistanceInsurance => {
@@ -29,6 +30,7 @@ export const TravelAssistanceInsuranceDeserializer = (input: any): TravelAssista
     vehicle: VehicleDeserializer(input.vehicle),
     participants: input.participants.map((member: any) => MemberDeserializer(member)),
     responsibleMember: ResponsibleMemberDeserializer(input.responsible_member),
+    totalCost: input.total_cost,
   }
 
   return single
@@ -44,6 +46,7 @@ export const TravelAssistanceInsuranceSerializer = (input: TravelAssistanceInsur
     group: GroupSerializer(input.group).name,
     vehicle: VehicleSerializer(input.vehicle),
     participants: input.participants ? input.participants.map((member: any) => MemberSerializer(member)) : undefined,
+    total_cost: input.totalCost,
   }
 
   return single

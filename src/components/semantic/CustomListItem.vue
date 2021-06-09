@@ -71,9 +71,19 @@ export default defineComponent({
         case 'TypeEenmaligeActiviteit':
           setInsuranceTypeState(InsuranceTypes.EENMALIGE_ACTIVITEIT)
           break
+
         case 'TypeTijdelijkeVerzekering':
           setInsuranceTypeState(InsuranceTypes.TIJDELIJKE_VERZEKERING_NIET_LEDEN)
           break
+
+        case 'TypeEthiasAssistanceMetAuto':
+          setInsuranceTypeState(InsuranceTypes.REIS_BIJSTAND)
+          break
+
+        case 'TypeEthiasAssistanceZonderAuto':
+          setInsuranceTypeState(InsuranceTypes.REIS_BIJSTAND)
+          break
+
         default:
           break
       }

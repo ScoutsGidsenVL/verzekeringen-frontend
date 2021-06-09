@@ -74,6 +74,7 @@ export default defineComponent({
       initialValues: {
         country: data.country ? data.country : undefined,
         participants: data.participants ? data.participants : undefined,
+        vehicle: data.vehicle ? data.vehicle : undefined,
       },
     })
     const selected = ref<string>('option-2')
