@@ -1,5 +1,5 @@
 <template>
-  <button :disabled="disabled" class="btn-simple-dark" type="submit">
+  <button :disabled="disabled" class="btn-simple-dark" :type="type">
     <a class="btn-simple-dark mt-0">{{ text }}</a>
   </button>
 </template>
@@ -17,6 +17,11 @@ export default defineComponent({
       type: Boolean,
       required: false,
       default: false,
+    },
+    type: {
+      type: String,
+      default: 'submit',
+      required: false,
     },
   },
 })

@@ -21,7 +21,7 @@ export interface InsuranceState {
 export default {
   state: (): InsuranceState => ({
     holderState: HolderStates.GENERAL,
-    insuranceTypeState: InsuranceTypes.TIJDELIJKE_VERZEKERING_NIET_LEDEN,
+    insuranceTypeState: InsuranceTypes ? InsuranceTypes.TIJDELIJKE_VERZEKERING_NIET_LEDEN : 'TIJDELIJKE_VERZEKERING_NIET_LEDEN',
     generalInsuranceState: {},
     oneTimeActivityState: {},
     nonMemberState: {},

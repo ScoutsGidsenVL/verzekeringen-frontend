@@ -69,7 +69,7 @@
           <custom-input :min="minDate" :type="InputTypes.DATE" rules="required" name="startDate" label="Start datum" />
         </div>
         <div class="w-80">
-          <custom-input :min="minDate" :type="InputTypes.DATE" :rules="dateRuleToInsuranceType('start', insuranceTypeState)" name="endDate" label="Eind datum" />
+          <custom-input :min="minDate" :type="InputTypes.DATE" rules="required|startDateBeforeEndDate:startDate|maximumDateTerm:startDate" name="endDate" label="Eind datum" />
         </div>
       </div>
     </div>
@@ -82,15 +82,6 @@
           <div style="width: 65%">
             <multi-select :disabled="isEdit" id="group" rules="required" placeholder="Group" track-by="fullInfo" value-prop="id" :options="userData.scoutsGroups" label="Selecteer groep" />
           </div>
-          <div class="mt-6 ml-3">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hover:text-lightGreen cursor-pointer" @click="refreshGroups()" viewBox="0 0 20 20" fill="currentColor">
-              <path
-                fill-rule="evenodd"
-                d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </div>
         </div>
       </div>
     </div>
@@ -102,7 +93,16 @@
       </div>
     </div>
 
-    <div class="mt-5 px-5">
+    <div>
+      <info-alert>
+        <p>
+          Om informatie van de aanvrager te wijzigen <strong><a target="_blank" href="https://groepsadmin.scoutsengidsenvlaanderen.be/">klik hier.</a></strong>
+          <custom-button @click="refreshGroups()" type="button" class="ml-5 mt-2" text="Herlaad" />
+        </p>
+      </info-alert>
+    </div>
+
+    <div class="mt-5">
       <custom-button text="Volgende" />
     </div>
   </form>
@@ -115,7 +115,6 @@ import InsuranceApplicant from './insuranceApplicant/insuranceApplicant.vue'
 import { BaseInsurance } from '@/serializer/insurances/BaseInsurance'
 import InfoAlert from '@/components/requestInsurance/InfoAlert.vue'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
-import { dateRuleToInsuranceType } from '@/helpers/formatHelper'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomButton from '@/components/CustomButton.vue'
@@ -155,7 +154,7 @@ export default defineComponent({
       initialValues: {
         startDate: data.startDate ? data.startDate : '',
         endDate: data.endDate ? data.endDate : '',
-        group: data.group ? data.group.id : '',
+        group: data.group ? data.group.id : userData.value.scoutsGroups ? userData.value.scoutsGroups[0].id : '',
         responsibleMember: data.responsibleMember ? data.responsibleMember : userData.value,
         insuranceOptions: data.insuranceOptions ? data.insuranceOptions : [],
         maxCoverage: data.maxCoverage ? data.maxCoverage : undefined,
@@ -211,7 +210,6 @@ export default defineComponent({
     }
 
     return {
-      dateRuleToInsuranceType,
       maxCoverageOptions,
       insuranceTypeState,
       InsuranceTypes,

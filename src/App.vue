@@ -12,6 +12,7 @@
 import basePage from './components/semantic/BasePage.vue'
 import { defineRules } from '@/veeValidate/rules'
 import { defineComponent } from 'vue'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'App',
@@ -19,7 +20,8 @@ export default defineComponent({
     'base-page': basePage,
   },
   setup() {
-    defineRules()
+    const store = useStore()
+    defineRules(store)
   },
 })
 </script>
