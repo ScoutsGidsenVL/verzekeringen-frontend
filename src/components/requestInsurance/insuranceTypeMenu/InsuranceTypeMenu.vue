@@ -12,7 +12,7 @@
           :value="insuranceType.value"
           @change="setInsuranceTypeState(insuranceType.value)"
         />
-        <label :for="index" class="ml-2">{{ insuranceType.name }}</label>
+        <label :for="index" class="ml-2 cursor-pointer">{{ insuranceType.name }}</label>
       </div>
     </form>
   </div>

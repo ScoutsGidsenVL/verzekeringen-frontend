@@ -3,56 +3,61 @@
     <base-side-bar v-model:isDisplay="display" v-model:selection="selected" :title="title" :options="['Nieuw', 'Bestaand']">
       <div v-if="selected === 'option-1'" class="mt-4">
         <form @submit="onSubmit">
-          <div class="w-96">
-            <custom-input :type="InputTypes.TEXT" rules="required" name="brand" label="Voornaam" />
+          <div class="custom-container mt-4">
+            <div class="w-96">
+              <custom-input :type="InputTypes.TEXT" rules="required" name="firstName" label="Voornaam" />
+            </div>
+
+            <div class="w-96 mt-4">
+              <custom-input :type="InputTypes.TEXT" rules="required" name="lastName" label="Achternaam" />
+            </div>
+
+            <div class="w-96">
+              <multi-select
+                id="postCodeCity"
+                :object="true"
+                track-by="label"
+                value-prop="label"
+                :repository="BelgianCitySearchRepository"
+                :resolve-on-load="true"
+                :options="[]"
+                :searchable="true"
+                label="Gemeenten"
+                rules="required"
+                placeholder="Zoek op naam/postcode"
+              />
+            </div>
+
+            <div class="w-96 mt-4">
+              <custom-input :type="InputTypes.TEXT" rules="required" name="street" label="Straat" />
+            </div>
+
+            <div class="w-96 mt-4">
+              <custom-input :type="InputTypes.TEXT" name="number" label="Nr" />
+            </div>
+
+            <div class="w-96 mt-4">
+              <custom-input :type="InputTypes.TEXT" name="letterBox" label="Bus" />
+            </div>
+
+            <div class="w-96 mt-4">
+              <custom-input :type="InputTypes.DATE" rules="required" name="birthDate" label="Geboortendatum" />
+            </div>
+
+            <div class="w-96 mt-4">
+              <custom-input :type="InputTypes.TEXT" rules="required" name="phoneNumber" label="Gsm" />
+            </div>
+
+            <div class="w-96 mt-4">
+              <custom-input :type="InputTypes.TEXT_AREA" name="comment" label="Opmerking">
+                <p>
+                  Indien je niet-leden wil verzekeren die in het buitenland wonen moet je in dit tekstvak de buitenlands gemeente, postcode en land opgeven. En bij adres, het belgisch adres van de
+                  persoon die de verzekering aanvraagt.
+                </p>
+              </custom-input>
+            </div>
           </div>
 
-          <div class="w-96 mt-4">
-            <custom-input :type="InputTypes.TEXT" rules="required" name="licensePlate" label="Achternaam" />
-          </div>
-
-          <div class="w-96">
-            <multi-select
-              id="postCodeCity"
-              track-by="location"
-              value-prop="value"
-              :repository="BelgianCitySearchRepository"
-              :options="[]"
-              :searchable="true"
-              label="Gemeenten"
-              rules="required"
-              placeholder="Zoek op naam/postcode"
-            />
-          </div>
-
-          <div class="w-96 mt-4">
-            <custom-input :type="InputTypes.TEXT" rules="required" name="street" label="Straat" />
-          </div>
-
-          <div class="w-96 mt-4">
-            <custom-input :type="InputTypes.TEXT" name="number" label="Nr" />
-          </div>
-
-          <div class="w-96 mt-4">
-            <custom-input :type="InputTypes.TEXT" name="letterBox" label="Bus" />
-          </div>
-
-          <div class="w-96 mt-4">
-            <custom-input :type="InputTypes.DATE" rules="required" name="birthDate" label="Geboortendatum" />
-          </div>
-
-          <div class="w-96 mt-4">
-            <custom-input :type="InputTypes.TEXT" rules="required" name="phoneNumber" label="Gsm" />
-          </div>
-
-          <div class="w-96 mt-4">
-            <custom-input :type="InputTypes.TEXT_AREA" name="comment" label="Opmerking">
-              <p>
-                Indien je niet-leden wil verzekeren die in het buitenland wonen moet je in dit tekstvak de buitenlands gemeente, postcode en land opgeven. En bij adres, het belgisch adres van de
-                persoon die de verzekering aanvraagt.
-              </p>
-            </custom-input>
-          </div>
           <div class="mt-5">
             <custom-button text="Voeg toe" />
           </div>
@@ -67,18 +72,17 @@
 
           <div class="custom-container mt-4">
             <hr v-if="selectedNonMembers.length > 0" class="mt-4 border-t-2 w-96 border-black" />
-            <div class="w-96" v-for="(nonMember, index) in selectedNonMembers" :key="nonMember.id">
+            <div class="w-96" v-for="nonMember in selectedNonMembers" :key="nonMember.id">
               <non-member-item :non-member="nonMember">
                 <div>
                   <div class="pt-3 pb-4 text-right">
-                    <input class="cursor-pointer" type="checkbox" :id="index" v-model="nonMember.isChecked" />
-                    <label class="pl-2" for="">Selecteer</label>
+                    <custom-button @click="addNonMember(nonMember)" type="button" text="Voeg toe" />
                   </div>
                 </div>
               </non-member-item>
             </div>
           </div>
-          <div class="mt-5"><custom-button text="Voeg toe" /></div>
+          <div v-if="selected.value === 'option-1'" class="mt-5"><custom-button text="Voeg toe" /></div>
         </form>
       </div>
     </base-side-bar>
@@ -121,6 +125,12 @@ export default defineComponent({
       type: Boolean,
       required: true,
     },
+    existingList: {
+      type: Array,
+      default: () => {
+        return []
+      },
+    },
   },
   setup(props, context) {
     const store = useStore()
@@ -130,20 +140,6 @@ export default defineComponent({
     const selected = ref<string>('option-1')
     const selectedNonMembers = ref<NonMember[]>([])
     const loading = ref<boolean>(false)
-
-    watch(
-      () => props.isDisplay,
-      () => {
-        display.value = props.isDisplay
-      }
-    )
-
-    watch(
-      () => display.value,
-      () => {
-        context.emit('update:isDisplay', display.value)
-      }
-    )
 
     const onSubmit = handleSubmit(async (values: NonMember) => {
       if (selected.value === 'option-1') {
@@ -164,23 +160,12 @@ export default defineComponent({
         postNonMember(nonMember.value)
       }
 
-      if (selected.value === 'option-2') {
-        const tempList = ref<Array<NonMember>>([])
-        selectedNonMembers.value.forEach((nonMember) => {
-          if (nonMember.isChecked) {
-            tempList.value.push(nonMember)
-          }
-        })
-        context.emit('addCreatedNonMemberToList', tempList.value)
-      }
-
       selectedNonMembers.value = []
-      display.value = false
     })
 
-    const addNonMember = (nonMember: any) => {
-      if (nonMember) {
-        selectedNonMembers.value.push(nonMember)
+    const addNonMember = (nonMember: NonMember) => {
+      if (!props.existingList.includes(nonMember)) {
+        context.emit('addCreatedNonMemberToList', [nonMember])
       }
     }
 
@@ -195,21 +180,26 @@ export default defineComponent({
     }
 
     const fetchedOptions = (options: any) => {
-      let alreadySelected: Array<any> = []
-
-      selectedNonMembers.value.forEach((nonMember) => {
-        if (nonMember.isChecked) {
-          alreadySelected.push(nonMember)
-        }
-      })
-
-      selectedNonMembers.value = alreadySelected
-
+      selectedNonMembers.value = []
       options.forEach((nonMember: any) => {
         selectedNonMembers.value.push(nonMember.value)
       })
       loading.value = false
     }
+
+    watch(
+      () => props.isDisplay,
+      () => {
+        display.value = props.isDisplay
+      }
+    )
+
+    watch(
+      () => display.value,
+      () => {
+        context.emit('update:isDisplay', display.value)
+      }
+    )
 
     return {
       BelgianCitySearchRepository,

@@ -5,7 +5,7 @@
     <strong class="cursor-pointer" @click="openSideBar()"> + Voeg niet-lid toe </strong>
   </div>
 
-  <non-member-side-bar v-model:isDisplay="isDisplay" title="Niet lid" @addCreatedNonMemberToList="addCreatedNonMemberToList($event)" />
+  <non-member-side-bar :existingList="nonMembers" v-model:isDisplay="isDisplay" title="Niet lid" @addCreatedNonMemberToList="addCreatedNonMemberToList($event)" />
 </template>
 
 <script lang="ts">

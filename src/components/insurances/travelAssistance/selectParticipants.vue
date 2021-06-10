@@ -5,7 +5,7 @@
     <strong class="cursor-pointer" @click="openSideBar()"> + Voeg lid toe </strong>
   </div>
 
-  <members-side-bar v-model:isDisplay="isDisplay" title="Lid" @addCreatedMemberToList="addCreatedMemberToList($event)" />
+  <members-side-bar :existingList="members" v-model:isDisplay="isDisplay" title="Lid" @addCreatedMemberToList="addCreatedMemberToList($event)" />
 </template>
 
 <script lang="ts">
