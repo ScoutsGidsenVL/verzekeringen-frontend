@@ -84,6 +84,14 @@ export default defineComponent({
           setInsuranceTypeState(InsuranceTypes.REIS_BIJSTAND)
           break
 
+        case 'TypeTijdelijkeAutoverzekering':
+          setInsuranceTypeState(InsuranceTypes.TIJDELIJKE_AUTO_VERZEKERING)
+          break
+
+        case 'TypeEvenementenVerzekering':
+          setInsuranceTypeState(InsuranceTypes.EVENEMENTEN_VERZEKERING)
+          break
+
         default:
           break
       }

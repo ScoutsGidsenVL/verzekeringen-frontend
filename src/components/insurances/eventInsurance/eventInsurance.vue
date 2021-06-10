@@ -1,6 +1,5 @@
 <template>
   <form @submit="onSubmit">
-    {{ values }}
     <custom-headline-2 text="Activiteit" />
     <div class="px-5">
       <custom-input :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" />

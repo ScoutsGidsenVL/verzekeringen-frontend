@@ -5,6 +5,7 @@
     <label-output v-if="location && location.postalCode" label="Locatie" :text="location.postalCode + ' ' + location.city" />
     <label-output v-if="country" label="Land" :text="country" />
     <label-output v-if="groupSize" label="Aantal extra te verzekeren personen" :text="groupSize.label" />
+    <label-output v-if="eventSize" label="Grootte van evenement" :text="eventSize.label" />
   </div>
 </template>
 
@@ -14,6 +15,7 @@ import { defineComponent, PropType } from 'vue'
 import { Location } from '@/serializer/Location'
 import { InputTypes } from '@/enums/inputTypes'
 import { GroupSize } from '@/serializer/GroupSize'
+import { EventSize } from '@/serializer/EventSize'
 
 export default defineComponent({
   name: 'ActivityDetail',
@@ -27,6 +29,9 @@ export default defineComponent({
     },
     groupSize: {
       type: Object as PropType<GroupSize>,
+    },
+    eventSize: {
+      type: Object as PropType<EventSize>,
     },
     location: Object as PropType<Location>,
     country: String,

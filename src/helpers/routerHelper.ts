@@ -12,6 +12,12 @@ export const routeDetailLinkBasedOnType = (insuranceType: any) => {
     case 'TypeEthiasAssistanceZonderAuto':
       return '/reisbijstand-zonder-auto-detail'
 
+    case 'TypeTijdelijkeAutoverzekering':
+      return '/niets'
+
+    case 'TypeEvenementenVerzekering':
+      return '/evenementen-verzekering-detail'
+
     default:
       return '/home'
   }

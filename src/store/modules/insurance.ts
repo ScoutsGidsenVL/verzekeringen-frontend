@@ -71,7 +71,7 @@ export default {
     },
     RESET_STATES(state: any) {
       state.holderState = HolderStates.GENERAL
-      state.insuranceTypeState = InsuranceTypes.EENMALIGE_ACTIVITEIT
+      state.insuranceTypeState = InsuranceTypes.TIJDELIJKE_VERZEKERING_NIET_LEDEN
       state.generalInsuranceState = {}
       state.oneTimeActivityState = {}
       state.nonMemberState = {}
