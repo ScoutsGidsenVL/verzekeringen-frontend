@@ -195,7 +195,16 @@ export default defineComponent({
     }
 
     const fetchedOptions = (options: any) => {
-      selectedNonMembers.value = []
+      let alreadySelected: Array<any> = []
+
+      selectedNonMembers.value.forEach((nonMember) => {
+        if (nonMember.isChecked) {
+          alreadySelected.push(nonMember)
+        }
+      })
+
+      selectedNonMembers.value = alreadySelected
+
       options.forEach((nonMember: any) => {
         selectedNonMembers.value.push(nonMember.value)
       })

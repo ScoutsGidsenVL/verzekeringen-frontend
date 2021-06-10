@@ -96,7 +96,15 @@ export default defineComponent({
     })
 
     const fetchedOptions = (options: any) => {
-      selectedMembers.value = []
+      let alreadySelected: Array<any> = []
+
+      selectedMembers.value.forEach((member) => {
+        if (member.isChecked) {
+          alreadySelected.push(member)
+        }
+      })
+      selectedMembers.value = alreadySelected
+
       options.forEach((member: Member) => {
         RepositoryFactory.get(MemberRepository)
           .getById(member.id)
