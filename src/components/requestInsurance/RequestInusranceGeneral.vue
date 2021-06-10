@@ -78,8 +78,19 @@
       <custom-headline-2 text="Groep" />
       <div class="px-5">
         <p>De factuur wordt naar de financieel verantwoordelijke van deze groep gestuurd.</p>
-        <div style="width: 65%">
-          <multi-select :disabled="isEdit" id="group" rules="required" placeholder="Group" track-by="fullInfo" value-prop="id" :options="user.scoutsGroups" label="Selecteer groep" />
+        <div class="flex">
+          <div style="width: 65%">
+            <multi-select :disabled="isEdit" id="group" rules="required" placeholder="Group" track-by="fullInfo" value-prop="id" :options="userData.scoutsGroups" label="Selecteer groep" />
+          </div>
+          <div class="mt-6 ml-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hover:text-lightGreen cursor-pointer" @click="refreshGroups()" viewBox="0 0 20 20" fill="currentColor">
+              <path
+                fill-rule="evenodd"
+                d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </div>
         </div>
       </div>
     </div>
@@ -119,6 +130,7 @@ import { useRoute } from 'vue-router'
 import { Coverage } from '@/serializer/Coverage'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import { MaxCoverageRepository } from '@/repositories/maxCoverageRepository'
+import AuthRepository from '@/repositories/authRepository'
 
 export default defineComponent({
   name: 'RequestInsuranceGeneral',
@@ -135,7 +147,7 @@ export default defineComponent({
     const route = useRoute()
     const store = useStore()
     const isEdit = !!route.params.id
-    const user = ref<ResponsibleMember>(store.getters.user)
+    const userData = ref<ResponsibleMember>(store.getters.user)
     let data: any = store.getters.getCurrentInsuranceState
     const maxCoverageOptions = ref<Array<Coverage>>()
 
@@ -144,7 +156,7 @@ export default defineComponent({
         startDate: data.startDate ? data.startDate : '',
         endDate: data.endDate ? data.endDate : '',
         group: data.group ? data.group.id : '',
-        responsibleMember: data.responsibleMember ? data.responsibleMember : user.value,
+        responsibleMember: data.responsibleMember ? data.responsibleMember : userData.value,
         insuranceOptions: data.insuranceOptions ? data.insuranceOptions : [],
         maxCoverage: data.maxCoverage ? data.maxCoverage : undefined,
       },
@@ -172,7 +184,7 @@ export default defineComponent({
         startDate: values.startDate,
         endDate: values.endDate,
         group: { name: values.group },
-        responsibleMember: values.responsibleMember ? values.responsibleMember : user.value,
+        responsibleMember: values.responsibleMember ? values.responsibleMember : userData.value,
         totalCost: '1.00',
       })
       store.dispatch('setGeneralInsuranceState', generalInsuranceState)
@@ -188,6 +200,15 @@ export default defineComponent({
     }
 
     fetchMaxCoverages()
+    const refreshGroups = () => {
+      RepositoryFactory.get(AuthRepository)
+        .me()
+        .then((user: any) => {
+          store.dispatch('setUser', user).then(() => {
+            userData.value = store.getters.user
+          })
+        })
+    }
 
     return {
       dateRuleToInsuranceType,
@@ -196,11 +217,12 @@ export default defineComponent({
       InsuranceTypes,
       InputTypes,
       minDate,
-      user,
+      userData,
       onSubmit,
       data,
       isEdit,
       values,
+      refreshGroups,
     }
   },
 })
