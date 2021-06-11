@@ -19,7 +19,7 @@
           :resolve-on-load="true"
           :options="[values.location]"
           :searchable="true"
-          label="Location"
+          label="Gemeenten"
           rules="required"
           placeholder="Zoek op naam/postcode"
         />

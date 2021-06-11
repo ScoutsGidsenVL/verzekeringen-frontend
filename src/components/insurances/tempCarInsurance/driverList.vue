@@ -13,7 +13,7 @@
       <member-item :member="member">
         <div v-if="canBeDeleted" class="text-right">
           <label @click="deleteMemberFromList(index)" class="hover:text-lightGreen cursor-pointer" for="">Verwijder</label>
-          <input class="mr-2 ml-4 cursor-pointer" v-model="selectedDriver" type="radio" :id="index + '-driver'" name="gender" :value="member" />
+          <input class="mr-2 ml-4 cursor-pointer" v-model="owner" type="radio" :id="index + '-driver'" name="gender" :value="member" />
           <label class="cursor-pointer" :for="index + '-driver'">Eigenaar</label>
         </div>
       </member-item>
@@ -24,6 +24,7 @@
 import MemberItem from '@/components/insurances/travelAssistance/memberItem.vue'
 import { defineComponent, PropType, ref, watch } from 'vue'
 import { Member } from '@/serializer/Member'
+import { useField } from 'vee-validate'
 
 export default defineComponent({
   name: 'MembersList',
@@ -48,6 +49,10 @@ export default defineComponent({
     const members = ref<Member[]>(props.membersList)
     const selectedDriver = ref<Member>()
 
+    const { value: owner } = useField<any>('owner', 'required', {
+      initialValue: {},
+    })
+
     watch(
       () => props.membersList,
       () => {
@@ -63,6 +68,7 @@ export default defineComponent({
       deleteMemberFromList,
       members,
       selectedDriver,
+      owner,
     }
   },
 })

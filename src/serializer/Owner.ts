@@ -1,12 +1,12 @@
 import { Location, LocationDeserializer, LocationSerializer } from '@/serializer/Location'
 
 export interface Owner {
-  readonly id: string
-  readonly lastName: string
-  readonly firstName: string
-  readonly phoneNumber: string
-  readonly email: string
-  birthDate: string
+  readonly id?: string
+  readonly lastName?: string
+  readonly firstName?: string
+  readonly phoneNumber?: string
+  readonly email?: string
+  birthDate?: string
   readonly groupAdminId?: string
   readonly street?: string
   readonly number?: string
