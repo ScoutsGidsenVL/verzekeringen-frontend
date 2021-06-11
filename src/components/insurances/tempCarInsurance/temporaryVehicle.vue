@@ -4,7 +4,7 @@
       <div class="mt-3">
         <custom-headline-2 text="Bestuurders" />
         <div class="px-5">
-          <select-drivers id="drivers" rules="required" />
+          <select-drivers id="drivers" ownerId="owner" rules="required" />
         </div>
       </div>
 
@@ -53,6 +53,7 @@ export default defineComponent({
       initialValues: {
         drivers: data.drivers ? data.drivers : undefined,
         vehicle: data.vehicle ? data.vehicle : undefined,
+        owner: data.owner ? data.owner : undefined,
       },
     })
     const selected = ref<string>('option-2')

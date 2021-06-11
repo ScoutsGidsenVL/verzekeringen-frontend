@@ -59,12 +59,12 @@
 import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRepository'
 import MemberSiderbar from '@/components/insurances/travelAssistance/membersSideBar.vue'
 import DriverList from '@/components/insurances/tempCarInsurance/driverList.vue'
+import CustomInput from '@/components/inputs/CustomInput.vue'
+import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import { NonMember } from '@/serializer/NonMember'
+import { InputTypes } from '@/enums/inputTypes'
 import { defineComponent, ref } from 'vue'
 import { useField } from 'vee-validate'
-import CustomInput from '@/components/inputs/CustomInput.vue'
-import { InputTypes } from '@/enums/inputTypes'
-import MultiSelect from '@/components/inputs/MultiSelect.vue'
 
 export default defineComponent({
   name: 'SelectParticipant',
@@ -76,6 +76,10 @@ export default defineComponent({
   },
   props: {
     id: {
+      type: String,
+      required: true,
+    },
+    ownerId: {
       type: String,
       required: true,
     },
@@ -108,9 +112,9 @@ export default defineComponent({
       addCreatedMemberToList,
       deleteMemberFromList,
       openSideBar,
-      members,
-      isDisplay,
       InputTypes,
+      isDisplay,
+      members,
     }
   },
 })
