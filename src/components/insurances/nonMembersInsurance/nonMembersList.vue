@@ -12,7 +12,7 @@
     <div class="w-96" v-for="(nonMember, index) in nonMembers" :key="nonMember.id">
       <non-member-item :non-member="nonMember">
         <div v-if="canBeDeleted" class="text-right">
-          <label @click="deleteNonMemberFromList(index)" class="hover:text-lightGreen cursor-pointer" for="">Verwijder</label>
+          <label @click="deleteNonMember(index)" class="hover:text-lightGreen cursor-pointer" for="">Verwijder</label>
         </div>
       </non-member-item>
     </div>
@@ -42,6 +42,7 @@ export default defineComponent({
       required: false,
     },
   },
+  emit: ['deleteNonMemberFromList'],
   setup(props, context) {
     const nonMembers = ref<NonMember[]>(props.nonMembersList)
 
@@ -52,12 +53,12 @@ export default defineComponent({
       }
     )
 
-    const deleteNonMemberFromList = (id: string) => {
+    const deleteNonMember = (id: string) => {
       context.emit('deleteNonMemberFromList', id)
     }
 
     return {
-      deleteNonMemberFromList,
+      deleteNonMember,
       nonMembers,
     }
   },

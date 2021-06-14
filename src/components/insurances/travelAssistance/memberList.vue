@@ -42,6 +42,7 @@ export default defineComponent({
       required: false,
     },
   },
+  emit: ['deleteMemberFromList'],
   setup(props, context) {
     const members = ref<Member[]>(props.membersList)
 

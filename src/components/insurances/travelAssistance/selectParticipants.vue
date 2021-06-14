@@ -1,25 +1,27 @@
 <template>
   <member-list :canBeDeleted="true" :membersList="members" @deleteMemberFromList="deleteMemberFromList($event)" />
+  <ErrorMessage :name="id" class="text-red text-sm block mt-1 w-80" />
 
   <div class="mt-2 text-lightGreen">
     <strong class="cursor-pointer" @click="openSideBar()"> + Voeg lid toe </strong>
   </div>
 
-  <members-side-bar :existingList="members" v-model:isDisplay="isDisplay" title="Lid" @addCreatedMemberToList="addCreatedMemberToList($event)" />
+  <members-side-bar :existingList="members" v-model:isDisplay="isDisplay" title="Lid" @addMemberToList="addMemberToList($event)" />
 </template>
 
 <script lang="ts">
 import MemberSiderbar from '@/components/insurances/travelAssistance/membersSideBar.vue'
 import MemberList from '@/components/insurances/travelAssistance/memberList.vue'
-import { NonMember } from '@/serializer/NonMember'
+import { ErrorMessage, useField } from 'vee-validate'
+import { Member } from '@/serializer/Member'
 import { defineComponent, ref } from 'vue'
-import { useField } from 'vee-validate'
 
 export default defineComponent({
   name: 'SelectParticipant',
   components: {
     'members-side-bar': MemberSiderbar,
     'member-list': MemberList,
+    ErrorMessage,
   },
   props: {
     id: {
@@ -33,7 +35,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { value: members } = useField<NonMember[]>(props.id, props.rules, {
+    const { value: members } = useField<Member[]>(props.id, props.rules, {
       initialValue: [],
     })
 
@@ -42,8 +44,8 @@ export default defineComponent({
     const openSideBar = () => {
       isDisplay.value = true
     }
-    const addCreatedMemberToList = (membersEvent: NonMember[]) => {
-      members.value = members.value.concat(membersEvent)
+    const addMemberToList = (member: Member) => {
+      members.value.push(member)
     }
 
     const deleteMemberFromList = (id: string) => {
@@ -51,7 +53,7 @@ export default defineComponent({
     }
 
     return {
-      addCreatedMemberToList,
+      addMemberToList,
       deleteMemberFromList,
       openSideBar,
       members,

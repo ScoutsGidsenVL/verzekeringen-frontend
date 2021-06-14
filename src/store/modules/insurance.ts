@@ -6,6 +6,7 @@ import { NonMemberInsurance } from '@/serializer/insurances/NonMemberInsurance'
 import { TravelAssistanceInsurance } from '@/serializer/insurances/TravelAssistanceInsurance'
 import { TemporaryVehicleInsurance } from '@/serializer/insurances/TemporaryVehicleInsurance'
 import { EventInsurance } from '@/serializer/insurances/EventInsurance'
+import { IS_NO_DRIVER } from '@/serializer/selectDriver'
 
 export interface InsuranceState {
   holderState: string
@@ -16,6 +17,7 @@ export interface InsuranceState {
   travelAssistanceState: TravelAssistanceInsurance
   temporaryVehicleState: TemporaryVehicleInsurance
   eventState: EventInsurance
+  isDriverOwnerState: String
 }
 
 export default {
@@ -28,6 +30,7 @@ export default {
     travelAssistanceState: {},
     temporaryVehicleState: {},
     eventState: {},
+    isDriverOwnerState: IS_NO_DRIVER,
   }),
   getters: {
     holderState(state: any): HolderStates {
@@ -42,6 +45,9 @@ export default {
     getCurrentInsuranceState(state: any, getters: any): any {
       //@ts-ignore
       return state[InsuranceTypeStoreNames[getters.insuranceTypeState]]
+    },
+    getIsDriverOwnerState(state: any): string {
+      return state.isDriverOwnerState
     },
   },
   mutations: {
@@ -69,6 +75,9 @@ export default {
     SET_EVENT_STATE(state: any, eventInsurance: EventInsurance) {
       state.eventState = eventInsurance
     },
+    SET_IS_DRIVER_OWNER_STATE(state: any, isDriverOwner: string) {
+      state.isDriverOwnerState = isDriverOwner
+    },
     RESET_STATES(state: any) {
       state.holderState = HolderStates.GENERAL
       state.insuranceTypeState = InsuranceTypes.TIJDELIJKE_VERZEKERING_NIET_LEDEN
@@ -78,6 +87,7 @@ export default {
       state.travelAssistanceState = {}
       state.temporaryVehicleState = {}
       state.eventState = {}
+      state.isDriverOwnerState = IS_NO_DRIVER
     },
   },
   actions: {
@@ -104,6 +114,9 @@ export default {
     },
     setEventState({ commit }: any, eventInsurance: EventInsurance) {
       commit('SET_EVENT_STATE', eventInsurance)
+    },
+    setIsDriverOwnerState({ commit }: any, isDriverOwner: string) {
+      commit('SET_IS_DRIVER_OWNER_STATE', isDriverOwner)
     },
     resetStates({ commit }: any) {
       commit('RESET_STATES')

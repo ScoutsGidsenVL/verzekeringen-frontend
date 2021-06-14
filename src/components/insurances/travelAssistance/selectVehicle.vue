@@ -5,6 +5,7 @@
         <label @click="deleteVehicle()" class="hover:text-lightGreen cursor-pointer" for="">Verwijder</label>
       </div>
     </vehicle-item>
+    <ErrorMessage :name="id" class="text-red text-sm block mt-1 w-80" />
   </div>
 
   <div class="mt-2 text-lightGreen">
@@ -20,13 +21,14 @@ import VehicleSiderbar from '@/components/insurances/travelAssistance/vehicleSid
 import VehicleItem from '@/components/insurances/travelAssistance/vehicleItem.vue'
 import { Vehicle } from '@/serializer/Vehicle'
 import { defineComponent, ref } from 'vue'
-import { useField } from 'vee-validate'
+import { ErrorMessage, useField } from 'vee-validate'
 
 export default defineComponent({
   name: 'SelectVehicle',
   components: {
     'vehicle-side-bar': VehicleSiderbar,
     'vehicle-item': VehicleItem,
+    ErrorMessage,
   },
   props: {
     id: {
@@ -35,7 +37,7 @@ export default defineComponent({
     },
     rules: {
       type: [Object, String, Function],
-      default: '',
+      default: 'required',
       required: false,
     },
   },

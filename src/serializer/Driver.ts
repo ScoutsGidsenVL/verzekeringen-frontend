@@ -1,23 +1,10 @@
-import { Location, LocationDeserializer, LocationSerializer } from '@/serializer/Location'
+import { LocationDeserializer, LocationSerializer } from '@/serializer/Location'
+import { Member } from '@/serializer/Member'
 
-export interface Member {
-  readonly id?: string
-  readonly lastName?: string
-  readonly firstName?: string
-  readonly phoneNumber?: string
-  readonly email?: string
-  birthDate?: string
-  readonly groupAdminId?: string
-  readonly street?: string
-  readonly number?: string
-  readonly letterBox?: string
-  readonly postCodeCity?: Location
-  readonly comment?: string
-  isChecked?: boolean
-}
+export interface Driver extends Member {}
 
-export const MemberDeserializer = (input: any): Member => {
-  const single: Member = {
+export const DriverDeserializer = (input: any): Driver => {
+  const single: Driver = {
     id: input.id ? input.id : undefined,
     lastName: input.last_name,
     firstName: input.first_name,
@@ -36,17 +23,14 @@ export const MemberDeserializer = (input: any): Member => {
   return single
 }
 
-export const MemberSerializer = (input: any): any => {
+export const DriverSerializer = (input: any): any => {
   const single: any = {
     last_name: input.lastName,
     first_name: input.firstName,
     phone_number: input.phoneNumber ? input.phoneNumber : '/',
-    email: input.email ? input.email : undefined,
     birth_date: input.birthDate,
-    group_admin_id: input.groupAdminId,
     street: input.street ? input.street : undefined,
     number: input.number ? input.number : undefined,
-    group: input.group ? input.group : null,
     comment: input.comment ? input.comment : undefined,
     postcode_city: input.postCodeCity ? LocationSerializer(input.postCodeCity) : undefined,
   }

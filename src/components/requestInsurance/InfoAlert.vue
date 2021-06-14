@@ -10,12 +10,11 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { boolean } from 'yup'
 
 export default defineComponent({
   name: 'InfoAlert',
   props: {
-    isMoreInfo: boolean,
+    isMoreInfo: Boolean,
   },
   setup() {},
 })

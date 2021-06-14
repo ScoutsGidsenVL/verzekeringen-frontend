@@ -1,8 +1,11 @@
-import { Member, MemberDeserializer, MemberSerializer } from '@/serializer/Member'
-import { Group, GroupDeserializer, GroupSerializer } from '@/serializer/Group'
-import { Vehicle, VehicleDeserializer, VehicleSerializer } from '@/serializer/Vehicle'
-import { InsuranceOption, InsuranceOptionDeserializer, InsuranceOptionSerializer } from '@/serializer/InsuranceOption'
+import { ResponsibleMember, ResponsibleMemberDeserializer, ResponsibleMemberSerializer } from '@/serializer/ResponsibleMember'
 import { Coverage, CoverageDeserializer, CoverageSerializer } from '@/serializer/Coverage'
+import { Vehicle, VehicleDeserializer, VehicleSerializer } from '@/serializer/Vehicle'
+import { Group, GroupDeserializer, GroupSerializer } from '@/serializer/Group'
+import { Owner, OwnerDeserializer, OwnerSerializer } from '@/serializer/Owner'
+import { MemberDeserializer, MemberSerializer } from '@/serializer/Member'
+import { SelectDriver } from '@/serializer/selectDriver'
+import { Driver } from '@/serializer/Driver'
 
 export interface TemporaryVehicleInsurance {
   readonly id?: number
@@ -12,11 +15,14 @@ export interface TemporaryVehicleInsurance {
   readonly responsiblePhoneNumber?: string
   readonly group?: Group
   readonly vehicle?: Vehicle
-  readonly drivers?: Member[]
-  readonly owner?: Member
+  readonly drivers?: Driver[]
+  readonly owner?: Owner
+  readonly input?: Owner
   readonly totalCost?: string
   readonly maxCoverage?: Coverage
-  readonly insuranceOption?: InsuranceOption
+  readonly insuranceOptions?: Array<number>
+  readonly selectDriverField?: SelectDriver
+  readonly responsibleMember?: ResponsibleMember
 }
 
 export const TemporaryVehicleDeserializer = (input: any): TemporaryVehicleInsurance => {
@@ -29,10 +35,11 @@ export const TemporaryVehicleDeserializer = (input: any): TemporaryVehicleInsura
     group: GroupDeserializer(input.group),
     vehicle: input.vehicle && input.vehicle.license_plate ? VehicleDeserializer(input.vehicle) : undefined,
     drivers: input.drivers.map((member: any) => MemberDeserializer(member)),
-    owner: input.owner ? MemberDeserializer(input.owner) : undefined,
+    owner: input.owner ? OwnerDeserializer(input.owner) : undefined,
     totalCost: input.total_cost,
     maxCoverage: input.max_coverage ? CoverageDeserializer(input.max_coverage) : undefined,
-    insuranceOption: input.insurance_option ? InsuranceOptionDeserializer(input.insurance_option) : undefined,
+    insuranceOptions: input.insurance_options ? input.insurance_options : undefined,
+    responsibleMember: ResponsibleMemberDeserializer(input.responsible_member),
   }
 
   return single
@@ -43,14 +50,13 @@ export const TemporaryVehicleSerializer = (input: TemporaryVehicleInsurance): Te
     start_date: input.startDate,
     end_date: input.endDate,
     comment: input.comment,
-    responsible_phone_number: input.responsiblePhoneNumber ? input.responsiblePhoneNumber : undefined,
+    responsible_phone_number: ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number,
     group: GroupSerializer(input.group).name,
     vehicle: input.vehicle && input.vehicle.licensePlate ? VehicleSerializer(input.vehicle) : undefined,
     drivers: input.drivers ? input.drivers.map((member: any) => MemberSerializer(member)) : undefined,
-    owner: input.owner ? MemberDeserializer(input.owner) : undefined,
-    total_cost: input.totalCost,
-    max_coverage: input.maxCoverage ? CoverageSerializer(input.maxCoverage) : undefined,
-    insurance_option: input.insuranceOption ? InsuranceOptionSerializer(input.insuranceOption) : undefined,
+    owner: input.owner ? OwnerSerializer(input.owner) : undefined,
+    max_coverage: input.maxCoverage ? CoverageSerializer(input.maxCoverage).value : undefined,
+    insurance_options: input.insuranceOptions ? input.insuranceOptions : undefined,
   }
 
   return single

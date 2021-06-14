@@ -1,12 +1,20 @@
 import { required } from '@vee-validate/rules'
 import { defineRule } from 'vee-validate'
 import moment from 'moment'
-import { useStore } from 'vuex'
-import { computed } from 'vue'
 import { InsuranceTypes } from '@/enums/insuranceTypes'
+import { IS_NO_DRIVER } from '@/serializer/selectDriver'
 
 export const defineRules = (store: any) => {
   defineRule('required', required)
+
+  defineRule('customRequired', (value: string) => {
+    const isDriverOwnerState = store.getters.getIsDriverOwnerState
+    if ((value === undefined || value === '' || !value) && isDriverOwnerState === IS_NO_DRIVER) {
+      return 'Dit veld mag niet leeg blijven.'
+    }
+
+    return true
+  })
 
   defineRule('startDateBeforeEndDate', (value: string, target: any, ctx: any) => {
     const endDate: number = Number(moment(value).format('YYYYMMDD'))

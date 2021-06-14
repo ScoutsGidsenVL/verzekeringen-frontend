@@ -13,13 +13,13 @@
               Verzekering stoffelijke schade - brand - diefstal van een gehuurd voertuig of een voertuig toebehorend aan leden van Scouts en Gidsen Vlaanderen of vrijwillige medewerkers.
             </p>
             <input class="mr-2" type="checkbox" id="choice-1" :value="1" v-model="values.insuranceOptions" />
-            <label for="choice-1">Heb je een auto gehuurd?</label>
+            <label for="choice-1">Optie 1: omnium</label>
           </div>
 
           <div class="mt-4">
             <p style="font-size: 0.7em">Dekking van vrijstelling in stoffelijke schade OF diefstal (voor voertuigen die gebruikt worden door een groep van Scouts en Gidsen Vlaanderen.)</p>
             <input class="mr-2" type="checkbox" id="choice-2" :value="2" v-model="values.insuranceOptions" />
-            <label for="choice-2">Is de auto omnium verzekerd?</label>
+            <label for="choice-2">Optie 2: reeds afgesloten omnium afdekken</label>
 
             <div v-if="values.insuranceOptions.includes(2)" class="px-5">
               <p>Maxiumum vrijstellingsbedrag</p>
@@ -42,7 +42,7 @@
           <div class="mt-4">
             <p style="font-size: 0.7em">Dekking van vrijstelling in burgerlijke aansprakelijkheid (voor voertuigen die gehuurd worden door een groep van Scouts en Gidsen Vlaanderen.)</p>
             <input class="mr-2" type="checkbox" id="choice-3" :value="3" v-model="values.insuranceOptions" />
-            <label for="choice-3">Wil je de vrijstelling (franchise) van deze verzekering afkopen?</label>
+            <label for="choice-3">Optie 3: huurvoertuigen</label>
           </div>
         </div>
       </div>
@@ -185,6 +185,8 @@ export default defineComponent({
         group: { name: values.group },
         responsibleMember: values.responsibleMember ? values.responsibleMember : userData.value,
         totalCost: '1.00',
+        insuranceOptions: values.insuranceOptions ? values.insuranceOptions : [],
+        maxCoverage: values.maxCoverage ? values.maxCoverage : undefined,
       })
       store.dispatch('setGeneralInsuranceState', generalInsuranceState)
       store.dispatch('setHolderState', HolderStates.TYPE)

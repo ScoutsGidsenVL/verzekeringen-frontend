@@ -12,13 +12,13 @@
     <form v-if="options" action="">
       <div class="flex gap-7">
         <div>
-          <input :id="1" v-model="selected" class="cursor-pointer" type="radio" :name="1" value="option-1" @change="emitOption()" />
-          <label :for="index" class="ml-2">{{ options[0] }}</label>
+          <input :id="'option-1'" v-model="selected" class="cursor-pointer" type="radio" :name="'option-1'" value="option-1" @change="emitOption()" />
+          <label :for="'option-1'" class="ml-2">{{ options[0] }}</label>
         </div>
 
         <div>
-          <input :id="2" v-model="selected" class="cursor-pointer" type="radio" :name="2" value="option-2" @change="emitOption()" />
-          <label :for="index" class="ml-2">{{ options[1] }}</label>
+          <input :id="'option-2'" v-model="selected" class="cursor-pointer" type="radio" :name="'option-2'" value="option-2" @change="emitOption()" />
+          <label :for="'option-2'" class="ml-2">{{ options[1] }}</label>
         </div>
       </div>
     </form>
@@ -46,7 +46,8 @@ export default defineComponent({
     isDisplay: Boolean,
     selection: {
       type: String,
-      required: true,
+      required: false,
+      default: 'option-1',
     },
     options: {
       type: Array as PropType<Array<String>>,

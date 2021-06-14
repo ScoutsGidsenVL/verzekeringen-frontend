@@ -5,6 +5,7 @@ import oneTimeActivityDetail from '@/components/insurances/oneTimeActivityInsura
 import nonMemberDetail from '@/components/insurances/nonMembersInsurance/nonMemberDetail.vue'
 import travelAssistanceDetail from '@/components/insurances/travelAssistance/travelAssistanceDetail.vue'
 import eventInsuranceDetail from '@/components/insurances/eventInsurance/eventInsuranceDetail.vue'
+import temporaryVehicleDetail from '@/components/insurances/tempCarInsurance/temporaryVehicleDetail.vue'
 
 const routes: any[] = [
   {
@@ -82,6 +83,16 @@ const routes: any[] = [
     path: '/evenementen-verzekering-detail/:id?',
     name: 'EventInsuranceDetail',
     component: eventInsuranceDetail,
+    meta: {
+      requiresOpenIdAuth: true,
+      title: 'Verzekering',
+      detail: true,
+    },
+  },
+  {
+    path: '/tijdelijke-autoverzekering-detail/:id?',
+    name: 'TemporaryVehicleDetail',
+    component: temporaryVehicleDetail,
     meta: {
       requiresOpenIdAuth: true,
       title: 'Verzekering',

@@ -42,8 +42,8 @@ export default defineComponent({
     const openSideBar = () => {
       isDisplay.value = true
     }
-    const addCreatedNonMemberToList = (nonMembersEvent: NonMember[]) => {
-      nonMembers.value = nonMembers.value.concat(nonMembersEvent)
+    const addCreatedNonMemberToList = (nonMembersList: NonMember[]) => {
+      nonMembers.value = nonMembers.value.concat(nonMembersList)
     }
 
     const deleteNonMemberFromList = (id: string) => {

@@ -12,7 +12,9 @@
       <travel-assistance-detail><slot></slot></travel-assistance-detail>
     </div>
 
-    <div v-if="isCurrentType(InsuranceTypes.TIJDELIJKE_AUTO_VERZEKERING, insuranceTypeState)">LEEG</div>
+    <div v-if="isCurrentType(InsuranceTypes.TIJDELIJKE_AUTO_VERZEKERING, insuranceTypeState)">
+      <temporary-vehicle-detail><slot></slot></temporary-vehicle-detail>
+    </div>
 
     <div v-if="isCurrentType(InsuranceTypes.EVENEMENTEN_VERZEKERING, insuranceTypeState)">
       <event-detail><slot></slot></event-detail>
@@ -31,6 +33,7 @@ import { isCurrentType } from '@/helpers/insuranceTypeHelper'
 import { InsuranceTypes } from '@/enums/insuranceTypes'
 import { computed, defineComponent } from 'vue'
 import { useStore } from 'vuex'
+import TemporaryVehicleDetail from '../insurances/tempCarInsurance/temporaryVehicleDetail.vue'
 
 export default defineComponent({
   name: 'RequestInsuranceDetail',
@@ -39,6 +42,7 @@ export default defineComponent({
     'non-member-insurance-detail': NonMemberInsuranceDetail,
     'travel-assistance-detail': TravelAssistanceDetail,
     'event-detail': EventDetail,
+    TemporaryVehicleDetail,
   },
   setup() {
     const store = useStore()

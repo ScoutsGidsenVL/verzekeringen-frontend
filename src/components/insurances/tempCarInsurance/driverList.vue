@@ -11,9 +11,9 @@
     <div class="w-96" v-for="(member, index) in membersList" :key="member.id">
       <member-item :member="member">
         <div v-if="canBeDeleted" class="text-right">
-          <label @click="deleteMemberFromList(index)" class="hover:text-lightGreen cursor-pointer" for="">Verwijder</label>
-          <input class="mr-2 ml-4 cursor-pointer" v-model="ownerComputed" type="radio" id="owner" name="owner" :value="member.id" />
-          <label class="cursor-pointer" :for="index + '-driver'">Eigenaar</label>
+          <label @click="deleteDriverFromList(index)" class="hover:text-lightGreen cursor-pointer" for="">Verwijder</label>
+          <input class="mr-2 ml-4 cursor-pointer" v-model="ownerComputed" type="radio" :id="index + 'isOwner'" :name="index + 'isOwner'" :value="member.id" />
+          <label class="cursor-pointer" :for="index + 'isOwner'">Eigenaar</label>
         </div>
       </member-item>
     </div>
@@ -45,18 +45,18 @@ export default defineComponent({
       type: String,
     },
   },
-  emit: ['update:owner'],
+  emit: ['update:owner', 'deleteMemberFromList'],
   setup(props, context) {
     const ownerComputed = computed<any>({
       get: () => props.owner,
       set: (value: any) => context.emit('update:owner', value),
     })
 
-    const deleteMemberFromList = (id: string) => {
+    const deleteDriverFromList = (id: string) => {
       context.emit('deleteMemberFromList', id)
     }
     return {
-      deleteMemberFromList,
+      deleteDriverFromList,
       ownerComputed,
     }
   },

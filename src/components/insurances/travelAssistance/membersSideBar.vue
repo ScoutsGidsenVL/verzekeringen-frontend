@@ -1,6 +1,6 @@
 <template>
   <div>
-    <base-side-bar v-model:isDisplay="display" v-model:selection="selected" :title="title">
+    <base-side-bar v-model:isDisplay="display" :title="title">
       <div>
         <div>
           <search-input name="member" placeholder="Zoek op naam" v-model:loading="loading" :repository="MemberRepository" @fetchedOptions="fetchedOptions($event)" />
@@ -18,8 +18,6 @@
             </member-item>
           </div>
         </div>
-
-        <div class="mt-5"><custom-button text="Voeg toe" /></div>
       </div>
     </base-side-bar>
   </div>
@@ -30,22 +28,22 @@ import MemberItem from '@/components/insurances/travelAssistance/memberItem.vue'
 import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRepository'
 import { MemberRepository } from '@/repositories/memberRepository'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
+import RepositoryFactory from '@/repositories/repositoryFactory'
 import BaseSideBar from '@/components/semantic/BaseSideBar.vue'
-import CustomButton from '@/components/CustomButton.vue'
 import SearchInput from '@/components/inputs/SearchInput.vue'
-import { Member } from '@/serializer/Member'
+import CustomButton from '@/components/CustomButton.vue'
 import { defineComponent, ref, watch } from 'vue'
 import { InputTypes } from '@/enums/inputTypes'
+import { Member } from '@/serializer/Member'
 import { useStore } from 'vuex'
-import RepositoryFactory from '@/repositories/repositoryFactory'
 
 export default defineComponent({
   name: 'MemberSideBar',
   components: {
     'custom-button': CustomButton,
     'base-side-bar': BaseSideBar,
-    'member-item': MemberItem,
     'search-input': SearchInput,
+    'member-item': MemberItem,
   },
   props: {
     title: {
@@ -72,18 +70,21 @@ export default defineComponent({
 
     const addMember = (member: Member) => {
       if (!props.existingList.includes(member)) {
-        context.emit('addCreatedMemberToList', [member])
+        context.emit('addMemberToList', member)
       }
     }
 
     const fetchedOptions = (options: any) => {
+      selectedMembers.value = []
       options.forEach((member: Member) => {
-        RepositoryFactory.get(MemberRepository)
-          .getById(member.id)
-          .then((result: Member) => {
-            result.birthDate = member.birthDate
-            selectedMembers.value.push(result)
-          })
+        if (member.id) {
+          RepositoryFactory.get(MemberRepository)
+            .getById(member.id)
+            .then((result: Member) => {
+              result.birthDate = member.birthDate
+              selectedMembers.value.push(result)
+            })
+        }
       })
       loading.value = false
     }
