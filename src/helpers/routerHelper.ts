@@ -13,7 +13,7 @@ export const routeDetailLinkBasedOnType = (insuranceType: any) => {
       return '/reisbijstand-zonder-auto-detail'
 
     case 'TypeTijdelijkeAutoverzekering':
-      return '/niets'
+      return '/tijdelijke-autoverzekering-detail'
 
     case 'TypeEvenementenVerzekering':
       return '/evenementen-verzekering-detail'

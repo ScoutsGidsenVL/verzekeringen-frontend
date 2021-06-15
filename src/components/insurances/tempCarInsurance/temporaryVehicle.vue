@@ -7,7 +7,6 @@
           <select-drivers id="selectDriverField" rules="required" />
         </div>
       </div>
-
       <div class="mt-3">
         <custom-headline-2 text="Voertuig" />
         <div class="px-5">
@@ -76,7 +75,6 @@ export default defineComponent({
           comment: data.comment,
         },
       })
-      console.log('FUSION: ', temporaryVehicleInsurance.value)
       store.dispatch('setTemporaryVehicleState', temporaryVehicleInsurance)
       store.dispatch('setHolderState', HolderStates.DETAIL)
     })

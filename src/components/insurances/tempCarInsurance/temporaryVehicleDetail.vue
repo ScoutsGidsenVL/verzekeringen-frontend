@@ -1,7 +1,6 @@
 <template>
   <base-detail :data="temporaryVehicleState" :repository="TemporaryVehicleRepository" title="Tijdelijke">
     <template #default="{ details }">
-      {{ details }}
       <div v-if="details" class="mt-1">
         <responsible-member-detail :responsible-member="details.responsibleMember" />
 

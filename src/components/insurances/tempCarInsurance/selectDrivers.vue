@@ -32,7 +32,7 @@
       </div>
 
       <div class="w-96 mt-3">
-        <custom-input :type="InputTypes.DATE" name="birthDate" label="Geboortendatum" :rules="'customRequired'" />
+        <custom-input :type="InputTypes.DATE" name="input.birthDate" label="Geboortendatum" :rules="'customRequired'" />
       </div>
 
       <div class="w-96">

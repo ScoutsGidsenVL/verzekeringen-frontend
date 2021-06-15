@@ -6,6 +6,7 @@ import { Owner, OwnerDeserializer, OwnerSerializer } from '@/serializer/Owner'
 import { MemberDeserializer, MemberSerializer } from '@/serializer/Member'
 import { SelectDriver } from '@/serializer/selectDriver'
 import { Driver } from '@/serializer/Driver'
+import { InsuranceOption } from '../InsuranceOption'
 
 export interface TemporaryVehicleInsurance {
   readonly id?: number
@@ -38,7 +39,7 @@ export const TemporaryVehicleDeserializer = (input: any): TemporaryVehicleInsura
     owner: input.owner ? OwnerDeserializer(input.owner) : undefined,
     totalCost: input.total_cost,
     maxCoverage: input.max_coverage ? CoverageDeserializer(input.max_coverage) : undefined,
-    insuranceOptions: input.insurance_options ? input.insurance_options : undefined,
+    insuranceOptions: input.insurance_options ? returnArrayWithValues(input.insurance_options) : undefined,
     responsibleMember: ResponsibleMemberDeserializer(input.responsible_member),
   }
 
@@ -60,4 +61,12 @@ export const TemporaryVehicleSerializer = (input: TemporaryVehicleInsurance): Te
   }
 
   return single
+}
+
+const returnArrayWithValues = (options: Array<InsuranceOption>) => {
+  const arr: Array<any> = []
+  options.forEach((option) => {
+    arr.push(option.value)
+  })
+  return arr
 }
