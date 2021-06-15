@@ -46,24 +46,12 @@
         </div>
       </div>
 
-      <div class="px-5">
-        <info-alert v-show="insuranceTypeState === InsuranceTypes.TIJDELIJKE_VERZEKERING_NIET_LEDEN">
-          <strong>OPGELET! Via deze verzekering kan je geen nieuwe leden verzekeren.</strong>
-          <p>Gelieve dit via de groepsadministratie te doen.</p>
-        </info-alert>
+      <div v-show="insuranceTypeState === InsuranceTypes.TIJDELIJKE_VERZEKERING_NIET_LEDEN" class="px-5">
+        <tip-general-non-member />
       </div>
 
-      <div class="px-5">
-        <info-alert v-show="insuranceTypeState === InsuranceTypes.REIS_BIJSTAND">
-          <strong>Wat biedt de reisbijstandsverzekering meer dan de gewone ledenpolis?</strong>
-          <p>Alleen geldig voor leden van Scouts en Gidsen Vlaanderen en personen die via een tijdelijke verzekering verzekerd zijn voor dezelfde periode.</p>
-
-          <div class="mt-3">
-            <strong>
-              <a target="_blank" href="https://www.scoutsengidsenvlaanderen.be/leiding/ondersteuning/groepsleiding/verzekeringen/tijdelijke-verzekering-niet-leden">Meer info</a>
-            </strong>
-          </div>
-        </info-alert>
+      <div v-show="insuranceTypeState === InsuranceTypes.REIS_BIJSTAND" class="px-5">
+        <tip-general-travel-assistance />
       </div>
     </div>
 
@@ -116,25 +104,27 @@
 <script lang="ts">
 import InsuranceTypeMenu from '@/components/requestInsurance/insuranceTypeMenu/InsuranceTypeMenu.vue'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
+import TipGeneralNonMember from '@/components/tips/tipGeneralNonMember.vue'
+import tipGeneralTravelAssistance from '@/components/tips/tipGeneralTravelAssistance.vue'
 import InsuranceApplicant from './insuranceApplicant/insuranceApplicant.vue'
+import { MaxCoverageRepository } from '@/repositories/maxCoverageRepository'
 import { BaseInsurance } from '@/serializer/insurances/BaseInsurance'
-import InfoAlert from '@/components/requestInsurance/InfoAlert.vue'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
+import RepositoryFactory from '@/repositories/repositoryFactory'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
+import { defineComponent, computed, ref, watch } from 'vue'
+import AuthRepository from '@/repositories/authRepository'
 import CustomButton from '@/components/CustomButton.vue'
 import { InsuranceTypes } from '@/enums/insuranceTypes'
-import { defineComponent, computed, ref, watch } from 'vue'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
+import { Coverage } from '@/serializer/Coverage'
 import { useForm } from 'vee-validate'
+import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import moment from 'moment'
-import { useRoute } from 'vue-router'
-import { Coverage } from '@/serializer/Coverage'
-import RepositoryFactory from '@/repositories/repositoryFactory'
-import { MaxCoverageRepository } from '@/repositories/maxCoverageRepository'
-import AuthRepository from '@/repositories/authRepository'
+import InfoAlert from '@/components/requestInsurance/InfoAlert.vue'
 
 export default defineComponent({
   name: 'RequestInsuranceGeneral',
@@ -146,6 +136,8 @@ export default defineComponent({
     'custom-input': CustomInput,
     'multi-select': MultiSelect,
     'info-alert': InfoAlert,
+    'tip-general-non-member': TipGeneralNonMember,
+    'tip-general-travel-assistance': tipGeneralTravelAssistance,
   },
   setup() {
     const route = useRoute()
