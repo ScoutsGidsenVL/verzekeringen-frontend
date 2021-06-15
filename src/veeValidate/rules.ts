@@ -2,10 +2,27 @@ import { required } from '@vee-validate/rules'
 import { defineRule } from 'vee-validate'
 import moment from 'moment'
 import { InsuranceTypes } from '@/enums/insuranceTypes'
-import { IS_NO_DRIVER } from '@/serializer/selectDriver'
+import { IS_NO_DRIVER, SelectDriver } from '@/serializer/selectDriver'
+import { Vehicle } from '@/serializer/Vehicle'
 
 export const defineRules = (store: any) => {
   defineRule('required', required)
+
+  defineRule('RequiredDrivers', (value: SelectDriver) => {
+    if (value.drivers.length === 0) {
+      return 'Bestuurders zijn vereist.'
+    }
+    return true
+  })
+
+  defineRule('RequiredVehicle', (value: any) => {
+    console.log('VALUE : ', value)
+    if (value.brand === undefined || value.brand === null) {
+      console.log('ERROR : ', value)
+      return 'Voertuig is vereist.'
+    }
+    return true
+  })
 
   defineRule('customRequired', (value: string) => {
     const isDriverOwnerState = store.getters.getIsDriverOwnerState

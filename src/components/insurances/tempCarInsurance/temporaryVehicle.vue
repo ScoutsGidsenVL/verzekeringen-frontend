@@ -4,13 +4,13 @@
       <div class="mt-3">
         <custom-headline-2 text="Bestuurders" />
         <div class="px-5">
-          <select-drivers id="selectDriverField" rules="required" />
+          <select-drivers id="selectDriverField" rules="RequiredDrivers:selectDriverField" />
         </div>
       </div>
       <div class="mt-3">
         <custom-headline-2 text="Voertuig" />
         <div class="px-5">
-          <select-vehicle id="vehicle" rules="required" />
+          <select-vehicle id="vehicle" rules="RequiredVehicle:vehicle" />
         </div>
       </div>
 
@@ -51,8 +51,8 @@ export default defineComponent({
     const data: TemporaryVehicleInsurance = store.getters.getCurrentInsuranceState
     const { handleSubmit, values } = useForm<TemporaryVehicleInsurance>({
       initialValues: {
-        drivers: data.drivers ? data.drivers : undefined,
-        vehicle: data.vehicle ? data.vehicle : undefined,
+        drivers: data.drivers ? data.drivers : [],
+        vehicle: data.vehicle ? data.vehicle : {},
         owner: data.owner ? data.owner : {},
         input: data.input ? data.input : {},
         selectDriverField: { drivers: [], isDriverOwner: IS_NO_DRIVER },

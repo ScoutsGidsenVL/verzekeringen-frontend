@@ -5,8 +5,9 @@
         <label @click="deleteVehicle()" class="hover:text-lightGreen cursor-pointer" for="">Verwijder</label>
       </div>
     </vehicle-item>
-    <ErrorMessage :name="id" class="text-red text-sm block mt-1 w-80" />
   </div>
+
+  <ErrorMessage :name="'vehicle'" class="text-red text-sm block mt-1 w-80" />
 
   <div class="mt-2 text-lightGreen">
     <strong class="cursor-pointer" @click="openSideBar()" v-if="!vehicle.brand"> + Selecteer voertuig </strong>
