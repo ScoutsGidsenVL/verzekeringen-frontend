@@ -12,4 +12,10 @@ export class TemporaryVehicleRepository extends BaseRepository {
       return this.deserializer(response)
     })
   }
+
+  editById(id: string, data: any): Promise<any> {
+    return this.put(this.endpoint + 'temporary_vehicle/' + id + '/', this.serializer(data)).then((response: any) => {
+      return this.deserializer(response)
+    })
+  }
 }

@@ -1,6 +1,7 @@
 <template>
   <form @submit="onSubmit">
     <div v-if="values">
+      {{ values }}
       <div class="mt-3">
         <custom-headline-2 text="Bestuurders" />
         <div class="px-5">
@@ -52,14 +53,17 @@ export default defineComponent({
     const data: TemporaryVehicleInsurance = store.getters.getCurrentInsuranceState
 
     const checkIfOwnerIsDriver = (owner: Owner, drivers: Driver[]) => {
+      let status = IS_NO_DRIVER
       drivers.forEach((driver) => {
         if (owner.firstName && owner.lastName && driver.firstName && driver.lastName) {
           if (owner.firstName + owner.lastName + owner.birthDate === driver.firstName + driver.lastName + driver.birthDate) {
-            return true
-          } else return false
-        } else return false
+            console.log('CHECK')
+            status = owner.firstName + owner.lastName + owner.birthDate
+          }
+        }
       })
-      return false
+      store.dispatch('setIsDriverOwnerState', status)
+      return status
     }
 
     const { handleSubmit, values } = useForm<TemporaryVehicleInsurance>({
@@ -70,11 +74,7 @@ export default defineComponent({
         input: data.input ? data.input : { firstName: '', lastName: '' },
         selectDriverField: {
           drivers: data.drivers ? data.drivers : [],
-          isDriverOwner: checkIfOwnerIsDriver(data.owner ? data.owner : { firstName: '', lastName: '' }, data.drivers ? data.drivers : [])
-            ? data.owner
-              ? data.owner.firstName + data.owner.lastName + data.owner.birthDate
-              : ''
-            : IS_NO_DRIVER,
+          isDriverOwner: checkIfOwnerIsDriver(data.owner ? data.owner : { firstName: '', lastName: '' }, data.drivers ? data.drivers : []),
         },
       },
     })
