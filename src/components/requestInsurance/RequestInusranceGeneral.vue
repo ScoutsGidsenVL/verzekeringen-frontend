@@ -57,6 +57,12 @@
         <info-alert v-show="insuranceTypeState === InsuranceTypes.REIS_BIJSTAND">
           <strong>Wat biedt de reisbijstandsverzekering meer dan de gewone ledenpolis?</strong>
           <p>Alleen geldig voor leden van Scouts en Gidsen Vlaanderen en personen die via een tijdelijke verzekering verzekerd zijn voor dezelfde periode.</p>
+
+          <div class="mt-3">
+            <strong>
+              <a target="_blank" href="https://www.scoutsengidsenvlaanderen.be/leiding/ondersteuning/groepsleiding/verzekeringen/tijdelijke-verzekering-niet-leden">Meer info</a>
+            </strong>
+          </div>
         </info-alert>
       </div>
     </div>

@@ -6,11 +6,16 @@ import nonMemberDetail from '@/components/insurances/nonMembersInsurance/nonMemb
 import travelAssistanceDetail from '@/components/insurances/travelAssistance/travelAssistanceDetail.vue'
 import eventInsuranceDetail from '@/components/insurances/eventInsurance/eventInsuranceDetail.vue'
 import temporaryVehicleDetail from '@/components/insurances/tempCarInsurance/temporaryVehicleDetail.vue'
+import StartView from '@/components/start.vue'
 
 const routes: any[] = [
   {
-    path: '/',
-    redirect: '/home',
+    path: '',
+    name: 'Start',
+    component: StartView,
+    meta: {
+      title: 'WWDB',
+    },
   },
   {
     path: '/home',
