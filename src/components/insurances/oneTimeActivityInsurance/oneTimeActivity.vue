@@ -53,6 +53,7 @@ import { OneTimeActivity } from '@/serializer/insurances/OneTimeActivity'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
+import { InsuranceTypeRepos } from '@/enums/insuranceTypes'
 import CustomButton from '@/components/CustomButton.vue'
 import { computed, defineComponent, ref } from 'vue'
 import { HolderStates } from '@/enums/holderStates'
@@ -110,6 +111,15 @@ export default defineComponent({
           comment: data.comment,
         },
       })
+
+      //@ts-ignore
+      RepositoryFactory.get(InsuranceTypeRepos[store.getters.insuranceTypeState])
+        //@ts-ignore
+        .getCalculatedCost(oneTimeActivity.value)
+        .then((cost: any) => {
+          oneTimeActivity.value.totalCost = cost
+        })
+
       store.dispatch('setOneTimeActivityState', oneTimeActivity.value).then(() => {
         store.dispatch('setHolderState', HolderStates.DETAIL)
       })

@@ -17,4 +17,10 @@ export class OneTimeActivityRepository extends BaseRepository {
       return this.deserializer(response)
     })
   }
+
+  getCalculatedCost = (data: OneTimeActivity) => {
+    return this.post(this.endpoint + 'activity/cost/', this.serializer(data)).then((response: any) => {
+      return response.total_cost
+    })
+  }
 }
