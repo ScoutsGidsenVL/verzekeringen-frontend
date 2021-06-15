@@ -43,8 +43,6 @@ export const TemporaryVehicleDeserializer = (input: any): TemporaryVehicleInsura
     responsibleMember: ResponsibleMemberDeserializer(input.responsible_member),
   }
 
-  console.log('SINGLE: ', single)
-
   return single
 }
 
