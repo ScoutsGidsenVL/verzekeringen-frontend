@@ -67,6 +67,8 @@ import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
 import { Country, CountryDeserializer } from '@/serializer/Country'
+import { InsuranceTypeRepos } from '@/enums/insuranceTypes'
+import RepositoryFactory from '@/repositories/repositoryFactory'
 
 export default defineComponent({
   name: 'NonMember',
@@ -107,6 +109,14 @@ export default defineComponent({
           comment: data.comment,
         },
       })
+
+      //@ts-ignore
+      RepositoryFactory.get(InsuranceTypeRepos[store.getters.insuranceTypeState])
+        //@ts-ignore
+        .getCalculatedCost(nonMember.value)
+        .then((cost: any) => {
+          nonMember.value.totalCost = cost
+        })
 
       store.dispatch('setNonMemberState', nonMember)
       store.dispatch('setHolderState', HolderStates.DETAIL)

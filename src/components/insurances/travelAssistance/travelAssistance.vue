@@ -6,7 +6,7 @@
         <div class="px-5 w-96">
           <multi-select
             rules="required"
-            insuranceTypeId="3"
+            insurance-type-id="3"
             id="country"
             :object="true"
             track-by="name"
@@ -56,6 +56,8 @@ import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
 import { BaseInsurance } from '@/serializer/insurances/BaseInsurance'
+import RepositoryFactory from '@/repositories/repositoryFactory'
+import { InsuranceTypeRepos } from '@/enums/insuranceTypes'
 
 export default defineComponent({
   name: 'TravelAssistance',
@@ -95,6 +97,14 @@ export default defineComponent({
           comment: data.comment,
         },
       })
+
+      //@ts-ignore
+      RepositoryFactory.get(InsuranceTypeRepos[store.getters.insuranceTypeState])
+        //@ts-ignore
+        .getCalculatedCost(travelAssistance.value)
+        .then((cost: any) => {
+          travelAssistance.value.totalCost = cost
+        })
 
       store.dispatch('setTravelAssistanceState', travelAssistance)
       store.dispatch('setHolderState', HolderStates.DETAIL)

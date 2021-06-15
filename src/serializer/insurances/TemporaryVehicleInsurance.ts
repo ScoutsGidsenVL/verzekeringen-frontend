@@ -3,8 +3,8 @@ import { Coverage, CoverageDeserializer, CoverageSerializer } from '@/serializer
 import { Vehicle, VehicleDeserializer, VehicleSerializer } from '@/serializer/Vehicle'
 import { Group, GroupDeserializer, GroupSerializer } from '@/serializer/Group'
 import { Owner, OwnerDeserializer, OwnerSerializer } from '@/serializer/Owner'
-import { MemberDeserializer, MemberSerializer } from '@/serializer/Member'
-import { IS_NO_DRIVER, SelectDriver } from '@/serializer/selectDriver'
+import { MemberSerializer } from '@/serializer/Member'
+import { SelectDriver } from '@/serializer/selectDriver'
 import { Driver, DriverDeserializer } from '@/serializer/Driver'
 import { InsuranceOption } from '../InsuranceOption'
 
@@ -19,7 +19,7 @@ export interface TemporaryVehicleInsurance {
   readonly drivers?: Driver[]
   readonly owner?: Owner
   readonly input?: Owner
-  readonly totalCost?: string
+  totalCost?: string
   readonly maxCoverage?: Coverage
   readonly insuranceOptions?: Array<number>
   readonly selectDriverField?: SelectDriver

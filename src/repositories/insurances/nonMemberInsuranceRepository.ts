@@ -18,4 +18,10 @@ export class NonMemberInsuranceRepository extends BaseRepository {
       return this.deserializer(response)
     })
   }
+
+  getCalculatedCost = (data: NonMemberInsurance) => {
+    return this.post(this.endpoint + 'temporary/cost/', this.serializer(data)).then((response: any) => {
+      return response.total_cost
+    })
+  }
 }

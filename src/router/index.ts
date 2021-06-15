@@ -14,7 +14,7 @@ const routes: any[] = [
     name: 'Start',
     component: StartView,
     meta: {
-      title: 'WWDB',
+      title: 'Verzekering',
     },
   },
   {

@@ -20,12 +20,11 @@ export default defineComponent({
 
     if (code) {
       // Fetch the tokens and remove the url params on succes and redirect to /#/ no history mode path
-      store.dispatch('fetchTokens', code).then((redirectPath) => {
+      store.dispatch('fetchTokens', code).then(() => {
         const url = new URL(location.toString())
         url.searchParams.delete('code')
         url.searchParams.delete('session_state')
         window.location.replace(url.toString())
-        console.log('redirect path: ', redirectPath)
       })
     } else {
       router.push('/home')

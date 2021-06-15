@@ -1,7 +1,6 @@
 <template>
   <form @submit="onSubmit">
     <div v-if="values">
-      {{ values }}
       <div class="mt-3">
         <custom-headline-2 text="Bestuurders" />
         <div class="px-5">
@@ -35,10 +34,12 @@ import { IS_NO_DRIVER } from '@/serializer/selectDriver'
 import { computed, defineComponent, ref } from 'vue'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
-import { useForm } from 'vee-validate'
-import { useStore } from 'vuex'
 import { Driver } from '@/serializer/Driver'
 import { Owner } from '@/serializer/Owner'
+import { useForm } from 'vee-validate'
+import { useStore } from 'vuex'
+import RepositoryFactory from '@/repositories/repositoryFactory'
+import { InsuranceTypeRepos } from '@/enums/insuranceTypes'
 
 export default defineComponent({
   name: 'TemporaryVehicle',
@@ -57,7 +58,6 @@ export default defineComponent({
       drivers.forEach((driver) => {
         if (owner.firstName && owner.lastName && driver.firstName && driver.lastName) {
           if (owner.firstName + owner.lastName + owner.birthDate === driver.firstName + driver.lastName + driver.birthDate) {
-            console.log('CHECK')
             status = owner.firstName + owner.lastName + owner.birthDate
           }
         }
@@ -104,6 +104,15 @@ export default defineComponent({
           comment: data.comment,
         },
       })
+
+      //@ts-ignore
+      RepositoryFactory.get(InsuranceTypeRepos[store.getters.insuranceTypeState])
+        //@ts-ignore
+        .getCalculatedCost(temporaryVehicleInsurance.value)
+        .then((cost: any) => {
+          temporaryVehicleInsurance.value.totalCost = cost
+        })
+
       store.dispatch('setTemporaryVehicleState', temporaryVehicleInsurance)
       store.dispatch('setHolderState', HolderStates.DETAIL)
     })

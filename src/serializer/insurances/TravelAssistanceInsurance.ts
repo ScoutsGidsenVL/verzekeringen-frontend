@@ -15,7 +15,7 @@ export interface TravelAssistanceInsurance {
   readonly vehicle?: Vehicle
   readonly participants?: Member[]
   readonly responsibleMember?: ResponsibleMember
-  readonly totalCost?: string
+  totalCost?: string
 }
 
 export const TravelAssistanceInsuranceDeserializer = (input: any): TravelAssistanceInsurance => {

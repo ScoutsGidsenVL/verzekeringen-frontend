@@ -14,7 +14,7 @@ export interface EventInsurance {
   readonly nature?: string
   readonly eventSize?: EventSize
   readonly location?: Location
-  readonly totalCost?: string
+  totalCost?: string
 }
 
 export const EventInsuranceDeserializer = (input: any): EventInsurance => {

@@ -7,9 +7,9 @@
       <div class="mt-3">
         <strong>
           Meer info over
-          <a target="_blank" href="https://www.scoutsengidsenvlaanderen.be/leiding/ondersteuning/groepsleiding/verzekeringen/reisbijstand">reisbijstand</a>
+          <a class="underline" target="_blank" href="https://www.scoutsengidsenvlaanderen.be/leiding/ondersteuning/groepsleiding/verzekeringen/reisbijstand">reisbijstand</a>
           &
-          <a target="_blank" href="https://www.scoutsengidsenvlaanderen.be/leiding/ondersteuning/groepsleiding/verzekeringen/reisbijstand-met-de-auto">reisbijstand met auto</a>
+          <a class="underline" target="_blank" href="https://www.scoutsengidsenvlaanderen.be/leiding/ondersteuning/groepsleiding/verzekeringen/reisbijstand-met-de-auto">reisbijstand met auto</a>
         </strong>
       </div>
     </info-alert>

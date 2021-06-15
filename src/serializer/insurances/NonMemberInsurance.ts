@@ -17,7 +17,7 @@ export interface NonMemberInsurance {
   readonly nature?: string
   readonly responsibleMember?: ResponsibleMember
   readonly status?: Status
-  readonly totalCost?: string
+  totalCost?: string
   readonly type?: Type
   readonly vvksComment?: string
   readonly nonMembers?: NonMember[]
