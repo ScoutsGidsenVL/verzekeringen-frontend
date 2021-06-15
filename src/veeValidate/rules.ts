@@ -16,9 +16,7 @@ export const defineRules = (store: any) => {
   })
 
   defineRule('RequiredVehicle', (value: any) => {
-    console.log('VALUE : ', value)
     if (value.brand === undefined || value.brand === null) {
-      console.log('ERROR : ', value)
       return 'Voertuig is vereist.'
     }
     return true

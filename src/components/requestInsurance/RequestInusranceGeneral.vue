@@ -4,7 +4,6 @@
       <custom-headline-2 text="Welke" />
 
       <insurance-type-menu :disabled="isEdit" />
-
       <div class="mt-3" v-if="insuranceTypeState === InsuranceTypes.TIJDELIJKE_AUTO_VERZEKERING">
         <div><strong>Keuze hulp</strong></div>
         <div class="mt-4 px-5">

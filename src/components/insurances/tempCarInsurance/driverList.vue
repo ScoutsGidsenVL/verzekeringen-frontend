@@ -12,7 +12,14 @@
       <member-item :member="member">
         <div v-if="canBeDeleted" class="text-right">
           <label @click="deleteDriverFromList(index)" class="hover:text-lightGreen cursor-pointer" for="">Verwijder</label>
-          <input class="mr-2 ml-4 cursor-pointer" v-model="ownerComputed" type="radio" :id="index + 'isOwner'" :name="index + 'isOwner'" :value="member.id" />
+          <input
+            class="mr-2 ml-4 cursor-pointer"
+            v-model="ownerComputed"
+            type="radio"
+            :id="index + 'isOwner'"
+            :name="index + 'isOwner'"
+            :value="member.firstName + member.lastName + member.birthDate"
+          />
           <label class="cursor-pointer" :for="index + 'isOwner'">Eigenaar</label>
         </div>
       </member-item>

@@ -115,7 +115,7 @@ export default defineComponent({
     })
 
     const { value: input } = useField<Owner>('input', 'required', {
-      initialValue: {},
+      initialValue: { firstName: '', lastName: '' },
     })
 
     watch(

@@ -4,8 +4,8 @@ import { Vehicle, VehicleDeserializer, VehicleSerializer } from '@/serializer/Ve
 import { Group, GroupDeserializer, GroupSerializer } from '@/serializer/Group'
 import { Owner, OwnerDeserializer, OwnerSerializer } from '@/serializer/Owner'
 import { MemberDeserializer, MemberSerializer } from '@/serializer/Member'
-import { SelectDriver } from '@/serializer/selectDriver'
-import { Driver } from '@/serializer/Driver'
+import { IS_NO_DRIVER, SelectDriver } from '@/serializer/selectDriver'
+import { Driver, DriverDeserializer } from '@/serializer/Driver'
 import { InsuranceOption } from '../InsuranceOption'
 
 export interface TemporaryVehicleInsurance {
@@ -35,13 +35,15 @@ export const TemporaryVehicleDeserializer = (input: any): TemporaryVehicleInsura
     responsiblePhoneNumber: input.responsible_phone_number ? input.responsible_phone_number : undefined,
     group: GroupDeserializer(input.group),
     vehicle: input.vehicle && input.vehicle.license_plate ? VehicleDeserializer(input.vehicle) : undefined,
-    drivers: input.drivers.map((member: any) => MemberDeserializer(member)),
+    drivers: input.drivers.map((member: any) => DriverDeserializer(member)),
     owner: input.owner ? OwnerDeserializer(input.owner) : undefined,
     totalCost: input.total_cost,
     maxCoverage: input.max_coverage ? CoverageDeserializer(input.max_coverage) : undefined,
     insuranceOptions: input.insurance_options ? returnArrayWithValues(input.insurance_options) : undefined,
     responsibleMember: ResponsibleMemberDeserializer(input.responsible_member),
   }
+
+  console.log('SINGLE: ', single)
 
   return single
 }

@@ -2,8 +2,8 @@ import { Location, LocationDeserializer, LocationSerializer } from '@/serializer
 
 export interface Member {
   readonly id?: string
-  readonly lastName?: string
-  readonly firstName?: string
+  readonly lastName: string
+  readonly firstName: string
   readonly phoneNumber?: string
   readonly email?: string
   birthDate?: string
