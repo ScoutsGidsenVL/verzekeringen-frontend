@@ -53,6 +53,10 @@
       <div v-show="insuranceTypeState === InsuranceTypes.REIS_BIJSTAND" class="px-5">
         <tip-general-travel-assistance />
       </div>
+
+      <div v-show="insuranceTypeState === InsuranceTypes.MATERIAAL_VERZEKERING" class="px-5">
+        <tip-general-material-insurance />
+      </div>
     </div>
 
     <div class="mb-5">
@@ -104,6 +108,7 @@
 <script lang="ts">
 import InsuranceTypeMenu from '@/components/requestInsurance/insuranceTypeMenu/InsuranceTypeMenu.vue'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
+import TipGeneralMaterialInsurance from '@/components/tips/tipGeneralMaterialInsurance.vue'
 import TipGeneralNonMember from '@/components/tips/tipGeneralNonMember.vue'
 import tipGeneralTravelAssistance from '@/components/tips/tipGeneralTravelAssistance.vue'
 import InsuranceApplicant from './insuranceApplicant/insuranceApplicant.vue'
@@ -138,6 +143,7 @@ export default defineComponent({
     'info-alert': InfoAlert,
     'tip-general-non-member': TipGeneralNonMember,
     'tip-general-travel-assistance': tipGeneralTravelAssistance,
+    'tip-general-material-insurance': TipGeneralMaterialInsurance,
   },
   setup() {
     const route = useRoute()

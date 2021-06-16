@@ -1,5 +1,6 @@
 import { BaseRepository } from '@/repositories/baseRepository'
 import { EventRepository } from '@/repositories/insurances/eventRepository'
+import { MaterialInsuranceRepository } from '@/repositories/insurances/materialInsuranceRepository'
 import { NonMemberInsuranceRepository } from '@/repositories/insurances/nonMemberInsuranceRepository'
 import { OneTimeActivityRepository } from '@/repositories/insurances/oneTimeActivityRepository'
 import { TemporaryVehicleRepository } from '@/repositories/insurances/temporaryVehicleRepository'
@@ -20,7 +21,7 @@ export const InsuranceTypeStoreNames: Record<InsuranceTypes, string> = {
   REIS_BIJSTAND: 'travelAssistanceState',
   TIJDELIJKE_AUTO_VERZEKERING: 'temporaryVehicleState',
   EVENEMENTEN_VERZEKERING: 'eventState',
-  MATERIAAL_VERZEKERING: 'MATERIAAL_VERZEKERING',
+  MATERIAAL_VERZEKERING: 'materialInsuranceState',
 }
 
 export const InsuranceTypeStoreSetters: Record<InsuranceTypes, string> = {
@@ -29,7 +30,7 @@ export const InsuranceTypeStoreSetters: Record<InsuranceTypes, string> = {
   REIS_BIJSTAND: 'setTravelAssistanceState',
   TIJDELIJKE_AUTO_VERZEKERING: 'setTemporaryVehicleState',
   EVENEMENTEN_VERZEKERING: 'setEventState',
-  MATERIAAL_VERZEKERING: 'MATERIAAL_VERZEKERING',
+  MATERIAAL_VERZEKERING: 'setMaterialInsuranceState',
 }
 
 export const InsuranceTypeRepos: Record<InsuranceTypes, new (...params: any[]) => BaseRepository> = {
@@ -38,5 +39,5 @@ export const InsuranceTypeRepos: Record<InsuranceTypes, new (...params: any[]) =
   REIS_BIJSTAND: TravelAssistanceRepository,
   TIJDELIJKE_AUTO_VERZEKERING: TemporaryVehicleRepository,
   EVENEMENTEN_VERZEKERING: EventRepository,
-  MATERIAAL_VERZEKERING: OneTimeActivityRepository,
+  MATERIAAL_VERZEKERING: MaterialInsuranceRepository,
 }

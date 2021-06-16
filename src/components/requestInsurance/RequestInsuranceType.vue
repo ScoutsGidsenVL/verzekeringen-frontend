@@ -20,7 +20,7 @@
   </div>
 
   <div v-if="isCurrentType(InsuranceTypes.MATERIAAL_VERZEKERING, insuranceTypeState)">
-    <div>nothing</div>
+    <material-insurance />
   </div>
 </template>
 
@@ -28,6 +28,7 @@
 import OneTimeActivity from '@/components/insurances/oneTimeActivityInsurance/oneTimeActivity.vue'
 import TravelAssistance from '@/components/insurances/travelAssistance/travelAssistance.vue'
 import NonMember from '@/components/insurances/nonMembersInsurance/nonMember.vue'
+import MaterialInsurance from '@/components/insurances/materialInsurance/materialInsurance.vue'
 import TemporaryVehicle from '@/components/insurances/tempCarInsurance/temporaryVehicle.vue'
 import EventInsurance from '@/components/insurances/eventInsurance/eventInsurance.vue'
 import { isCurrentType } from '@/helpers/insuranceTypeHelper'
@@ -42,6 +43,7 @@ export default defineComponent({
     'travel-assistance': TravelAssistance,
     'temporary-vehicle': TemporaryVehicle,
     'event-insurance': EventInsurance,
+    'material-insurance': MaterialInsurance,
     'non-member': NonMember,
   },
   setup() {

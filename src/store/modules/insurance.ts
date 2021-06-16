@@ -7,6 +7,7 @@ import { TravelAssistanceInsurance } from '@/serializer/insurances/TravelAssista
 import { TemporaryVehicleInsurance } from '@/serializer/insurances/TemporaryVehicleInsurance'
 import { EventInsurance } from '@/serializer/insurances/EventInsurance'
 import { IS_NO_DRIVER } from '@/serializer/selectDriver'
+import { MaterialInsurance } from '@/serializer/insurances/MaterialInsurance'
 
 export interface InsuranceState {
   holderState: string
@@ -17,6 +18,7 @@ export interface InsuranceState {
   travelAssistanceState: TravelAssistanceInsurance
   temporaryVehicleState: TemporaryVehicleInsurance
   eventState: EventInsurance
+  materialInsuranceState: MaterialInsurance
   isDriverOwnerState: String
 }
 
@@ -30,6 +32,7 @@ export default {
     travelAssistanceState: {},
     temporaryVehicleState: {},
     eventState: {},
+    materialInsuranceState: {},
     isDriverOwnerState: IS_NO_DRIVER,
   }),
   getters: {
@@ -75,6 +78,9 @@ export default {
     SET_EVENT_STATE(state: any, eventInsurance: EventInsurance) {
       state.eventState = eventInsurance
     },
+    SET_MATERIAL_INSURANCE_STATE(state: any, materialInsurance: MaterialInsurance) {
+      state.materialInsuranceState = materialInsurance
+    },
     SET_IS_DRIVER_OWNER_STATE(state: any, isDriverOwner: string) {
       state.isDriverOwnerState = isDriverOwner
     },
@@ -87,6 +93,7 @@ export default {
       state.travelAssistanceState = {}
       state.temporaryVehicleState = {}
       state.eventState = {}
+      state.materialInsuranceState = {}
       state.isDriverOwnerState = IS_NO_DRIVER
     },
   },
@@ -114,6 +121,9 @@ export default {
     },
     setEventState({ commit }: any, eventInsurance: EventInsurance) {
       commit('SET_EVENT_STATE', eventInsurance)
+    },
+    setMaterialInsuranceState({ commit }: any, materialInsurance: MaterialInsurance) {
+      commit('SET_MATERIAL_INSURANCE_STATE', materialInsurance)
     },
     setIsDriverOwnerState({ commit }: any, isDriverOwner: string) {
       commit('SET_IS_DRIVER_OWNER_STATE', isDriverOwner)
