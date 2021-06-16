@@ -1,7 +1,7 @@
 <template>
   <div>
-    <base-side-bar v-model:isDisplay="display" v-model:selection="selected" :title="title" :options="['Nieuw', 'Bestaand']">
-      <div v-if="selected === 'option-1'" class="mt-4">
+    <base-side-bar name="Vehicle" v-model:isDisplay="display" v-model:selection="selected" :title="title" :options="['Nieuw', 'Bestaand']">
+      <div v-if="selected === 'NieuwVehicle'" class="mt-4">
         <form @submit="onSubmit">
           <div class="custom-container mt-5">
             <div class="w-96">
@@ -60,7 +60,7 @@
           </div>
         </form>
       </div>
-      <div v-if="selected === 'option-2'">
+      <div v-if="selected === 'BestaandVehicle'">
         <form @submit="onSubmit">
           <div>
             <div>
@@ -130,7 +130,7 @@ export default defineComponent({
     const user = ref<ResponsibleMember>(store.getters.user)
     const display = ref<boolean>(props.isDisplay)
     const { handleSubmit, values } = useForm<Vehicle>()
-    const selected = ref<string>('option-1')
+    const selected = ref<string>('NieuwVehicle')
     const selectedVehicle = ref<Vehicle>({})
     const fetchedVehicles = ref<Array<Vehicle>>([])
     const generalInsuranceState = computed(() => {
@@ -153,7 +153,7 @@ export default defineComponent({
     )
 
     const onSubmit = handleSubmit(async (values: Vehicle) => {
-      if (selected.value === 'option-1') {
+      if (selected.value === 'NieuwVehicle') {
         const vehicle = ref<Vehicle>({
           type: values.type,
           brand: values.brand,
@@ -166,7 +166,7 @@ export default defineComponent({
         postVehicle(vehicle.value)
       }
 
-      if (selected.value === 'option-2') {
+      if (selected.value === 'BestaandVehicle') {
         context.emit('addCreatedVehicle', selectedVehicle.value)
       }
 

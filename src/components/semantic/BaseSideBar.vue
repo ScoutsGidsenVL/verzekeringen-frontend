@@ -12,13 +12,13 @@
     <form v-if="options" action="">
       <div class="flex gap-7">
         <div>
-          <input :id="'option-1'" v-model="selected" class="cursor-pointer" type="radio" :name="'option-1'" value="option-1" @change="emitOption()" />
-          <label :for="'option-1'" class="ml-2">{{ options[0] }}</label>
+          <input :id="options[0] + name" v-model="selected" class="cursor-pointer" type="radio" :name="options[0] + name" :value="options[0] + name" @change="emitOption()" />
+          <label :for="options[0] + name" class="ml-2">{{ options[0] }}</label>
         </div>
 
         <div>
-          <input :id="'option-2'" v-model="selected" class="cursor-pointer" type="radio" :name="'option-2'" value="option-2" @change="emitOption()" />
-          <label :for="'option-2'" class="ml-2">{{ options[1] }}</label>
+          <input :id="options[1] + name" v-model="selected" class="cursor-pointer" type="radio" :name="options[1] + name" :value="options[1] + name" @change="emitOption()" />
+          <label :for="options[1] + name" class="ml-2">{{ options[1] }}</label>
         </div>
       </div>
     </form>
@@ -47,7 +47,7 @@ export default defineComponent({
     selection: {
       type: String,
       required: false,
-      default: 'option-1',
+      default: '',
     },
     options: {
       type: Array as PropType<Array<String>>,
@@ -58,6 +58,7 @@ export default defineComponent({
       default: 'w-3/12',
       required: false,
     },
+    name: String,
   },
   setup(props, context) {
     const selected = ref<string>(props.selection)

@@ -2,8 +2,8 @@ export interface Equipment {
   readonly nature?: string
   readonly description?: string
   readonly totalValue?: string
-  readonly ownerMember?: string
-  readonly ownerNonMember?: string
+  ownerMember?: string
+  ownerNonMember?: string
   readonly group?: string
 }
 

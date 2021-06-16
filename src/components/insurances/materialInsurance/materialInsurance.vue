@@ -38,8 +38,8 @@
       </div>
     </div>
 
-    <div>
-      <select-equipment :id="equipment" />
+    <div class="px-5 mt-3">
+      <select-equipment id="equipment" rules="required" />
     </div>
 
     <div class="px-5 mt-5">
@@ -49,22 +49,22 @@
 </template>
 
 <script lang="ts">
+import SelectEquipment from '@/components/insurances/materialInsurance/selectEquipment.vue'
 import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRepository'
 import { MaterialInsurance } from '@/serializer/insurances/MaterialInsurance'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
-import SelectEquipment from '@/components/insurances/materialInsurance/selectEquipment.vue'
 import { CountryRepository } from '@/repositories/countriesRepository'
+import { Country, CountryDeserializer } from '@/serializer/Country'
+import RepositoryFactory from '@/repositories/repositoryFactory'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
+import { InsuranceTypeRepos } from '@/enums/insuranceTypes'
 import CustomButton from '@/components/CustomButton.vue'
 import { computed, defineComponent, ref } from 'vue'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
-import { Country, CountryDeserializer } from '@/serializer/Country'
-import { InsuranceTypeRepos } from '@/enums/insuranceTypes'
-import RepositoryFactory from '@/repositories/repositoryFactory'
 
 export default defineComponent({
   name: 'MaterialInsurance',
@@ -84,10 +84,9 @@ export default defineComponent({
         nature: data.nature ? data.nature : '',
         country: data.country ? data.country : initialCountry.value,
         postCodeCity: data.postCodeCity ? (data.postCodeCity.city === undefined ? {} : data.postCodeCity) : undefined,
+        equipment: [],
       },
     })
-
-    const selected = ref<string>('option-2')
 
     const generalInsuranceState = computed(() => {
       return store.state.insurance.generalInsuranceState
@@ -120,7 +119,6 @@ export default defineComponent({
       BelgianCitySearchRepository,
       CountryRepository,
       InputTypes,
-      selected,
       onSubmit,
       values,
       data,

@@ -79,7 +79,6 @@ export default defineComponent({
         vehicle: data.vehicle ? data.vehicle : undefined,
       },
     })
-    const selected = ref<string>('option-2')
 
     const generalInsuranceState = computed((): BaseInsurance => {
       return store.state.insurance.generalInsuranceState
@@ -113,7 +112,6 @@ export default defineComponent({
     return {
       CountryRepository,
       InputTypes,
-      selected,
       onSubmit,
       values,
     }

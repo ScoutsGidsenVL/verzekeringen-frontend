@@ -1,7 +1,7 @@
 <template>
   <div>
-    <base-side-bar v-model:isDisplay="display" v-model:selection="selected" :title="title" :options="['Nieuw', 'Bestaand']">
-      <div v-if="selected === 'option-1'" class="mt-4">
+    <base-side-bar name="NonMember" v-model:isDisplay="display" v-model:selection="selected" :title="title" :options="['Nieuw', 'Bestaand']">
+      <div v-if="selected === 'NieuwNonMember'" class="mt-4">
         <form @submit="onSubmit">
           <div class="custom-container mt-4">
             <div class="w-96">
@@ -64,7 +64,7 @@
         </form>
       </div>
 
-      <div v-if="selected === 'option-2'">
+      <div v-if="selected === 'BestaandNonMember'">
         <form @submit="onSubmit">
           <div>
             <search-input name="nonMember" placeholder="Zoek op naam" v-model:loading="loading" :repository="NonMemberRepository" @fetchedOptions="fetchedOptions($event)" />
@@ -82,7 +82,7 @@
               </non-member-item>
             </div>
           </div>
-          <div v-if="selected.value === 'option-1'" class="mt-5"><custom-button text="Voeg toe" /></div>
+          <div v-if="selected.value === 'NieuwNonMember'" class="mt-5"><custom-button text="Voeg toe" /></div>
         </form>
       </div>
     </base-side-bar>
@@ -131,18 +131,23 @@ export default defineComponent({
         return []
       },
     },
+    closeOnAdd: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
   },
   setup(props, context) {
     const store = useStore()
     const user = ref<ResponsibleMember>(store.getters.user)
     const display = ref<boolean>(props.isDisplay)
     const { handleSubmit } = useForm<NonMember>()
-    const selected = ref<string>('option-1')
+    const selected = ref<string>('NieuwNonMember')
     const selectedNonMembers = ref<NonMember[]>([])
     const loading = ref<boolean>(false)
 
     const onSubmit = handleSubmit(async (values: NonMember) => {
-      if (selected.value === 'option-1') {
+      if (selected.value === 'NieuwNonMember') {
         const generalInsuranceState = ref<any>(store.getters.generalInsuranceState)
 
         const nonMember = ref<NonMember>({
@@ -165,7 +170,10 @@ export default defineComponent({
 
     const addNonMember = (nonMember: NonMember) => {
       if (!props.existingList.includes(nonMember)) {
-        context.emit('addCreatedNonMemberToList', [nonMember])
+        context.emit('addCreatedNonMemberToList', nonMember)
+      }
+      if (props.closeOnAdd) {
+        display.value = false
       }
     }
 
@@ -173,9 +181,10 @@ export default defineComponent({
       RepositoryFactory.get(NonMemberRepository)
         .create(data)
         .then((completed: NonMember) => {
-          selectedNonMembers.value.push(completed)
-          context.emit('addCreatedNonMemberToList', selectedNonMembers.value)
-          selectedNonMembers.value = []
+          context.emit('addCreatedNonMemberToList', completed)
+          if (props.closeOnAdd) {
+            display.value = false
+          }
         })
     }
 

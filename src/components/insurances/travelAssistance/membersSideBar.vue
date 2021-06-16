@@ -1,6 +1,6 @@
 <template>
   <div>
-    <base-side-bar v-model:isDisplay="display" :title="title">
+    <base-side-bar name="Member" v-model:isDisplay="display" :title="title">
       <div>
         <div>
           <search-input name="member" placeholder="Zoek op naam" v-model:loading="loading" :repository="MemberRepository" @fetchedOptions="fetchedOptions($event)" />
@@ -60,6 +60,11 @@ export default defineComponent({
         return []
       },
     },
+    closeOnAdd: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
   },
   setup(props, context) {
     const store = useStore()
@@ -71,6 +76,9 @@ export default defineComponent({
     const addMember = (member: Member) => {
       if (!props.existingList.includes(member)) {
         context.emit('addMemberToList', member)
+      }
+      if (props.closeOnAdd) {
+        display.value = false
       }
     }
 

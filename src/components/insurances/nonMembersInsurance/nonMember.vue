@@ -88,11 +88,9 @@ export default defineComponent({
         nature: data.nature ? data.nature : '',
         country: data.country ? data.country : initialCountry.value,
         postCodeCity: data.postCodeCity ? (data.postCodeCity.city === undefined ? {} : data.postCodeCity) : undefined,
-        nonMembers: data.nonMembers ? data.nonMembers : undefined,
+        nonMembers: data.nonMembers ? data.nonMembers : [],
       },
     })
-
-    const selected = ref<string>('option-2')
 
     const generalInsuranceState = computed(() => {
       return store.state.insurance.generalInsuranceState
@@ -126,7 +124,6 @@ export default defineComponent({
       BelgianCitySearchRepository,
       CountryRepository,
       InputTypes,
-      selected,
       onSubmit,
       values,
       data,

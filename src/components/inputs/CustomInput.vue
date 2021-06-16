@@ -3,6 +3,9 @@
     <strong>
       <label>{{ label }}</label>
     </strong>
+    <div v-if="extraInfo" style="font-size: 13px">
+      <label>{{ extraInfo }}</label>
+    </div>
     <div>
       <slot />
     </div>
@@ -57,6 +60,10 @@ export default defineComponent({
       type: String,
       required: false,
       default: '1000',
+    },
+    extraInfo: {
+      type: String,
+      required: false,
     },
   },
   setup(props) {
