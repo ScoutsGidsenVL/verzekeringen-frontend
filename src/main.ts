@@ -30,7 +30,7 @@ new StaticFileRepository().getFile('config.json').then((result: any) => {
         authorizedRedirectRoute: '/',
         serverTokenEndpoint: 'token/',
         serverRefreshEndpoint: 'refresh/',
-        InternalRedirectUrl: '',
+        InternalRedirectUrl: '/',
       },
     })
   }

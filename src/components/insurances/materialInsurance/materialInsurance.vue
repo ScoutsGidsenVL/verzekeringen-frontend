@@ -38,6 +38,10 @@
       </div>
     </div>
 
+    <div>
+      <select-equipment :id="equipment" />
+    </div>
+
     <div class="px-5 mt-5">
       <custom-button text="Volgende" />
     </div>
@@ -48,6 +52,7 @@
 import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRepository'
 import { MaterialInsurance } from '@/serializer/insurances/MaterialInsurance'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
+import SelectEquipment from '@/components/insurances/materialInsurance/selectEquipment.vue'
 import { CountryRepository } from '@/repositories/countriesRepository'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
@@ -68,6 +73,7 @@ export default defineComponent({
     'custom-button': CustomButton,
     'multi-select': MultiSelect,
     'custom-input': CustomInput,
+    'select-equipment': SelectEquipment,
   },
   setup() {
     const store = useStore()
