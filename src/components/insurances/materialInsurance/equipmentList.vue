@@ -10,6 +10,12 @@
 
   <div class="grid grid-cols-2 gap-1" style="width: 850px">
     <div class="w-96" v-for="(material, index) in equipment" :key="material.id">
+      <div>
+        <div v-if="material.ownerMember">(Equipment van lid)</div>
+        <div v-if="material.ownerNonMember">(Equipment van niet-lid)</div>
+        <div v-if="!material.ownerNonMember && !material.ownerMember">(Equipment van groep)</div>
+      </div>
+
       <equipment-item :equipment="material">
         <div v-if="canBeDeleted" class="text-right">
           <label @click="deleteEquipment(index)" class="hover:text-lightGreen cursor-pointer" for="">Verwijder</label>
