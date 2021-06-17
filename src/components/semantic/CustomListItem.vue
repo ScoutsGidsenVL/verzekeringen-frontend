@@ -54,6 +54,7 @@ export default defineComponent({
 
     const fetchInsuranceById = (id: string, type: string) => {
       setInsuranceType(type)
+
       //@ts-ignore
       RepositoryFactory.get(InsuranceTypeRepos[store.getters.insuranceTypeState])
         //@ts-ignore
@@ -90,6 +91,10 @@ export default defineComponent({
 
         case 'TypeEvenementenVerzekering':
           setInsuranceTypeState(InsuranceTypes.EVENEMENTEN_VERZEKERING)
+          break
+
+        case 'TypeGroepsmateriaalVerzekering':
+          setInsuranceTypeState(InsuranceTypes.MATERIAAL_VERZEKERING)
           break
 
         default:

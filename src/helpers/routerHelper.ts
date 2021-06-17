@@ -18,6 +18,9 @@ export const routeDetailLinkBasedOnType = (insuranceType: any) => {
     case 'TypeEvenementenVerzekering':
       return '/evenementen-verzekering-detail'
 
+    case 'TypeGroepsmateriaalVerzekering':
+      return '/materiaal-verzekering-detail'
+
     default:
       return '/home'
   }

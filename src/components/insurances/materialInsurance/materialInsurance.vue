@@ -85,7 +85,7 @@ export default defineComponent({
         nature: data.nature ? data.nature : '',
         country: data.country ? data.country : initialCountry.value,
         postCodeCity: data.postCodeCity ? (data.postCodeCity.city === undefined ? {} : data.postCodeCity) : undefined,
-        equipment: [],
+        equipment: data.equipment ? data.equipment : [],
       },
     })
 

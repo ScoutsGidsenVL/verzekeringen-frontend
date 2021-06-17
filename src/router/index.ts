@@ -6,6 +6,8 @@ import nonMemberDetail from '@/components/insurances/nonMembersInsurance/nonMemb
 import travelAssistanceDetail from '@/components/insurances/travelAssistance/travelAssistanceDetail.vue'
 import eventInsuranceDetail from '@/components/insurances/eventInsurance/eventInsuranceDetail.vue'
 import temporaryVehicleDetail from '@/components/insurances/tempCarInsurance/temporaryVehicleDetail.vue'
+import materialInsuranceDetail from '@/components/insurances/materialInsurance/materialInsuranceDetail.vue'
+
 import StartView from '@/components/start.vue'
 
 const routes: any[] = [
@@ -98,6 +100,16 @@ const routes: any[] = [
     path: '/tijdelijke-autoverzekering-detail/:id?',
     name: 'TemporaryVehicleDetail',
     component: temporaryVehicleDetail,
+    meta: {
+      requiresOpenIdAuth: true,
+      title: 'Verzekering',
+      detail: true,
+    },
+  },
+  {
+    path: '/materiaal-verzekering-detail/:id?',
+    name: 'MaterialInsuranceDetail',
+    component: materialInsuranceDetail,
     meta: {
       requiresOpenIdAuth: true,
       title: 'Verzekering',
