@@ -1,6 +1,6 @@
 <template>
-  <div v-if="vehicle.brand">
-    <vehicle-item v-if="vehicle" :vehicle="vehicle" :no-line="true">
+  <div v-if="vehicle">
+    <vehicle-item :vehicle="vehicle" :no-line="true">
       <div class="text-right mt-4">
         <label @click="deleteVehicle()" class="hover:text-lightGreen cursor-pointer" for="">Verwijder</label>
       </div>
@@ -10,8 +10,7 @@
   <ErrorMessage :name="'vehicle'" class="text-red text-sm block mt-1 w-80" />
 
   <div class="mt-2 text-lightGreen">
-    <strong class="cursor-pointer" @click="openSideBar()" v-if="!vehicle.brand"> + Selecteer voertuig </strong>
-    <strong class="cursor-pointer" @click="openSideBar()" v-if="vehicle.brand"> + Selecteer ander voertuig </strong>
+    <strong class="cursor-pointer" @click="openSideBar()"> + Selecteer ander voertuig </strong>
   </div>
 
   <vehicle-side-bar v-model:isDisplay="isDisplay" title="Voertuig" @addCreatedVehicle="addCreatedVehicle($event)" />

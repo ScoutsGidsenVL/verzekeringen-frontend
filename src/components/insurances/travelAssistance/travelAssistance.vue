@@ -75,7 +75,7 @@ export default defineComponent({
     const { handleSubmit, values } = useForm<TravelAssistanceInsurance>({
       initialValues: {
         country: data.country ? data.country : undefined,
-        participants: data.participants ? data.participants : undefined,
+        participants: data.participants ? data.participants : [],
         vehicle: data.vehicle ? data.vehicle : undefined,
       },
     })
