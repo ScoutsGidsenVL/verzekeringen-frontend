@@ -35,7 +35,8 @@
         </div>
       </div>
 
-      <div class="px-5 mt-5">
+      <div class="flex gap-3 px-5 mt-5">
+        <custom-button @click="back()" type="button" text="Vorige" />
         <custom-button text="Volgende" />
       </div>
     </div>
@@ -109,11 +110,16 @@ export default defineComponent({
       store.dispatch('setHolderState', HolderStates.DETAIL)
     })
 
+    const back = () => {
+      store.dispatch('setHolderState', HolderStates.GENERAL)
+    }
+
     return {
       CountryRepository,
       InputTypes,
       onSubmit,
       values,
+      back,
     }
   },
 })

@@ -46,7 +46,8 @@
       <select-non-member id="nonMembers" rules="required" />
     </div>
 
-    <div class="px-5 mt-5">
+    <div class="flex gap-3 px-5 mt-5">
+      <custom-button @click="back()" type="button" text="Vorige" />
       <custom-button text="Volgende" />
     </div>
   </form>
@@ -120,6 +121,10 @@ export default defineComponent({
       store.dispatch('setHolderState', HolderStates.DETAIL)
     })
 
+    const back = () => {
+      store.dispatch('setHolderState', HolderStates.GENERAL)
+    }
+
     return {
       BelgianCitySearchRepository,
       CountryRepository,
@@ -127,6 +132,7 @@ export default defineComponent({
       onSubmit,
       values,
       data,
+      back,
     }
   },
 })

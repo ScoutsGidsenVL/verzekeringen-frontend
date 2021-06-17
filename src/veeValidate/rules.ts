@@ -8,7 +8,6 @@ import moment from 'moment'
 import { configure } from 'vee-validate'
 
 export const defineRules = (store: any) => {
-  setLocale('nl')
   defineRule('required', required)
 
   configure({
@@ -28,6 +27,8 @@ export const defineRules = (store: any) => {
       },
     }),
   })
+
+  setLocale('nl')
 
   defineRule('RequiredDrivers', (value: SelectDriver) => {
     if (value.drivers.length === 0) {

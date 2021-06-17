@@ -11,7 +11,8 @@
         </div>
       </div>
     </request-insurance-detail>
-    <div class="mt-5">
+    <div class="flex gap-3 px-5 mt-5">
+      <custom-button @click="back()" type="button" text="Vorige" />
       <custom-button text="Bevestig" />
     </div>
   </form>
@@ -90,10 +91,15 @@ export default defineComponent({
         })
     }
 
+    const back = () => {
+      store.dispatch('setHolderState', HolderStates.TYPE)
+    }
+
     return {
       onSubmit,
       InputTypes,
       error,
+      back,
     }
   },
 })
