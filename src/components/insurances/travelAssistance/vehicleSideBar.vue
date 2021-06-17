@@ -9,7 +9,7 @@
             </div>
 
             <div class="w-96 mt-4">
-              <custom-input :type="InputTypes.TEXT" rules="required" name="licensePlate" label="Nummerplaat" />
+              <custom-input :maxlength="10" :type="InputTypes.TEXT" rules="required" name="licensePlate" label="Nummerplaat" />
             </div>
 
             <div class="w-96 mt-4">
@@ -22,7 +22,7 @@
             </div>
 
             <div class="w-96 mt-4">
-              <custom-input :type="InputTypes.TEXT" rules="required" name="chassisNumber" label="Chassisnummer" />
+              <custom-input :maxlength="20" :type="InputTypes.TEXT" rules="required" name="chassisNumber" label="Chassisnummer" />
             </div>
 
             <div class="w-96">

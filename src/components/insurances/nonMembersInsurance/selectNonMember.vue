@@ -1,5 +1,6 @@
 <template>
   <non-member-list :canBeDeleted="true" :nonMembersList="nonMembers" @deleteNonMemberFromList="deleteNonMemberFromList($event)" />
+  <ErrorMessage :name="id" class="text-red text-sm block mt-1 w-80" />
 
   <div class="mt-2 text-lightGreen">
     <strong class="cursor-pointer" @click="openSideBar()"> + Voeg niet-lid toe </strong>
@@ -13,13 +14,14 @@ import NonMemberSideBar from '@/components/insurances/nonMembersInsurance/nonMem
 import NonMemberList from '@/components/insurances/nonMembersInsurance/nonMembersList.vue'
 import { NonMember } from '@/serializer/NonMember'
 import { defineComponent, ref } from 'vue'
-import { useField } from 'vee-validate'
+import { ErrorMessage, useField } from 'vee-validate'
 
 export default defineComponent({
   name: 'SelectNonMembers',
   components: {
     'non-member-side-bar': NonMemberSideBar,
     'non-member-list': NonMemberList,
+    ErrorMessage,
   },
   props: {
     id: {
