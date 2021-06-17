@@ -25,7 +25,7 @@
         </div>
 
         <div v-if="person.birthDate">
-          <strong>Geboortendatum</strong>
+          <strong>Geboortedatum</strong>
           <p>{{ person.birthDate }}</p>
         </div>
       </div>

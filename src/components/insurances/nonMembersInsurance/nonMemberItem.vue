@@ -19,7 +19,7 @@
       </div>
 
       <div class="mt-3">
-        <strong>Geboortendatum</strong>
+        <strong>Geboortedatum</strong>
         <p>{{ nonMember.birthDate }}</p>
       </div>
 

@@ -31,7 +31,7 @@
           :resolve-on-load="true"
           :options="[values.postCodeCity]"
           :searchable="true"
-          label="Gemeenten"
+          label="Gemeente"
           rules="required"
           placeholder="Zoek op naam/postcode"
         />

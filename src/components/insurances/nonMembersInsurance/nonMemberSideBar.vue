@@ -22,7 +22,7 @@
                 :resolve-on-load="true"
                 :options="[]"
                 :searchable="true"
-                label="Gemeenten"
+                label="Gemeente"
                 rules="required"
                 placeholder="Zoek op naam/postcode"
               />
@@ -41,7 +41,7 @@
             </div>
 
             <div class="w-96 mt-4">
-              <custom-input :type="InputTypes.DATE" rules="required" name="birthDate" label="Geboortendatum" />
+              <custom-input :type="InputTypes.DATE" rules="required" name="birthDate" label="Geboortedatum" />
             </div>
 
             <div class="w-96 mt-4">
