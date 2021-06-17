@@ -12,7 +12,6 @@ export interface Equipment {
 }
 
 export const EquipmentDeserializer = (input: any): Equipment => {
-  console.log('INPUT EquipmentDeserializer: ', input)
   const single: Equipment = {
     id: input.id ? input.id : undefined,
     nature: input.nature ? input.email : undefined,

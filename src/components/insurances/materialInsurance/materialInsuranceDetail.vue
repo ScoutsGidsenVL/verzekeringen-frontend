@@ -11,14 +11,23 @@
           </div>
         </div>
 
-        <div v-if="!(holderState === HolderStates.DETAIL)">
+        <activity-detail
+          :nature="details.nature"
+          :location="details.postCodeCity"
+          :country="details.postCodeCity && details.postCodeCity.city ? 'België' : details.country ? details.country.name : undefined"
+        />
+
+        <p class="font-semibold">Materiaal</p>
+        <div class="px-5 py-4">
+          <equipment-list :equipmentList="details.equipment" />
+        </div>
+
+        <div v-if="!(holderState === HolderStates.DETAIL) && details.comment">
           <p class="font-semibold">Opmerkingen</p>
-          <div v-if="details.comment" class="px-5">
+          <div class="px-5">
             <label-output :text="details.comment" />
           </div>
         </div>
-
-        <activity-detail :nature="details.nature" :location="details.postCodeCity" :country="details.country.name" />
 
         <slot></slot>
       </div>
@@ -37,6 +46,7 @@ import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { computed, defineComponent } from 'vue'
 import { useStore } from 'vuex'
+import EquipmentList from '@/components/insurances/materialInsurance/equipmentList.vue'
 
 export default defineComponent({
   name: 'MaterialInusranceDetail',
@@ -45,6 +55,7 @@ export default defineComponent({
     'activity-detail': ActivityDetail,
     'label-output': LabelOutput,
     'base-detail': BaseDetail,
+    'equipment-list': EquipmentList,
   },
   setup() {
     const store = useStore()

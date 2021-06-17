@@ -80,6 +80,9 @@ export default defineComponent({
       if (props.title === 'Evenementen verzekering') {
         titelText.value = '<p style="font-size: 30px">Je <strong class="font-semibold">' + props.title + '</strong> is aangevraagd</p>'
       }
+      if (props.title === 'Materiaal') {
+        titelText.value = '<p style="font-size: 30px">Je <strong class="font-semibold">' + 'Materiaal verzekering' + '</strong> is aangevraagd</p>'
+      }
     }
 
     if (holderState.value === HolderStates.DETAIL) {

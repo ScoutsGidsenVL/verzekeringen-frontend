@@ -176,7 +176,6 @@ export default defineComponent({
           ownerNonMember: values.ownerNonMember ? values.ownerNonMember : undefined,
           group: generalInsuranceState.value.group.name,
         })
-        console.log(equipment.value)
         postEquipment(equipment.value)
       }
     })
@@ -195,7 +194,6 @@ export default defineComponent({
       RepositoryFactory.get(EquipmentRepository)
         .create(data)
         .then((completed: Equipment) => {
-          console.log('response: ', completed)
           context.emit('addEquipmentToList', completed)
         })
     }
