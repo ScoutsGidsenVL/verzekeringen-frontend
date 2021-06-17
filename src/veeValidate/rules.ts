@@ -1,12 +1,33 @@
+import { IS_NO_DRIVER, SelectDriver } from '@/serializer/selectDriver'
+import { localize, setLocale } from '@vee-validate/i18n'
+import { InsuranceTypes } from '@/enums/insuranceTypes'
 import { required } from '@vee-validate/rules'
 import { defineRule } from 'vee-validate'
 import moment from 'moment'
-import { InsuranceTypes } from '@/enums/insuranceTypes'
-import { IS_NO_DRIVER, SelectDriver } from '@/serializer/selectDriver'
-import { Vehicle } from '@/serializer/Vehicle'
+
+import { configure } from 'vee-validate'
 
 export const defineRules = (store: any) => {
+  setLocale('nl')
   defineRule('required', required)
+
+  configure({
+    // Generates an English message locale generator
+    // https://vee-validate.logaretm.com/v4/guide/i18n#global-message-generator
+
+    generateMessage: localize({
+      en: {
+        messages: {
+          required: 'This field is required',
+        },
+      },
+      nl: {
+        messages: {
+          required: 'Dit veld is verplicht',
+        },
+      },
+    }),
+  })
 
   defineRule('RequiredDrivers', (value: SelectDriver) => {
     if (value.drivers.length === 0) {
