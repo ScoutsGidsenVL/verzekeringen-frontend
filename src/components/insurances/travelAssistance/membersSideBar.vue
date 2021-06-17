@@ -1,26 +1,24 @@
 <template>
-  <div>
-    <base-side-bar name="Member" v-model:isDisplay="display" :title="title">
+  <base-side-bar v-model:isDisplay="display" name="Member" :title="title">
+    <div class="d-flex flex-col h-full">
       <div>
-        <div>
-          <search-input name="member" placeholder="Zoek op naam" v-model:loading="loading" :repository="MemberRepository" @fetchedOptions="fetchedOptions($event)" />
-        </div>
+        <search-input v-model:loading="loading" name="member" placeholder="Zoek op naam" :repository="MemberRepository" @fetchedOptions="fetchedOptions($event)" />
+      </div>
 
-        <div class="custom-container mt-4">
-          <hr v-if="selectedMembers.length > 0" class="mt-4 border-t-2 w-96 border-black" />
-          <div class="w-96" v-for="member in selectedMembers" :key="member.id">
-            <member-item :member="member">
-              <div>
-                <div class="pt-3 pb-4 text-right">
-                  <custom-button @click="addMember(member)" type="button" text="Voeg toe" />
-                </div>
+      <div class="h-full overflow-y-scroll mt-4 pb-24">
+        <hr v-if="selectedMembers.length > 0" class="mt-4 border-t-2 w-96 border-black" />
+        <div v-for="member in selectedMembers" :key="member.id" class="w-96">
+          <member-item :member="member">
+            <div>
+              <div class="pt-3 pb-4 text-right">
+                <custom-button type="button" text="Voeg toe" @click="addMember(member)" />
               </div>
-            </member-item>
-          </div>
+            </div>
+          </member-item>
         </div>
       </div>
-    </base-side-bar>
-  </div>
+    </div>
+  </base-side-bar>
 </template>
 
 <script lang="ts">

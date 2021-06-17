@@ -1,87 +1,79 @@
 <template>
   <div>
-    <base-side-bar name="Vehicle" v-model:isDisplay="display" v-model:selection="selected" :title="title" :options="['Nieuw', 'Bestaand']">
-      <div v-if="selected === 'NieuwVehicle'" class="mt-4">
-        <form @submit="onSubmit">
-          <div class="custom-container mt-5">
-            <div class="w-96">
-              <custom-input :type="InputTypes.TEXT" rules="required" name="brand" label="Merk" />
-            </div>
-
-            <div class="w-96 mt-4">
-              <custom-input :maxlength="10" :type="InputTypes.TEXT" rules="required" name="licensePlate" label="Nummerplaat" />
-            </div>
-
-            <div class="w-96 mt-4">
-              <custom-input :type="InputTypes.TEXT" rules="required" name="constructionYear" maxlength="4" label="Bouwjaar">
-                <div class="pb-3">
-                  Bouwjaar ouder 10 jaar geleden? Het heeft weinig zin om een oud voertuig te verzekeren. Bij een schade zal de verzekeringsmaatschappij nooit een bedrag uitkeren dat hoger is dan de
-                  waarde. (Meestal erg laag voor een oude auto.)
-                </div>
-              </custom-input>
-            </div>
-
-            <div class="w-96 mt-4">
-              <custom-input :maxlength="20" :type="InputTypes.TEXT" rules="required" name="chassisNumber" label="Chassisnummer" />
-            </div>
-
-            <div class="w-96">
-              <multi-select
-                class="custom"
-                :object="true"
-                id="type"
-                track-by="label"
-                value-prop="value"
-                :repository="VehicleTypeRepository"
-                :options="vehicleTypes"
-                label="Type"
-                rules="required"
-                placeholder="Selecteer type"
-              />
-            </div>
-
-            <div class="w-96">
-              <multi-select
-                :object="true"
-                id="trailer"
-                track-by="label"
-                value-prop="value"
-                :repository="TrailerRepository"
-                :options="trailers"
-                label="Aanhangwagen"
-                rules="required"
-                placeholder="Selecteer aanhangwagen"
-              />
-            </div>
-
-            <div class="pt-4 w">
-              <custom-button text="Voeg toe" />
-            </div>
+    <base-side-bar v-model:isDisplay="display" v-model:selection="selected" name="Vehicle" :title="title" :options="['Nieuw', 'Bestaand']">
+      <div v-if="selected === 'NieuwVehicle'" class="d-flex flex-col h-full">
+        <form class="h-full overflow-y-scroll mt-5 pb-36" @submit="onSubmit">
+          <div class="w-96">
+            <custom-input :type="InputTypes.TEXT" rules="required" name="brand" label="Merk" />
           </div>
-        </form>
-      </div>
-      <div v-if="selected === 'BestaandVehicle'">
-        <form @submit="onSubmit">
-          <div>
-            <div>
-              <search-input name="search" placeholder="Zoek op merk" v-model:loading="loading" :repository="VehicleRepository" @fetchedOptions="fetchedOptions($event)" />
-            </div>
-
-            <div class="custom-container mt-4">
-              <hr v-if="fetchedVehicles.length > 0" class="mt-4 border-t-2 w-96 border-black pb-4" />
-              <div class="w-96" v-for="vehicle in fetchedVehicles" :key="vehicle.id">
-                <vehicle-item :vehicle="vehicle">
-                  <div>
-                    <div class="pb-4 text-right">
-                      <div><custom-button text="Kies" @click="setVehicle(vehicle)" /></div>
-                    </div>
-                  </div>
-                </vehicle-item>
+          <div class="w-96 mt-4">
+            <custom-input :maxlength="10" :type="InputTypes.TEXT" rules="required" name="licensePlate" label="Nummerplaat" />
+          </div>
+          <div class="w-96 mt-4">
+            <custom-input :type="InputTypes.TEXT" rules="required" name="constructionYear" maxlength="4" label="Bouwjaar">
+              <div class="pb-3">
+                Bouwjaar ouder 10 jaar geleden? Het heeft weinig zin om een oud voertuig te verzekeren. Bij een schade zal de verzekeringsmaatschappij nooit een bedrag uitkeren dat hoger is dan de
+                waarde. (Meestal erg laag voor een oude auto.)
               </div>
-            </div>
+            </custom-input>
+          </div>
+
+          <div class="w-96 mt-4">
+            <custom-input :maxlength="20" :type="InputTypes.TEXT" rules="required" name="chassisNumber" label="Chassisnummer" />
+          </div>
+
+          <div class="w-96">
+            <multi-select
+              id="type"
+              class="custom"
+              :object="true"
+              track-by="label"
+              value-prop="value"
+              :repository="VehicleTypeRepository"
+              :options="vehicleTypes"
+              label="Type"
+              rules="required"
+              placeholder="Selecteer type"
+            />
+          </div>
+
+          <div class="w-96">
+            <multi-select
+              id="trailer"
+              :object="true"
+              track-by="label"
+              value-prop="value"
+              :repository="TrailerRepository"
+              :options="trailers"
+              label="Aanhangwagen"
+              rules="required"
+              placeholder="Selecteer aanhangwagen"
+            />
+          </div>
+
+          <div class="pt-4 w">
+            <custom-button text="Voeg toe" />
           </div>
         </form>
       </div>
+      <form v-if="selected === 'BestaandVehicle'" class="d-flex flex-col h-full" @submit="onSubmit">
+        <div>
+          <search-input v-model:loading="loading" name="search" placeholder="Zoek op merk" :repository="VehicleRepository" @fetchedOptions="fetchedOptions($event)" />
+        </div>
+
+        <div class="h-full overflow-y-scroll mt-4 pb-24">
+          <hr v-if="fetchedVehicles.length > 0" class="mt-4 border-t-2 w-96 border-black pb-4" />
+          <div v-for="vehicle in fetchedVehicles" :key="vehicle.id" class="w-96">
+            <vehicle-item :vehicle="vehicle">
+              <div>
+                <div class="pb-4 text-right">
+                  <div><custom-button text="Kies" @click="setVehicle(vehicle)" /></div>
+                </div>
+              </div>
+            </vehicle-item>
+          </div>
+        </div>
+      </form>
     </base-side-bar>
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div v-if="isDisplay" class="h-full w-full fixed top-0 left-0 overflow-x-hidden z-0 bg-black bg-opacity-20" @click="hideSideBar()"></div>
-  <div v-if="isDisplay" :class="'bg-white fixed top-0 right-0 h-full z-20 pt-5 px-4' + ' ' + width">
+  <div v-if="isDisplay" :class="'bg-white d-flex fixed flex-col top-0 right-0 h-full z-20 pt-5 px-4' + ' ' + width">
     <div class="mb-3 cursor-pointer" @click="hideSideBar()">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
         <path
@@ -23,15 +23,13 @@
       </div>
     </form>
 
-    <div>
-      <slot />
-    </div>
+    <slot />
   </div>
 </template>
 
 <script lang="ts">
 import header2 from '@/components/customHeadlines/CustomHeadline2.vue'
-import { defineComponent, PropType, ref } from 'vue'
+import { defineComponent, PropType, ref, toRefs, watch } from 'vue'
 
 export default defineComponent({
   name: 'BaseSideBar',
@@ -55,13 +53,23 @@ export default defineComponent({
     },
     width: {
       type: String,
-      default: 'w-3/12',
+      default: 'w-2/5',
       required: false,
     },
     name: String,
   },
   setup(props, context) {
     const selected = ref<string>(props.selection)
+
+    const { isDisplay } = toRefs(props)
+
+    watch(isDisplay, (value: boolean) => {
+      if (value == true) {
+        document.body.classList.add('overflow-hidden')
+      } else {
+        document.body.classList.remove('overflow-hidden')
+      }
+    })
 
     const hideSideBar: () => void = () => {
       context.emit('update:isDisplay', false)
