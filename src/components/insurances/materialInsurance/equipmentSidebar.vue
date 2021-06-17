@@ -1,8 +1,8 @@
 <template>
   <div>
-    <base-side-bar name="Equipment" v-model:isDisplay="display" v-model:selection="selected" :title="title" :options="['Nieuw', 'Bestaand']">
-      <div v-if="selected === 'NieuwEquipment'" class="mt-4">
-        <form @submit="onSubmit">
+    <base-side-bar v-model:isDisplay="display" v-model:selection="selected" name="Equipment" :title="title" :options="['Nieuw', 'Bestaand']">
+      <div v-if="selected === 'NieuwEquipment'" class="d-flex flex-col h-full">
+        <form class="h-full overflow-y-scroll mt-5 pb-36" @submit="onSubmit">
           <div class="custom-container mt-4">
             <div class="mt-4">
               <p>Wil je een fiets verzekeren</p>
@@ -20,12 +20,12 @@
             </div>
 
             <div v-if="!isBicycle" class="w-96 mt-4">
-              <custom-input extraInfo="bv: Tent, Geluidsinstallatie" :type="InputTypes.TEXT" rules="required" name="nature" label="Soort" />
+              <custom-input extra-info="bv: Tent, Geluidsinstallatie" :type="InputTypes.TEXT" rules="required" name="nature" label="Soort" />
             </div>
 
             <div class="w-96 mt-4">
               <custom-input
-                :extraInfo="isBicycle ? 'Merk, model en type. bv: Gazelle, Paris Plus, stads fiets' : 'Materie, model. bv: Senior, JB Systems ME2 mixer'"
+                :extra-info="isBicycle ? 'Merk, model en type. bv: Gazelle, Paris Plus, stads fiets' : 'Materie, model. bv: Senior, JB Systems ME2 mixer'"
                 :type="InputTypes.TEXT_AREA"
                 rules="required"
                 name="description"
@@ -39,7 +39,7 @@
                 <hr v-if="owner" class="border-t-2 border-black" />
                 <member-item :member="owner">
                   <div class="text-right">
-                    <label @click="removeOwner()" class="hover:text-lightGreen cursor-pointer" for="">Verwijder</label>
+                    <label class="hover:text-lightGreen cursor-pointer" for="" @click="removeOwner()">Verwijder</label>
                   </div>
                 </member-item>
               </div>
@@ -48,15 +48,15 @@
             <div>
               <div>
                 <strong class="cursor-pointer text-lightGreen" @click="openMemberSideBar()"> Selecteer ander lid </strong>
-                <members-side-bar :closeOnAdd="true" :existingList="members" v-model:isDisplay="isMemberSideBarDisplay" title="Lid" @addMemberToList="addMember($event)" />
+                <members-side-bar v-model:isDisplay="isMemberSideBarDisplay" :close-on-add="true" :existing-list="members" title="Lid" @addMemberToList="addMember($event)" />
               </div>
 
               <div class="mt-3">
                 <strong class="cursor-pointer text-lightGreen" @click="openNonMemberSideBar()"> Selecteer ander niet-lid </strong>
                 <non-member-side-bar
-                  :closeOnAdd="true"
-                  :existingList="nonMembers"
                   v-model:isDisplay="isNonMemberSideBarDisplay"
+                  :close-on-add="true"
+                  :existing-list="nonMembers"
                   title="Niet lid"
                   @addCreatedNonMemberToList="addCreatedNonMember($event)"
                 />
@@ -64,7 +64,7 @@
             </div>
 
             <div class="w-96 mt-4">
-              <custom-input :extraInfo="setTotalValueInfo()" :type="InputTypes.TEXT" rules="required" name="totalValue" label="Nieuwwaarde" />
+              <custom-input :extra-info="setTotalValueInfo()" :type="InputTypes.TEXT" rules="required" name="totalValue" label="Nieuwwaarde" />
             </div>
 
             <div class="mt-5">
@@ -74,26 +74,24 @@
         </form>
       </div>
 
-      <div v-if="selected === 'BestaandEquipment'">
-        <form @submit="onSubmit">
-          <div>
-            <search-input name="equipment" placeholder="Zoek op beschrijving" v-model:loading="loading" :repository="EquipmentRepository" @fetchedOptions="fetchedOptions($event)" />
-          </div>
+      <form v-if="selected === 'BestaandEquipment'" class="d-flex flex-col h-full" @submit="onSubmit">
+        <div>
+          <search-input v-model:loading="loading" name="equipment" placeholder="Zoek op beschrijving" :repository="EquipmentRepository" @fetchedOptions="fetchedOptions($event)" />
+        </div>
 
-          <div class="custom-container mt-4">
-            <hr v-if="searchedEquipmentList.length > 0" class="mt-4 border-t-2 w-96 border-black" />
-            <div class="w-96" v-for="equipment in searchedEquipmentList" :key="equipment.id">
-              <equipment-item :equipment="equipment">
-                <div>
-                  <div class="mt-2 pb-4 text-right">
-                    <custom-button @click="addEquipment(equipment)" type="button" text="Voeg toe" />
-                  </div>
+        <div class="h-full overflow-y-scroll mt-4 pb-24">
+          <hr v-if="searchedEquipmentList.length > 0" class="mt-4 border-t-2 w-96 border-black" />
+          <div v-for="equipment in searchedEquipmentList" :key="equipment.id" class="w-96">
+            <equipment-item :equipment="equipment">
+              <div>
+                <div class="mt-2 pb-4 text-right">
+                  <custom-button type="button" text="Voeg toe" @click="addEquipment(equipment)" />
                 </div>
-              </equipment-item>
-            </div>
+              </div>
+            </equipment-item>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </base-side-bar>
   </div>
 </template>
