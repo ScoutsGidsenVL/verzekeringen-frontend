@@ -3,6 +3,7 @@ import { Group, GroupDeserializer, GroupSerializer } from '@/serializer/Group'
 import { Country, CountryDeserializer, CountrySerializer } from '@/serializer/Country'
 import { Vehicle, VehicleDeserializer, VehicleSerializer } from '@/serializer/Vehicle'
 import { ResponsibleMember, ResponsibleMemberDeserializer } from '@/serializer/ResponsibleMember'
+import moment from 'moment'
 
 export interface TravelAssistanceInsurance {
   readonly id?: number
@@ -21,8 +22,8 @@ export interface TravelAssistanceInsurance {
 export const TravelAssistanceInsuranceDeserializer = (input: any): TravelAssistanceInsurance => {
   const single: TravelAssistanceInsurance = {
     id: input.id ? input.id : undefined,
-    startDate: input.start_date,
-    endDate: input.end_date,
+    startDate: moment(input.start_date).format('YYYY-MM-DD'),
+    endDate: moment(input.end_date).format('YYYY-MM-DD'),
     comment: input.comment ? input.comment : undefined,
     responsiblePhoneNumber: input.responsible_phone_number ? input.responsible_phone_number : undefined,
     country: input.country ? CountryDeserializer(input.country) : undefined,
@@ -38,8 +39,8 @@ export const TravelAssistanceInsuranceDeserializer = (input: any): TravelAssista
 
 export const TravelAssistanceInsuranceSerializer = (input: TravelAssistanceInsurance): TravelAssistanceInsurance => {
   const single: any = {
-    start_date: input.startDate,
-    end_date: input.endDate,
+    start_date: moment(input.startDate).format(),
+    end_date: moment(input.endDate).format(),
     comment: input.comment,
     responsible_phone_number: input.responsiblePhoneNumber ? input.responsiblePhoneNumber : undefined,
     country: input.country ? CountrySerializer(input.country).id : undefined,

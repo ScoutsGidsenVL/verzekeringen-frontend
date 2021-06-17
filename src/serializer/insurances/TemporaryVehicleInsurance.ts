@@ -7,6 +7,7 @@ import { MemberSerializer } from '@/serializer/Member'
 import { SelectDriver } from '@/serializer/selectDriver'
 import { Driver, DriverDeserializer } from '@/serializer/Driver'
 import { InsuranceOption } from '../InsuranceOption'
+import moment from 'moment'
 
 export interface TemporaryVehicleInsurance {
   readonly id?: number
@@ -29,8 +30,8 @@ export interface TemporaryVehicleInsurance {
 export const TemporaryVehicleDeserializer = (input: any): TemporaryVehicleInsurance => {
   const single: TemporaryVehicleInsurance = {
     id: input.id ? input.id : undefined,
-    startDate: input.start_date,
-    endDate: input.end_date,
+    startDate: moment(input.start_date).format('YYYY-MM-DD'),
+    endDate: moment(input.end_date).format('YYYY-MM-DD'),
     comment: input.comment ? input.comment : undefined,
     responsiblePhoneNumber: input.responsible_phone_number ? input.responsible_phone_number : undefined,
     group: GroupDeserializer(input.group),
@@ -48,8 +49,8 @@ export const TemporaryVehicleDeserializer = (input: any): TemporaryVehicleInsura
 
 export const TemporaryVehicleSerializer = (input: TemporaryVehicleInsurance): TemporaryVehicleInsurance => {
   const single: any = {
-    start_date: input.startDate,
-    end_date: input.endDate,
+    start_date: moment(input.startDate).format(),
+    end_date: moment(input.endDate).format(),
     comment: input.comment,
     responsible_phone_number: ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number,
     group: GroupSerializer(input.group).name,

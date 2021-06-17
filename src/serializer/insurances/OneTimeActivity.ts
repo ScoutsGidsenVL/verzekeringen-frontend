@@ -4,6 +4,8 @@ import { Status, StatusDeserializer } from '@/serializer/Status'
 import { Group, GroupDeserializer, GroupSerializer } from '@/serializer/Group'
 import { Type, TypeDeserializer } from '@/serializer/Type'
 import { GroupSize, GroupSizeDeserializer, GroupSizeSerializer } from '../GroupSize'
+import moment from 'moment'
+
 export interface OneTimeActivity {
   readonly id?: number
   readonly startDate?: string
@@ -24,8 +26,8 @@ export interface OneTimeActivity {
 export const oneTimeActivityDeserializer = (input: any): OneTimeActivity => {
   const single: OneTimeActivity = {
     id: input.id,
-    startDate: input.start_date,
-    endDate: input.end_date,
+    startDate: moment(input.start_date).format('YYYY-MM-DD'),
+    endDate: moment(input.end_date).format('YYYY-MM-DD'),
     createdOn: input.created_on,
     comment: input.comment,
     group: GroupDeserializer(input.group),
@@ -44,8 +46,8 @@ export const oneTimeActivityDeserializer = (input: any): OneTimeActivity => {
 
 export const oneTimeActivitySerializer = (input: OneTimeActivity): OneTimeActivity => {
   const single: any = {
-    start_date: input.startDate,
-    end_date: input.endDate,
+    start_date: moment(input.startDate).format(),
+    end_date: moment(input.endDate).format(),
     created_on: input.createdOn,
     comment: input.comment,
     group: GroupSerializer(input.group).name,

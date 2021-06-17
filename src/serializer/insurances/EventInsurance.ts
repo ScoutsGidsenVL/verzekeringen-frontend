@@ -2,6 +2,7 @@ import { Group, GroupDeserializer, GroupSerializer } from '@/serializer/Group'
 import { Location, LocationDeserializer, LocationSerializer } from '@/serializer/Location'
 import { EventSize, EventSizeDeserializer, EventSizeSerializer } from '@/serializer/EventSize'
 import { ResponsibleMember, ResponsibleMemberDeserializer, ResponsibleMemberSerializer } from '../ResponsibleMember'
+import moment from 'moment'
 
 export interface EventInsurance {
   readonly id?: number
@@ -20,8 +21,8 @@ export interface EventInsurance {
 export const EventInsuranceDeserializer = (input: any): EventInsurance => {
   const single: EventInsurance = {
     id: input.id ? input.id : undefined,
-    startDate: input.start_date,
-    endDate: input.end_date,
+    startDate: moment(input.start_date).format('YYYY-MM-DD'),
+    endDate: moment(input.end_date).format('YYYY-MM-DD'),
     comment: input.comment ? input.comment : undefined,
     responsibleMember: ResponsibleMemberDeserializer(input.responsible_member),
     responsiblePhoneNumber: input.responsible_phone_number ? input.responsible_phone_number : undefined,
@@ -37,8 +38,8 @@ export const EventInsuranceDeserializer = (input: any): EventInsurance => {
 
 export const EventInsuranceSerializer = (input: EventInsurance): EventInsurance => {
   const single: any = {
-    start_date: input.startDate,
-    end_date: input.endDate,
+    start_date: moment(input.startDate).format(),
+    end_date: moment(input.endDate).format(),
     comment: input.comment,
     responsible_phone_number: ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number,
     group: GroupSerializer(input.group).name,

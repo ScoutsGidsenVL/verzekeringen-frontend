@@ -5,6 +5,7 @@ import { Group, GroupDeserializer, GroupSerializer } from '@/serializer/Group'
 import { Status, StatusDeserializer } from '@/serializer/Status'
 import { Type, TypeDeserializer } from '@/serializer/Type'
 import { Country, CountryDeserializer, CountrySerializer } from '../Country'
+import moment from 'moment'
 
 export interface NonMemberInsurance {
   readonly id?: number
@@ -27,8 +28,8 @@ export interface NonMemberInsurance {
 export const nonMemberInsuranceDeserializer = (input: any): NonMemberInsurance => {
   const single: NonMemberInsurance = {
     id: input.id ? input.id : undefined,
-    startDate: input.start_date,
-    endDate: input.end_date,
+    startDate: moment(input.start_date).format('YYYY-MM-DD'),
+    endDate: moment(input.end_date).format('YYYY-MM-DD'),
     createdOn: input.created_on,
     comment: input.comment ? input.comment : undefined,
     group: GroupDeserializer(input.group),
@@ -48,8 +49,8 @@ export const nonMemberInsuranceDeserializer = (input: any): NonMemberInsurance =
 
 export const nonMemberInsuranceSerializer = (input: NonMemberInsurance): NonMemberInsurance => {
   const single: any = {
-    start_date: input.startDate,
-    end_date: input.endDate,
+    start_date: moment(input.startDate).format(),
+    end_date: moment(input.endDate).format(),
     created_on: input.createdOn,
     comment: input.comment,
     group: GroupSerializer(input.group).name,

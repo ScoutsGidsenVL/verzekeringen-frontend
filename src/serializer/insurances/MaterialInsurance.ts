@@ -5,6 +5,7 @@ import { Group, GroupDeserializer, GroupSerializer } from '@/serializer/Group'
 import { Type, TypeDeserializer } from '@/serializer/Type'
 import { Country, CountryDeserializer, CountrySerializer } from '@/serializer/Country'
 import { Equipment, EquipmentDeserializer, EquipmentSerializer } from '@/serializer/Equipment'
+import moment from 'moment'
 
 export interface MaterialInsurance {
   readonly id?: number
@@ -26,8 +27,8 @@ export interface MaterialInsurance {
 export const MaterialInsuranceDeserializer = (input: any): MaterialInsurance => {
   const single: MaterialInsurance = {
     id: input.id,
-    startDate: input.start_date,
-    endDate: input.end_date,
+    startDate: moment(input.start_date).format('YYYY-MM-DD'),
+    endDate: moment(input.end_date).format('YYYY-MM-DD'),
     comment: input.comment,
     group: GroupDeserializer(input.group),
     nature: input.nature,
@@ -38,7 +39,7 @@ export const MaterialInsuranceDeserializer = (input: any): MaterialInsurance => 
     vvksComment: input.vvks_comment,
     country: input.country ? CountryDeserializer(input.country) : undefined,
     postCodeCity: input.postcode_city ? LocationDeserializer(input.postcode_city) : undefined,
-    equipment: input.equipment ? input.equipment.map((equipment: any) => EquipmentDeserializer(equipment)) : undefined, 
+    equipment: input.equipment ? input.equipment.map((equipment: any) => EquipmentDeserializer(equipment)) : undefined,
   }
 
   return single
@@ -46,8 +47,8 @@ export const MaterialInsuranceDeserializer = (input: any): MaterialInsurance => 
 
 export const MaterialInsuranceSerializer = (input: MaterialInsurance): MaterialInsurance => {
   const single: any = {
-    start_date: input.startDate,
-    end_date: input.endDate,
+    start_date: moment(input.startDate).format(),
+    end_date: moment(input.endDate).format(),
     comment: input.comment,
     group: GroupSerializer(input.group).name,
     nature: input.nature,
