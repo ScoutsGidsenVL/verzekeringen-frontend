@@ -33,11 +33,17 @@
               />
             </div>
 
-            <div class="w-96">
-              <multi-select :disabled="isEdit" id="group" rules="required" placeholder="Group" track-by="fullInfo" value-prop="id" :options="userData.scoutsGroups" label="Selecteer groep" />
+            <div class="w-96 mt-4">
+              <strong>Eigenaar</strong><strong v-if="owner">{{ lidType }}</strong>
+              <div class="py-3">
+                <hr v-if="owner" class="border-t-2 border-black" />
+                <member-item :member="owner">
+                  <div class="text-right">
+                    <label @click="removeOwner()" class="hover:text-lightGreen cursor-pointer" for="">Verwijder</label>
+                  </div>
+                </member-item>
+              </div>
             </div>
-
-            <div class="w-96 mt-4">{{ owner }}</div>
 
             <div>
               <div>
@@ -79,7 +85,7 @@
             <div class="w-96" v-for="equipment in searchedEquipmentList" :key="equipment.id">
               <equipment-item :equipment="equipment">
                 <div>
-                  <div class="pt-3 pb-4 text-right">
+                  <div class="mt-2 pb-4 text-right">
                     <custom-button @click="addEquipment(equipment)" type="button" text="Voeg toe" />
                   </div>
                 </div>
@@ -93,25 +99,25 @@
 </template>
 
 <script lang="ts">
+import NonMemberSideBar from '@/components/insurances/nonMembersInsurance/nonMemberSideBar.vue'
+import MemberSiderbar from '@/components/insurances/travelAssistance/membersSideBar.vue'
 import EquipmentItem from '@/components/insurances/materialInsurance/equipmentItem.vue'
+import MemberItem from '@/components/insurances/travelAssistance/memberItem.vue'
 import { EquipmentRepository } from '@/repositories/equipmentRepository'
+import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import BaseSideBar from '@/components/semantic/BaseSideBar.vue'
 import SearchInput from '@/components/inputs/SearchInput.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import CustomButton from '@/components/CustomButton.vue'
-import { defineComponent, ref, watch } from 'vue'
+import { NonMember } from '@/serializer/NonMember'
 import { Equipment } from '@/serializer/Equipment'
+import { defineComponent, ref, watch } from 'vue'
 import { InputTypes } from '@/enums/inputTypes'
+import { Member } from '@/serializer/Member'
+import { Owner } from '@/serializer/Owner'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
-import { ResponsibleMember } from '@/serializer/ResponsibleMember'
-import MultiSelect from '@/components/inputs/MultiSelect.vue'
-import NonMemberSideBar from '@/components/insurances/nonMembersInsurance/nonMemberSideBar.vue'
-import MemberSiderbar from '@/components/insurances/travelAssistance/membersSideBar.vue'
-import { Member } from '@/serializer/Member'
-import { NonMember } from '@/serializer/NonMember'
-import { Owner } from '@/serializer/Owner'
 
 export default defineComponent({
   name: 'EquipmentSideBar',
@@ -121,9 +127,9 @@ export default defineComponent({
     'equipment-item': EquipmentItem,
     'search-input': SearchInput,
     'custom-input': CustomInput,
-    'multi-select': MultiSelect,
     'non-member-side-bar': NonMemberSideBar,
     'members-side-bar': MemberSiderbar,
+    'member-item': MemberItem,
   },
   props: {
     title: {
@@ -150,6 +156,7 @@ export default defineComponent({
     const isBicycle = ref<boolean>(false)
     const userData = ref<ResponsibleMember>(store.getters.user)
     const owner = ref<Owner>()
+    const lidType = ref<String>()
 
     const { handleSubmit, values } = useForm<Equipment>({
       initialValues: {},
@@ -157,24 +164,26 @@ export default defineComponent({
 
     const onSubmit = handleSubmit(async (values: Equipment) => {
       if (selected.value === 'NieuwEquipment') {
-        const generalInsuranceState = ref<any>(store.getters.generalInsuranceState)
-
         const equipment = ref<Equipment>({
           nature: values.nature ? values.nature : undefined,
           description: values.description ? values.description : undefined,
           totalValue: values.totalValue ? values.totalValue : undefined,
           ownerMember: values.ownerMember ? values.ownerMember : undefined,
           ownerNonMember: values.ownerNonMember ? values.ownerNonMember : undefined,
-          group: generalInsuranceState.value.group.name,
+          group: values.group ? values.group : undefined,
         })
         console.log(equipment.value)
-        // postEquipment(equipment.value)
+        postEquipment(equipment.value)
       }
     })
 
     const addEquipment = (equipment: Equipment) => {
-      if (!props.existingList.includes(equipment)) {
-        context.emit('addEquipmentToList', equipment)
+      if (equipment.id) {
+        RepositoryFactory.get(EquipmentRepository)
+          .getById(equipment.id)
+          .then((result: Equipment) => {
+            context.emit('addEquipmentToList', result)
+          })
       }
     }
 
@@ -182,6 +191,7 @@ export default defineComponent({
       RepositoryFactory.get(EquipmentRepository)
         .create(data)
         .then((completed: Equipment) => {
+          console.log('response: ', completed)
           context.emit('addEquipmentToList', completed)
         })
     }
@@ -192,10 +202,18 @@ export default defineComponent({
     }
 
     const setTotalValueInfo = () => {
-      let text = ''
+      let text = 'Maximum te verzekeren bedrag per tent 2478,94 EUR. Vrijstelling 247,89 EUR'
 
       if (isBicycle.value) {
         text = 'Totale nieuwwaarde per fiets max. 495,79 EUR'
+      }
+
+      if (values.ownerMember) {
+        text = 'Maximum te verzekeren bedrag per tent 2478,94 EUR. Vrijstelling 247,89 EUR'
+      }
+
+      if (values.ownerNonMember) {
+        text = 'Maximum te verzekeren bedrag per tent 2478,94 EUR. Vrijstelling 247,89 EUR'
       }
 
       return text
@@ -213,18 +231,22 @@ export default defineComponent({
 
     const addMember = (member: Member) => {
       values.ownerNonMember = undefined
-      values.ownerMember = member.id
+      values.ownerMember = member
       owner.value = member
+      lidType.value = ' (Lid)'
     }
 
     const addCreatedNonMember = (nonMember: NonMember) => {
-      console.log('ADD: ', nonMember)
       if (nonMember.id) {
         values.ownerMember = undefined
-        values.ownerNonMember = nonMember.id.toString()
+        values.ownerNonMember = nonMember
         owner.value = nonMember
-        console.log('OWNER: ', owner.value)
+        lidType.value = ' (Niet lid)'
       }
+    }
+
+    const removeOwner = () => {
+      owner.value = undefined
     }
 
     watch(
@@ -263,6 +285,8 @@ export default defineComponent({
       addMember,
       addCreatedNonMember,
       owner,
+      removeOwner,
+      lidType,
     }
   },
 })

@@ -11,7 +11,7 @@
         <p>{{ member.phoneNumber !== '' ? member.phoneNumber : '/' }}</p>
       </div>
 
-      <div class="mt-3">
+      <div v-if="member.email" class="mt-3">
         <strong>Email</strong>
         <p>{{ member.email !== '' ? member.email : '/' }}</p>
       </div>

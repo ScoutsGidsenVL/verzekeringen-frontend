@@ -35,6 +35,7 @@ export const NonMemberDeserializer = (input: any): NonMember => {
 
 export const NonMemberSerializer = (input: any): any => {
   const single: any = {
+    id: input.id ? input.id : undefined,
     last_name: input.lastName,
     first_name: input.firstName,
     phone_number: input.phoneNumber,

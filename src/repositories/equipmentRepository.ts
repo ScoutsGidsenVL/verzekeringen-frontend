@@ -9,7 +9,7 @@ export class EquipmentRepository extends BaseRepository {
   serializer = EquipmentSerializer
 
   search(query: string): Promise<any> {
-    return this.get(this.endpoint +  '?page_size=1000&term=' + query, {}).then((response: ArrayResult) => {
+    return this.get(this.endpoint + '?page_size=1000&term=' + query, {}).then((response: ArrayResult) => {
       const array: any[] = []
       response.results.forEach((result: Equipment) => {
         result = EquipmentDeserializer(result)

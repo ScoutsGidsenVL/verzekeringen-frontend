@@ -46,7 +46,9 @@ export default defineComponent({
     }
 
     const addEquipmentToList = (material: Equipment) => {
-      equipment.value.push(material)
+      if (equipment.value.filter((x: Equipment) => x.id == material.id).length === 0) {
+        equipment.value.push(material)
+      }
     }
 
     const deleteEquipmentFromList = (id: string) => {
