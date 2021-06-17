@@ -24,7 +24,7 @@
             <div v-if="details.insuranceOptions.includes(2)" class="mb-3">
               <p>Optie 2: reeds afgesloten omnium afdekken</p>
               <p style="font-size: 0.7em">Dekking van vrijstelling in stoffelijke schade OF diefstal (voor voertuigen die gebruikt worden door een groep van Scouts en Gidsen Vlaanderen.)</p>
-              <p>Maxiumum vrijstellingsbedrag {{ details.maxCoverage.label }}</p>
+              <p>Maximum vrijstellingsbedrag {{ details.maxCoverage.label }}</p>
             </div>
 
             <div v-if="details.insuranceOptions.includes(3)">

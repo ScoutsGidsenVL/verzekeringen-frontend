@@ -21,7 +21,7 @@
             <label for="choice-2">Optie 2: reeds afgesloten omnium afdekken</label>
 
             <div v-if="values.insuranceOptions.includes(2)" class="px-5">
-              <p>Maxiumum vrijstellingsbedrag</p>
+              <p>Maximum vrijstellingsbedrag</p>
               <p style="font-size: 0.7em">Om de vrijstelling (=franchise) van een reeds afgesloten omnium verzekering af te kopen.</p>
               <div style="margin-top: -2em" class="w-80">
                 <multi-select
@@ -32,7 +32,7 @@
                   value-prop="value"
                   :repository="maxCoverageRepository"
                   :options="maxCoverageOptions"
-                  placeholder="Maxiumum vrijstellingsbedrag"
+                  placeholder="Maximum vrijstellingsbedrag"
                 />
               </div>
             </div>
