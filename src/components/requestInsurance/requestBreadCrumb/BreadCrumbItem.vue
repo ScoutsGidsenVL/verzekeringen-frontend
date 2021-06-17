@@ -1,6 +1,15 @@
 <template>
   <div class="flex" style="margin-right: 2em">
-    <div :class="['h-10 w-10 text-center p-2 rounded-full border-2 border-lightGray', visibleOnState === holderState ? 'bg-lightGreen' : '']">{{ index }}</div>
+    <div
+      v-if="isChangeStatePossible"
+      @click="changeState()"
+      :class="['h-10 w-10 text-center p-2 rounded-full border-2 border-lightGray cursor-pointer', visibleOnState === holderState ? 'bg-lightGreen' : '']"
+    >
+      {{ index }}
+    </div>
+    <div v-else :class="['h-10 w-10 text-center p-2 rounded-full border-2 border-lightGray', visibleOnState === holderState ? 'bg-lightGreen' : '']">
+      {{ index }}
+    </div>
     <div v-if="isChangeStatePossible" class="pt-2 pl-3 cursor-pointer" @click="changeState()">{{ text }}</div>
     <div v-else class="pt-2 pl-3">{{ text }}</div>
   </div>
@@ -36,7 +45,9 @@ export default defineComponent({
       return store.state.insurance.holderState
     })
     const changeState = () => {
-      store.dispatch('setHolderState', props.visibleOnState)
+      if (props.isChangeStatePossible) {
+        store.dispatch('setHolderState', props.visibleOnState)
+      }
     }
     return {
       changeState,
