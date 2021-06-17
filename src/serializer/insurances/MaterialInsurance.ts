@@ -4,7 +4,7 @@ import { Status, StatusDeserializer } from '@/serializer/Status'
 import { Group, GroupDeserializer, GroupSerializer } from '@/serializer/Group'
 import { Type, TypeDeserializer } from '@/serializer/Type'
 import { Country, CountryDeserializer, CountrySerializer } from '@/serializer/Country'
-import { Equipment, EquipmentDeserializer, EquipmentSerializer } from '@/serializer/Equipment'
+import { Equipment, EquipmentDeserializer, EquipmentSerializerToPostInsurance } from '@/serializer/Equipment'
 import moment from 'moment'
 
 export interface MaterialInsurance {
@@ -53,10 +53,9 @@ export const MaterialInsuranceSerializer = (input: MaterialInsurance): MaterialI
     group: GroupSerializer(input.group).name,
     nature: input.nature,
     responsible_phone_number: ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number,
-    total_cost: input.totalCost,
     country: input.country && input.country.name !== 'België' ? CountrySerializer(input.country).id : undefined,
     postcode_city: input.country && input.country.name !== 'België' ? undefined : LocationSerializer(input.postCodeCity),
-    equipment: input.equipment ? input.equipment.map((equipment: any) => EquipmentSerializer(equipment)) : undefined,
+    equipment: input.equipment ? input.equipment.map((equipment: any) => EquipmentSerializerToPostInsurance(equipment)) : undefined,
   }
 
   return single

@@ -92,6 +92,9 @@ export default defineComponent({
       if (props.title === 'Tijdelijke') {
         titelText.value = '<p style="font-size: 30px">Overzicht <strong class="font-semibold">' + 'tijdelijke autoverzekering' + '</strong></p>'
       }
+      if (props.title === 'Materiaal') {
+        titelText.value = '<p style="font-size: 30px">Overzicht <strong class="font-semibold">' + 'materiaal verzekering' + '</strong></p>'
+      }
     }
 
     return {

@@ -1,7 +1,7 @@
 <template>
   <div v-if="equipment" class="w-96">
     <div class="py-3">
-      <div v-if="person">
+      <div v-if="person" class="mb-5">
         <div v-if="person.firstName">
           <strong>Naam</strong>
           <p>{{ person.firstName + ' ' + person.lastName }}</p>
@@ -30,7 +30,7 @@
         </div>
       </div>
 
-      <div class="mt-5">
+      <div>
         <div v-if="equipment.nature">
           <strong>Soort</strong>
           {{ equipment.nature }}
@@ -52,8 +52,11 @@
         </div>
       </div>
     </div>
-    <slot />
-    <hr class="border-t-2 border-black" />
+
+    <div>
+      <slot />
+      <hr class="border-t-2 border-black" />
+    </div>
   </div>
 </template>
 

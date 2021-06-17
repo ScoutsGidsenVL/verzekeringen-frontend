@@ -2,6 +2,7 @@
   <form @submit="onSubmit">
     <custom-headline-2 text="Activiteit" />
     <div v-if="values" class="px-5">
+      {{ values }}
       <custom-input :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" />
 
       <div class="w-96">
@@ -38,6 +39,7 @@
       </div>
     </div>
 
+    <custom-headline-2 class="mt-2" text="Materiaal" />
     <div class="px-5 mt-3">
       <select-equipment id="equipment" rules="required" />
     </div>
@@ -100,6 +102,7 @@ export default defineComponent({
           postCodeCity: values.postCodeCity ? values.postCodeCity : undefined,
           country: values.country ? values.country : undefined,
           comment: data.comment,
+          equipment: values.equipment ? values.equipment : undefined,
         },
       })
 
@@ -122,6 +125,7 @@ export default defineComponent({
       onSubmit,
       values,
       data,
+      generalInsuranceState,
     }
   },
 })

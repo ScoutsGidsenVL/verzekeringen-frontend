@@ -77,7 +77,7 @@
       <div v-if="selected === 'BestaandEquipment'">
         <form @submit="onSubmit">
           <div>
-            <search-input name="equipment" placeholder="Zoek op naam" v-model:loading="loading" :repository="EquipmentRepository" @fetchedOptions="fetchedOptions($event)" />
+            <search-input name="equipment" placeholder="Zoek op beschrijving" v-model:loading="loading" :repository="EquipmentRepository" @fetchedOptions="fetchedOptions($event)" />
           </div>
 
           <div class="custom-container mt-4">
@@ -112,7 +112,7 @@ import CustomInput from '@/components/inputs/CustomInput.vue'
 import CustomButton from '@/components/CustomButton.vue'
 import { NonMember } from '@/serializer/NonMember'
 import { Equipment } from '@/serializer/Equipment'
-import { defineComponent, ref, watch } from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
 import { InputTypes } from '@/enums/inputTypes'
 import { Member } from '@/serializer/Member'
 import { Owner } from '@/serializer/Owner'
@@ -158,6 +158,10 @@ export default defineComponent({
     const owner = ref<Owner>()
     const lidType = ref<String>()
 
+    const generalInsuranceState = computed(() => {
+      return store.state.insurance.generalInsuranceState
+    })
+
     const { handleSubmit, values } = useForm<Equipment>({
       initialValues: {},
     })
@@ -170,7 +174,7 @@ export default defineComponent({
           totalValue: values.totalValue ? values.totalValue : undefined,
           ownerMember: values.ownerMember ? values.ownerMember : undefined,
           ownerNonMember: values.ownerNonMember ? values.ownerNonMember : undefined,
-          group: values.group ? values.group : undefined,
+          group: generalInsuranceState.value.group.name,
         })
         console.log(equipment.value)
         postEquipment(equipment.value)
@@ -247,6 +251,8 @@ export default defineComponent({
 
     const removeOwner = () => {
       owner.value = undefined
+      values.ownerMember = undefined
+      values.ownerNonMember = undefined
     }
 
     watch(

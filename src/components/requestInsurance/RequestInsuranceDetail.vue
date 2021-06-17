@@ -20,7 +20,9 @@
       <event-detail><slot></slot></event-detail>
     </div>
 
-    <div v-if="isCurrentType(InsuranceTypes.MATERIAAL_VERZEKERING, insuranceTypeState)"></div>
+    <div v-if="isCurrentType(InsuranceTypes.MATERIAAL_VERZEKERING, insuranceTypeState)">
+      <material-insurance-detail><slot></slot></material-insurance-detail>
+    </div>
   </div>
 </template>
 
@@ -29,6 +31,7 @@ import OneTimeActivityDetail from '@/components/insurances/oneTimeActivityInsura
 import NonMemberInsuranceDetail from '@/components/insurances/nonMembersInsurance/nonMemberDetail.vue'
 import TravelAssistanceDetail from '@/components/insurances/travelAssistance/travelAssistanceDetail.vue'
 import EventDetail from '@/components/insurances/eventInsurance/eventInsuranceDetail.vue'
+import MaterialInsuranceDetail from '@/components/insurances/materialInsurance/materialInsuranceDetail.vue'
 import { isCurrentType } from '@/helpers/insuranceTypeHelper'
 import { InsuranceTypes } from '@/enums/insuranceTypes'
 import { computed, defineComponent } from 'vue'
@@ -42,6 +45,7 @@ export default defineComponent({
     'non-member-insurance-detail': NonMemberInsuranceDetail,
     'travel-assistance-detail': TravelAssistanceDetail,
     'event-detail': EventDetail,
+    'material-insurance-detail': MaterialInsuranceDetail,
     TemporaryVehicleDetail,
   },
   setup() {
