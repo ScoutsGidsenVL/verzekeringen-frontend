@@ -10,7 +10,7 @@ export const GroupDeserializer = (input: any): Group => {
     id: input.id,
     location: input.location,
     name: input.name,
-    fullInfo: `${input.name} (${input.id}).`,
+    fullInfo: `${input.name} - ${input.id}`,
   }
 
   return single
