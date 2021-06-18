@@ -1,61 +1,59 @@
 <template>
   <div>
     <base-side-bar v-model:isDisplay="display" v-model:selection="selected" name="Vehicle" :title="title" :options="['Nieuw', 'Bestaand']">
-      <div v-if="selected === 'NieuwVehicle'" class="d-flex flex-col h-full">
-        <form class="h-full overflow-y-scroll mt-5 pb-36" @submit="onSubmit">
-          <div class="w-96">
-            <custom-input :type="InputTypes.TEXT" rules="required" name="brand" label="Merk" />
-          </div>
-          <div class="w-96 mt-4">
-            <custom-input :maxlength="10" :type="InputTypes.TEXT" rules="required" name="licensePlate" label="Nummerplaat" />
-          </div>
-          <div class="w-96 mt-4">
-            <custom-input :type="InputTypes.TEXT" rules="required" name="constructionYear" maxlength="4" label="Bouwjaar">
-              <div class="pb-3">
-                Bouwjaar ouder 10 jaar geleden? Het heeft weinig zin om een oud voertuig te verzekeren. Bij een schade zal de verzekeringsmaatschappij nooit een bedrag uitkeren dat hoger is dan de
-                waarde. (Meestal erg laag voor een oude auto.)
-              </div>
-            </custom-input>
-          </div>
+      <form v-if="selected === 'NieuwVehicle'" id="addNewVehicle" class="d-flex flex-col relative overflow-y-scroll h-full" @submit="onSubmit">
+        <div class="w-96">
+          <custom-input :type="InputTypes.TEXT" rules="required" name="brand" label="Merk" />
+        </div>
+        <div class="w-96 mt-4">
+          <custom-input :maxlength="10" :type="InputTypes.TEXT" rules="required" name="licensePlate" label="Nummerplaat" />
+        </div>
+        <div class="w-96 mt-4">
+          <custom-input :type="InputTypes.TEXT" rules="required" name="constructionYear" maxlength="4" label="Bouwjaar">
+            <div class="pb-3">
+              Bouwjaar ouder 10 jaar geleden? Het heeft weinig zin om een oud voertuig te verzekeren. Bij een schade zal de verzekeringsmaatschappij nooit een bedrag uitkeren dat hoger is dan de
+              waarde. (Meestal erg laag voor een oude auto.)
+            </div>
+          </custom-input>
+        </div>
 
-          <div class="w-96 mt-4">
-            <custom-input :maxlength="20" :type="InputTypes.TEXT" rules="required" name="chassisNumber" label="Chassisnummer" />
-          </div>
+        <div class="w-96 mt-4">
+          <custom-input :maxlength="20" :type="InputTypes.TEXT" rules="required" name="chassisNumber" label="Chassisnummer" />
+        </div>
 
-          <div class="w-96">
-            <multi-select
-              id="type"
-              class="custom"
-              :object="true"
-              track-by="label"
-              value-prop="value"
-              :repository="VehicleTypeRepository"
-              :options="vehicleTypes"
-              label="Type"
-              rules="required"
-              placeholder="Selecteer type"
-            />
-          </div>
+        <div class="w-96">
+          <multi-select
+            id="type"
+            class="custom"
+            :object="true"
+            track-by="label"
+            value-prop="value"
+            :repository="VehicleTypeRepository"
+            :options="vehicleTypes"
+            label="Type"
+            rules="required"
+            placeholder="Selecteer type"
+          />
+        </div>
 
-          <div class="w-96">
-            <multi-select
-              id="trailer"
-              :object="true"
-              track-by="label"
-              value-prop="value"
-              :repository="TrailerRepository"
-              :options="trailers"
-              label="Aanhangwagen"
-              rules="required"
-              placeholder="Selecteer aanhangwagen"
-            />
-          </div>
+        <div class="w-96">
+          <multi-select
+            id="trailer"
+            :object="true"
+            track-by="label"
+            value-prop="value"
+            :repository="TrailerRepository"
+            :options="trailers"
+            label="Aanhangwagen"
+            rules="required"
+            placeholder="Selecteer aanhangwagen"
+          />
+        </div>
 
-          <div class="pt-4 w">
-            <custom-button text="Voeg toe" />
-          </div>
-        </form>
-      </div>
+        <div class="mt-5 py-4 sticky bottom-0 bg-white">
+          <custom-button text="Voeg toe" />
+        </div>
+      </form>
       <form v-if="selected === 'BestaandVehicle'" class="d-flex flex-col h-full" @submit="onSubmit">
         <div>
           <search-input v-model:loading="loading" name="search" placeholder="Zoek op merk" :repository="VehicleRepository" @fetchedOptions="fetchedOptions($event)" />
@@ -96,6 +94,7 @@ import { VehicleRepository } from '@/repositories//vehicleRepository'
 import { TrailerRepository } from '@/repositories/trailerRepository'
 import VehicleItem from '@/components/insurances/travelAssistance/vehicleItem.vue'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
+import { scrollToFirstError } from '@/veeValidate/helpers'
 
 export default defineComponent({
   name: 'VehicleSideBar',
@@ -121,7 +120,7 @@ export default defineComponent({
     const store = useStore()
     const user = ref<ResponsibleMember>(store.getters.user)
     const display = ref<boolean>(props.isDisplay)
-    const { handleSubmit, values } = useForm<Vehicle>()
+    const { handleSubmit, values, validate } = useForm<Vehicle>()
     const selected = ref<string>('NieuwVehicle')
     const selectedVehicle = ref<Vehicle>({})
     const fetchedVehicles = ref<Array<Vehicle>>([])
@@ -144,27 +143,30 @@ export default defineComponent({
       }
     )
 
-    const onSubmit = handleSubmit(async (values: Vehicle) => {
-      if (selected.value === 'NieuwVehicle') {
-        const vehicle = ref<Vehicle>({
-          type: values.type,
-          brand: values.brand,
-          licensePlate: values.licensePlate,
-          constructionYear: values.constructionYear,
-          chassisNumber: values.chassisNumber,
-          trailer: values.trailer,
-          group: generalInsuranceState.value.group.name,
-        })
-        postVehicle(vehicle.value)
-      }
+    const onSubmit = async () => {
+      await validate().then((validation: any) => scrollToFirstError(validation, 'addNewVehicle'))
+      handleSubmit(async (values: Vehicle) => {
+        if (selected.value === 'NieuwVehicle') {
+          const vehicle = ref<Vehicle>({
+            type: values.type,
+            brand: values.brand,
+            licensePlate: values.licensePlate,
+            constructionYear: values.constructionYear,
+            chassisNumber: values.chassisNumber,
+            trailer: values.trailer,
+            group: generalInsuranceState.value.group.name,
+          })
+          postVehicle(vehicle.value)
+        }
 
-      if (selected.value === 'BestaandVehicle') {
-        context.emit('addCreatedVehicle', selectedVehicle.value)
-      }
+        if (selected.value === 'BestaandVehicle') {
+          context.emit('addCreatedVehicle', selectedVehicle.value)
+        }
 
-      selectedVehicle.value = {}
-      display.value = false
-    })
+        selectedVehicle.value = {}
+        display.value = false
+      })()
+    }
 
     const addVehicle = (vehicle: any) => {
       if (vehicle) {

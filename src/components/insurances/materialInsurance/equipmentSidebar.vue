@@ -1,78 +1,76 @@
 <template>
   <div>
     <base-side-bar v-model:isDisplay="display" v-model:selection="selected" name="Equipment" :title="title" :options="['Nieuw', 'Bestaand']">
-      <div v-if="selected === 'NieuwEquipment'" class="d-flex flex-col h-full">
-        <form class="h-full overflow-y-scroll mt-5 pb-36" @submit="onSubmit">
-          <div class="custom-container mt-4">
-            <div class="mt-4">
-              <p>Wil je een fiets verzekeren</p>
-              <div class="flex gap-7">
-                <div>
-                  <input :id="'ja'" v-model="isBicycle" class="cursor-pointer" type="radio" :name="'ja'" :value="true" />
-                  <label :for="'ja'" class="ml-2">Ja</label>
-                </div>
-
-                <div>
-                  <input :id="'nee'" v-model="isBicycle" class="cursor-pointer" type="radio" :name="'nee'" :value="false" />
-                  <label :for="'nee'" class="ml-2">Nee</label>
-                </div>
-              </div>
-            </div>
-
-            <div v-if="!isBicycle" class="w-96 mt-4">
-              <custom-input extra-info="bv: Tent, Geluidsinstallatie" :type="InputTypes.TEXT" rules="required" name="nature" label="Soort" />
-            </div>
-
-            <div class="w-96 mt-4">
-              <custom-input
-                :extra-info="isBicycle ? 'Merk, model en type. bv: Gazelle, Paris Plus, stads fiets' : 'Materie, model. bv: Senior, JB Systems ME2 mixer'"
-                :type="InputTypes.TEXT_AREA"
-                rules="required"
-                name="description"
-                label="Omschrijving"
-              />
-            </div>
-
-            <div class="w-96 mt-4">
-              <strong>Eigenaar</strong><strong v-if="owner">{{ lidType }}</strong>
-              <div class="py-3">
-                <hr v-if="owner" class="border-t-2 border-black" />
-                <member-item :member="owner">
-                  <div class="text-right">
-                    <label class="hover:text-lightGreen cursor-pointer" for="" @click="removeOwner()">Verwijder</label>
-                  </div>
-                </member-item>
-              </div>
-            </div>
-
-            <div>
+      <form v-if="selected === 'NieuwEquipment'" class="d-flex flex-col relative overflow-y-scroll h-full" @submit="onSubmit">
+        <div class="mt-4">
+          <div class="mt-4">
+            <p>Wil je een fiets verzekeren</p>
+            <div class="flex gap-7">
               <div>
-                <strong class="cursor-pointer text-lightGreen" @click="openMemberSideBar()"> Selecteer ander lid </strong>
-                <members-side-bar v-model:isDisplay="isMemberSideBarDisplay" :close-on-add="true" :existing-list="members" title="Lid" @addMemberToList="addMember($event)" />
+                <input :id="'ja'" v-model="isBicycle" class="cursor-pointer" type="radio" :name="'ja'" :value="true" />
+                <label :for="'ja'" class="ml-2">Ja</label>
               </div>
 
-              <div class="mt-3">
-                <strong class="cursor-pointer text-lightGreen" @click="openNonMemberSideBar()"> Selecteer ander niet-lid </strong>
-                <non-member-side-bar
-                  v-model:isDisplay="isNonMemberSideBarDisplay"
-                  :close-on-add="true"
-                  :existing-list="nonMembers"
-                  title="Niet lid"
-                  @addCreatedNonMemberToList="addCreatedNonMember($event)"
-                />
+              <div>
+                <input :id="'nee'" v-model="isBicycle" class="cursor-pointer" type="radio" :name="'nee'" :value="false" />
+                <label :for="'nee'" class="ml-2">Nee</label>
               </div>
-            </div>
-
-            <div class="w-96 mt-4">
-              <custom-input :extra-info="setTotalValueInfo()" :type="InputTypes.TEXT" rules="required" name="totalValue" label="Nieuwwaarde" />
-            </div>
-
-            <div class="mt-5">
-              <custom-button text="Voeg toe" />
             </div>
           </div>
-        </form>
-      </div>
+
+          <div v-if="!isBicycle" class="w-96 mt-4">
+            <custom-input extra-info="bv: Tent, Geluidsinstallatie" :type="InputTypes.TEXT" rules="required" name="nature" label="Soort" />
+          </div>
+
+          <div class="w-96 mt-4">
+            <custom-input
+              :extra-info="isBicycle ? 'Merk, model en type. bv: Gazelle, Paris Plus, stads fiets' : 'Materie, model. bv: Senior, JB Systems ME2 mixer'"
+              :type="InputTypes.TEXT_AREA"
+              rules="required"
+              name="description"
+              label="Omschrijving"
+            />
+          </div>
+
+          <div class="w-96 mt-4">
+            <strong>Eigenaar</strong><strong v-if="owner">{{ lidType }}</strong>
+            <div class="py-3">
+              <hr v-if="owner" class="border-t-2 border-black" />
+              <member-item :member="owner">
+                <div class="text-right">
+                  <label class="hover:text-lightGreen cursor-pointer" for="" @click="removeOwner()">Verwijder</label>
+                </div>
+              </member-item>
+            </div>
+          </div>
+
+          <div>
+            <div>
+              <strong class="cursor-pointer text-lightGreen" @click="openMemberSideBar()"> Selecteer ander lid </strong>
+              <members-side-bar v-model:isDisplay="isMemberSideBarDisplay" :close-on-add="true" :existing-list="members" title="Lid" @addMemberToList="addMember($event)" />
+            </div>
+
+            <div class="mt-3">
+              <strong class="cursor-pointer text-lightGreen" @click="openNonMemberSideBar()"> Selecteer ander niet-lid </strong>
+              <non-member-side-bar
+                v-model:isDisplay="isNonMemberSideBarDisplay"
+                :close-on-add="true"
+                :existing-list="nonMembers"
+                title="Niet lid"
+                @addCreatedNonMemberToList="addCreatedNonMember($event)"
+              />
+            </div>
+          </div>
+
+          <div class="w-96 mt-4">
+            <custom-input :extra-info="setTotalValueInfo()" :type="InputTypes.TEXT" rules="required" name="totalValue" label="Nieuwwaarde" />
+          </div>
+
+          <div class="mt-5">
+            <custom-button text="Voeg toe" />
+          </div>
+        </div>
+      </form>
 
       <form v-if="selected === 'BestaandEquipment'" class="d-flex flex-col h-full" @submit="onSubmit">
         <div>

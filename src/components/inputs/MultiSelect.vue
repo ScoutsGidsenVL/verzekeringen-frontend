@@ -9,6 +9,7 @@
         v-model="inputValue"
         :name="id"
         :value-prop="valueProp"
+        :id="id"
         :disabled="disabled"
         :filter-results="false"
         :min-chars="1"

@@ -1,7 +1,7 @@
 <template>
   <div>
     <base-side-bar v-model:isDisplay="display" v-model:selection="selected" name="NonMember" :title="title" :options="['Nieuw', 'Bestaand']">
-      <form v-if="selected === 'NieuwNonMember'" ref="formDiv" class="d-flex flex-col relative overflow-y-scroll h-full" @submit="onSubmit">
+      <form v-if="selected === 'NieuwNonMember'" id="addNewNonMember" ref="formDiv" class="d-flex flex-col relative overflow-y-scroll h-full" @submit="onSubmit">
         <div v-if="memberAdded" role="alert" aria-label="Statusbericht" class="alert alert-dismissible alert-status-msg fadeIn show container alert-success">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close" @click="() => (memberAdded = false)">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 587.9 587.9">
@@ -83,7 +83,7 @@
           </div>
         </div>
 
-        <div class="mt-5 py-4 sticky bottom-0 bg-white shadow-md">
+        <div class="mt-5 py-4 sticky bottom-0 bg-white">
           <custom-button text="Voeg toe" />
         </div>
       </form>
@@ -125,6 +125,7 @@ import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
 import SearchInput from '@/components/inputs/SearchInput.vue'
+import { scrollToFirstError } from '@/veeValidate/helpers'
 
 export default defineComponent({
   name: 'NonMemberSideBar',
@@ -161,34 +162,37 @@ export default defineComponent({
     const store = useStore()
     const user = ref<ResponsibleMember>(store.getters.user)
     const display = ref<boolean>(props.isDisplay)
-    const { handleSubmit, resetForm } = useForm<NonMember>()
+    const { resetForm, errors, handleSubmit, validate } = useForm<NonMember>()
     const selected = ref<string>('NieuwNonMember')
     const selectedNonMembers = ref<NonMember[]>([])
     const loading = ref<boolean>(false)
     const memberAdded = ref<boolean>(false)
     const formDiv = ref<HTMLDivElement | undefined>(undefined)
 
-    const onSubmit = handleSubmit(async (values: NonMember) => {
-      if (selected.value === 'NieuwNonMember') {
-        const generalInsuranceState = ref<any>(store.getters.generalInsuranceState)
+    const onSubmit = async () => {
+      await validate().then((validation: any) => scrollToFirstError(validation, 'addNewNonMember'))
+      handleSubmit(async (values: NonMember) => {
+        if (selected.value === 'NieuwNonMember') {
+          const generalInsuranceState = ref<any>(store.getters.generalInsuranceState)
 
-        const nonMember = ref<NonMember>({
-          lastName: values.lastName,
-          firstName: values.firstName,
-          phoneNumber: values.phoneNumber,
-          birthDate: values.birthDate,
-          street: values.street,
-          number: values.number,
-          letterBox: values.letterBox,
-          comment: values.comment,
-          postCodeCity: values.postCodeCity,
-          group: generalInsuranceState.value.group.name,
-        })
-        postNonMember(nonMember.value)
-      }
+          const nonMember = ref<NonMember>({
+            lastName: values.lastName,
+            firstName: values.firstName,
+            phoneNumber: values.phoneNumber,
+            birthDate: values.birthDate,
+            street: values.street,
+            number: values.number,
+            letterBox: values.letterBox,
+            comment: values.comment,
+            postCodeCity: values.postCodeCity,
+            group: generalInsuranceState.value.group.name,
+          })
+          postNonMember(nonMember.value)
+        }
 
-      selectedNonMembers.value = []
-    })
+        selectedNonMembers.value = []
+      })()
+    }
 
     const addNonMember = (nonMember: NonMember) => {
       if (!props.existingList.includes(nonMember)) {
@@ -252,6 +256,7 @@ export default defineComponent({
       loading,
       memberAdded,
       formDiv,
+      errors,
     }
   },
 })
