@@ -6,19 +6,20 @@
 
       <div class="w-96">
         <multi-select
-          rules="required"
-          insuranceTypeId="2"
           id="country"
+          rules="required"
+          insurance-type-id="2"
           :object="true"
           track-by="name"
           value-prop="name"
           :repository="CountryRepository"
           :resolve-on-load="true"
-          :options="[values.country.city ? values.country : undefined]"
+          :options="values.country.city ? [values.country] : [{ id: '3232', name: 'België' }]"
           :extra-option="{ id: '3232', name: 'België' }"
           :searchable="true"
           label="Land"
           placeholder="Zoek op naam"
+          :disabled="true"
         />
       </div>
       <div v-if="values.country.name === '' || values.country.name === 'België'" class="w-96">
@@ -29,7 +30,7 @@
           value-prop="label"
           :repository="BelgianCitySearchRepository"
           :resolve-on-load="true"
-          :options="[values.postCodeCity]"
+          :options="values.postCodeCity ? [values.postCodeCity] : []"
           :searchable="true"
           label="Gemeente"
           rules="required"
@@ -47,7 +48,7 @@
     </div>
 
     <div class="flex gap-3 px-5 mt-5">
-      <custom-button @click="back()" type="button" text="Vorige" />
+      <custom-button type="button" text="Vorige" @click="back()" />
       <custom-button text="Volgende" />
     </div>
   </form>
