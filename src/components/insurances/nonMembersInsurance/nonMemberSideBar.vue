@@ -83,7 +83,7 @@
           </div>
         </div>
 
-        <div class="mt-5 py-4 sticky bottom-0 bg-white shadow-md">
+        <div class="mt-5 py-4 sticky bottom-0 bg-white">
           <custom-button text="Voeg toe" />
         </div>
       </form>

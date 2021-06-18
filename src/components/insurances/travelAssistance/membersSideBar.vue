@@ -11,7 +11,7 @@
           <member-item :member="member">
             <div>
               <div class="pt-3 pb-4 text-right">
-                <custom-button type="button" text="Voeg toe" @click="addMember(member)" />
+                <custom-button type="button" :text="existingList.includes(member) ? 'Toegevoegd' : 'Voeg toe'" @click="addMember(member)" />
               </div>
             </div>
           </member-item>
