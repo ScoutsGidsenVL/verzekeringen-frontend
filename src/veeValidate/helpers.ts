@@ -1,3 +1,5 @@
+import { ComputedRef, Ref, ref, watch } from 'vue'
+
 export const scrollToFirstError = (validation: any, container: string) => {
   if (validation.valid) {
     return
@@ -20,5 +22,51 @@ export const scrollToFirstError = (validation: any, container: string) => {
     if (el) {
       el.scrollIntoView()
     }
+  }
+}
+
+export const useScrollToTop = (): {
+  formDiv: Ref<HTMLDivElement | undefined>
+  scrollToTop: () => void
+} => {
+  const formDiv = ref<HTMLDivElement | undefined>(undefined)
+
+  const scrollToTop = () => {
+    if (formDiv.value) {
+      formDiv.value.scrollTop = 0
+    }
+  }
+
+  return {
+    formDiv,
+    scrollToTop,
+  }
+}
+
+export type formMeta<T> = ComputedRef<{
+  dirty: boolean
+  touched: boolean
+  valid: boolean
+  pending: boolean
+  initialValues: T
+}>
+
+export const useFormSendWithSuccess = <T>(
+  meta: formMeta<T>
+): {
+  formSendWithSuccess: Ref<boolean>
+} => {
+  const formSendWithSuccess = ref<boolean>(false)
+
+  if (meta) {
+    watch(meta, (value: { dirty: boolean }) => {
+      if (value.dirty) {
+        formSendWithSuccess.value = false
+      }
+    })
+  }
+
+  return {
+    formSendWithSuccess,
   }
 }

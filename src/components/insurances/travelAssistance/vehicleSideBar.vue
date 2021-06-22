@@ -1,7 +1,7 @@
 <template>
   <div>
     <base-side-bar v-model:isDisplay="display" v-model:selection="selected" name="Vehicle" :title="title" :options="['Nieuw', 'Bestaand']">
-      <form v-if="selected === 'NieuwVehicle'" id="addNewVehicle" class="d-flex flex-col relative overflow-y-scroll h-full" @submit="onSubmit">
+      <form v-if="selected === 'NieuwVehicle'" id="addNewVehicle" class="d-flex flex-col relative overflow-y-scroll h-full" @submit.prevent="onSubmit">
         <div class="w-96">
           <custom-input :type="InputTypes.TEXT" rules="required" name="brand" label="Merk" />
         </div>
