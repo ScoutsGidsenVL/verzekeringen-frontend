@@ -171,7 +171,7 @@ export default defineComponent({
         group: data.group ? data.group.id : userData.value.scoutsGroups ? userData.value.scoutsGroups[0].id : '',
         responsibleMember: data.responsibleMember ? data.responsibleMember : userData.value,
         insuranceOptions: data.insuranceOptions ? data.insuranceOptions : [],
-        maxCoverage: data.maxCoverage ? data.maxCoverage : undefined,
+        maxCoverage: data.maxCoverage ? data.maxCoverage : [],
       },
     })
 
@@ -224,6 +224,16 @@ export default defineComponent({
           })
         })
     }
+
+    watch(
+      () => insuranceTypeState.value,
+      () => {
+        console.log('TYPE CHANGED')
+        if (insuranceTypeState.value === InsuranceTypes.TIJDELIJKE_AUTO_VERZEKERING) {
+          values.insuranceOptions = []
+        }
+      }
+    )
 
     return {
       maxCoverageOptions,
