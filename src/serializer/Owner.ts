@@ -32,7 +32,7 @@ export const OwnerSerializer = (input: any): any => {
     first_name: input.firstName,
     phone_number: input.phoneNumber ? input.phoneNumber : '/',
     email: input.email ? input.email : undefined,
-    birth_date: input.birthDate,
+    birth_date: input.birthDate ? input.birthDate : '2000-01-01',
     street: input.street ? input.street : undefined,
     number: input.number ? input.number : undefined,
     comment: input.comment ? input.comment : undefined,
