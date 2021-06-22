@@ -8,7 +8,7 @@ export interface Group {
 export const GroupDeserializer = (input: any): Group => {
   const single: Group = {
     id: input.id,
-    location: input.location,
+    location: input.location ? input.location : undefined,
     name: input.name,
     fullInfo: `${input.name} - ${input.id}`,
   }

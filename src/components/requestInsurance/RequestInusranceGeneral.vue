@@ -86,7 +86,16 @@
         <p>De factuur wordt naar de financieel verantwoordelijke van deze groep gestuurd.</p>
         <div class="flex">
           <div style="width: 65%">
-            <multi-select :disabled="isEdit" id="group" rules="required" placeholder="Group" track-by="fullInfo" value-prop="id" :options="userData.scoutsGroups" label="Selecteer groep" />
+            <multi-select
+              :disabled="isEdit"
+              id="group"
+              rules="required"
+              placeholder="Group"
+              track-by="fullInfo"
+              value-prop="id"
+              :options="values.responsibleMember.scoutsGroups"
+              label="Selecteer groep"
+            />
           </div>
         </div>
       </div>
@@ -215,12 +224,13 @@ export default defineComponent({
     }
 
     fetchMaxCoverages()
+
     const refreshGroups = () => {
       RepositoryFactory.get(AuthRepository)
         .me()
         .then((user: any) => {
           store.dispatch('setUser', user).then(() => {
-            userData.value = store.getters.user
+            values.responsibleMember = store.getters.user
           })
         })
     }
