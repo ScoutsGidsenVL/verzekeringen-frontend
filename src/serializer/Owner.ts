@@ -10,7 +10,7 @@ export const OwnerDeserializer = (input: any): Owner => {
     id: input.id ? input.id : undefined,
     lastName: input.last_name,
     firstName: input.first_name,
-    phoneNumber: input.phone_number,
+    phoneNumber: input.phone_number ? input.phone_number.replace(/ /g, '') : undefined,
     email: input.email ? input.email : undefined,
     birthDate: input.birth_date,
     groupAdminId: input.group_admin_id,
@@ -30,7 +30,7 @@ export const OwnerSerializer = (input: any): any => {
   const single: any = {
     last_name: input.lastName,
     first_name: input.firstName,
-    phone_number: input.phoneNumber ? input.phoneNumber : '/',
+    phone_number: input.phoneNumber ? input.phoneNumber.replace(/ /g, '') : '/',
     email: input.email ? input.email : undefined,
     birth_date: input.birthDate ? input.birthDate : '2000-01-01',
     street: input.street ? input.street : undefined,

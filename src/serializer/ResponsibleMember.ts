@@ -19,7 +19,7 @@ export const ResponsibleMemberDeserializer = (input: any): ResponsibleMember => 
     birthDate: input.birth_date,
     email: input.email,
     membershipNumber: input.membership_number,
-    phoneNumber: input.phone_number,
+    phoneNumber: input.phone_number ? input.phone_number.replace(/ /g, '') : undefined,
     scoutsGroups: input.scouts_group ? input.scouts_groups.map((group: any) => GroupDeserializer(group)) : undefined,
   }
 
@@ -33,7 +33,7 @@ export const ResponsibleMemberSerializer = (input: any): any => {
     birth_date: input.birthDate,
     email: input.email,
     membership_number: input.membershipNumber,
-    responsible_phone_number: input.phoneNumber ? input.phoneNumber : undefined,
+    responsible_phone_number: input.phoneNumber ? input.phoneNumber.replace(/ /g, '') : '/',
   }
 
   return single

@@ -31,10 +31,6 @@
         <custom-input :type="InputTypes.TEXT" name="input.phoneNumber" label="Gsm" :rules="'customRequired'" />
       </div>
 
-      <div v-if="!input.companyName" class="w-96 mt-3">
-        <custom-input :type="InputTypes.DATE" name="input.birthDate" label="Geboortedatum" :rules="'customRequired'" />
-      </div>
-
       <div class="w-96">
         <multi-select
           id="input.postCodeCity"
