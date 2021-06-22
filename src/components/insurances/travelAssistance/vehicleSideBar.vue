@@ -120,7 +120,11 @@ export default defineComponent({
     const store = useStore()
     const user = ref<ResponsibleMember>(store.getters.user)
     const display = ref<boolean>(props.isDisplay)
-    const { handleSubmit, values, validate, resetForm } = useForm<Vehicle>()
+    const { handleSubmit, values, validate, resetForm } = useForm<Vehicle>({
+      initialValues: {
+        trailer: { id: '0', value: '0', label: 'Geen' },
+      },
+    })
     const selected = ref<string>('NieuwVehicle')
     const selectedVehicle = ref<Vehicle>({})
     const fetchedVehicles = ref<Array<Vehicle>>([])
@@ -193,6 +197,13 @@ export default defineComponent({
         .then((result: any) => {
           vehicleTypes.value = result
         })
+        .catch(() => {
+          RepositoryFactory.get(VehicleTypeRepository)
+            .getArray()
+            .then((result: any) => {
+              vehicleTypes.value = result
+            })
+        })
     }
 
     const trailers = ref<VehicleType[]>([])
@@ -202,6 +213,13 @@ export default defineComponent({
         .getArray()
         .then((result: any) => {
           trailers.value = result
+        })
+        .catch(() => {
+          RepositoryFactory.get(TrailerRepository)
+            .getArray()
+            .then((result: any) => {
+              trailers.value = result
+            })
         })
     }
 
