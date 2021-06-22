@@ -19,7 +19,6 @@
           :searchable="true"
           label="Land"
           placeholder="Zoek op naam"
-          :disabled="true"
         />
       </div>
       <div v-if="values.country.name === '' || values.country.name === 'België'" class="w-96">
