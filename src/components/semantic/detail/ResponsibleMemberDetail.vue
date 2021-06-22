@@ -1,7 +1,7 @@
 <template>
   <p class="font-semibold">Aanvrager</p>
   <div class="px-5">
-    <label-output label="Naam" :text="responsibleMember.firstName" />
+    <label-output label="Naam" :text="responsibleMember.firstName + ' ' + (responsibleMember.lastName ? responsibleMember.lastName : '')" />
     <label-output label="Lidnummer" :text="responsibleMember.membershipNumber" />
     <label-output label="E-mailadres" :text="responsibleMember.email" />
     <label-output label="Gsm" :text="responsibleMember.phoneNumber" />

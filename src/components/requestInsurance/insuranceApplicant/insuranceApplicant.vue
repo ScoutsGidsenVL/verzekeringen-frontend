@@ -1,5 +1,5 @@
 <template>
-  <label-output label="Naam" :text="user.firstName" />
+  <label-output label="Naam" :text="user.firstName + ' ' + (user.lastName ? user.lastName : '')" />
   <label-output label="Lidnummer" :text="user.membershipNumber" />
   <label-output label="E-mailadres" :text="user.email" />
   <label-output label="Gsm" :text="user.phoneNumber" />
