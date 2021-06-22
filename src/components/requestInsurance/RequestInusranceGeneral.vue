@@ -228,7 +228,6 @@ export default defineComponent({
     watch(
       () => insuranceTypeState.value,
       () => {
-        console.log('TYPE CHANGED')
         if (insuranceTypeState.value === InsuranceTypes.TIJDELIJKE_AUTO_VERZEKERING) {
           values.insuranceOptions = []
         }

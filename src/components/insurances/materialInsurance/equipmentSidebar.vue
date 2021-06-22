@@ -200,18 +200,18 @@ export default defineComponent({
     }
 
     const setTotalValueInfo = () => {
-      let text = 'Maximum te verzekeren bedrag per tent 2478,94 EUR. Vrijstelling 247,89 EUR'
+      let text = 'Maximum te verzekeren bedrag per tent 2500 EUR. Vrijstelling 250 EUR'
 
       if (isBicycle.value) {
-        text = 'Totale nieuwwaarde per fiets max. 495,79 EUR'
+        text = 'Totale nieuwwaarde per fiets max. 500 EUR'
       }
 
       if (values.ownerMember) {
-        text = 'Maximum te verzekeren bedrag per tent 2478,94 EUR. Vrijstelling 247,89 EUR'
+        text = 'Maximum te verzekeren bedrag per tent 2500 EUR. Vrijstelling 250 EUR'
       }
 
       if (values.ownerNonMember) {
-        text = 'Maximum te verzekeren bedrag per tent 2478,94 EUR. Vrijstelling 247,89 EUR'
+        text = 'Maximum te verzekeren bedrag per tent 2500 EUR. Vrijstelling 250 EUR'
       }
 
       return text
