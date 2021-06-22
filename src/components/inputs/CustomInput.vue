@@ -9,8 +9,8 @@
     <div>
       <slot />
     </div>
-    <input v-if="type !== InputTypes.TEXT_AREA" v-model="inputValue" class="bg-lightGray p-2 min-w-0 w-100" :min="min" :type="type" step="1" :maxlength="maxlength" :name="name" />
-    <textarea v-if="type === InputTypes.TEXT_AREA" v-model="inputValue" class="bg-lightGray p-2 w-96 h-32 min-w-0" :type="'text'" :name="name" :disabled="disabled" maxlength="500" />
+    <input v-if="type !== InputTypes.TEXT_AREA && !hideInput" v-model="inputValue" class="bg-lightGray p-2 min-w-0 w-100" :min="min" :type="type" step="1" :maxlength="maxlength" :name="name" />
+    <textarea v-if="type === InputTypes.TEXT_AREA && !hideInput" v-model="inputValue" class="bg-lightGray p-2 w-96 h-32 min-w-0" :type="'text'" :name="name" :disabled="disabled" maxlength="500" />
     <ErrorMessage :name="name" class="text-red text-sm block mt-1 w-80" />
   </form>
 </template>
@@ -63,6 +63,11 @@ export default defineComponent({
     },
     extraInfo: {
       type: String,
+      required: false,
+    },
+    hideInput: {
+      type: Boolean,
+      default: false,
       required: false,
     },
   },

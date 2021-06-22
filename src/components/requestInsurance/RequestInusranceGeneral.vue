@@ -49,6 +49,10 @@
             <label for="choice-3">Optie 3: huurvoertuigen</label>
           </div>
         </div>
+
+        <div class="px-5">
+          <custom-input hideInput="true" v-show="true" :type="InputTypes.TEXT" rules="required" name="insuranceOptions" />
+        </div>
       </div>
 
       <div v-show="insuranceTypeState === InsuranceTypes.TIJDELIJKE_VERZEKERING_NIET_LEDEN" class="px-5">
