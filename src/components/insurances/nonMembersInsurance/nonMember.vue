@@ -21,20 +21,22 @@
           placeholder="Zoek op naam"
         />
       </div>
-      <div v-if="values.country.name === '' || values.country.name === 'België'" class="w-96">
-        <multi-select
-          id="postCodeCity"
-          :object="true"
-          track-by="label"
-          value-prop="label"
-          :repository="BelgianCitySearchRepository"
-          :resolve-on-load="true"
-          :options="values.postCodeCity ? [values.postCodeCity] : []"
-          :searchable="true"
-          label="Gemeente"
-          rules="required"
-          placeholder="Zoek op naam/postcode"
-        />
+      <div v-if="values.country">
+        <div v-if="values.country.name === '' || values.country.name === 'België'" class="w-96">
+          <multi-select
+            id="postCodeCity"
+            :object="true"
+            track-by="label"
+            value-prop="label"
+            :repository="BelgianCitySearchRepository"
+            :resolve-on-load="true"
+            :options="values.postCodeCity ? [values.postCodeCity] : []"
+            :searchable="true"
+            label="Gemeente"
+            rules="required"
+            placeholder="Zoek op naam/postcode"
+          />
+        </div>
       </div>
     </div>
 
