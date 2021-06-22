@@ -6,6 +6,11 @@
       <insurance-type-menu :disabled="isEdit" />
       <div class="mt-3" v-if="insuranceTypeState === InsuranceTypes.TIJDELIJKE_AUTO_VERZEKERING">
         <div><strong>Keuze hulp</strong></div>
+
+        <div class="px-5">
+          <tip-choice-help />
+        </div>
+
         <div class="mt-4 px-5">
           <div>
             <p style="font-size: 0.7em">
@@ -107,15 +112,17 @@
 
 <script lang="ts">
 import InsuranceTypeMenu from '@/components/requestInsurance/insuranceTypeMenu/InsuranceTypeMenu.vue'
-import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
 import TipGeneralMaterialInsurance from '@/components/tips/tipGeneralMaterialInsurance.vue'
-import TipGeneralNonMember from '@/components/tips/tipGeneralNonMember.vue'
 import tipGeneralTravelAssistance from '@/components/tips/tipGeneralTravelAssistance.vue'
+import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
+import TipGeneralNonMember from '@/components/tips/tipGeneralNonMember.vue'
 import InsuranceApplicant from './insuranceApplicant/insuranceApplicant.vue'
 import { MaxCoverageRepository } from '@/repositories/maxCoverageRepository'
 import { BaseInsurance } from '@/serializer/insurances/BaseInsurance'
+import InfoAlert from '@/components/requestInsurance/InfoAlert.vue'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 import RepositoryFactory from '@/repositories/repositoryFactory'
+import TipChoiceHelp from '@/components/tips/tipChoiceHelp.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import { defineComponent, computed, ref, watch } from 'vue'
@@ -123,27 +130,27 @@ import AuthRepository from '@/repositories/authRepository'
 import CustomButton from '@/components/CustomButton.vue'
 import { InsuranceTypes } from '@/enums/insuranceTypes'
 import { HolderStates } from '@/enums/holderStates'
-import { InputTypes } from '@/enums/inputTypes'
 import { Coverage } from '@/serializer/Coverage'
+import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import moment from 'moment'
-import InfoAlert from '@/components/requestInsurance/InfoAlert.vue'
 
 export default defineComponent({
   name: 'RequestInsuranceGeneral',
   components: {
-    'insurance-type-menu': InsuranceTypeMenu,
+    'tip-general-material-insurance': TipGeneralMaterialInsurance,
+    'tip-general-travel-assistance': tipGeneralTravelAssistance,
+    'tip-general-non-member': TipGeneralNonMember,
     'insurance-applicant': InsuranceApplicant,
+    'insurance-type-menu': InsuranceTypeMenu,
     'custom-headline-2': CustomHeadline2,
+    'tip-choice-help': TipChoiceHelp,
     'custom-button': CustomButton,
     'custom-input': CustomInput,
     'multi-select': MultiSelect,
     'info-alert': InfoAlert,
-    'tip-general-non-member': TipGeneralNonMember,
-    'tip-general-travel-assistance': tipGeneralTravelAssistance,
-    'tip-general-material-insurance': TipGeneralMaterialInsurance,
   },
   setup() {
     const route = useRoute()
