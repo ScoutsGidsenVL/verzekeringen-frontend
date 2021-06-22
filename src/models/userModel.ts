@@ -25,7 +25,7 @@ export default class UserModel implements ResponsibleMember {
       input.email,
       input.membership_number,
       input.birth_date,
-      input.phone_number,
+      input.phone_number ? input.phone_number.replace(/ /g, '') : undefined,
       input.scouts_groups.map((group: any) => GroupDeserializer(group))
     )
   }
