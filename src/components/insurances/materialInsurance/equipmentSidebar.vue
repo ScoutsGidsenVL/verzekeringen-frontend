@@ -1,7 +1,8 @@
 <template>
   <div>
     <base-side-bar v-model:isDisplay="display" v-model:selection="selected" name="Equipment" :title="title" :options="['Nieuw', 'Bestaand']">
-      <form v-if="selected === 'NieuwEquipment'" class="d-flex flex-col relative overflow-y-scroll h-full" @submit="onSubmit">
+      <form v-if="selected === 'NieuwEquipment'" ref="formDiv" class="d-flex flex-col relative overflow-y-scroll h-full" @submit.prevent="onSubmit">
+        <success-toast v-model:showOrHide="formSendWithSuccess" label="Materiaal succesvol toegevoegd" />
         <div class="mt-4">
           <div class="mt-4">
             <p>Wil je een fiets verzekeren</p>
@@ -66,13 +67,13 @@
             <custom-input :extra-info="setTotalValueInfo()" :type="InputTypes.TEXT" rules="required" name="totalValue" label="Nieuwwaarde" />
           </div>
 
-          <div class="mt-5">
+          <div class="mt-5 py-4 sticky bottom-0 bg-white">
             <custom-button text="Voeg toe" />
           </div>
         </div>
       </form>
 
-      <form v-if="selected === 'BestaandEquipment'" class="d-flex flex-col h-full" @submit="onSubmit">
+      <form v-if="selected === 'BestaandEquipment'" class="d-flex flex-col h-full" @submit.prevent="onSubmit">
         <div>
           <search-input v-model:loading="loading" name="equipment" placeholder="Zoek op beschrijving" :repository="EquipmentRepository" @fetchedOptions="fetchedOptions($event)" />
         </div>
@@ -83,7 +84,7 @@
             <equipment-item :equipment="equipment">
               <div>
                 <div class="mt-2 pb-4 text-right">
-                  <custom-button type="button" text="Voeg toe" @click="addEquipment(equipment)" />
+                  <custom-button type="button" :text="existingList.includes(equipment) ? 'Toegevoegd' : 'Voeg toe'" @click="addEquipment(equipment)" />
                 </div>
               </div>
             </equipment-item>
@@ -114,6 +115,8 @@ import { Member } from '@/serializer/Member'
 import { Owner } from '@/serializer/Owner'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
+import { scrollToFirstError, useFormSendWithSuccess, useScrollToTop } from '@/veeValidate/helpers'
+import SuccessToast from '@/components/semantic/successToast.vue'
 
 export default defineComponent({
   name: 'EquipmentSideBar',
@@ -126,6 +129,7 @@ export default defineComponent({
     'non-member-side-bar': NonMemberSideBar,
     'members-side-bar': MemberSiderbar,
     'member-item': MemberItem,
+    'success-toast': SuccessToast,
   },
   props: {
     title: {
@@ -153,28 +157,32 @@ export default defineComponent({
     const userData = ref<ResponsibleMember>(store.getters.user)
     const owner = ref<Owner>()
     const lidType = ref<String>()
+    const { handleSubmit, values, validate, resetForm, meta } = useForm<Equipment>({
+      initialValues: {},
+    })
+    const { formSendWithSuccess } = useFormSendWithSuccess<Equipment>(meta)
+    const { formDiv, scrollToTop } = useScrollToTop()
 
     const generalInsuranceState = computed(() => {
       return store.state.insurance.generalInsuranceState
     })
 
-    const { handleSubmit, values } = useForm<Equipment>({
-      initialValues: {},
-    })
-
-    const onSubmit = handleSubmit(async (values: Equipment) => {
-      if (selected.value === 'NieuwEquipment') {
-        const equipment = ref<Equipment>({
-          nature: values.nature ? values.nature : undefined,
-          description: values.description ? values.description : undefined,
-          totalValue: values.totalValue ? values.totalValue : undefined,
-          ownerMember: values.ownerMember ? values.ownerMember : undefined,
-          ownerNonMember: values.ownerNonMember ? values.ownerNonMember : undefined,
-          group: generalInsuranceState.value.group.name,
-        })
-        postEquipment(equipment.value)
-      }
-    })
+    const onSubmit = async () => {
+      await validate().then((validation: any) => scrollToFirstError(validation, 'addNewNonMember'))
+      handleSubmit(async (values: Equipment) => {
+        if (selected.value === 'NieuwEquipment') {
+          const equipment = ref<Equipment>({
+            nature: values.nature ? values.nature : undefined,
+            description: values.description ? values.description : undefined,
+            totalValue: values.totalValue ? values.totalValue : undefined,
+            ownerMember: values.ownerMember ? values.ownerMember : undefined,
+            ownerNonMember: values.ownerNonMember ? values.ownerNonMember : undefined,
+            group: generalInsuranceState.value.group.name,
+          })
+          postEquipment(equipment.value)
+        }
+      })()
+    }
 
     const addEquipment = (equipment: Equipment) => {
       if (equipment.id) {
@@ -187,10 +195,14 @@ export default defineComponent({
     }
 
     const postEquipment = (data: Equipment) => {
+      formSendWithSuccess.value = false
       RepositoryFactory.get(EquipmentRepository)
         .create(data)
         .then((completed: Equipment) => {
           context.emit('addEquipmentToList', completed)
+          formSendWithSuccess.value = true
+          resetForm()
+          scrollToTop()
         })
     }
 
@@ -287,6 +299,8 @@ export default defineComponent({
       owner,
       removeOwner,
       lidType,
+      formSendWithSuccess,
+      formDiv,
     }
   },
 })

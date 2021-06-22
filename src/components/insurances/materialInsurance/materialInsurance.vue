@@ -6,9 +6,9 @@
 
       <div class="w-96">
         <multi-select
-          rules="required"
-          insuranceTypeId="2"
           id="country"
+          rules="required"
+          insurance-type-id="2"
           :object="true"
           track-by="name"
           value-prop="name"
@@ -29,7 +29,7 @@
           value-prop="label"
           :repository="BelgianCitySearchRepository"
           :resolve-on-load="true"
-          :options="[values.postCodeCity]"
+          :options="values.postCodeCity ? [values.postCodeCity] : []"
           :searchable="true"
           label="Gemeente"
           rules="required"
@@ -44,7 +44,7 @@
     </div>
 
     <div class="flex gap-3 px-5 mt-5">
-      <custom-button @click="back()" type="button" text="Vorige" />
+      <custom-button type="button" text="Vorige" @click="back()" />
       <custom-button text="Volgende" />
     </div>
   </form>

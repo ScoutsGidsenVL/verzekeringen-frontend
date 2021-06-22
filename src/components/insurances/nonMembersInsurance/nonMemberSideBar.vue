@@ -2,7 +2,7 @@
   <div>
     <base-side-bar v-model:isDisplay="display" v-model:selection="selected" name="NonMember" :title="title" :options="['Nieuw', 'Bestaand']">
       <form v-if="selected === 'NieuwNonMember'" id="addNewNonMember" ref="formDiv" class="d-flex flex-col relative overflow-y-scroll h-full" @submit.prevent="onSubmit">
-        <success-toast v-if="formSendWithSuccess" v-model:showOrHide="formSendWithSuccess" label="Niet lid succesvol toegevoegd" />
+        <success-toast v-model:showOrHide="formSendWithSuccess" label="Niet lid succesvol toegevoegd" />
         <div class="mt-4">
           <div class="w-96">
             <custom-input :type="InputTypes.TEXT" rules="required" name="firstName" label="Voornaam" />
@@ -63,7 +63,7 @@
         </div>
       </form>
 
-      <form v-if="selected === 'BestaandNonMember'" class="d-flex flex-col h-full" @submit="onSubmit">
+      <form v-if="selected === 'BestaandNonMember'" class="d-flex flex-col h-full" @submit.prevent="onSubmit">
         <div>
           <search-input v-model:loading="loading" name="nonMember" placeholder="Zoek op naam" :repository="NonMemberRepository" @fetchedOptions="fetchedOptions($event)" />
         </div>

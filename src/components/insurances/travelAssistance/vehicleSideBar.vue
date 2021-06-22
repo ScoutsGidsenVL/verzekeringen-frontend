@@ -120,7 +120,7 @@ export default defineComponent({
     const store = useStore()
     const user = ref<ResponsibleMember>(store.getters.user)
     const display = ref<boolean>(props.isDisplay)
-    const { handleSubmit, values, validate } = useForm<Vehicle>()
+    const { handleSubmit, values, validate, resetForm } = useForm<Vehicle>()
     const selected = ref<string>('NieuwVehicle')
     const selectedVehicle = ref<Vehicle>({})
     const fetchedVehicles = ref<Array<Vehicle>>([])
@@ -181,6 +181,7 @@ export default defineComponent({
           selectedVehicle.value = completed
           context.emit('addCreatedVehicle', selectedVehicle.value)
           selectedVehicle.value = {}
+          resetForm()
         })
     }
 
