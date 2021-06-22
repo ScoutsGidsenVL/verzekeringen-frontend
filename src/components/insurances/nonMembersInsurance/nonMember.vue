@@ -14,7 +14,7 @@
           value-prop="name"
           :repository="CountryRepository"
           :resolve-on-load="true"
-          :options="values.country.city ? [values.country] : [{ id: '3232', name: 'België' }]"
+          :options="values.country ? [values.country] : [{ id: '3232', name: 'België' }]"
           :extra-option="{ id: '3232', name: 'België' }"
           :searchable="true"
           label="Land"
@@ -88,7 +88,7 @@ export default defineComponent({
       initialValues: {
         nature: data.nature ? data.nature : '',
         country: data.country ? data.country : initialCountry.value,
-        postCodeCity: data.postCodeCity ? (data.postCodeCity.city === undefined ? {} : data.postCodeCity) : undefined,
+        postCodeCity: data.postCodeCity ? (data.postCodeCity.city === undefined ? undefined : data.postCodeCity) : undefined,
         nonMembers: data.nonMembers ? data.nonMembers : [],
       },
     })
