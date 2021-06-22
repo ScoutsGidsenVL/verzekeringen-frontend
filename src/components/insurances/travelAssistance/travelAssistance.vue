@@ -104,10 +104,10 @@ export default defineComponent({
         .getCalculatedCost(travelAssistance.value)
         .then((cost: any) => {
           travelAssistance.value.totalCost = cost
-        })
 
-      store.dispatch('setTravelAssistanceState', travelAssistance)
-      store.dispatch('setHolderState', HolderStates.DETAIL)
+          store.dispatch('setTravelAssistanceState', travelAssistance)
+          store.dispatch('setHolderState', HolderStates.DETAIL)
+        })
     })
 
     const back = () => {

@@ -118,11 +118,11 @@ export default defineComponent({
         .getCalculatedCost(oneTimeActivity.value)
         .then((cost: any) => {
           oneTimeActivity.value.totalCost = cost
-        })
 
-      store.dispatch('setOneTimeActivityState', oneTimeActivity.value).then(() => {
-        store.dispatch('setHolderState', HolderStates.DETAIL)
-      })
+          store.dispatch('setOneTimeActivityState', oneTimeActivity.value).then(() => {
+            store.dispatch('setHolderState', HolderStates.DETAIL)
+          })
+        })
     })
 
     const back = () => {

@@ -115,10 +115,10 @@ export default defineComponent({
         .getCalculatedCost(nonMember.value)
         .then((cost: any) => {
           nonMember.value.totalCost = cost
-        })
 
-      store.dispatch('setNonMemberState', nonMember)
-      store.dispatch('setHolderState', HolderStates.DETAIL)
+          store.dispatch('setNonMemberState', nonMember)
+          store.dispatch('setHolderState', HolderStates.DETAIL)
+        })
     })
 
     const back = () => {

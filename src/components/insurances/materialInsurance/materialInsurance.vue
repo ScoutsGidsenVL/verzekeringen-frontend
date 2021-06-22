@@ -112,10 +112,10 @@ export default defineComponent({
         .getCalculatedCost(materialInsurance.value)
         .then((cost: any) => {
           materialInsurance.value.totalCost = cost
-        })
 
-      store.dispatch('setMaterialInsuranceState', materialInsurance.value)
-      store.dispatch('setHolderState', HolderStates.DETAIL)
+          store.dispatch('setMaterialInsuranceState', materialInsurance.value)
+          store.dispatch('setHolderState', HolderStates.DETAIL)
+        })
     })
 
     const back = () => {

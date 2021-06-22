@@ -118,11 +118,11 @@ export default defineComponent({
         .getCalculatedCost(eventInsurance.value)
         .then((cost: any) => {
           eventInsurance.value.totalCost = cost
-        })
 
-      store.dispatch('setEventState', eventInsurance.value).then(() => {
-        store.dispatch('setHolderState', HolderStates.DETAIL)
-      })
+          store.dispatch('setEventState', eventInsurance.value).then(() => {
+            store.dispatch('setHolderState', HolderStates.DETAIL)
+          })
+        })
     })
 
     const back = () => {

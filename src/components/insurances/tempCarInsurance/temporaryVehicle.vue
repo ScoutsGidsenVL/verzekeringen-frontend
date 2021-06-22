@@ -112,10 +112,10 @@ export default defineComponent({
         .getCalculatedCost(temporaryVehicleInsurance.value)
         .then((cost: any) => {
           temporaryVehicleInsurance.value.totalCost = cost
-        })
 
-      store.dispatch('setTemporaryVehicleState', temporaryVehicleInsurance)
-      store.dispatch('setHolderState', HolderStates.DETAIL)
+          store.dispatch('setTemporaryVehicleState', temporaryVehicleInsurance)
+          store.dispatch('setHolderState', HolderStates.DETAIL)
+        })
     })
 
     const back = () => {
