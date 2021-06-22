@@ -28,6 +28,7 @@
               }
             : options
         "
+        noOptionsText="-geen resultaten-"
       />
       <error-message class="text-red font-light ml-1 mt-1 text-sm inline-block" :name="id" />
     </div>
