@@ -54,8 +54,9 @@ export const defineRules = (store: any) => {
   })
 
   defineRule('startDateBeforeEndDate', (value: string, target: any, ctx: any) => {
-    const endDate: number = Number(moment(value).format('YYYYMMDD'))
+    const endDate: number = Number(moment(value).add(1, 'days').format('YYYYMMDD'))
     const startDate: number = Number(moment(ctx.form[target]).format('YYYYMMDD'))
+
     if (startDate >= endDate) {
       return 'Start datum moet voor eind datum zijn'
     }
