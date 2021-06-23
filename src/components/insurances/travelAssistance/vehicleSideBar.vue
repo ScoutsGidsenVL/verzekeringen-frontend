@@ -1,6 +1,6 @@
 <template>
   <div>
-    <base-side-bar v-model:isDisplay="display" v-model:selection="selected" name="Vehicle" :title="title" :options="['Nieuw', 'Bestaand']">
+    <base-side-bar :isEdit="isEdit" v-model:isDisplay="display" v-model:selection="selected" name="Vehicle" :title="title" :options="['Nieuw', 'Bestaand']">
       <form v-if="selected === 'NieuwVehicle'" id="addNewVehicle" class="d-flex flex-col relative overflow-y-scroll h-full" @submit.prevent="onSubmit">
         <div class="w-96">
           <custom-input :type="InputTypes.TEXT" rules="required" name="brand" label="Merk" />
@@ -51,7 +51,7 @@
         </div>
 
         <div class="mt-5 py-4 sticky bottom-0 bg-white">
-          <custom-button text="Voeg toe" />
+          <custom-button :text="isEdit ? 'Bewerk' : 'Voeg toe'" />
         </div>
       </form>
       <form v-if="selected === 'BestaandVehicle'" class="d-flex flex-col h-full" @submit="onSubmit">
@@ -83,7 +83,7 @@ import BaseSideBar from '@/components/semantic/BaseSideBar.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import SearchInput from '@/components/inputs/SearchInput.vue'
 import CustomButton from '@/components/CustomButton.vue'
-import { computed, defineComponent, ref, watch } from 'vue'
+import { computed, defineComponent, PropType, ref, watch } from 'vue'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
@@ -95,6 +95,10 @@ import { TrailerRepository } from '@/repositories/trailerRepository'
 import VehicleItem from '@/components/insurances/travelAssistance/vehicleItem.vue'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import { scrollToFirstError } from '@/veeValidate/helpers'
+
+export interface vehicleSideBar {
+  vehicle: Vehicle
+}
 
 export default defineComponent({
   name: 'VehicleSideBar',
@@ -115,16 +119,32 @@ export default defineComponent({
       type: Boolean,
       required: true,
     },
+    isEdit: {
+      type: Boolean,
+      required: true,
+    },
+    inputVehicle: {
+      type: Object as PropType<Vehicle>,
+      required: true,
+    },
   },
   setup(props, context) {
     const store = useStore()
     const user = ref<ResponsibleMember>(store.getters.user)
     const display = ref<boolean>(props.isDisplay)
+    console.log('PROPS INIT: ', props.inputVehicle)
     const { handleSubmit, values, validate, resetForm } = useForm<Vehicle>({
       initialValues: {
-        trailer: { id: '0', value: '0', label: 'Geen' },
+        id: props.isEdit ? props.inputVehicle.id : '',
+        type: props.isEdit ? props.inputVehicle.type : undefined,
+        brand: props.isEdit ? props.inputVehicle.brand : '',
+        licensePlate: props.isEdit ? props.inputVehicle.licensePlate : '',
+        constructionYear: props.isEdit ? props.inputVehicle.constructionYear : '',
+        chassisNumber: props.isEdit ? props.inputVehicle.chassisNumber : '',
+        trailer: props.isEdit ? props.inputVehicle.trailer : { id: '0', value: '0', label: 'Geen' },
       },
     })
+
     const selected = ref<string>('NieuwVehicle')
     const selectedVehicle = ref<Vehicle>({})
     const fetchedVehicles = ref<Array<Vehicle>>([])
@@ -144,6 +164,9 @@ export default defineComponent({
       () => display.value,
       () => {
         context.emit('update:isDisplay', display.value)
+        if (!display.value) {
+          context.emit('update:isEdit', display.value)
+        }
       }
     )
 
@@ -151,7 +174,9 @@ export default defineComponent({
       await validate().then((validation: any) => scrollToFirstError(validation, 'addNewVehicle'))
       handleSubmit(async (values: Vehicle) => {
         if (selected.value === 'NieuwVehicle') {
+          values.group = generalInsuranceState.value.group.name
           const vehicle = ref<Vehicle>({
+            id: values.id,
             type: values.type,
             brand: values.brand,
             licensePlate: values.licensePlate,
@@ -160,7 +185,11 @@ export default defineComponent({
             trailer: values.trailer,
             group: generalInsuranceState.value.group.name,
           })
-          postVehicle(vehicle.value)
+          if (!props.isEdit) {
+            postVehicle(vehicle.value)
+          } else {
+            updateVehicle(vehicle.value)
+          }
         }
 
         if (selected.value === 'BestaandVehicle') {
@@ -187,6 +216,19 @@ export default defineComponent({
           selectedVehicle.value = {}
           resetForm()
         })
+    }
+
+    const updateVehicle = (data: Vehicle) => {
+      if (data.id) {
+        RepositoryFactory.get(VehicleRepository)
+          .update(data.id, data)
+          .then((completed: Vehicle) => {
+            selectedVehicle.value = completed
+            context.emit('addCreatedVehicle', selectedVehicle.value)
+            selectedVehicle.value = {}
+            resetForm()
+          })
+      }
     }
 
     const vehicleTypes = ref<VehicleType[]>([])
@@ -223,9 +265,6 @@ export default defineComponent({
         })
     }
 
-    getVehicleTypes()
-    getTrailers()
-
     const fetchedOptions = (options: any) => {
       fetchedVehicles.value = []
       options.forEach((vehicle: any) => {
@@ -237,6 +276,9 @@ export default defineComponent({
     const setVehicle = (vehicle: Vehicle) => {
       selectedVehicle.value = vehicle
     }
+
+    getVehicleTypes()
+    getTrailers()
 
     return {
       VehicleTypeRepository,

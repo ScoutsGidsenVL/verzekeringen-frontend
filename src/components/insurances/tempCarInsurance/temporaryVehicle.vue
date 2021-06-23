@@ -70,7 +70,7 @@ export default defineComponent({
     const { handleSubmit, values } = useForm<TemporaryVehicleInsurance>({
       initialValues: {
         drivers: data.drivers ? data.drivers : [],
-        vehicle: data.vehicle ? data.vehicle : {},
+        vehicle: data.vehicle ? data.vehicle : undefined,
         owner: data.owner ? data.owner : { firstName: '', lastName: '' },
         input: data.input ? data.input : { firstName: '', lastName: '' },
         selectDriverField: {

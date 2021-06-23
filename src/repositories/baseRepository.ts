@@ -58,6 +58,12 @@ export abstract class BaseRepository extends BaseApiRepository {
     })
   }
 
+  update(id: string, data: any) {
+    return this.patch(this.endpoint + id + '/', this.serializer(data)).then((response: any) => {
+      return this.deserializer(response)
+    })
+  }
+
   formatPaginationUrl = (url: string) => {
     return url
   }

@@ -1,4 +1,5 @@
 <template>
+  <slot name="top"></slot>
   <div v-if="vehicle && vehicle.licensePlate" class="w-96">
     <div v-if="vehicle.brand">
       <strong>Merk</strong>

@@ -9,7 +9,7 @@
       </svg>
     </div>
     <header-2 :text="title" />
-    <form v-if="options" action="">
+    <form v-if="options && !isEdit" action="">
       <div class="flex gap-7">
         <div>
           <input :id="options[0] + name" v-model="selected" class="cursor-pointer" type="radio" :name="options[0] + name" :value="options[0] + name" @change="emitOption()" />
@@ -56,6 +56,7 @@ export default defineComponent({
       default: 'w-2/5',
       required: false,
     },
+    isEdit: Boolean,
     name: String,
   },
   setup(props, context) {

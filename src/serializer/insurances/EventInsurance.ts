@@ -37,9 +37,6 @@ export const EventInsuranceDeserializer = (input: any): EventInsurance => {
 }
 
 export const EventInsuranceSerializer = (input: EventInsurance): EventInsurance => {
-  console.log('BEFORE: ', input.startDate)
-  console.log('AFTER: ', moment(input.startDate).format('YYYY-MM-DDTh:mm:ss'))
-
   const single: any = {
     start_date: input.startDate,
     end_date: input.endDate,

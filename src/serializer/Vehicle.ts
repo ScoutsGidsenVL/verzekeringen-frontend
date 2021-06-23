@@ -4,17 +4,18 @@ import moment from 'moment'
 
 export interface Vehicle {
   readonly id?: string
-  readonly type?: VehicleType
-  readonly brand?: string
-  readonly licensePlate?: string
-  readonly constructionYear?: string
-  readonly chassisNumber?: string
-  readonly trailer?: Trailer
-  readonly group?: string
+  type?: VehicleType
+  brand?: string
+  licensePlate?: string
+  constructionYear?: string
+  chassisNumber?: string
+  trailer?: Trailer
+  group?: string
 }
 
 export const VehicleDeserializer = (input: any): Vehicle => {
   const single: Vehicle = {
+    id: input.id ? input.id : undefined,
     type: VehicleTypeDeserializer(input.type),
     brand: input.brand,
     licensePlate: input.license_plate,

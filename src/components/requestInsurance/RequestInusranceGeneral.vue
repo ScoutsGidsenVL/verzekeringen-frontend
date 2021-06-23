@@ -90,8 +90,6 @@
           />
         </div>
       </div>
-      {{ values.startDate }}<br />
-      {{ values.endDate }}
     </div>
 
     <div class="mb-5">
