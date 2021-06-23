@@ -1,6 +1,6 @@
 <template>
   <div>
-    <base-side-bar v-model:isDisplay="display" v-model:selection="selected" name="NonMember" :title="title" :options="['Nieuw', 'Bestaand']">
+    <base-side-bar :isEdit="isEdit" v-model:isDisplay="display" v-model:selection="selected" name="NonMember" :title="title" :options="['Nieuw', 'Bestaand']">
       <form v-if="selected === 'NieuwNonMember'" id="addNewNonMember" ref="formDiv" class="d-flex flex-col relative overflow-y-scroll h-full" @submit.prevent="onSubmit">
         <success-toast v-model:showOrHide="formSendWithSuccess" label="Niet lid succesvol toegevoegd" />
         <div class="mt-4">
@@ -59,7 +59,7 @@
         </div>
 
         <div class="mt-5 py-4 sticky bottom-0 bg-white">
-          <custom-button text="Voeg toe" />
+          <custom-button :text="isEdit ? 'Bewerk' : 'Voeg toe'" />
         </div>
       </form>
 
@@ -95,7 +95,7 @@ import CustomInput from '@/components/inputs/CustomInput.vue'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomButton from '@/components/CustomButton.vue'
 import { NonMember } from '@/serializer/NonMember'
-import { defineComponent, ref, watch } from 'vue'
+import { defineComponent, PropType, ref, watch } from 'vue'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
@@ -134,12 +134,33 @@ export default defineComponent({
       default: false,
       required: false,
     },
+    isEdit: {
+      type: Boolean,
+      required: true,
+    },
+    inputNonMember: {
+      type: Object as PropType<NonMember>,
+      required: true,
+    },
   },
   setup(props, context) {
     const store = useStore()
     const user = ref<ResponsibleMember>(store.getters.user)
     const display = ref<boolean>(props.isDisplay)
-    const { resetForm, errors, handleSubmit, validate, meta } = useForm<NonMember>()
+    const { resetForm, errors, handleSubmit, validate, meta } = useForm<NonMember>({
+      initialValues: {
+        id: props.isEdit ? props.inputNonMember.id : '',
+        lastName: props.isEdit ? props.inputNonMember.lastName : '',
+        firstName: props.isEdit ? props.inputNonMember.firstName : '',
+        phoneNumber: props.isEdit ? props.inputNonMember.phoneNumber : '',
+        birthDate: props.isEdit ? props.inputNonMember.birthDate : '',
+        street: props.isEdit ? props.inputNonMember.street : '',
+        number: props.isEdit ? props.inputNonMember.number : '',
+        letterBox: props.isEdit ? props.inputNonMember.letterBox : '',
+        comment: props.isEdit ? props.inputNonMember.comment : '',
+        postCodeCity: props.isEdit ? props.inputNonMember.postCodeCity : {},
+      },
+    })
     const { formSendWithSuccess } = useFormSendWithSuccess<NonMember>(meta)
     const selected = ref<string>('NieuwNonMember')
     const selectedNonMembers = ref<NonMember[]>([])
@@ -153,6 +174,7 @@ export default defineComponent({
           const generalInsuranceState = ref<any>(store.getters.generalInsuranceState)
 
           const nonMember = ref<NonMember>({
+            id: values.id,
             lastName: values.lastName,
             firstName: values.firstName,
             phoneNumber: values.phoneNumber,
@@ -164,7 +186,11 @@ export default defineComponent({
             postCodeCity: values.postCodeCity,
             group: generalInsuranceState.value.group.name,
           })
-          postNonMember(nonMember.value)
+          if (props.isEdit) {
+            editNonMember(nonMember.value)
+          } else {
+            postNonMember(nonMember.value)
+          }
         }
 
         selectedNonMembers.value = []
@@ -177,6 +203,21 @@ export default defineComponent({
       }
       if (props.closeOnAdd) {
         display.value = false
+      }
+    }
+
+    const editNonMember = (data: NonMember) => {
+      formSendWithSuccess.value = false
+      if (data.id) {
+        RepositoryFactory.get(NonMemberRepository)
+          .update(data.id, data)
+          .then((completed: NonMember) => {
+            context.emit('updateMemberInList', completed)
+            formSendWithSuccess.value = true
+            resetForm()
+            scrollToTop()
+            display.value = false
+          })
       }
     }
 
@@ -214,6 +255,9 @@ export default defineComponent({
       () => display.value,
       () => {
         context.emit('update:isDisplay', display.value)
+        if (!display.value) {
+          context.emit('update:isEdit', display.value)
+        }
       }
     )
 
@@ -232,6 +276,7 @@ export default defineComponent({
       formSendWithSuccess,
       formDiv,
       errors,
+      editNonMember,
     }
   },
 })

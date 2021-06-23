@@ -11,6 +11,14 @@
   <div class="grid grid-cols-2 gap-1" style="width: 850px">
     <div class="w-96" v-for="(nonMember, index) in nonMembers" :key="nonMember.id">
       <non-member-item :non-member="nonMember">
+        <template v-slot:top>
+          <div class="my-3 flex justify-end" @click="editNonMember(nonMember)">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hover:text-lightGreen cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+            </svg>
+          </div>
+        </template>
+
         <div v-if="canBeDeleted" class="text-right">
           <label @click="deleteNonMember(index)" class="hover:text-lightGreen cursor-pointer" for="">Verwijder</label>
         </div>
@@ -57,8 +65,13 @@ export default defineComponent({
       context.emit('deleteNonMemberFromList', id)
     }
 
+    const editNonMember = (nonMember: NonMember) => {
+      context.emit('editNonMember', nonMember)
+    }
+
     return {
       deleteNonMember,
+      editNonMember,
       nonMembers,
     }
   },

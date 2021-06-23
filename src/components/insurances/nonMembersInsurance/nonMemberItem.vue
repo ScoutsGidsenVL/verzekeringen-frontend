@@ -1,5 +1,6 @@
 <template>
   <div v-if="nonMember" class="w-96">
+    <slot name="top"></slot>
     <div class="py-3">
       <div>
         <strong>Naam</strong>
