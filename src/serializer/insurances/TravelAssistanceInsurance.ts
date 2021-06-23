@@ -39,8 +39,8 @@ export const TravelAssistanceInsuranceDeserializer = (input: any): TravelAssista
 
 export const TravelAssistanceInsuranceSerializer = (input: TravelAssistanceInsurance): TravelAssistanceInsurance => {
   const single: any = {
-    start_date: moment(input.startDate).format(),
-    end_date: moment(input.endDate).format(),
+    start_date: moment(input.startDate).format('YYYY-MM-DDTh:mm:ss'),
+    end_date: moment(input.endDate).format('YYYY-MM-DDTh:mm:ss'),
     comment: input.comment,
     responsible_phone_number: input.responsiblePhoneNumber ? input.responsiblePhoneNumber : undefined,
     country: input.country ? CountrySerializer(input.country).id : undefined,

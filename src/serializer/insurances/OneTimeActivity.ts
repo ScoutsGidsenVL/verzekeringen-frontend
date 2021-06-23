@@ -46,8 +46,8 @@ export const oneTimeActivityDeserializer = (input: any): OneTimeActivity => {
 
 export const oneTimeActivitySerializer = (input: OneTimeActivity): OneTimeActivity => {
   const single: any = {
-    start_date: moment(input.startDate).format(),
-    end_date: moment(input.endDate).format(),
+    start_date: moment(input.startDate).format('YYYY-MM-DDTh:mm:ss'),
+    end_date: moment(input.endDate).format('YYYY-MM-DDTh:mm:ss'),
     created_on: input.createdOn,
     comment: input.comment,
     group: GroupSerializer(input.group).name,

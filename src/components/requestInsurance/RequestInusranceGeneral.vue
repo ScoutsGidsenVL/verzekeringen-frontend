@@ -72,10 +72,22 @@
       <custom-headline-2 text="Wanneer" />
       <div class="px-5 flex gap-4">
         <div class="w-80">
-          <custom-input :min="minDate" :type="InputTypes.DATE" rules="required" name="startDate" label="Start datum" />
+          <custom-input
+            :min="minDate"
+            :type="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING ? InputTypes.DATE_TIME_LOCAL : InputTypes.DATE"
+            rules="required"
+            name="startDate"
+            label="Start datum"
+          />
         </div>
         <div class="w-80">
-          <custom-input :min="minDate" :type="InputTypes.DATE" rules="required|startDateBeforeEndDate:startDate|maximumDateTerm:startDate" name="endDate" label="Eind datum" />
+          <custom-input
+            :min="minDate"
+            :type="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING ? InputTypes.DATE_TIME_LOCAL : InputTypes.DATE"
+            rules="required|startDateBeforeEndDate:startDate|maximumDateTerm:startDate"
+            name="endDate"
+            label="Eind datum"
+          />
         </div>
       </div>
     </div>

@@ -38,8 +38,8 @@ export const EventInsuranceDeserializer = (input: any): EventInsurance => {
 
 export const EventInsuranceSerializer = (input: EventInsurance): EventInsurance => {
   const single: any = {
-    start_date: moment(input.startDate).format(),
-    end_date: moment(input.endDate).format(),
+    start_date: input.startDate,
+    end_date: input.endDate,
     comment: input.comment,
     responsible_phone_number: ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number,
     group: GroupSerializer(input.group).name,

@@ -49,8 +49,8 @@ export const TemporaryVehicleDeserializer = (input: any): TemporaryVehicleInsura
 
 export const TemporaryVehicleSerializer = (input: TemporaryVehicleInsurance): TemporaryVehicleInsurance => {
   const single: any = {
-    start_date: moment(input.startDate).format(),
-    end_date: moment(input.endDate).format(),
+    start_date: moment(input.startDate).format('YYYY-MM-DDTh:mm:ss'),
+    end_date: moment(input.endDate).format('YYYY-MM-DDTh:mm:ss'),
     comment: input.comment,
     responsible_phone_number: ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number,
     group: GroupSerializer(input.group).name,

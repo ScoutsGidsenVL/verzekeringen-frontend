@@ -34,7 +34,7 @@ export const MaterialInsuranceDeserializer = (input: any): MaterialInsurance => 
     nature: input.nature,
     responsibleMember: ResponsibleMemberDeserializer(input.responsible_member),
     status: StatusDeserializer(input.status),
-    totalCost: input.total_cost,
+    totalCost: input.total_cost ? input.total_cost : undefined,
     type: TypeDeserializer(input.type),
     vvksComment: input.vvks_comment,
     country: input.country ? CountryDeserializer(input.country) : undefined,
@@ -47,8 +47,8 @@ export const MaterialInsuranceDeserializer = (input: any): MaterialInsurance => 
 
 export const MaterialInsuranceSerializer = (input: MaterialInsurance): MaterialInsurance => {
   const single: any = {
-    start_date: moment(input.startDate).format(),
-    end_date: moment(input.endDate).format(),
+    start_date: moment(input.startDate).format('YYYY-MM-DDTh:mm:ss'),
+    end_date: moment(input.endDate).format('YYYY-MM-DDTh:mm:ss'),
     comment: input.comment,
     group: GroupSerializer(input.group).name,
     nature: input.nature,
