@@ -132,7 +132,6 @@ export default defineComponent({
     const store = useStore()
     const user = ref<ResponsibleMember>(store.getters.user)
     const display = ref<boolean>(props.isDisplay)
-    console.log('PROPS INIT: ', props.inputVehicle)
     const { handleSubmit, values, validate, resetForm } = useForm<Vehicle>({
       initialValues: {
         id: props.isEdit ? props.inputVehicle.id : '',
