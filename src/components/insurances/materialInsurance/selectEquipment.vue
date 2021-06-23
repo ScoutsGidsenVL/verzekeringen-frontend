@@ -1,11 +1,20 @@
 <template>
-  <equipment-list :canBeDeleted="true" :equipmentList="equipment" @deleteEquipmentFromList="deleteEquipmentFromList($event)" />
+  <equipment-list :canBeDeleted="true" :equipmentList="equipment" @deleteEquipmentFromList="deleteEquipmentFromList($event)" @editEquipment="editEquipment($event)" />
 
   <div class="mt-2 text-lightGreen">
     <strong class="cursor-pointer" @click="openSideBar()"> + Voeg materiaal toe </strong>
   </div>
 
-  <equipment-side-bar :existingList="equipment" v-model:isDisplay="isDisplay" title="Materiaal" @addEquipmentToList="addEquipmentToList($event)" />
+  <equipment-side-bar
+    v-if="isDisplay"
+    v-model:isEdit="isEdit"
+    :inputEquipment="equipmentToEdit"
+    :existingList="equipment"
+    v-model:isDisplay="isDisplay"
+    :title="isEdit ? 'Bewerk materiaal' : 'Materiaal'"
+    @addEquipmentToList="addEquipmentToList($event)"
+    @updateEquipmentInList="updateEquipmentInList($event)"
+  />
 </template>
 
 <script lang="ts">
@@ -55,12 +64,38 @@ export default defineComponent({
       equipment.value.splice(Number(id), 1)
     }
 
+    const equipmentToEdit = ref<Equipment>()
+    const isEdit = ref<boolean>(false)
+
+    const editEquipment = (editVehicle: Equipment) => {
+      equipmentToEdit.value = editVehicle
+      isEdit.value = true
+      isDisplay.value = true
+    }
+
+    const updateEquipmentInList = (quipment: Equipment) => {
+      const tempArr: Array<Equipment> = []
+
+      equipment.value.forEach((listedEquipment: Equipment) => {
+        if (listedEquipment.id === quipment.id) {
+          tempArr.push(quipment)
+        } else {
+          tempArr.push(listedEquipment)
+        }
+      })
+      equipment.value = tempArr
+    }
+
     return {
-      addEquipmentToList,
       deleteEquipmentFromList,
+      updateEquipmentInList,
+      addEquipmentToList,
+      equipmentToEdit,
+      editEquipment,
       openSideBar,
       equipment,
       isDisplay,
+      isEdit,
     }
   },
 })

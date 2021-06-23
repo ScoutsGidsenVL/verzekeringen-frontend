@@ -14,7 +14,7 @@ export interface Equipment {
 export const EquipmentDeserializer = (input: any): Equipment => {
   const single: Equipment = {
     id: input.id ? input.id : undefined,
-    nature: input.nature ? input.email : undefined,
+    nature: input.nature ? input.nature : undefined,
     description: input.description ? input.description : undefined,
     totalValue: input.total_value ? input.total_value : undefined,
     ownerMember: input.owner_member ? MemberDeserializer(input.owner_member) : undefined,
@@ -27,7 +27,7 @@ export const EquipmentDeserializer = (input: any): Equipment => {
 
 export const EquipmentSerializer = (input: any): any => {
   const single: any = {
-    nature: input.nature ? input.email : undefined,
+    nature: input.nature ? input.nature : undefined,
     description: input.description ? input.description : undefined,
     total_value: input.totalValue ? input.totalValue : undefined,
     owner_member: input.ownerMember ? MemberSerializer(input.ownerMember).id : undefined,

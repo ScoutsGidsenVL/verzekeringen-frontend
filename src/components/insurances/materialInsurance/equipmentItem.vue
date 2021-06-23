@@ -1,5 +1,6 @@
 <template>
   <div v-if="equipment" class="w-96">
+    <slot name="top"></slot>
     <div class="py-3">
       <div v-if="person" class="mb-5">
         <div v-if="person.firstName">
@@ -31,11 +32,6 @@
       </div>
 
       <div>
-        <div v-if="equipment.nature">
-          <strong>Soort</strong>
-          {{ equipment.nature }}
-        </div>
-
         <div v-if="equipment.nature">
           <strong>Soort</strong>
           {{ equipment.nature }}

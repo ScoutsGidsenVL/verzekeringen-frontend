@@ -72,7 +72,7 @@
           </div>
 
           <div class="mt-5 py-4 sticky bottom-0 bg-white">
-            <custom-button text="Voeg toe" />
+            <custom-button :text="isEdit ? 'Bewerk' : 'Voeg toe'" />
           </div>
         </div>
       </form>
@@ -113,7 +113,7 @@ import CustomInput from '@/components/inputs/CustomInput.vue'
 import CustomButton from '@/components/CustomButton.vue'
 import { NonMember } from '@/serializer/NonMember'
 import { Equipment } from '@/serializer/Equipment'
-import { computed, defineComponent, ref, watch } from 'vue'
+import { computed, defineComponent, PropType, ref, watch } from 'vue'
 import { InputTypes } from '@/enums/inputTypes'
 import { Member } from '@/serializer/Member'
 import { Owner } from '@/serializer/Owner'
@@ -150,6 +150,14 @@ export default defineComponent({
         return []
       },
     },
+    isEdit: {
+      type: Boolean,
+      required: true,
+    },
+    inputEquipment: {
+      type: Object as PropType<Equipment>,
+      required: true,
+    },
   },
   setup(props, context) {
     const store = useStore()
@@ -162,11 +170,27 @@ export default defineComponent({
     const owner = ref<Owner>()
     const lidType = ref<String>()
     const { handleSubmit, values, validate, resetForm, meta } = useForm<Equipment>({
-      initialValues: {},
+      initialValues: {
+        id: props.isEdit ? props.inputEquipment.id : undefined,
+        nature: props.isEdit ? props.inputEquipment.nature : '',
+        description: props.isEdit ? props.inputEquipment.description : '',
+        totalValue: props.isEdit ? props.inputEquipment.totalValue : '',
+        ownerMember: props.isEdit ? props.inputEquipment.ownerMember : undefined,
+        ownerNonMember: props.isEdit ? props.inputEquipment.ownerNonMember : undefined,
+      },
     })
+
     const { formSendWithSuccess } = useFormSendWithSuccess<Equipment>(meta)
     const { formDiv, scrollToTop } = useScrollToTop()
     const isGroupEquipement = ref<boolean>(false)
+
+    if (props.isEdit) {
+      if (values.ownerMember || values.ownerNonMember) {
+        owner.value = values.ownerMember ? values.ownerMember : values.ownerNonMember
+      } else {
+        isGroupEquipement.value = true
+      }
+    }
 
     const generalInsuranceState = computed(() => {
       return store.state.insurance.generalInsuranceState
@@ -177,6 +201,7 @@ export default defineComponent({
       handleSubmit(async (values: Equipment) => {
         if (selected.value === 'NieuwEquipment') {
           const equipment = ref<Equipment>({
+            id: values.id ? values.id : undefined,
             nature: values.nature ? values.nature : undefined,
             description: values.description ? values.description : undefined,
             totalValue: values.totalValue ? values.totalValue : undefined,
@@ -184,7 +209,11 @@ export default defineComponent({
             ownerNonMember: values.ownerNonMember ? values.ownerNonMember : undefined,
             group: generalInsuranceState.value.group.name,
           })
-          postEquipment(equipment.value)
+          if (!props.isEdit) {
+            postEquipment(equipment.value)
+          } else {
+            updateEquipment(equipment.value)
+          }
         }
       })()
     }
@@ -195,6 +224,16 @@ export default defineComponent({
           .getById(equipment.id)
           .then((result: Equipment) => {
             context.emit('addEquipmentToList', result)
+          })
+      }
+    }
+
+    const updateEquipment = (data: Equipment) => {
+      if (data.id) {
+        RepositoryFactory.get(EquipmentRepository)
+          .update(data.id, data)
+          .then((completed: Equipment) => {
+            context.emit('updateEquipmentInList', completed)
           })
       }
     }
@@ -277,6 +316,9 @@ export default defineComponent({
       () => display.value,
       () => {
         context.emit('update:isDisplay', display.value)
+        if (!display.value) {
+          context.emit('update:isEdit', display.value)
+        }
       }
     )
 
