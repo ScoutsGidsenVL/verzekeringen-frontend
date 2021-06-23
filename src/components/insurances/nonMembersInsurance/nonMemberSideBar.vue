@@ -68,7 +68,7 @@
           <search-input v-model:loading="loading" name="nonMember" placeholder="Zoek op naam" :repository="NonMemberRepository" @fetchedOptions="fetchedOptions($event)" />
         </div>
 
-        <div class="h-full overflow-y-scroll mt-4 pb-24">
+        <div class="h-full overflow-y-scroll mt-4 pb-36">
           <hr v-if="selectedNonMembers.length > 0" class="mt-4 border-t-2 w-96 border-black" />
           <div v-for="nonMember in selectedNonMembers" :key="nonMember.id" class="w-96">
             <non-member-item :non-member="nonMember">

@@ -35,6 +35,10 @@
 
           <div class="w-96 mt-4">
             <strong>Eigenaar</strong><strong v-if="owner">{{ lidType }}</strong>
+            <div class="w-full mt-2">
+              <input id="equipement-group" v-model="isGroupEquipement" class="mr-2" type="checkbox" />
+              <label for="equipement-group">Materiaal is van groep</label>
+            </div>
             <div class="py-3">
               <hr v-if="owner" class="border-t-2 border-black" />
               <member-item :member="owner">
@@ -45,7 +49,7 @@
             </div>
           </div>
 
-          <div>
+          <div v-show="!isGroupEquipement">
             <div>
               <strong class="cursor-pointer text-lightGreen" @click="openMemberSideBar()"> Selecteer ander lid </strong>
               <members-side-bar v-model:isDisplay="isMemberSideBarDisplay" :close-on-add="true" :existing-list="members" title="Lid" @addMemberToList="addMember($event)" />
@@ -162,6 +166,7 @@ export default defineComponent({
     })
     const { formSendWithSuccess } = useFormSendWithSuccess<Equipment>(meta)
     const { formDiv, scrollToTop } = useScrollToTop()
+    const isGroupEquipement = ref<boolean>(false)
 
     const generalInsuranceState = computed(() => {
       return store.state.insurance.generalInsuranceState
@@ -301,6 +306,7 @@ export default defineComponent({
       lidType,
       formSendWithSuccess,
       formDiv,
+      isGroupEquipement,
     }
   },
 })
