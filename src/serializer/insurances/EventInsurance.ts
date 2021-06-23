@@ -21,8 +21,8 @@ export interface EventInsurance {
 export const EventInsuranceDeserializer = (input: any): EventInsurance => {
   const single: EventInsurance = {
     id: input.id ? input.id : undefined,
-    startDate: moment(input.start_date).format('YYYY-MM-DD'),
-    endDate: moment(input.end_date).format('YYYY-MM-DD'),
+    startDate: moment(input.start_date).format('YYYY-MM-DD h:mm'),
+    endDate: moment(input.end_date).format('YYYY-MM-DD h:mm'),
     comment: input.comment ? input.comment : undefined,
     responsibleMember: ResponsibleMemberDeserializer(input.responsible_member),
     responsiblePhoneNumber: input.responsible_phone_number ? input.responsible_phone_number : undefined,
@@ -37,6 +37,9 @@ export const EventInsuranceDeserializer = (input: any): EventInsurance => {
 }
 
 export const EventInsuranceSerializer = (input: EventInsurance): EventInsurance => {
+  console.log('BEFORE: ', input.startDate)
+  console.log('AFTER: ', moment(input.startDate).format('YYYY-MM-DDTh:mm:ss'))
+
   const single: any = {
     start_date: input.startDate,
     end_date: input.endDate,

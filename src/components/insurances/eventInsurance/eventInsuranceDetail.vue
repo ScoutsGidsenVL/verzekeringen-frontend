@@ -7,7 +7,7 @@
         <div>
           <p class="font-semibold">Datum</p>
           <div class="px-5">
-            <label-output label="Periode" :text="formatDate(details.startDate, details.endDate)" />
+            <label-output label="Periode" :text="formatEventDate(details.startDate, details.endDate)" />
           </div>
         </div>
 
@@ -32,7 +32,7 @@ import ResponsibleMemberDetail from '@/components/semantic/detail/ResponsibleMem
 import ActivityDetail from '@/components/semantic/detail/ActivityDetail.vue'
 import BaseDetail from '@/components/semantic/detail/BaseDetail.vue'
 import LabelOutput from '@/components/semantic/LabelOutput.vue'
-import { formatDate } from '@/helpers/formatHelper'
+import { formatEventDate } from '@/helpers/formatHelper'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { computed, defineComponent } from 'vue'
@@ -60,7 +60,7 @@ export default defineComponent({
     return {
       EventRepository,
       eventInsuranceState,
-      formatDate,
+      formatEventDate,
       InputTypes,
       HolderStates,
       holderState,
