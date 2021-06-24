@@ -23,3 +23,7 @@ export const GroupSerializer = (input: any): any => {
 
   return single
 }
+
+export const orderGroups = (groups: Array<Group>) => {
+  return groups.sort((a: any, b: any) => Number(a.id.replace(/\D/g, '')) - Number(b.id.replace(/\D/g, '')))
+}

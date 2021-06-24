@@ -231,8 +231,6 @@ export default defineComponent({
     }
 
     const updateEquipment = (data: Equipment) => {
-      console.log('CHECK')
-
       if (data.id) {
         RepositoryFactory.get(EquipmentRepository)
           .update(data.id, data)

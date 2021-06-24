@@ -48,8 +48,6 @@ export default defineComponent({
       RepositoryFactory.get(InsuranceRepository)
         .getArray('/insurances/?page=1&page_size=5')
         .then((res: ArrayResult) => {
-          console.log('RES INSCURANCES:', res)
-
           data.value = res
         })
     }
@@ -74,7 +72,6 @@ export default defineComponent({
       RepositoryFactory.get(DraftRepository)
         .getArray('/insurance_drafts/?page=1&page_size=5')
         .then((res: ArrayResult) => {
-          console.log('RES DRAFTS:', res)
           drafts.value = res
         })
     }

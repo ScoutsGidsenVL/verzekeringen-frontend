@@ -98,16 +98,7 @@
         <p>De factuur wordt naar de financieel verantwoordelijke van deze groep gestuurd.</p>
         <div class="flex">
           <div style="width: 65%">
-            <multi-select
-              :disabled="isEdit"
-              id="group"
-              rules="required"
-              placeholder="Group"
-              track-by="fullInfo"
-              value-prop="id"
-              :options="values.responsibleMember.scoutsGroups"
-              label="Selecteer groep"
-            />
+            <multi-select :disabled="isEdit" id="group" rules="required" placeholder="Group" track-by="fullInfo" value-prop="id" :options="userData.scoutsGroups" label="Selecteer groep" />
           </div>
         </div>
       </div>
@@ -186,7 +177,6 @@ export default defineComponent({
     const userData = ref<ResponsibleMember>(store.getters.user)
     let data: any = store.getters.getCurrentInsuranceState
     const maxCoverageOptions = ref<Array<Coverage>>()
-
     const { handleSubmit, values } = useForm<BaseInsurance>({
       initialValues: {
         startDate: data.startDate ? data.startDate : '',
