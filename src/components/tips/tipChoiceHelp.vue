@@ -66,7 +66,7 @@ export default defineComponent({
 
       // NEE NEE JA
       if (choices.value[0] === false && choices.value[3] === false && choices.value[5] === true) {
-        text.value = 'Aan de hand van voorgaande vragen zijn volgende optie(s) het best geschikt voor uw aanvraag: <strong>optie 1</strong>'
+        text.value = 'Aan de hand van voorgaande vragen zijn volgende keuze(s) het best geschikt voor uw aanvraag: <strong>keuze 1</strong>'
       }
 
       // NEE JA NEE
@@ -76,7 +76,7 @@ export default defineComponent({
 
       // NEE JA JA
       if (choices.value[0] === false && choices.value[3] === true && choices.value[4] === true) {
-        text.value = 'Aan de hand van voorgaande vragen zijn volgende optie(s) het best geschikt voor uw aanvraag: <strong>optie 2</strong>'
+        text.value = 'Aan de hand van voorgaande vragen zijn volgende keuze(s) het best geschikt voor uw aanvraag: <strong>keuze 2</strong>'
       }
 
       // JA NEE NEE NEE
@@ -86,7 +86,7 @@ export default defineComponent({
 
       // JA NEE JA JA
       if (choices.value[0] === true && choices.value[1] === false && choices.value[3] === true && choices.value[4] === true) {
-        text.value = 'Aan de hand van voorgaande vragen zijn volgende optie(s) het best geschikt voor uw aanvraag: <strong>optie 2</strong>'
+        text.value = 'Aan de hand van voorgaande vragen zijn volgende keuze(s) het best geschikt voor uw aanvraag: <strong>keuze 2</strong>'
       }
 
       // JA JA NEE NEE NEE
@@ -96,12 +96,12 @@ export default defineComponent({
 
       // JA JA NEE NEE JA
       if (choices.value[0] === true && choices.value[1] === true && choices.value[2] === false && choices.value[3] === false && choices.value[5] === true) {
-        text.value = 'Aan de hand van voorgaande vragen zijn volgende optie(s) het best geschikt voor uw aanvraag: <strong>optie 1</strong>'
+        text.value = 'Aan de hand van voorgaande vragen zijn volgende keuze(s) het best geschikt voor uw aanvraag: <strong>keuze 1</strong>'
       }
 
       // JA JA NEE JA JA
       if (choices.value[0] === true && choices.value[1] === true && choices.value[2] === false && choices.value[3] === true && choices.value[4] === true) {
-        text.value = 'Aan de hand van voorgaande vragen zijn volgende optie(s) het best geschikt voor uw aanvraag: <strong>optie 2</strong>'
+        text.value = 'Aan de hand van voorgaande vragen zijn volgende keuze(s) het best geschikt voor uw aanvraag: <strong>keuze 2</strong>'
       }
 
       // JA JA NEE JA NEE
@@ -111,22 +111,22 @@ export default defineComponent({
 
       // JA JA JA NEE NEE
       if (choices.value[0] === true && choices.value[1] === true && choices.value[2] === true && choices.value[3] === false && choices.value[5] === false) {
-        text.value = 'Aan de hand van voorgaande vragen zijn volgende optie(s) het best geschikt voor uw aanvraag: <strong>optie 3</strong>' // this one
+        text.value = 'Aan de hand van voorgaande vragen zijn volgende keuze(s) het best geschikt voor uw aanvraag: <strong>keuze 3</strong>' // this one
       }
 
       // JA JA JA NEE JA
       if (choices.value[0] === true && choices.value[1] === true && choices.value[2] === true && choices.value[3] === false && choices.value[5] === true) {
-        text.value = 'Aan de hand van voorgaande vragen zijn volgende optie(s) het best geschikt voor uw aanvraag: <strong>optie 3</strong> & <strong>optie 1</strong>'
+        text.value = 'Aan de hand van voorgaande vragen zijn volgende keuze(s) het best geschikt voor uw aanvraag: <strong>keuze 3</strong> & <strong>keuze 1</strong>'
       }
 
       // JA JA JA JA NEE
       if (choices.value[0] === true && choices.value[1] === true && choices.value[2] === true && choices.value[3] === true && choices.value[4] === false) {
-        text.value = 'Aan de hand van voorgaande vragen zijn volgende optie(s) het best geschikt voor uw aanvraag: <strong>optie 3</strong>'
+        text.value = 'Aan de hand van voorgaande vragen zijn volgende keuze(s) het best geschikt voor uw aanvraag: <strong>keuze 3</strong>'
       }
 
       // JA JA JA JA JA
       if (choices.value[0] === true && choices.value[1] === true && choices.value[2] === true && choices.value[3] === true && choices.value[4] === true) {
-        text.value = 'Aan de hand van voorgaande vragen zijn volgende optie(s) het best geschikt voor uw aanvraag: <strong>optie 2 & optie 3</strong>'
+        text.value = 'Aan de hand van voorgaande vragen zijn volgende keuze(s) het best geschikt voor uw aanvraag: <strong>keuze 2 & keuze 3</strong>'
       }
 
       return text.value

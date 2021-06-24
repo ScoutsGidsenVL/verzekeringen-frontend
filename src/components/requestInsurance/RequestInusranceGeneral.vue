@@ -17,13 +17,13 @@
               Verzekering stoffelijke schade - brand - diefstal van een gehuurd voertuig of een voertuig toebehorend aan leden van Scouts en Gidsen Vlaanderen of vrijwillige medewerkers.
             </p>
             <input class="mr-2" type="checkbox" id="choice-1" :value="1" v-model="values.insuranceOptions" />
-            <label for="choice-1">Optie 1: omnium</label>
+            <label for="choice-1">Keuze 1: omnium</label>
           </div>
 
           <div class="mt-4">
             <p style="font-size: 0.7em">Dekking van vrijstelling in stoffelijke schade OF diefstal (voor voertuigen die gebruikt worden door een groep van Scouts en Gidsen Vlaanderen.)</p>
             <input class="mr-2" type="checkbox" id="choice-2" :value="2" v-model="values.insuranceOptions" />
-            <label for="choice-2">Optie 2: reeds afgesloten omnium afdekken</label>
+            <label for="choice-2">Keuze 2: reeds afgesloten omnium afdekken</label>
 
             <div v-if="values.insuranceOptions.includes(2)" class="px-5">
               <p>Maximum vrijstellingsbedrag</p>
@@ -46,7 +46,7 @@
           <div class="mt-4">
             <p style="font-size: 0.7em">Dekking van vrijstelling in burgerlijke aansprakelijkheid (voor voertuigen die gehuurd worden door een groep van Scouts en Gidsen Vlaanderen.)</p>
             <input class="mr-2" type="checkbox" id="choice-3" :value="3" v-model="values.insuranceOptions" />
-            <label for="choice-3">Optie 3: huurvoertuigen</label>
+            <label for="choice-3">Keuze 3: huurvoertuigen</label>
           </div>
         </div>
 

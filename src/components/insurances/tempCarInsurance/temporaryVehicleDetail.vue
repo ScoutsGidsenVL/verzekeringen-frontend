@@ -12,23 +12,23 @@
         </div>
 
         <div>
-          <p class="font-semibold">Verzekering opties</p>
+          <p class="font-semibold">Gekozen verzekering</p>
           <div class="px-5 py-3">
             <div v-if="details.insuranceOptions.includes(1)" class="mb-3">
-              <p>Optie 1: omnium</p>
+              <p>Keuze 1: omnium</p>
               <p style="font-size: 0.7em">
                 Verzekering stoffelijke schade - brand - diefstal van een gehuurd voertuig of een voertuig toebehorend aan leden van Scouts en Gidsen Vlaanderen of vrijwillige medewerkers.
               </p>
             </div>
 
             <div v-if="details.insuranceOptions.includes(2)" class="mb-3">
-              <p>Optie 2: reeds afgesloten omnium afdekken</p>
+              <p>Keuze 2: reeds afgesloten omnium afdekken</p>
               <p style="font-size: 0.7em">Dekking van vrijstelling in stoffelijke schade OF diefstal (voor voertuigen die gebruikt worden door een groep van Scouts en Gidsen Vlaanderen.)</p>
               <p>Maximum vrijstellingsbedrag {{ details.maxCoverage.label }}</p>
             </div>
 
             <div v-if="details.insuranceOptions.includes(3)">
-              <p>Optie 3: huurvoertuigen</p>
+              <p>Keuze 3: huurvoertuigen</p>
               <p style="font-size: 0.7em">Dekking van vrijstelling in burgerlijke aansprakelijkheid (voor voertuigen die gehuurd worden door een groep van Scouts en Gidsen Vlaanderen.)</p>
             </div>
           </div>
