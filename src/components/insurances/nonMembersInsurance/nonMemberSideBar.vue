@@ -50,7 +50,7 @@
 
           <div class="w-96 mt-4">
             <custom-input :type="InputTypes.TEXT_AREA" name="comment" label="Opmerking">
-              <p>
+              <p v-if="isExtraInformationComment">
                 Indien je niet-leden wil verzekeren die in het buitenland wonen moet je in dit tekstvak de buitenlands gemeente, postcode en land opgeven. En bij adres, het belgisch adres van de
                 persoon die de verzekering aanvraagt.
               </p>
@@ -141,6 +141,11 @@ export default defineComponent({
     inputNonMember: {
       type: Object as PropType<NonMember>,
       required: true,
+    },
+    isExtraInformationComment: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   setup(props, context) {

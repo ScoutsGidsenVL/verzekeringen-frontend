@@ -45,7 +45,7 @@
     </div>
 
     <div class="px-5">
-      <select-non-member id="nonMembers" rules="required" />
+      <select-non-member :isExtraInformationComment="true" id="nonMembers" rules="required" />
     </div>
 
     <div class="flex gap-3 px-5 mt-5">

@@ -8,6 +8,7 @@
 
   <non-member-side-bar
     v-if="isDisplay"
+    :isExtraInformationComment="isExtraInformationComment"
     v-model:isEdit="isEdit"
     :inputNonMember="nonMemberToEdit"
     :existingList="nonMembers"
@@ -41,6 +42,11 @@ export default defineComponent({
       type: [Object, String, Function],
       default: '',
       required: false,
+    },
+    isExtraInformationComment: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   setup(props) {
