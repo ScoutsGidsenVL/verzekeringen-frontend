@@ -45,10 +45,6 @@
           </div>
 
           <div class="w-96 mt-4">
-            <custom-input :type="InputTypes.TEXT" rules="required" name="phoneNumber" label="Gsm" />
-          </div>
-
-          <div class="w-96 mt-4">
             <custom-input :type="InputTypes.TEXT_AREA" name="comment" label="Opmerking">
               <p v-if="isExtraInformationComment">
                 Indien je niet-leden wil verzekeren die in het buitenland wonen moet je in dit tekstvak de buitenlands gemeente, postcode en land opgeven. En bij adres, het belgisch adres van de
@@ -182,7 +178,7 @@ export default defineComponent({
             id: values.id,
             lastName: values.lastName,
             firstName: values.firstName,
-            phoneNumber: values.phoneNumber,
+            phoneNumber: values.phoneNumber ? values.phoneNumber : '/',
             birthDate: values.birthDate,
             street: values.street,
             number: values.number,
