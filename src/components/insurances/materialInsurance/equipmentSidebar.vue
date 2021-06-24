@@ -51,12 +51,12 @@
 
           <div v-show="!isGroupEquipement">
             <div>
-              <strong class="cursor-pointer text-lightGreen" @click="openMemberSideBar()"> Selecteer ander lid </strong>
+              <strong class="cursor-pointer text-lightGreen" @click="openMemberSideBar()"> Selecteer lid </strong>
               <members-side-bar v-model:isDisplay="isMemberSideBarDisplay" :close-on-add="true" :existing-list="members" title="Lid" @addMemberToList="addMember($event)" />
             </div>
 
             <div class="mt-3">
-              <strong class="cursor-pointer text-lightGreen" @click="openNonMemberSideBar()"> Selecteer ander niet-lid </strong>
+              <strong class="cursor-pointer text-lightGreen" @click="openNonMemberSideBar()"> Selecteer niet-lid </strong>
               <non-member-side-bar
                 v-model:isDisplay="isNonMemberSideBarDisplay"
                 :close-on-add="true"
