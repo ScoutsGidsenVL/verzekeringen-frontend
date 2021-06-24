@@ -17,7 +17,7 @@
   <ErrorMessage :name="'vehicle'" class="text-red text-sm block mt-1 w-80" />
 
   <div class="mt-2 text-lightGreen">
-    <strong class="cursor-pointer" @click="openSideBar()"> + Selecteer ander voertuig </strong>
+    <strong class="cursor-pointer" @click="openSideBar()"> + Selecteer voertuig </strong>
   </div>
 
   <vehicle-side-bar
