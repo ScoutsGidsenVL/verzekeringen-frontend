@@ -14,6 +14,7 @@ export interface Member {
   readonly postCodeCity?: Location
   readonly comment?: string
   isChecked?: boolean
+  readonly membershipNumber?: string
 }
 
 export const MemberDeserializer = (input: any): Member => {
@@ -31,6 +32,7 @@ export const MemberDeserializer = (input: any): Member => {
     postCodeCity: input.postcode_city ? LocationDeserializer(input.postcode_city) : undefined,
     comment: input.comment,
     isChecked: false,
+    membershipNumber: input.membership_number ? input.membership_number : undefined,
   }
 
   return single
@@ -50,6 +52,7 @@ export const MemberSerializer = (input: any): any => {
     group: input.group ? input.group : null,
     comment: input.comment ? input.comment : undefined,
     postcode_city: input.postCodeCity ? LocationSerializer(input.postCodeCity) : undefined,
+    membership_number: input.membershipNumber ? input.membershipNumber : undefined,
   }
 
   return single
