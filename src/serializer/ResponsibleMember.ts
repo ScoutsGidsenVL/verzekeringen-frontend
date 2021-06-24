@@ -13,12 +13,12 @@ export interface ResponsibleMember {
 
 export const ResponsibleMemberDeserializer = (input: any): ResponsibleMember => {
   const single: ResponsibleMember = {
-    id: input.id,
-    firstName: input.first_name,
-    lastName: input.last_name,
-    birthDate: input.birth_date,
-    email: input.email,
-    membershipNumber: input.membership_number,
+    id: input.id ? input.id : undefined,
+    firstName: input.first_name ? input.first_name : undefined,
+    lastName: input.last_name ? input.last_name : undefined,
+    birthDate: input.birth_date ? input.birth_date : undefined,
+    email: input.email ? input.email : undefined,
+    membershipNumber: input.membership_number ? input.membership_number : undefined,
     phoneNumber: input.phone_number ? input.phone_number.replace(/ /g, '') : undefined,
     scoutsGroups: input.scouts_group ? input.scouts_groups.map((group: any) => GroupDeserializer(group)) : undefined,
   }

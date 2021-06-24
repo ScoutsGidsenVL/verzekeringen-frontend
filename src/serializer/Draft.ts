@@ -3,7 +3,7 @@ import { Group, GroupDeserializer } from '@/serializer/Group'
 import { Status, StatusDeserializer } from '@/serializer/Status'
 import { Type, TypeDeserializer } from '@/serializer/Type'
 
-export interface Insurance {
+export interface Draft {
   readonly id: number
   readonly startDate: string
   readonly endDate: string
@@ -13,22 +13,22 @@ export interface Insurance {
   readonly type: Type | undefined
 }
 
-export const insuranceDeserializer = (input: any): Insurance => {
-  const single: Insurance = {
+export const draftDeserializer = (input: any): Draft => {
+  const single: Draft = {
     id: input.id,
     startDate: input.start_date,
     endDate: input.end_date,
     responsibleMember: input.responsible_member ? ResponsibleMemberDeserializer(input.responsible_member) : undefined,
-    group: input.group ? GroupDeserializer(input.group) : undefined,
-    status: input.status ? StatusDeserializer(input.status) : undefined,
-    type: input.type ? TypeDeserializer(input.type) : undefined,
+    group: input.group ? GroupDeserializer({ id: input.group }) : undefined,
+    status: input.status ? StatusDeserializer({ label: input.status }) : StatusDeserializer({ label: 'draft' }),
+    type: input.type ? TypeDeserializer({ description: input.type }) : undefined,
   }
 
   return single
 }
 
-export const insuranceSerializer = (input: any): Insurance => {
-  const single: Insurance = {
+export const draftSerializer = (input: any): Draft => {
+  const single: Draft = {
     id: input.id,
     startDate: input.start_date,
     endDate: input.end_date,

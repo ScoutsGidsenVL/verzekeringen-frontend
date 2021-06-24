@@ -1,19 +1,19 @@
 <template>
-  <div class="custom-grid py-2 border-t-2 border-black">
+  <div v-if="item" class="custom-grid py-2 border-t-2 border-black">
     <div>
-      <p>{{ formatDate(item.startDate, item.endDate) }}</p>
+      <p>{{ item.startDate && item.endDate ? formatDate(item.startDate, item.endDate) : '' }}</p>
     </div>
     <div>
-      <p>{{ item.group.name }}</p>
+      <p>{{ item.group && item.group.name ? item.group.name : '' }} {{ item.group && item.group.id ? item.group.id : '' }}</p>
     </div>
     <div>
-      <p>{{ item.type.description }}</p>
+      <p>{{ item.type && item.type.description ? item.type.description : '' }}</p>
     </div>
     <div>
-      <p>{{ item.status.label }}</p>
+      <p>{{ item.status && item.status.label ? item.status.label : '' }}</p>
     </div>
     <div>
-      <div class="float-right flex gap-5">
+      <div v-if="item.type && item.type.name" class="float-right flex gap-5">
         <div @click="fetchInsuranceById(item.id, item.type.name)">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hover:text-lightGreen cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
             <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
@@ -116,6 +116,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 .custom-grid {
   display: grid;
-  grid-template-columns: 25% 20% 35% 15% 5%;
+  grid-template-columns: 25% 30% 25% 15% 5%;
 }
 </style>
