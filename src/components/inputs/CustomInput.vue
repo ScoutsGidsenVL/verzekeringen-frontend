@@ -1,7 +1,8 @@
 <template>
   <div>
-    <strong>
+    <strong v-if="!hideInput">
       <label>{{ label }}</label>
+      <required :rules="rules" />
     </strong>
     <div v-if="extraInfo" style="font-size: 13px">
       <label>{{ extraInfo }}</label>
@@ -19,11 +20,13 @@
 import { ErrorMessage, useField } from 'vee-validate'
 import { InputTypes } from '@/enums/inputTypes'
 import { defineComponent } from 'vue'
+import Required from '@/components/semantic/Required.vue'
 
 export default defineComponent({
   name: 'CustomInput',
   components: {
     ErrorMessage,
+    Required,
   },
   props: {
     name: {

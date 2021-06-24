@@ -1,9 +1,7 @@
 <template>
   <equipment-list :canBeDeleted="true" :equipmentList="equipment" @deleteEquipmentFromList="deleteEquipmentFromList($event)" @editEquipment="editEquipment($event)" />
 
-  <div class="mt-2 text-lightGreen">
-    <strong class="cursor-pointer" @click="openSideBar()"> + Voeg materiaal toe </strong>
-  </div>
+  <div class="mt-2 text-lightGreen"><strong class="cursor-pointer" @click="openSideBar()"> + Voeg materiaal toe </strong><required :rules="rules" /></div>
 
   <equipment-side-bar
     v-if="isDisplay"
@@ -23,12 +21,14 @@ import EquipmentList from '@/components/insurances/materialInsurance/equipmentLi
 import { Equipment } from '@/serializer/Equipment'
 import { defineComponent, ref } from 'vue'
 import { useField } from 'vee-validate'
+import Required from '@/components/semantic/Required.vue'
 
 export default defineComponent({
   name: 'SelectMaterial',
   components: {
     'equipment-side-bar': EquipmentSidebar,
     'equipment-list': EquipmentList,
+    Required,
   },
   props: {
     id: {
@@ -45,8 +45,6 @@ export default defineComponent({
     const { value: equipment } = useField<any>(props.id, props.rules, {
       initialValue: [],
     })
-
-    // const equipment = ref<any>([])
 
     const isDisplay = ref<boolean>(false)
 

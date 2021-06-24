@@ -10,7 +10,7 @@
       <div class="mt-3">
         <custom-headline-2 text="Voertuig" />
         <div class="px-5">
-          <select-vehicle id="vehicle" rules="RequiredVehicle:vehicle" />
+          <select-vehicle id="vehicle" rules="required|RequiredVehicle:vehicle" />
         </div>
       </div>
 

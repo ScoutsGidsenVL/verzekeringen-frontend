@@ -2,6 +2,7 @@
   <div v-if="options" class="pt-4">
     <strong>
       <label>{{ label }}</label>
+      <required :rules="rules" />
     </strong>
     <div class="min-w-0">
       <multi-select
@@ -42,11 +43,14 @@ import Multiselect from '@vueform/multiselect'
 import { PropType, ref, watch } from 'vue'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import { BaseRepository } from '@/repositories/baseRepository'
+import Required from '@/components/semantic/Required.vue'
+
 export default defineComponent({
   name: 'AppMultiSelect',
   components: {
     'error-message': ErrorMessage,
     'multi-select': Multiselect,
+    Required,
   },
   props: {
     id: {

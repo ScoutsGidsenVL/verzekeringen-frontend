@@ -2,9 +2,7 @@
   <non-member-list :canBeDeleted="true" :nonMembersList="nonMembers" @deleteNonMemberFromList="deleteNonMemberFromList($event)" @editNonMember="editNonMember($event)" />
   <ErrorMessage :name="id" class="text-red text-sm block mt-1 w-80" />
 
-  <div class="mt-2 text-lightGreen">
-    <strong class="cursor-pointer" @click="openSideBar()"> + Voeg niet-lid toe </strong>
-  </div>
+  <div class="mt-2 text-lightGreen"><strong class="cursor-pointer" @click="openSideBar()"> + Voeg niet-lid toe </strong><required :rules="rules" /></div>
 
   <non-member-side-bar
     v-if="isDisplay"
@@ -25,6 +23,7 @@ import NonMemberList from '@/components/insurances/nonMembersInsurance/nonMember
 import { ErrorMessage, useField } from 'vee-validate'
 import { NonMember } from '@/serializer/NonMember'
 import { defineComponent, ref } from 'vue'
+import Required from '@/components/semantic/Required.vue'
 
 export default defineComponent({
   name: 'SelectNonMembers',
@@ -32,6 +31,7 @@ export default defineComponent({
     'non-member-side-bar': NonMemberSideBar,
     'non-member-list': NonMemberList,
     ErrorMessage,
+    Required,
   },
   props: {
     id: {

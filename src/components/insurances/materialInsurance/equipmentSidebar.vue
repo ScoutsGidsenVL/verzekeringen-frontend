@@ -21,7 +21,7 @@
 
           <div v-if="!isBicycle && !values.ownerMember" class="w-96 mt-4">
             <div>
-              <custom-input extra-info="bv: Tent, Geluidsinstallatie" :type="InputTypes.TEXT" rules="required" name="nature" label="Soort" />
+              <custom-input extra-info="bv: Tent, Geluidsinstallatie" :type="InputTypes.TEXT" name="nature" label="Soort" />
             </div>
           </div>
 

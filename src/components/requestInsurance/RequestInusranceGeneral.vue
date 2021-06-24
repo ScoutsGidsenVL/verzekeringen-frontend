@@ -5,7 +5,7 @@
 
       <insurance-type-menu :disabled="isEdit" />
       <div class="mt-3" v-if="insuranceTypeState === InsuranceTypes.TIJDELIJKE_AUTO_VERZEKERING">
-        <div><strong>Keuze hulp</strong></div>
+        <div><strong>Keuze hulp</strong><required rules="required" /></div>
 
         <div class="px-5">
           <tip-choice-help />
@@ -161,6 +161,7 @@ import { useForm } from 'vee-validate'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import moment from 'moment'
+import Required from '@/components/semantic/Required.vue'
 
 export default defineComponent({
   name: 'RequestInsuranceGeneral',
@@ -176,6 +177,7 @@ export default defineComponent({
     'custom-input': CustomInput,
     'multi-select': MultiSelect,
     'info-alert': InfoAlert,
+    Required,
   },
   setup() {
     const route = useRoute()

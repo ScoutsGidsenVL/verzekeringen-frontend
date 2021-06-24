@@ -2,9 +2,7 @@
   <driver-list :canBeDeleted="true" :membersList="selectDriverField.drivers" v-model:owner="selectDriverField.isDriverOwner" @deleteMemberFromList="deleteMemberFromList($event)" />
   <ErrorMessage :name="id" class="text-red text-sm block mt-1 w-80" />
 
-  <div class="mt-2 text-lightGreen">
-    <strong class="cursor-pointer" @click="openSideBar()"> + Voeg bestuurder toe </strong>
-  </div>
+  <div class="mt-2 text-lightGreen"><strong class="cursor-pointer" @click="openSideBar()"> + Voeg bestuurder toe </strong><required :rules="'required'" /></div>
 
   <div class="mt-5">
     <tip-temp-vehicle />
@@ -78,6 +76,7 @@ import { ErrorMessage, useField } from 'vee-validate'
 import { Driver } from '@/serializer/Driver'
 import { Owner } from '@/serializer/Owner'
 import { useStore } from 'vuex'
+import Required from '@/components/semantic/Required.vue'
 
 export default defineComponent({
   name: 'SelectParticipant',
@@ -88,6 +87,7 @@ export default defineComponent({
     'multi-select': MultiSelect,
     'tip-temp-vehicle': TipTempVehicle,
     ErrorMessage,
+    Required,
   },
   props: {
     id: {

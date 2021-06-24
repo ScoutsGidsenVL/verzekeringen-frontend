@@ -2,9 +2,7 @@
   <member-list :canBeDeleted="true" :membersList="members" @deleteMemberFromList="deleteMemberFromList($event)" />
   <ErrorMessage :name="id" class="text-red text-sm block mt-1 w-80" />
 
-  <div class="mt-2 text-lightGreen">
-    <strong class="cursor-pointer" @click="openSideBar()"> + Voeg lid toe </strong>
-  </div>
+  <div class="mt-2 text-lightGreen"><strong class="cursor-pointer" @click="openSideBar()"> + Voeg lid toe </strong><required rules="required" /></div>
 
   <members-side-bar :existingList="members" v-model:isDisplay="isDisplay" title="Lid" @addMemberToList="addMemberToList($event)" />
 </template>
@@ -15,6 +13,7 @@ import MemberList from '@/components/insurances/travelAssistance/memberList.vue'
 import { ErrorMessage, useField } from 'vee-validate'
 import { Member } from '@/serializer/Member'
 import { defineComponent, ref } from 'vue'
+import Required from '@/components/semantic/Required.vue'
 
 export default defineComponent({
   name: 'SelectParticipant',
@@ -22,6 +21,7 @@ export default defineComponent({
     'members-side-bar': MemberSiderbar,
     'member-list': MemberList,
     ErrorMessage,
+    Required,
   },
   props: {
     id: {

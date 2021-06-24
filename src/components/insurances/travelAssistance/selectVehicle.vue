@@ -16,9 +16,7 @@
 
   <ErrorMessage :name="'vehicle'" class="text-red text-sm block mt-1 w-80" />
 
-  <div class="mt-2 text-lightGreen">
-    <strong class="cursor-pointer" @click="openSideBar()"> + Selecteer voertuig </strong>
-  </div>
+  <div class="mt-2 text-lightGreen"><strong class="cursor-pointer" @click="openSideBar()"> + Selecteer voertuig </strong><required :rules="rules" /></div>
 
   <vehicle-side-bar
     v-if="isDisplay"
@@ -36,6 +34,7 @@ import VehicleItem from '@/components/insurances/travelAssistance/vehicleItem.vu
 import { Vehicle } from '@/serializer/Vehicle'
 import { defineComponent, ref } from 'vue'
 import { ErrorMessage, useField } from 'vee-validate'
+import Required from '@/components/semantic/Required.vue'
 
 export default defineComponent({
   name: 'SelectVehicle',
@@ -43,6 +42,7 @@ export default defineComponent({
     'vehicle-side-bar': VehicleSiderbar,
     'vehicle-item': VehicleItem,
     ErrorMessage,
+    Required,
   },
   props: {
     id: {
@@ -51,7 +51,7 @@ export default defineComponent({
     },
     rules: {
       type: [Object, String, Function],
-      default: 'required',
+      default: '',
       required: false,
     },
   },
