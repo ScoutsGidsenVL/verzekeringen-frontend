@@ -19,8 +19,10 @@
             </div>
           </div>
 
-          <div v-if="!isBicycle" class="w-96 mt-4">
-            <custom-input extra-info="bv: Tent, Geluidsinstallatie" :type="InputTypes.TEXT" rules="required" name="nature" label="Soort" />
+          <div v-if="!isBicycle && !values.ownerMember" class="w-96 mt-4">
+            <div>
+              <custom-input extra-info="bv: Tent, Geluidsinstallatie" :type="InputTypes.TEXT" rules="required" name="nature" label="Soort" />
+            </div>
           </div>
 
           <div class="w-96 mt-4">
@@ -167,7 +169,7 @@ export default defineComponent({
     const searchedEquipmentList = ref<Array<Equipment>>([])
     const isBicycle = ref<boolean>(false)
     const userData = ref<ResponsibleMember>(store.getters.user)
-    const owner = ref<Owner>()
+    const owner = ref<Owner | null>()
     const lidType = ref<String>()
     const { handleSubmit, values, validate, resetForm, meta } = useForm<Equipment>({
       initialValues: {
@@ -202,11 +204,11 @@ export default defineComponent({
         if (selected.value === 'NieuwEquipment') {
           const equipment = ref<Equipment>({
             id: values.id ? values.id : undefined,
-            nature: values.nature ? values.nature : undefined,
+            nature: values.nature && isBicycle.value === false && !values.ownerMember ? values.nature : undefined,
             description: values.description ? values.description : undefined,
             totalValue: values.totalValue ? values.totalValue : undefined,
-            ownerMember: values.ownerMember ? values.ownerMember : undefined,
-            ownerNonMember: values.ownerNonMember ? values.ownerNonMember : undefined,
+            ownerMember: values.ownerMember && isGroupEquipement.value === false ? values.ownerMember : undefined,
+            ownerNonMember: values.ownerNonMember && isGroupEquipement.value === false ? values.ownerNonMember : undefined,
             group: generalInsuranceState.value.group.name,
           })
           if (!props.isEdit) {
@@ -229,6 +231,8 @@ export default defineComponent({
     }
 
     const updateEquipment = (data: Equipment) => {
+      console.log('CHECK')
+
       if (data.id) {
         RepositoryFactory.get(EquipmentRepository)
           .update(data.id, data)

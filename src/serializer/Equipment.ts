@@ -6,8 +6,8 @@ export interface Equipment {
   readonly nature?: string
   readonly description?: string
   readonly totalValue?: string
-  ownerMember?: Member
-  ownerNonMember?: NonMember
+  ownerMember?: Member | null
+  ownerNonMember?: NonMember | null
   readonly group?: string
 }
 
@@ -30,8 +30,8 @@ export const EquipmentSerializer = (input: any): any => {
     nature: input.nature ? input.nature : undefined,
     description: input.description ? input.description : undefined,
     total_value: input.totalValue ? input.totalValue : undefined,
-    owner_member: input.ownerMember ? MemberSerializer(input.ownerMember).id : undefined,
-    owner_non_member: input.ownerNonMember ? NonMemberSerializer(input.ownerNonMember).id : undefined,
+    owner_member: input.ownerMember ? MemberSerializer(input.ownerMember).id : null,
+    owner_non_member: input.ownerNonMember ? NonMemberSerializer(input.ownerNonMember).id : null,
     group: input.group ? input.group : undefined,
   }
 

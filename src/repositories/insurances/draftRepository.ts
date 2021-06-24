@@ -14,7 +14,8 @@ export class DraftRepository extends BaseRepository {
     return this.get(this.endpoint + paginationUrl, {}).then((response: ArrayResult) => {
       const array: any[] = []
       response.results.forEach((result: any) => {
-        array.push(this.deserializer(result.data))
+        const draft = this.deserializer({ ...result.data, ...{ type: result.insurance_type } })
+        array.push(draft)
       })
       response.results = array
       return response
