@@ -116,6 +116,15 @@ const routes: any[] = [
       detail: true,
     },
   },
+  {
+    path: '/draft-bewerken/:id',
+    name: 'DraftBewerken',
+    component: RequestInsurance,
+    meta: {
+      requiresOpenIdAuth: true,
+      title: 'Verzekering Bewerken',
+    },
+  },
 ]
 
 const router = createRouter({

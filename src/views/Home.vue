@@ -12,8 +12,8 @@
     </div>
   </div>
 
-  <div v-if="drafts && false" class="mt-5">
-    <custom-list :items="drafts.results" title="Nog te voltooien" />
+  <div v-if="drafts" class="mt-5">
+    <custom-list @removeDraft="removeDraft($event)" :isDraft="true" :items="drafts.results" title="Nog te voltooien" />
     <div class="flex gap-5 pt-3 float-right">
       <custom-button v-if="drafts.previous" @click="getPreviousDrafts(drafts.previous)" text="Vorige" />
       <custom-button v-if="drafts.next" @click="getNextDrafts(drafts.next)" text="Volgende" />
@@ -92,6 +92,16 @@ export default defineComponent({
         })
     }
 
+    const removeDraft = (id: string) => {
+      if (drafts.value) {
+        for (let i = 0; i < drafts.value.results.length; i++) {
+          if (drafts.value.results[i].id === id) {
+            drafts.value.results.splice(i, 1)
+          }
+        }
+      }
+    }
+
     getInsurances()
     getDrafts()
 
@@ -100,8 +110,9 @@ export default defineComponent({
       getNextInsurances,
       getPreviousDrafts,
       getNextDrafts,
-      data,
+      removeDraft,
       drafts,
+      data,
     }
   },
 })

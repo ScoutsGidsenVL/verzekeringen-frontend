@@ -67,4 +67,8 @@ export abstract class BaseRepository extends BaseApiRepository {
   formatPaginationUrl = (url: string) => {
     return url
   }
+
+  removeById(id: string): Promise<any> {
+    return this.delete(this.endpoint + id)
+  }
 }

@@ -14,7 +14,7 @@
       <p class="font-semibold">Status</p>
     </div>
   </div>
-  <custom-list-item v-for="item in items" :key="item.id" :item="item" />
+  <custom-list-item @removeDraft="removeDraft($event)" :isDraft="isDraft" v-for="item in items" :key="item.id" :item="item" />
   <hr class="border-t-2 border-black" />
 </template>
 
@@ -36,6 +36,15 @@ export default defineComponent({
       type: Array,
       required: true,
     },
+    isDraft: Boolean,
+  },
+  setup(props, context) {
+    const removeDraft = (id: string) => {
+      context.emit('removeDraft', id)
+    }
+    return {
+      removeDraft,
+    }
   },
 })
 </script>

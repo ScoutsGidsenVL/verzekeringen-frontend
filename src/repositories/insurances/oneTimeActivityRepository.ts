@@ -23,4 +23,10 @@ export class OneTimeActivityRepository extends BaseRepository {
       return response.total_cost
     })
   }
+
+  getDraftById(id: string): Promise<any> {
+    return this.get('/insurance_drafts/' + id, {}).then((response: any) => {
+      return this.deserializer({ ...response.data, ...{ group: { id: response.data.group } } })
+    })
+  }
 }

@@ -25,20 +25,20 @@ export interface OneTimeActivity {
 
 export const oneTimeActivityDeserializer = (input: any): OneTimeActivity => {
   const single: OneTimeActivity = {
-    id: input.id,
-    startDate: moment(input.start_date).format('YYYY-MM-DD'),
-    endDate: moment(input.end_date).format('YYYY-MM-DD'),
-    createdOn: input.created_on,
-    comment: input.comment,
-    group: GroupDeserializer(input.group),
-    groupSize: GroupSizeDeserializer(input.group_size),
-    location: LocationDeserializer(input.location),
-    nature: input.nature,
-    responsibleMember: ResponsibleMemberDeserializer(input.responsible_member),
-    status: StatusDeserializer(input.status),
-    totalCost: input.total_cost,
-    type: TypeDeserializer(input.type),
-    vvksComment: input.vvks_comment,
+    id: input.id ? input.id : undefined,
+    startDate: input.start_date ? moment(input.start_date).format('YYYY-MM-DD') : undefined,
+    endDate: input.end_date ? moment(input.end_date).format('YYYY-MM-DD') : undefined,
+    createdOn: input.created_on ? input.created_on : undefined,
+    comment: input.comment ? input.comment : undefined,
+    group: input.group ? GroupDeserializer(input.group) : undefined,
+    groupSize: input.group_size ? GroupSizeDeserializer(input.group_size) : undefined,
+    location: input.location ? LocationDeserializer(input.location) : undefined,
+    nature: input.nature ? input.nature : undefined,
+    responsibleMember: input.responsible_member ? ResponsibleMemberDeserializer(input.responsible_member) : undefined,
+    status: input.status ? StatusDeserializer(input.status) : undefined,
+    totalCost: input.total_cost ? input.total_cost : undefined,
+    type: input.type ? TypeDeserializer(input.type) : undefined,
+    vvksComment: input.vvks_comment ? input.vvks_comment : undefined,
   }
 
   return single
