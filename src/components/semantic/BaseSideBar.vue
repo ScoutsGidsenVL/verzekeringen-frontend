@@ -1,6 +1,6 @@
 <template>
   <div v-if="isDisplay" class="h-full w-full fixed top-0 left-0 overflow-x-hidden z-0 bg-black bg-opacity-20" @click="hideSideBar()"></div>
-  <div v-if="isDisplay" :class="'bg-white d-flex fixed flex-col top-0 right-0 h-full z-20 pt-5 px-4' + ' ' + width">
+  <div :class="{ 'd-flex': isDisplay, 'd-none': !isDisplay }" class="bg-white x fixed flex-col top-0 right-0 h-full z-20 pt-5 px-4 'w-2/5">
     <div class="mb-3 cursor-pointer" @click="hideSideBar()">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
         <path
@@ -62,7 +62,11 @@ export default defineComponent({
   setup(props, context) {
     const selected = ref<string>(props.selection)
 
-    const { isDisplay } = toRefs(props)
+    const { isDisplay, selection } = toRefs(props)
+
+    watch(selection, (value: string) => {
+      selected.value = value
+    })
 
     watch(isDisplay, (value: boolean) => {
       if (value == true) {
@@ -74,10 +78,11 @@ export default defineComponent({
 
     const hideSideBar: () => void = () => {
       context.emit('update:isDisplay', false)
+      context.emit('hideSidebar')
     }
 
     const emitOption = () => {
-      context.emit('update:selection', selected.value)
+      context.emit('options', selected.value)
     }
 
     return {
