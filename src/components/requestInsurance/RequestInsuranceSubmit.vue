@@ -30,6 +30,7 @@ import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
+import { DraftRepository } from '@/repositories/insurances/draftRepository'
 
 export default defineComponent({
   name: 'RequestInsuranceSubmit',
@@ -43,6 +44,7 @@ export default defineComponent({
     const store = useStore()
     const error = ref<boolean>(false)
     const isEdit = !!route.params.id
+    const isDraft = route.meta.isDraft ? route.meta.isDraft : false
 
     const data: any = store.getters.getCurrentInsuranceState
     const { handleSubmit } = useForm({
@@ -54,7 +56,7 @@ export default defineComponent({
     const onSubmit = handleSubmit(async (values: any) => {
       //@ts-ignore
       store.dispatch(InsuranceTypeStoreSetters[store.getters.insuranceTypeState], { ...store.getters.getCurrentInsuranceState, ...{ comment: values.comment } })
-      if (isEdit) {
+      if (isEdit && !isDraft) {
         editInsurance()
       } else {
         postInsurance()
@@ -70,6 +72,9 @@ export default defineComponent({
           store.dispatch('setHolderState', HolderStates.COMPLETED)
           //@ts-ignore
           store.dispatch(InsuranceTypeStoreSetters[store.getters.insuranceTypeState], completed)
+
+          //IF POSTED FROM A DRAFT, DRAFT WILL BE DELETED
+          RepositoryFactory.get(DraftRepository).removeById(route.params.id)
         })
         .catch(() => {
           error.value = true

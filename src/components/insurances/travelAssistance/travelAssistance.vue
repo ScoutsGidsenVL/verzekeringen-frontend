@@ -38,6 +38,7 @@
       <div class="flex gap-3 px-5 mt-5">
         <custom-button @click="back()" type="button" text="Vorige" />
         <custom-button text="Volgende" />
+        <custom-button v-if="!isEdit" @click="saveAsDraft()" type="button" class="float-right" text="OPSLAAN" />
       </div>
     </div>
   </form>
@@ -58,7 +59,9 @@ import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
 import { BaseInsurance } from '@/serializer/insurances/BaseInsurance'
 import RepositoryFactory from '@/repositories/repositoryFactory'
-import { InsuranceTypeRepos } from '@/enums/insuranceTypes'
+import { InsuranceTypeRepos, InsuranceTypes } from '@/enums/insuranceTypes'
+import { useRoute } from 'vue-router'
+import router from '@/router'
 
 export default defineComponent({
   name: 'TravelAssistance',
@@ -70,8 +73,8 @@ export default defineComponent({
     'multi-select': MultiSelect,
   },
   setup() {
+    const route = useRoute()
     const store = useStore()
-
     const data: TravelAssistanceInsurance = store.getters.getCurrentInsuranceState
     const { handleSubmit, values } = useForm<TravelAssistanceInsurance>({
       initialValues: {
@@ -80,6 +83,7 @@ export default defineComponent({
         vehicle: data.vehicle ? data.vehicle : undefined,
       },
     })
+    const isEdit = !!route.params.id
 
     const generalInsuranceState = computed((): BaseInsurance => {
       return store.state.insurance.generalInsuranceState
@@ -114,12 +118,39 @@ export default defineComponent({
       store.dispatch('setHolderState', HolderStates.GENERAL)
     }
 
+    const insuranceTypeState = computed((): InsuranceTypes => {
+      return store.state.insurance.insuranceTypeState
+    })
+
+    const saveAsDraft = () => {
+      const draftData = ref<TravelAssistanceInsurance>({
+        ...generalInsuranceState.value,
+        ...{
+          country: values.country ? values.country : undefined,
+          participants: values.participants ? values.participants : [],
+          vehicle: values.vehicle ? values.vehicle : undefined,
+          responsiblePhoneNumber:
+            generalInsuranceState.value.responsibleMember && generalInsuranceState.value.responsibleMember.phoneNumber ? generalInsuranceState.value.responsibleMember.phoneNumber : '/',
+          comment: data.comment,
+        },
+      })
+      //@ts-ignore
+      RepositoryFactory.get(InsuranceTypeRepos[insuranceTypeState.value])
+        //@ts-ignore
+        .createDraft(draftData.value, insuranceTypeState.value)
+        .then(() => {
+          router.push('/home')
+        })
+    }
+
     return {
       CountryRepository,
       InputTypes,
       onSubmit,
       values,
       back,
+      isEdit,
+      saveAsDraft,
     }
   },
 })

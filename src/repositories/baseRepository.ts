@@ -1,5 +1,9 @@
+import { InsuranceTypeId, InsuranceTypes } from '@/enums/insuranceTypes'
 import BaseApiRepository from '@/repositories/baseApiRepository'
 import { ArrayResult } from '@/serializer/ArrayResult'
+import { ResponsibleMember } from '@/serializer/ResponsibleMember'
+import store from '@/store/store'
+import { ref } from 'vue'
 
 export abstract class BaseRepository extends BaseApiRepository {
   abstract id: string
@@ -68,7 +72,31 @@ export abstract class BaseRepository extends BaseApiRepository {
     return url
   }
 
-  removeById(id: string): Promise<any> {
+  removeById(id: string | string[]): Promise<any> {
     return this.delete(this.endpoint + id)
   }
+
+  createDraft(data: any, type: InsuranceTypes) {
+    const draft: draft = { insurance_type: InsuranceTypeId[type], data: this.serializer(data) }
+
+    return this.post('/insurance_drafts/', draft).then((response: any) => {
+      return this.deserializer(response)
+    })
+  }
+
+  getDraftById(id: string): Promise<any> {
+    return this.get('/insurance_drafts/' + id, {}).then((response: any) => {
+      const userData = ref<ResponsibleMember>(store.getters.user)
+
+      if (userData.value.scoutsGroups) {
+        response.data.group = userData.value.scoutsGroups.find((x) => x.id === response.data.group)
+        return this.deserializer(response.data)
+      }
+    })
+  }
+}
+
+export interface draft {
+  insurance_type: string
+  data: any
 }

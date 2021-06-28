@@ -98,7 +98,17 @@
         <p>De factuur wordt naar de financieel verantwoordelijke van deze groep gestuurd.</p>
         <div class="flex">
           <div style="width: 65%">
-            <multi-select :disabled="isEdit" id="group" rules="required" placeholder="Group" track-by="fullInfo" value-prop="id" :options="userData.scoutsGroups" label="Selecteer groep" />
+            <multi-select
+              :object="true"
+              :disabled="isEdit"
+              id="group"
+              rules="required"
+              placeholder="Group"
+              track-by="fullInfo"
+              value-prop="id"
+              :options="userData.scoutsGroups"
+              label="Selecteer groep"
+            />
           </div>
         </div>
       </div>
@@ -122,6 +132,7 @@
 
     <div class="mt-5">
       <custom-button text="Volgende" />
+      <custom-button v-if="!isEdit" @click="saveAsDraft()" type="button" class="ml-3" text="OPSLAAN" />
     </div>
   </form>
 </template>
@@ -153,6 +164,8 @@ import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import moment from 'moment'
 import Required from '@/components/semantic/Required.vue'
+import { InsuranceTypeRepos } from '@/enums/insuranceTypes'
+import router from '@/router'
 
 export default defineComponent({
   name: 'RequestInsuranceGeneral',
@@ -181,24 +194,12 @@ export default defineComponent({
       initialValues: {
         startDate: data.startDate ? data.startDate : '',
         endDate: data.endDate ? data.endDate : '',
-        group: data.group ? data.group.id : userData.value.scoutsGroups ? userData.value.scoutsGroups[0].id : '',
+        group: data.group ? data.group : userData.value.scoutsGroups ? userData.value.scoutsGroups[0] : undefined,
         responsibleMember: data.responsibleMember ? data.responsibleMember : userData.value,
         insuranceOptions: data.insuranceOptions ? data.insuranceOptions : [],
         maxCoverage: data.maxCoverage ? data.maxCoverage : [],
       },
     })
-
-    watch(
-      () => values.insuranceOptions,
-      (current, old) => {
-        if (old && current && old.includes(2) && current.includes(1)) {
-          values.insuranceOptions = current.filter((item) => ![2].includes(item))
-        }
-        if (old && current && old.includes(1) && current.includes(2)) {
-          values.insuranceOptions = current.filter((item) => ![1].includes(item))
-        }
-      }
-    )
 
     const insuranceTypeState = computed((): InsuranceTypes => {
       return store.state.insurance.insuranceTypeState
@@ -209,7 +210,7 @@ export default defineComponent({
       const generalInsuranceState = ref<BaseInsurance>({
         startDate: values.startDate,
         endDate: values.endDate,
-        group: { name: values.group },
+        group: values.group,
         responsibleMember: values.responsibleMember ? values.responsibleMember : userData.value,
         totalCost: '1.00',
         insuranceOptions: values.insuranceOptions ? values.insuranceOptions : [],
@@ -227,8 +228,6 @@ export default defineComponent({
         })
     }
 
-    fetchMaxCoverages()
-
     const refreshGroups = () => {
       RepositoryFactory.get(AuthRepository)
         .me()
@@ -239,11 +238,45 @@ export default defineComponent({
         })
     }
 
+    const saveAsDraft = () => {
+      const draftData = ref<BaseInsurance>({
+        startDate: values.startDate,
+        endDate: values.endDate,
+        group: values.group,
+        responsibleMember: values.responsibleMember ? values.responsibleMember : userData.value,
+        totalCost: '1.00',
+        insuranceOptions: values.insuranceOptions ? values.insuranceOptions : [],
+        maxCoverage: values.maxCoverage ? values.maxCoverage : undefined,
+      })
+
+      //@ts-ignore
+      RepositoryFactory.get(InsuranceTypeRepos[insuranceTypeState.value])
+        //@ts-ignore
+        .createDraft(draftData.value, insuranceTypeState.value)
+        .then(() => {
+          router.push('/home')
+        })
+    }
+
+    fetchMaxCoverages()
+
     watch(
       () => insuranceTypeState.value,
       () => {
         if (insuranceTypeState.value === InsuranceTypes.TIJDELIJKE_AUTO_VERZEKERING) {
           values.insuranceOptions = []
+        }
+      }
+    )
+
+    watch(
+      () => values.insuranceOptions,
+      (current, old) => {
+        if (old && current && old.includes(2) && current.includes(1)) {
+          values.insuranceOptions = current.filter((item) => ![2].includes(item))
+        }
+        if (old && current && old.includes(1) && current.includes(2)) {
+          values.insuranceOptions = current.filter((item) => ![1].includes(item))
         }
       }
     )
@@ -260,6 +293,7 @@ export default defineComponent({
       isEdit,
       values,
       refreshGroups,
+      saveAsDraft,
     }
   },
 })

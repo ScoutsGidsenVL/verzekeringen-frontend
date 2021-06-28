@@ -46,6 +46,7 @@
     <div class="flex gap-3 px-5 mt-5">
       <custom-button type="button" text="Vorige" @click="back()" />
       <custom-button text="Volgende" />
+      <custom-button v-if="!isEdit" @click="saveAsDraft()" type="button" class="float-right" text="OPSLAAN" />
     </div>
   </form>
 </template>
@@ -60,13 +61,15 @@ import { Country, CountryDeserializer } from '@/serializer/Country'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
-import { InsuranceTypeRepos } from '@/enums/insuranceTypes'
+import { InsuranceTypeRepos, InsuranceTypes } from '@/enums/insuranceTypes'
 import CustomButton from '@/components/CustomButton.vue'
 import { computed, defineComponent, ref } from 'vue'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
+import router from '@/router'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'MaterialInsurance',
@@ -78,6 +81,7 @@ export default defineComponent({
     'select-equipment': SelectEquipment,
   },
   setup() {
+    const route = useRoute()
     const store = useStore()
     const initialCountry = ref<Country>(CountryDeserializer({ id: '3232', name: 'België' }))
     const data: MaterialInsurance = store.getters.getCurrentInsuranceState
@@ -89,6 +93,7 @@ export default defineComponent({
         equipment: data.equipment ? data.equipment : [],
       },
     })
+    const isEdit = !!route.params.id
 
     const generalInsuranceState = computed(() => {
       return store.state.insurance.generalInsuranceState
@@ -122,6 +127,31 @@ export default defineComponent({
       store.dispatch('setHolderState', HolderStates.GENERAL)
     }
 
+    const insuranceTypeState = computed((): InsuranceTypes => {
+      return store.state.insurance.insuranceTypeState
+    })
+
+    const saveAsDraft = () => {
+      const draftData = ref<MaterialInsurance>({
+        ...generalInsuranceState.value,
+        ...{
+          nature: values.nature,
+          postCodeCity: values.postCodeCity ? values.postCodeCity : undefined,
+          country: values.country ? values.country : undefined,
+          comment: data.comment,
+          equipment: values.equipment ? values.equipment : undefined,
+        },
+      })
+
+      //@ts-ignore
+      RepositoryFactory.get(InsuranceTypeRepos[insuranceTypeState.value])
+        //@ts-ignore
+        .createDraft(draftData.value, insuranceTypeState.value)
+        .then(() => {
+          router.push('/home')
+        })
+    }
+
     return {
       BelgianCitySearchRepository,
       CountryRepository,
@@ -131,6 +161,8 @@ export default defineComponent({
       data,
       generalInsuranceState,
       back,
+      isEdit,
+      saveAsDraft,
     }
   },
 })

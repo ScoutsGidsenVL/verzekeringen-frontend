@@ -123,6 +123,7 @@ const routes: any[] = [
     meta: {
       requiresOpenIdAuth: true,
       title: 'Verzekering Bewerken',
+      isDraft: true,
     },
   },
 ]

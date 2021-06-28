@@ -16,6 +16,7 @@
   </div>
   <custom-list-item @removeDraft="removeDraft($event)" :isDraft="isDraft" v-for="item in items" :key="item.id" :item="item" />
   <hr class="border-t-2 border-black" />
+  <div v-if="items.length === 0" class="text-center my-3"><i>Geen resultaten</i></div>
 </template>
 
 <script lang="ts">

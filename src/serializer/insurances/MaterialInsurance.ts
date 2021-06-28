@@ -26,17 +26,17 @@ export interface MaterialInsurance {
 
 export const MaterialInsuranceDeserializer = (input: any): MaterialInsurance => {
   const single: MaterialInsurance = {
-    id: input.id,
-    startDate: moment(input.start_date).format('YYYY-MM-DD'),
-    endDate: moment(input.end_date).format('YYYY-MM-DD'),
-    comment: input.comment,
-    group: GroupDeserializer(input.group),
-    nature: input.nature,
-    responsibleMember: ResponsibleMemberDeserializer(input.responsible_member),
-    status: StatusDeserializer(input.status),
+    id: input.id ? input.id : undefined,
+    startDate: input.start_date ? moment(input.start_date).format('YYYY-MM-DD') : undefined,
+    endDate: input.end_date ? moment(input.end_date).format('YYYY-MM-DD') : undefined,
+    comment: input.comment ? input.comment : undefined,
+    group: input.grou ? GroupDeserializer(input.group) : undefined,
+    nature: input.nature ? input.nature : undefined,
+    responsibleMember: input.responsible_member ? ResponsibleMemberDeserializer(input.responsible_member) : undefined,
+    status: input.status ? StatusDeserializer(input.status) : undefined,
     totalCost: input.total_cost ? input.total_cost : undefined,
-    type: TypeDeserializer(input.type),
-    vvksComment: input.vvks_comment,
+    type: input.type ? TypeDeserializer(input.type) : undefined,
+    vvksComment: input.vvks_comment ? input.vvks_comment : undefined,
     country: input.country ? CountryDeserializer(input.country) : undefined,
     postCodeCity: input.postcode_city ? LocationDeserializer(input.postcode_city) : undefined,
     equipment: input.equipment ? input.equipment.map((equipment: any) => EquipmentDeserializer(equipment)) : undefined,
@@ -47,14 +47,14 @@ export const MaterialInsuranceDeserializer = (input: any): MaterialInsurance => 
 
 export const MaterialInsuranceSerializer = (input: MaterialInsurance): MaterialInsurance => {
   const single: any = {
-    start_date: moment(input.startDate).format('YYYY-MM-DDTh:mm:ss'),
-    end_date: moment(input.endDate).format('YYYY-MM-DDTh:mm:ss'),
-    comment: input.comment,
-    group: GroupSerializer(input.group).name,
-    nature: input.nature,
-    responsible_phone_number: ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number,
+    start_date: input.startDate ? moment(input.startDate).format('YYYY-MM-DDTh:mm:ss') : undefined,
+    end_date: input.endDate ? moment(input.endDate).format('YYYY-MM-DDTh:mm:ss') : undefined,
+    comment: input.comment ? input.comment : undefined,
+    group: input.group ? GroupSerializer(input.group).id : undefined,
+    nature: input.nature ? input.nature : undefined,
+    responsible_phone_number: input.responsibleMember ? ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number : undefined,
     country: input.country && input.country.name !== 'België' ? CountrySerializer(input.country).id : undefined,
-    postcode_city: input.country && input.country.name !== 'België' ? undefined : LocationSerializer(input.postCodeCity),
+    postcode_city: input.country && input.country.name !== 'België' ? undefined : input.postCodeCity ? LocationSerializer(input.postCodeCity) : undefined,
     equipment: input.equipment ? input.equipment.map((equipment: any) => EquipmentSerializerToPostInsurance(equipment)) : undefined,
   }
 

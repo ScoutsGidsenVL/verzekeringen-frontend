@@ -77,29 +77,23 @@ export default defineComponent({
     }
 
     const getPreviousDrafts = (previous: string) => {
-      RepositoryFactory.get(InsuranceRepository)
+      RepositoryFactory.get(DraftRepository)
         .getArray(previous)
         .then((res: ArrayResult) => {
-          data.value = res
+          drafts.value = res
         })
     }
 
     const getNextDrafts = (next: string) => {
-      RepositoryFactory.get(InsuranceRepository)
+      RepositoryFactory.get(DraftRepository)
         .getArray(next)
         .then((res: ArrayResult) => {
-          data.value = res
+          drafts.value = res
         })
     }
 
-    const removeDraft = (id: string) => {
-      if (drafts.value) {
-        for (let i = 0; i < drafts.value.results.length; i++) {
-          if (drafts.value.results[i].id === id) {
-            drafts.value.results.splice(i, 1)
-          }
-        }
-      }
+    const removeDraft = () => {
+      getDrafts()
     }
 
     getInsurances()

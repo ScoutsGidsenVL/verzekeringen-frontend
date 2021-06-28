@@ -21,16 +21,16 @@ export interface EventInsurance {
 export const EventInsuranceDeserializer = (input: any): EventInsurance => {
   const single: EventInsurance = {
     id: input.id ? input.id : undefined,
-    startDate: moment(input.start_date).format('YYYY-MM-DD h:mm'),
-    endDate: moment(input.end_date).format('YYYY-MM-DD h:mm'),
+    startDate: input.start_date ? moment(input.start_date).format('YYYY-MM-DD h:mm') : undefined,
+    endDate: input.end_date ? moment(input.end_date).format('YYYY-MM-DD h:mm') : undefined,
     comment: input.comment ? input.comment : undefined,
-    responsibleMember: ResponsibleMemberDeserializer(input.responsible_member),
+    responsibleMember: input.responsible_member ? ResponsibleMemberDeserializer(input.responsible_member) : undefined,
     responsiblePhoneNumber: input.responsible_phone_number ? input.responsible_phone_number : undefined,
-    group: GroupDeserializer(input.group),
-    totalCost: input.total_cost,
-    nature: input.nature,
-    location: LocationDeserializer(input.location),
-    eventSize: input.event_size ? EventSizeDeserializer(input.event_size) : undefined,
+    group: input.group ? GroupDeserializer(input.group) : undefined,
+    totalCost: input.total_cost ? input.total_cost : undefined,
+    nature: input.nature ? input.nature : undefined,
+    location: input.location ? LocationDeserializer(input.location) : undefined,
+    eventSize: input.event_size ? (typeof input.event_size === 'object' ? EventSizeDeserializer(input.event_size) : { id: input.event_size }) : undefined,
   }
 
   return single
@@ -38,15 +38,15 @@ export const EventInsuranceDeserializer = (input: any): EventInsurance => {
 
 export const EventInsuranceSerializer = (input: EventInsurance): EventInsurance => {
   const single: any = {
-    start_date: input.startDate,
-    end_date: input.endDate,
-    comment: input.comment,
-    responsible_phone_number: ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number,
-    group: GroupSerializer(input.group).name,
-    total_cost: input.totalCost,
-    nature: input.nature,
-    location: LocationSerializer(input.location),
-    event_size: input.eventSize ? EventSizeSerializer(input.eventSize).value : undefined,
+    start_date: input.startDate ? input.startDate : undefined,
+    end_date: input.endDate ? input.endDate : undefined,
+    comment: input.comment ? input.comment : undefined,
+    responsible_phone_number: input.responsibleMember ? ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number : undefined,
+    group: input.group ? GroupSerializer(input.group).id : undefined,
+    total_cost: input.totalCost ? input.totalCost : undefined,
+    nature: input.nature ? input.nature : undefined,
+    location: input.location ? LocationSerializer(input.location) : undefined,
+    event_size: input.eventSize ? EventSizeSerializer(input.eventSize).id : undefined,
   }
 
   return single

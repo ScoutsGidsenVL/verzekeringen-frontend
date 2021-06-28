@@ -31,7 +31,7 @@ export const oneTimeActivityDeserializer = (input: any): OneTimeActivity => {
     createdOn: input.created_on ? input.created_on : undefined,
     comment: input.comment ? input.comment : undefined,
     group: input.group ? GroupDeserializer(input.group) : undefined,
-    groupSize: input.group_size ? GroupSizeDeserializer(input.group_size) : undefined,
+    groupSize: input.group_size ? (typeof input.group_size === 'object' ? GroupSizeDeserializer(input.group_size) : { id: input.group_size }) : undefined,
     location: input.location ? LocationDeserializer(input.location) : undefined,
     nature: input.nature ? input.nature : undefined,
     responsibleMember: input.responsible_member ? ResponsibleMemberDeserializer(input.responsible_member) : undefined,
@@ -46,16 +46,16 @@ export const oneTimeActivityDeserializer = (input: any): OneTimeActivity => {
 
 export const oneTimeActivitySerializer = (input: OneTimeActivity): OneTimeActivity => {
   const single: any = {
-    start_date: moment(input.startDate).format('YYYY-MM-DDTh:mm:ss'),
-    end_date: moment(input.endDate).format('YYYY-MM-DDTh:mm:ss'),
-    created_on: input.createdOn,
-    comment: input.comment,
-    group: GroupSerializer(input.group).name,
-    group_size: GroupSizeSerializer(input.groupSize).id,
-    location: LocationSerializer(input.location),
-    nature: input.nature,
-    responsible_phone_number: ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number,
-    total_cost: input.totalCost,
+    start_date: input.startDate ? moment(input.startDate).format('YYYY-MM-DDTh:mm:ss') : undefined,
+    end_date: input.endDate ? moment(input.endDate).format('YYYY-MM-DDTh:mm:ss') : undefined,
+    created_on: input.createdOn ? input.createdOn : undefined,
+    comment: input.comment ? input.comment : undefined,
+    group: input.group ? GroupSerializer(input.group).id : undefined,
+    group_size: input.groupSize ? GroupSizeSerializer(input.groupSize).id : undefined,
+    location: input.location ? LocationSerializer(input.location) : undefined,
+    nature: input.nature ? input.nature : undefined,
+    responsible_phone_number: input.responsibleMember ? ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number : undefined,
+    total_cost: input.totalCost ? input.totalCost : undefined,
   }
 
   return single

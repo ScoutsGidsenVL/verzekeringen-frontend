@@ -1,5 +1,7 @@
-import { TemporaryVehicleDeserializer, TemporaryVehicleInsurance, TemporaryVehicleSerializer } from '@/serializer/insurances/TemporaryVehicleInsurance'
+import { TemporaryVehicleDeserializer, TemporaryVehicleInsurance, TemporaryVehicleSerializer, DraftTemporaryVehicleSerializer } from '@/serializer/insurances/TemporaryVehicleInsurance'
 import { BaseRepository } from '@/repositories/baseRepository'
+import { InsuranceTypeId, InsuranceTypes } from '@/enums/insuranceTypes'
+import { draft } from '@/repositories/baseRepository'
 
 export class TemporaryVehicleRepository extends BaseRepository {
   id = '/insurances/temporary_vehicle/'
@@ -22,6 +24,14 @@ export class TemporaryVehicleRepository extends BaseRepository {
   getCalculatedCost = (data: TemporaryVehicleInsurance) => {
     return this.post(this.endpoint + 'temporary_vehicle/cost/', this.serializer(data)).then((response: any) => {
       return response.total_cost
+    })
+  }
+
+  createDraft(data: any, type: InsuranceTypes) {
+    const draft: draft = { insurance_type: InsuranceTypeId[type], data: DraftTemporaryVehicleSerializer(data) }
+
+    return this.post('/insurance_drafts/', draft).then((response: any) => {
+      return this.deserializer(response)
     })
   }
 }

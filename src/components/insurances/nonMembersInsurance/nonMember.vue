@@ -51,6 +51,7 @@
     <div class="flex gap-3 px-5 mt-5">
       <custom-button type="button" text="Vorige" @click="back()" />
       <custom-button text="Volgende" />
+      <custom-button v-if="!isEdit" @click="saveAsDraft()" type="button" class="float-right" text="OPSLAAN" />
     </div>
   </form>
 </template>
@@ -70,8 +71,10 @@ import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
 import { Country, CountryDeserializer } from '@/serializer/Country'
-import { InsuranceTypeRepos } from '@/enums/insuranceTypes'
+import { InsuranceTypeRepos, InsuranceTypes } from '@/enums/insuranceTypes'
 import RepositoryFactory from '@/repositories/repositoryFactory'
+import router from '@/router'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'NonMember',
@@ -83,6 +86,8 @@ export default defineComponent({
     'custom-input': CustomInput,
   },
   setup() {
+    const route = useRoute()
+    const isEdit = !!route.params.id
     const store = useStore()
     const initialCountry = ref<Country>(CountryDeserializer({ id: '3232', name: 'België' }))
     const data: NonMemberInsurance = store.getters.getCurrentInsuranceState
@@ -127,6 +132,31 @@ export default defineComponent({
       store.dispatch('setHolderState', HolderStates.GENERAL)
     }
 
+    const insuranceTypeState = computed((): InsuranceTypes => {
+      return store.state.insurance.insuranceTypeState
+    })
+
+    const saveAsDraft = () => {
+      const draftData = ref<NonMemberInsurance>({
+        ...generalInsuranceState.value,
+        ...{
+          nature: values.nature,
+          postCodeCity: values.postCodeCity ? values.postCodeCity : undefined,
+          country: values.country ? values.country : undefined,
+          nonMembers: values.nonMembers ? values.nonMembers : [],
+          comment: data.comment,
+        },
+      })
+
+      //@ts-ignore
+      RepositoryFactory.get(InsuranceTypeRepos[insuranceTypeState.value])
+        //@ts-ignore
+        .createDraft(draftData.value, insuranceTypeState.value)
+        .then(() => {
+          router.push('/home')
+        })
+    }
+
     return {
       BelgianCitySearchRepository,
       CountryRepository,
@@ -135,6 +165,8 @@ export default defineComponent({
       values,
       data,
       back,
+      saveAsDraft,
+      isEdit,
     }
   },
 })

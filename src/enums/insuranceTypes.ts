@@ -41,3 +41,12 @@ export const InsuranceTypeRepos: Record<InsuranceTypes, new (...params: any[]) =
   EVENEMENTEN_VERZEKERING: EventRepository,
   MATERIAAL_VERZEKERING: MaterialInsuranceRepository,
 }
+
+export const InsuranceTypeId: Record<InsuranceTypes, string> = {
+  EENMALIGE_ACTIVITEIT: '1',
+  TIJDELIJKE_VERZEKERING_NIET_LEDEN: '2',
+  REIS_BIJSTAND: '3',
+  TIJDELIJKE_AUTO_VERZEKERING: '5',
+  EVENEMENTEN_VERZEKERING: '10',
+  MATERIAAL_VERZEKERING: '6',
+}

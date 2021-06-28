@@ -17,6 +17,7 @@
       <div class="flex gap-3 px-5 mt-5">
         <custom-button @click="back()" type="button" text="Vorige" />
         <custom-button text="Volgende" />
+        <custom-button v-if="!isEdit" @click="saveAsDraft()" type="button" class="float-right" text="OPSLAAN" />
       </div>
     </div>
   </form>
@@ -40,7 +41,9 @@ import { Owner } from '@/serializer/Owner'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
 import RepositoryFactory from '@/repositories/repositoryFactory'
-import { InsuranceTypeRepos } from '@/enums/insuranceTypes'
+import { InsuranceTypeRepos, InsuranceTypes } from '@/enums/insuranceTypes'
+import { useRoute } from 'vue-router'
+import router from '@/router'
 
 export default defineComponent({
   name: 'TemporaryVehicle',
@@ -51,8 +54,10 @@ export default defineComponent({
     'custom-button': CustomButton,
   },
   setup() {
+    const route = useRoute()
     const store = useStore()
     const data: TemporaryVehicleInsurance = store.getters.getCurrentInsuranceState
+    const isEdit = !!route.params.id
 
     const checkIfOwnerIsDriver = (owner: Owner, drivers: Driver[]) => {
       let status = IS_NO_DRIVER
@@ -122,6 +127,42 @@ export default defineComponent({
       store.dispatch('setHolderState', HolderStates.GENERAL)
     }
 
+    const insuranceTypeState = computed((): InsuranceTypes => {
+      return store.state.insurance.insuranceTypeState
+    })
+
+    const saveAsDraft = () => {
+      const draftData = ref<TemporaryVehicleInsurance>({
+        ...generalInsuranceState.value,
+        ...{
+          vehicle: values.vehicle ? values.vehicle : undefined,
+          drivers: values.selectDriverField && values.selectDriverField.drivers ? values.selectDriverField.drivers : [],
+          selectDriverField: values.selectDriverField,
+          owner:
+            values.selectDriverField && values.selectDriverField.isDriverOwner === IS_NO_DRIVER
+              ? values.input
+              : values.selectDriverField &&
+                values.selectDriverField.drivers.find((driver: Driver) => {
+                  // Nescescarry for a put request
+                  if (driver.firstName && driver.lastName) {
+                    if (values.selectDriverField && driver.firstName + driver.lastName + driver.birthDate === values.selectDriverField.isDriverOwner) {
+                      return driver
+                    }
+                  }
+                }),
+          comment: data.comment,
+        },
+      })
+
+      //@ts-ignore
+      RepositoryFactory.get(InsuranceTypeRepos[insuranceTypeState.value])
+        //@ts-ignore
+        .createDraft(draftData.value, insuranceTypeState.value)
+        .then(() => {
+          router.push('/home')
+        })
+    }
+
     return {
       BelgianCitySearchRepository,
       CountryRepository,
@@ -129,6 +170,8 @@ export default defineComponent({
       onSubmit,
       values,
       back,
+      isEdit,
+      saveAsDraft,
     }
   },
 })

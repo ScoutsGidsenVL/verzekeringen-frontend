@@ -41,6 +41,7 @@
     <div class="flex gap-3 px-5 mt-5">
       <custom-button @click="back()" type="button" text="Vorige" />
       <custom-button text="Volgende" />
+      <custom-button v-if="!isEdit" @click="saveAsDraft()" type="button" class="float-right" text="OPSLAAN" />
     </div>
   </form>
 </template>
@@ -59,7 +60,9 @@ import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
-import { InsuranceTypeRepos } from '@/enums/insuranceTypes'
+import { InsuranceTypeRepos, InsuranceTypes } from '@/enums/insuranceTypes'
+import { useRoute } from 'vue-router'
+import router from '@/router'
 
 type eventInsuranceFormType = {
   nature: string
@@ -76,6 +79,8 @@ export default defineComponent({
     'custom-input': CustomInput,
   },
   setup() {
+    const route = useRoute()
+
     const store = useStore()
     const data: any = store.getters.getCurrentInsuranceState
     const { handleSubmit, values } = useForm<eventInsuranceFormType>({
@@ -85,6 +90,7 @@ export default defineComponent({
         eventSize: data.eventSize ? data.eventSize : '',
       },
     })
+    const isEdit = !!route.params.id
 
     const generalInsuranceState = computed(() => {
       return store.state.insurance.generalInsuranceState
@@ -129,6 +135,30 @@ export default defineComponent({
       store.dispatch('setHolderState', HolderStates.GENERAL)
     }
 
+    const insuranceTypeState = computed((): InsuranceTypes => {
+      return store.state.insurance.insuranceTypeState
+    })
+
+    const saveAsDraft = () => {
+      const draftData = ref<EventInsurance>({
+        ...generalInsuranceState.value,
+        ...{
+          nature: values.nature,
+          location: values.location,
+          eventSize: values.eventSize,
+          comment: data.comment,
+        },
+      })
+
+      //@ts-ignore
+      RepositoryFactory.get(InsuranceTypeRepos[insuranceTypeState.value])
+        //@ts-ignore
+        .createDraft(draftData.value, insuranceTypeState.value)
+        .then(() => {
+          router.push('/home')
+        })
+    }
+
     return {
       eventSizes,
       BelgianCitySearchRepository,
@@ -137,6 +167,8 @@ export default defineComponent({
       generalInsuranceState,
       values,
       back,
+      saveAsDraft,
+      isEdit,
     }
   },
 })
