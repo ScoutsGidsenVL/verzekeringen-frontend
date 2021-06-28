@@ -1,7 +1,22 @@
 <template>
   <div>
-    <base-side-bar :isEdit="isEdit" v-model:isDisplay="display" v-model:selection="selected" name="NonMember" :title="title" :options="['Nieuw', 'Bestaand']">
-      <form v-if="selected === 'NieuwNonMember'" id="addNewNonMember" ref="formDiv" class="d-flex flex-col relative overflow-y-scroll h-full" @submit.prevent="onSubmit">
+    <base-side-bar
+      :selection="selected"
+      :is-display="sideBarState.state !== 'hide'"
+      :is-edit="sideBarState.state === 'edit'"
+      name="NonMember"
+      :title="title"
+      :options="['Nieuw', 'Bestaand']"
+      @options="changeSideBar"
+      @hideSidebar="closeSideBar"
+    >
+      <form
+        id="addNewNonMember"
+        ref="formDiv"
+        :class="{ 'd-flex': sideBarState.state === 'new' || sideBarState.state === 'edit', 'd-none': sideBarState.state === 'list' }"
+        class="flex-col relative overflow-y-scroll h-full"
+        @submit.prevent="onSubmit"
+      >
         <success-toast v-model:showOrHide="formSendWithSuccess" label="Niet lid succesvol toegevoegd" />
         <div class="mt-4">
           <div class="w-96">
@@ -55,11 +70,11 @@
         </div>
 
         <div class="mt-5 py-4 sticky bottom-0 bg-white">
-          <custom-button :text="isEdit ? 'Bewerk' : 'Voeg toe'" />
+          <custom-button :text="sideBarState.state === 'edit' ? 'Bewerk' : 'Voeg toe'" />
         </div>
       </form>
 
-      <form v-if="selected === 'BestaandNonMember'" class="d-flex flex-col h-full" @submit.prevent="onSubmit">
+      <form :class="{ 'd-flex': sideBarState.state === 'list', 'd-none': sideBarState.state === 'new' || sideBarState.state === 'edit' }" class="flex-col h-full" @submit.prevent="onSubmit">
         <div>
           <search-input v-model:loading="loading" name="nonMember" placeholder="Zoek op naam" :repository="NonMemberRepository" @fetchedOptions="fetchedOptions($event)" />
         </div>
@@ -74,7 +89,6 @@
             </non-member-item>
           </div>
         </div>
-        <div v-if="selected.value === 'NieuwNonMember'" class="mt-5"><custom-button text="Voeg toe" /></div>
       </form>
     </base-side-bar>
   </div>
@@ -91,13 +105,22 @@ import CustomInput from '@/components/inputs/CustomInput.vue'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomButton from '@/components/CustomButton.vue'
 import { NonMember } from '@/serializer/NonMember'
-import { defineComponent, PropType, ref, watch } from 'vue'
+import { computed, defineComponent, PropType, ref, toRefs, watch } from 'vue'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
 import SearchInput from '@/components/inputs/SearchInput.vue'
 import { scrollToFirstError, useScrollToTop, useFormSendWithSuccess } from '@/veeValidate/helpers'
 import SuccessToast from '@/components/semantic/successToast.vue'
+
+export type sideBarState<T> =
+  | {
+      state: 'edit'
+      entity: T
+    }
+  | { state: 'list' }
+  | { state: 'new' }
+  | { state: 'hide' }
 
 export default defineComponent({
   name: 'NonMemberSideBar',
@@ -115,10 +138,6 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    isDisplay: {
-      type: Boolean,
-      required: true,
-    },
     existingList: {
       type: Array,
       default: () => {
@@ -130,13 +149,12 @@ export default defineComponent({
       default: false,
       required: false,
     },
-    isEdit: {
-      type: Boolean,
+    sideBarState: {
+      type: Object as PropType<sideBarState<NonMember>>,
       required: true,
-    },
-    inputNonMember: {
-      type: Object as PropType<NonMember>,
-      required: true,
+      default: () => {
+        'hide'
+      },
     },
     isExtraInformationComment: {
       type: Boolean,
@@ -144,34 +162,62 @@ export default defineComponent({
       default: false,
     },
   },
+  emits: ['update:sideBarState', 'addCreatedNonMemberToList', 'updateMemberInList'],
   setup(props, context) {
     const store = useStore()
     const user = ref<ResponsibleMember>(store.getters.user)
-    const display = ref<boolean>(props.isDisplay)
-    const { resetForm, errors, handleSubmit, validate, meta } = useForm<NonMember>({
-      initialValues: {
-        id: props.isEdit ? props.inputNonMember.id : '',
-        lastName: props.isEdit ? props.inputNonMember.lastName : '',
-        firstName: props.isEdit ? props.inputNonMember.firstName : '',
-        phoneNumber: props.isEdit ? props.inputNonMember.phoneNumber : '',
-        birthDate: props.isEdit ? props.inputNonMember.birthDate : '',
-        street: props.isEdit ? props.inputNonMember.street : '',
-        number: props.isEdit ? props.inputNonMember.number : '',
-        letterBox: props.isEdit ? props.inputNonMember.letterBox : '',
-        comment: props.isEdit ? props.inputNonMember.comment : '',
-        postCodeCity: props.isEdit ? props.inputNonMember.postCodeCity : {},
-      },
-    })
+    const { resetForm, errors, handleSubmit, validate, meta, values } = useForm<NonMember>()
     const { formSendWithSuccess } = useFormSendWithSuccess<NonMember>(meta)
-    const selected = ref<string>('NieuwNonMember')
+    const selected = computed(() => (props.sideBarState.state === 'list' ? 'BestaandNonMember' : 'NieuwNonMember'))
     const selectedNonMembers = ref<NonMember[]>([])
     const loading = ref<boolean>(false)
     const { formDiv, scrollToTop } = useScrollToTop()
 
+    const { sideBarState } = toRefs(props)
+
+    watch(sideBarState, (value: sideBarState<NonMember>) => {
+      if (value.state === 'edit') {
+        formSendWithSuccess.value = false
+        resetForm({
+          values: {
+            id: value.entity.id,
+            lastName: value.entity.lastName,
+            firstName: value.entity.firstName,
+            phoneNumber: value.entity.phoneNumber,
+            birthDate: value.entity.birthDate,
+            street: value.entity.street,
+            number: value.entity.number,
+            letterBox: value.entity.letterBox,
+            comment: value.entity.comment,
+            postCodeCity: value.entity.postCodeCity,
+          },
+        })
+      }
+
+      if (value.state === 'new') {
+        formSendWithSuccess.value = false
+        resetForm({
+          values: {
+            id: '',
+            lastName: '',
+            firstName: '',
+            phoneNumber: '',
+            birthDate: '',
+            street: '',
+            number: '',
+            letterBox: '',
+            comment: '',
+            postCodeCity: {},
+          },
+          errors: {},
+        })
+      }
+    })
+
     const onSubmit = async () => {
       await validate().then((validation: any) => scrollToFirstError(validation, 'addNewNonMember'))
       handleSubmit(async (values: NonMember) => {
-        if (selected.value === 'NieuwNonMember') {
+        if (props.sideBarState.state === 'new' || props.sideBarState.state === 'edit') {
           const generalInsuranceState = ref<any>(store.getters.generalInsuranceState)
 
           const nonMember = ref<NonMember>({
@@ -187,14 +233,14 @@ export default defineComponent({
             postCodeCity: values.postCodeCity,
             group: generalInsuranceState.value.group.name,
           })
-          if (props.isEdit) {
-            editNonMember(nonMember.value)
+          if (props.sideBarState.state === 'edit') {
+            await editNonMember(nonMember.value)
           } else {
-            postNonMember(nonMember.value)
+            await postNonMember(nonMember.value)
           }
         }
 
-        selectedNonMembers.value = []
+        // selectedNonMembers.value = []
       })()
     }
 
@@ -203,7 +249,7 @@ export default defineComponent({
         context.emit('addCreatedNonMemberToList', nonMember)
       }
       if (props.closeOnAdd) {
-        display.value = false
+        closeSideBar()
       }
     }
 
@@ -214,10 +260,7 @@ export default defineComponent({
           .update(data.id, data)
           .then((completed: NonMember) => {
             context.emit('updateMemberInList', completed)
-            formSendWithSuccess.value = true
-            resetForm()
-            scrollToTop()
-            display.value = false
+            closeSideBar()
           })
       }
     }
@@ -229,10 +272,10 @@ export default defineComponent({
         .then((completed: NonMember) => {
           context.emit('addCreatedNonMemberToList', completed)
           formSendWithSuccess.value = true
-          resetForm()
           scrollToTop()
+          resetForm()
           if (props.closeOnAdd) {
-            display.value = false
+            closeSideBar()
           }
         })
     }
@@ -245,22 +288,20 @@ export default defineComponent({
       loading.value = false
     }
 
-    watch(
-      () => props.isDisplay,
-      () => {
-        display.value = props.isDisplay
-      }
-    )
+    const closeSideBar = () => {
+      context.emit('update:sideBarState', { state: 'hide' })
+    }
 
-    watch(
-      () => display.value,
-      () => {
-        context.emit('update:isDisplay', display.value)
-        if (!display.value) {
-          context.emit('update:isEdit', display.value)
-        }
+    const changeSideBar = (options: 'NieuwNonMember' | 'BestaandNonMember') => {
+      console.log(options)
+      if (options === 'NieuwNonMember') {
+        context.emit('update:sideBarState', { state: 'new' })
       }
-    )
+
+      if (options === 'BestaandNonMember') {
+        context.emit('update:sideBarState', { state: 'list' })
+      }
+    }
 
     return {
       BelgianCitySearchRepository,
@@ -269,7 +310,6 @@ export default defineComponent({
       addNonMember,
       InputTypes,
       selected,
-      display,
       onSubmit,
       user,
       fetchedOptions,
@@ -278,6 +318,9 @@ export default defineComponent({
       formDiv,
       errors,
       editNonMember,
+      closeSideBar,
+      changeSideBar,
+      values,
     }
   },
 })

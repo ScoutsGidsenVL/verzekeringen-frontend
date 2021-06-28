@@ -1,17 +1,14 @@
 <template>
-  <non-member-list :canBeDeleted="true" :nonMembersList="nonMembers" @deleteNonMemberFromList="deleteNonMemberFromList($event)" @editNonMember="editNonMember($event)" />
+  <non-member-list :can-be-deleted="true" :non-members-list="nonMembers" @deleteNonMemberFromList="deleteNonMemberFromList($event)" @editNonMember="editNonMember($event)" />
   <ErrorMessage :name="id" class="text-red text-sm block mt-1 w-80" />
 
   <div class="mt-2 text-lightGreen"><strong class="cursor-pointer" @click="openSideBar()"> + Voeg niet-lid toe </strong><required :rules="rules" /></div>
 
   <non-member-side-bar
-    v-if="isDisplay"
-    :isExtraInformationComment="isExtraInformationComment"
-    v-model:isEdit="isEdit"
-    :inputNonMember="nonMemberToEdit"
-    :existingList="nonMembers"
-    v-model:isDisplay="isDisplay"
-    :title="isEdit ? 'Bewerk niet lid' : 'Niet lid'"
+    v-model:side-bar-state="sideBarState"
+    :is-extra-information-comment="isExtraInformationComment"
+    :existing-list="nonMembers"
+    :title="sideBarState.state === 'edit' ? 'Bewerk niet lid' : 'Niet lid'"
     @addCreatedNonMemberToList="addCreatedNonMemberToList($event)"
     @updateMemberInList="updateMemberInList($event)"
   />
@@ -24,6 +21,7 @@ import { ErrorMessage, useField } from 'vee-validate'
 import { NonMember } from '@/serializer/NonMember'
 import { defineComponent, ref } from 'vue'
 import Required from '@/components/semantic/Required.vue'
+import { sideBarState } from './nonMemberSideBar.vue'
 
 export default defineComponent({
   name: 'SelectNonMembers',
@@ -53,11 +51,10 @@ export default defineComponent({
     const { value: nonMembers } = useField<NonMember[]>(props.id, props.rules, {
       initialValue: [],
     })
-
-    const isDisplay = ref<boolean>(false)
+    const sideBarState = ref<sideBarState<NonMember>>({ state: 'hide' })
 
     const openSideBar = () => {
-      isDisplay.value = true
+      sideBarState.value = { state: 'new' }
     }
     const addCreatedNonMemberToList = (nonMember: NonMember) => {
       if (nonMember) {
@@ -69,13 +66,11 @@ export default defineComponent({
       nonMembers.value.splice(Number(id), 1)
     }
 
-    const isEdit = ref<Boolean>(false)
-    const nonMemberToEdit = ref<NonMember>()
-
     const editNonMember = (nonMember: NonMember) => {
-      nonMemberToEdit.value = nonMember
-      isEdit.value = true
-      isDisplay.value = true
+      sideBarState.value = {
+        state: 'edit',
+        entity: nonMember,
+      }
     }
 
     const updateMemberInList = (nonMember: NonMember) => {
@@ -95,12 +90,10 @@ export default defineComponent({
       addCreatedNonMemberToList,
       deleteNonMemberFromList,
       updateMemberInList,
-      nonMemberToEdit,
       editNonMember,
       openSideBar,
       nonMembers,
-      isDisplay,
-      isEdit,
+      sideBarState,
     }
   },
 })
