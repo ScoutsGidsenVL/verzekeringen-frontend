@@ -221,7 +221,7 @@ export default defineComponent({
             letterBox: values.letterBox,
             comment: values.comment,
             postCodeCity: values.postCodeCity,
-            group: generalInsuranceState.value.group.name,
+            group: generalInsuranceState.value.group.id,
           })
           if (props.sideBarState.state === 'edit') {
             await editNonMember(nonMember.value)

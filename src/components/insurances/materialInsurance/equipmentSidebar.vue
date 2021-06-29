@@ -35,22 +35,25 @@
             </div>
           </div>
 
-          <div v-show="!isGroupEquipement">
-            <div>
-              <strong class="cursor-pointer text-lightGreen" @click="openMemberSideBar()"> Selecteer lid </strong>
-              <members-side-bar v-model:isDisplay="isMemberSideBarDisplay" :close-on-add="true" :existing-list="members" title="Lid" @addMemberToList="addMember($event)" />
+          <div>
+            <div v-show="isGroupEquipement === false">
+              <div>
+                <strong class="cursor-pointer text-lightGreen" @click="openMemberSideBar()"> Selecteer lid </strong>
+                <members-side-bar v-model:isDisplay="isMemberSideBarDisplay" :close-on-add="true" :existing-list="members" title="Lid" @addMemberToList="addMember($event)" />
+              </div>
+
+              <div class="mt-3">
+                <strong class="cursor-pointer text-lightGreen" @click="openNonMemberSideBar()"> Selecteer niet-lid </strong>
+                <non-member-side-bar
+                  v-model:side-bar-state="nonMemberSideBarState"
+                  :close-on-add="true"
+                  :existing-list="nonMembers"
+                  title="Niet lid"
+                  @addCreatedNonMemberToList="addCreatedNonMember($event)"
+                />
+              </div>
             </div>
 
-            <div class="mt-3">
-              <strong class="cursor-pointer text-lightGreen" @click="openNonMemberSideBar()"> Selecteer niet-lid </strong>
-              <non-member-side-bar
-                v-model:side-bar-state="nonMemberSideBarState"
-                :close-on-add="true"
-                :existing-list="nonMembers"
-                title="Niet lid"
-                @addCreatedNonMemberToList="addCreatedNonMember($event)"
-              />
-            </div>
             <div class="mt-4">
               <p>Wil je een fiets verzekeren</p>
               <div class="flex gap-7">
@@ -205,6 +208,9 @@ export default defineComponent({
             group: value.entity.group,
           },
         })
+        if (!values.ownerMember && !values.ownerMember) {
+          isGroupEquipement.value = true
+        }
       }
 
       if (value.state === 'new') {
