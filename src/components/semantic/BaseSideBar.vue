@@ -9,8 +9,8 @@
           />
         </svg>
       </div>
-      <h1 class="group-search__title mb-3 mt-0 inline-block relative text-xl" style="font-size: 2rem; position: initial">
-        <span>{{ title }} toevoegen</span>
+      <h1 class="group-search__title mb-3 mt-0 inline-block relative text-xl" style="font-size: 2rem; position: initial; transition: none !important">
+        <span class="animate-none">{{ title }} toevoegen</span>
       </h1>
       <form v-if="options && !isEdit" action="">
         <div class="flex gap-7">
@@ -109,5 +109,17 @@ header {
   display: block;
   position: sticky;
   top: 0;
+}
+
+.group-search__title:before {
+  animation: backgroundReveal 0s 0s both;
+}
+
+.group-search__title:after {
+  animation: backgroundReveal 0s 0s both;
+}
+
+.group-search__title span {
+  animation: fadeIn 0s 0s both;
 }
 </style>
