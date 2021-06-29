@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://use.typekit.net/frt5hnw.css');
+@import './css/scouts1.css';
+@import './css/scouts2.css';
+@import './css/scouts3.css';
+@import './css/scouts4.css';
+@import './css/scouts5.css';

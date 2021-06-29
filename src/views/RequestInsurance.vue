@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="container">
     <request-bread-crumb />
   </div>
-  <div>
+  <div class="container">
     <state-form-holder />
   </div>
 </template>

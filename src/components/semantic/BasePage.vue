@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="container mt-8 mb-4 pt-2">
     <page-title />
-    <slot />
   </div>
+  <slot />
 </template>
 
 <script lang="ts">
