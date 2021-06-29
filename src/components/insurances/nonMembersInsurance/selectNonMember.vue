@@ -1,8 +1,7 @@
 <template>
+  <div class="text-lightGreen"><a class="cursor-pointer link-inline" @click="openSideBar()"> + Voeg niet-lid toe </a><required :rules="rules" /></div>
   <non-member-list :can-be-deleted="true" :non-members-list="nonMembers" @deleteNonMemberFromList="deleteNonMemberFromList($event)" @editNonMember="editNonMember($event)" />
   <ErrorMessage :name="id" class="text-red text-sm block mt-1 w-80" />
-
-  <div class="mt-2 text-lightGreen"><strong class="cursor-pointer" @click="openSideBar()"> + Voeg niet-lid toe </strong><required :rules="rules" /></div>
 
   <non-member-side-bar
     v-model:side-bar-state="sideBarState"
