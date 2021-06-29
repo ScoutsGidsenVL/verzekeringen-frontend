@@ -2,6 +2,15 @@
   <base-detail :data="materialInsuranceState" :repository="MaterialInsuranceRepository" title="Materiaal">
     <template #default="{ details }">
       <div v-if="details" class="mt-1">
+        <div v-if="!(holderState === HolderStates.DETAIL) && details.comment">
+          <p class="font-semibold">Opmerkingen</p>
+          <div class="px-5">
+            <label-output :text="details.comment" />
+          </div>
+        </div>
+
+        <slot></slot>
+
         <responsible-member-detail :responsible-member="details.responsibleMember" />
 
         <div>
@@ -21,15 +30,6 @@
         <div class="px-5 py-4">
           <equipment-list :equipmentList="details.equipment" />
         </div>
-
-        <div v-if="!(holderState === HolderStates.DETAIL) && details.comment">
-          <p class="font-semibold">Opmerkingen</p>
-          <div class="px-5">
-            <label-output :text="details.comment" />
-          </div>
-        </div>
-
-        <slot></slot>
       </div>
     </template>
   </base-detail>

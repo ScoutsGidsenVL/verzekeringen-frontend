@@ -6,11 +6,12 @@
     <div class="mt-3">
       <div v-html="titelText"></div>
     </div>
-    <slot :details="details" :isDetail="isDetail" />
 
-    <div v-if="details" class="mt-5 cw-auto pl-5 pt-5 pb-5 bg-lightGray">
+    <div v-if="details" class="my-3 cw-auto pl-5 pt-5 pb-5 bg-lightGray">
       <h1 class="text-2xl font-extrabold">€{{ details.totalCost }}</h1>
     </div>
+
+    <slot :details="details" :isDetail="isDetail" />
   </div>
 
   <div v-if="holderState === HolderStates.COMPLETED" class="mt-4 inline-block">

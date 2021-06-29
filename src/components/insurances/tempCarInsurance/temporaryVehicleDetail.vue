@@ -2,6 +2,15 @@
   <base-detail :data="temporaryVehicleState" :repository="TemporaryVehicleRepository" title="Tijdelijke">
     <template #default="{ details }">
       <div v-if="details" class="mt-1">
+        <div v-if="!(holderState === HolderStates.DETAIL)">
+          <p class="font-semibold">Opmerkingen</p>
+          <div v-if="details.comment" class="px-5">
+            <label-output :text="details.comment" />
+          </div>
+        </div>
+
+        <slot></slot>
+
         <responsible-member-detail :responsible-member="details.responsibleMember" />
 
         <div>
@@ -54,15 +63,6 @@
             <vehicle-item :vehicle="details.vehicle" :no-line="true" />
           </div>
         </div>
-
-        <div v-if="!(holderState === HolderStates.DETAIL)">
-          <p class="font-semibold">Opmerkingen</p>
-          <div v-if="details.comment" class="px-5">
-            <label-output :text="details.comment" />
-          </div>
-        </div>
-
-        <slot></slot>
       </div>
     </template>
   </base-detail>

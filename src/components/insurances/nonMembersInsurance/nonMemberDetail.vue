@@ -2,6 +2,15 @@
   <base-detail :data="nonMemberState" :repository="NonMemberInsuranceRepository" title="Niet leden">
     <template #default="{ details }">
       <div v-if="details" class="mt-1">
+        <div v-if="!(holderState === HolderStates.DETAIL)">
+          <p class="font-semibold">Opmerkingen</p>
+          <div v-if="details.comment" class="px-5">
+            <label-output :text="details.comment" />
+          </div>
+        </div>
+
+        <slot></slot>
+
         <responsible-member-detail :responsible-member="details.responsibleMember" />
 
         <div>
@@ -19,15 +28,6 @@
             <non-members-list :nonMembersList="details.nonMembers" />
           </div>
         </div>
-
-        <div v-if="!(holderState === HolderStates.DETAIL)">
-          <p class="font-semibold">Opmerkingen</p>
-          <div v-if="details.comment" class="px-5">
-            <label-output :text="details.comment" />
-          </div>
-        </div>
-
-        <slot></slot>
       </div>
     </template>
   </base-detail>
