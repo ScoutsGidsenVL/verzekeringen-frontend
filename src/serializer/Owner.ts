@@ -35,6 +35,7 @@ export const OwnerSerializer = (input: any): any => {
     birth_date: input.birthDate ? input.birthDate : '2000-01-01',
     street: input.street ? input.street : undefined,
     number: input.number ? input.number : undefined,
+    letter_box: input.letterBox ? input.letterBox : undefined,
     comment: input.comment ? input.comment : undefined,
     postcode_city: input.postCodeCity ? LocationSerializer(input.postCodeCity) : undefined,
     company_name: input.companyName ? input.companyName : undefined,

@@ -69,6 +69,7 @@ export default defineComponent({
         }
       })
       store.dispatch('setIsDriverOwnerState', status)
+      console.log('status:', status)
       return status
     }
 
@@ -77,7 +78,7 @@ export default defineComponent({
         drivers: data.drivers ? data.drivers : [],
         vehicle: data.vehicle ? data.vehicle : undefined,
         owner: data.owner ? data.owner : { firstName: '', lastName: '' },
-        input: data.input ? data.input : { firstName: '', lastName: '' },
+        input: data.owner ? data.owner : { firstName: '', lastName: '' },
         selectDriverField: {
           drivers: data.drivers ? data.drivers : [],
           isDriverOwner: checkIfOwnerIsDriver(data.owner ? data.owner : { firstName: '', lastName: '' }, data.drivers ? data.drivers : []),

@@ -39,7 +39,7 @@ export const TemporaryVehicleDeserializer = (input: any): TemporaryVehicleInsura
     drivers: input.drivers ? input.drivers.map((member: any) => DriverDeserializer(member)) : undefined,
     owner: input.owner ? OwnerDeserializer(input.owner) : undefined,
     totalCost: input.total_cost ? input.total_cost : undefined,
-    maxCoverage: input.max_coverage ? CoverageDeserializer(input.max_coverage) : undefined,
+    maxCoverage: input.max_coverage ? input.max_coverage : undefined,
     insuranceOptions: input.insurance_options ? (typeof input.insurance_options[0] === 'object' ? returnArrayWithValues(input.insurance_options) : input.insurance_options) : undefined,
     responsibleMember: input.responsible_member ? ResponsibleMemberDeserializer(input.responsible_member) : undefined,
   }
@@ -74,7 +74,7 @@ export const DraftTemporaryVehicleSerializer = (input: TemporaryVehicleInsurance
     vehicle: input.vehicle && input.vehicle.licensePlate ? DraftVehicleSerializer(input.vehicle) : undefined,
     drivers: input.drivers ? input.drivers.map((member: any) => MemberSerializer(member)) : undefined,
     owner: input.owner ? OwnerSerializer(input.owner) : undefined,
-    max_coverage: input.maxCoverage ? CoverageSerializer(input.maxCoverage).value : undefined,
+    max_coverage: input.maxCoverage ? input.maxCoverage : undefined,
     insurance_options: input.insuranceOptions ? input.insuranceOptions : undefined,
   }
 
