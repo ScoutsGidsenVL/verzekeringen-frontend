@@ -1,22 +1,19 @@
 <template>
-  <div class="w-auto pl-5 bg-lightGray pt-5 pb-5 mt-4">
-    <router-link to="/aanvraag">
-      <custom-button text="Vraag nieuwe verzekering aan" />
-    </router-link>
-  </div>
-  <div v-if="data" class="mt-5">
-    <custom-list :items="data.results" title="Recent aangevraagd" />
-    <div class="flex gap-5 pt-3 float-right">
-      <custom-button v-if="data.previous" @click="getPreviousInsurances(data.previous)" text="Vorige" />
-      <custom-button v-if="data.next" @click="getNextInsurances(data.next)" text="Volgende" />
+  <call-to-action link="/aanvraag" text="Vraag nieuwe verzekering aan" />
+  <div class="container">
+    <div v-if="drafts">
+      <custom-list :is-draft="true" :items="drafts.results" title="Nog te voltooien" @removeDraft="removeDraft($event)" />
+      <div class="flex gap-5 pt-3 float-right">
+        <custom-button v-if="drafts.previous" text="Vorige" @click="getPreviousDrafts(drafts.previous)" />
+        <custom-button v-if="drafts.next" text="Volgende" @click="getNextDrafts(drafts.next)" />
+      </div>
     </div>
-  </div>
-
-  <div v-if="drafts" class="mt-5">
-    <custom-list @removeDraft="removeDraft($event)" :isDraft="true" :items="drafts.results" title="Nog te voltooien" />
-    <div class="flex gap-5 pt-3 float-right">
-      <custom-button v-if="drafts.previous" @click="getPreviousDrafts(drafts.previous)" text="Vorige" />
-      <custom-button v-if="drafts.next" @click="getNextDrafts(drafts.next)" text="Volgende" />
+    <div v-if="data">
+      <custom-list :items="data.results" title="Recent aangevraagd" />
+      <div class="flex gap-5 pt-3 float-right">
+        <custom-button v-if="data.previous" text="Vorige" @click="getPreviousInsurances(data.previous)" />
+        <custom-button v-if="data.next" text="Volgende" @click="getNextInsurances(data.next)" />
+      </div>
     </div>
   </div>
 </template>
@@ -27,6 +24,7 @@ import { DraftRepository } from '@/repositories/insurances/draftRepository'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import customList from '../components/semantic/CustomList.vue'
 import customButton from '../components/CustomButton.vue'
+import CallToAction from '../components/customHeadlines/CallToAction.vue'
 import { ArrayResult } from '@/serializer/ArrayResult'
 import { defineComponent, ref } from 'vue'
 import { useStore } from 'vuex'
@@ -36,6 +34,7 @@ export default defineComponent({
   components: {
     'custom-button': customButton,
     'custom-list': customList,
+    'call-to-action': CallToAction,
   },
   setup: () => {
     const store = useStore()

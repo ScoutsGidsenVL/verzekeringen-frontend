@@ -1,5 +1,5 @@
 <template>
-  <h2 class="py-5 text-2xl">{{ title }}</h2>
+  <h2 class="py-5">{{ title }}</h2>
   <div class="custom-grid py-2 border-t-2 border-black">
     <div>
       <p class="font-semibold">Datum</p>
@@ -14,7 +14,7 @@
       <p class="font-semibold">Status</p>
     </div>
   </div>
-  <custom-list-item @removeDraft="removeDraft($event)" :isDraft="isDraft" v-for="item in items" :key="item.id" :item="item" />
+  <custom-list-item v-for="item in items" :key="item.id" :is-draft="isDraft" :item="item" @removeDraft="removeDraft($event)" />
   <hr class="border-t-2 border-black" />
   <div v-if="items.length === 0" class="text-center my-3"><i>Geen resultaten</i></div>
 </template>
