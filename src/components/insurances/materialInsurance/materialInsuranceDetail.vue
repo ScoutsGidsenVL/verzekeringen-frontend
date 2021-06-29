@@ -1,5 +1,5 @@
 <template>
-  <base-detail :data="materialInsuranceState" :repository="MaterialInsuranceRepository" title="Materiaal">
+  <base-detail :single-page="singlePage" :data="materialInsuranceState" :repository="MaterialInsuranceRepository" title="Materiaal">
     <template #default="{ details }">
       <div v-if="details" class="mt-1">
         <div v-if="!(holderState === HolderStates.DETAIL) && details.comment">
@@ -28,7 +28,7 @@
 
         <p class="font-semibold">Materiaal</p>
         <div class="px-5 py-4">
-          <equipment-list :equipmentList="details.equipment" />
+          <equipment-list :equipment-list="details.equipment" />
         </div>
       </div>
     </template>
@@ -56,6 +56,13 @@ export default defineComponent({
     'label-output': LabelOutput,
     'base-detail': BaseDetail,
     'equipment-list': EquipmentList,
+  },
+  props: {
+    singlePage: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
   },
   setup() {
     const store = useStore()

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="item" class="custom-grid py-2 border-t-2 border-black">
+  <div v-if="item" class="md:grid-cols-list grid py-2 border-t-2 border-black">
     <div>
       <p>{{ item.startDate && item.endDate ? formatDate(item.startDate, item.endDate) : '' }}</p>
     </div>
@@ -156,10 +156,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style lang="scss" scoped>
-.custom-grid {
-  display: grid;
-  grid-template-columns: 25% 30% 25% 15% 5%;
-}
-</style>

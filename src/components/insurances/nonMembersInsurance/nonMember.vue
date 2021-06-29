@@ -45,7 +45,7 @@
     </div>
 
     <div class="px-5">
-      <select-non-member :isExtraInformationComment="true" id="nonMembers" rules="required" />
+      <select-non-member id="nonMembers" :is-extra-information-comment="true" rules="required" />
     </div>
 
     <div>
@@ -54,11 +54,10 @@
         <custom-input :type="InputTypes.TEXT_AREA" name="comment" label="" />
       </div>
     </div>
-
-    <div class="flex gap-3 px-5 mt-5">
+    <div class="flex gap-3 px-5 mt-5 items-center">
       <custom-button type="button" text="Vorige" @click="back()" />
       <custom-button text="Volgende" />
-      <a class="hover:text-lightGreen underline cursor-pointer ml-3" v-if="!isEdit" @click="saveAsDraft()">Opslaan</a>
+      <a v-if="!isEdit" class="link-inline cursor-pointer" @click="saveAsDraft()">Opslaan</a>
     </div>
   </form>
 </template>

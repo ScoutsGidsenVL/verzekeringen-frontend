@@ -50,6 +50,7 @@ const routes: any[] = [
     path: '/eenmalige-activiteit-detail/:id?',
     name: 'ActivityDetail',
     component: oneTimeActivityDetail,
+    props: { singlePage: true },
     meta: {
       requiresOpenIdAuth: true,
       title: 'Verzekering',
@@ -60,6 +61,7 @@ const routes: any[] = [
     path: '/tijdelijke-verzekering-niet-leden-detail/:id?',
     name: 'NonMemberDetail',
     component: nonMemberDetail,
+    props: { singlePage: true },
     meta: {
       requiresOpenIdAuth: true,
       title: 'Verzekering',
@@ -70,6 +72,7 @@ const routes: any[] = [
     path: '/reisbijstand-met-auto-detail/:id?',
     name: 'TravelAssistanceWithCar',
     component: travelAssistanceDetail,
+    props: { singlePage: true },
     meta: {
       requiresOpenIdAuth: true,
       title: 'Verzekering',
@@ -80,6 +83,7 @@ const routes: any[] = [
     path: '/reisbijstand-zonder-auto-detail/:id?',
     name: 'TravelAssistanceWithoutCar',
     component: travelAssistanceDetail,
+    props: { singlePage: true },
     meta: {
       requiresOpenIdAuth: true,
       title: 'Verzekering',
@@ -90,6 +94,7 @@ const routes: any[] = [
     path: '/evenementen-verzekering-detail/:id?',
     name: 'EventInsuranceDetail',
     component: eventInsuranceDetail,
+    props: { singlePage: true },
     meta: {
       requiresOpenIdAuth: true,
       title: 'Verzekering',
@@ -100,6 +105,7 @@ const routes: any[] = [
     path: '/tijdelijke-autoverzekering-detail/:id?',
     name: 'TemporaryVehicleDetail',
     component: temporaryVehicleDetail,
+    props: { singlePage: true },
     meta: {
       requiresOpenIdAuth: true,
       title: 'Verzekering',
@@ -110,6 +116,7 @@ const routes: any[] = [
     path: '/materiaal-verzekering-detail/:id?',
     name: 'MaterialInsuranceDetail',
     component: materialInsuranceDetail,
+    props: { singlePage: true },
     meta: {
       requiresOpenIdAuth: true,
       title: 'Verzekering',

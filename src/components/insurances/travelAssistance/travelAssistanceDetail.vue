@@ -1,5 +1,5 @@
 <template>
-  <base-detail :data="travelAssistanceState" :repository="TravelAssistanceRepository" title="Reisbijstand">
+  <base-detail :single-page="singlePage" :data="travelAssistanceState" :repository="TravelAssistanceRepository" title="Reisbijstand">
     <template #default="{ details }">
       <div v-if="details" class="mt-1">
         <div v-if="!(holderState === HolderStates.DETAIL)">
@@ -63,6 +63,13 @@ export default defineComponent({
     'base-detail': BaseDetail,
     'member-list': MemberList,
     'vehicle-item': VehicleItem,
+  },
+  props: {
+    singlePage: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
   },
   setup() {
     const store = useStore()

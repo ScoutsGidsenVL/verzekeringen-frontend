@@ -3,16 +3,16 @@
   <div class="container">
     <div v-if="drafts">
       <custom-list :is-draft="true" :items="drafts.results" title="Nog te voltooien" @removeDraft="removeDraft($event)" />
-      <div class="flex gap-5 pt-3 float-right">
-        <custom-button v-if="drafts.previous" text="Vorige" @click="getPreviousDrafts(drafts.previous)" />
-        <custom-button v-if="drafts.next" text="Volgende" @click="getNextDrafts(drafts.next)" />
+      <div class="flex gap-5 pt-1 pb-5 float-right">
+        <a v-if="drafts.previous" class="link-inline cursor-pointer" @click="getPreviousDrafts(drafts.previous)">Vorige pagina</a>
+        <a v-if="drafts.next" class="link-inline cursor-pointer" @click="getNextDrafts(drafts.next)">Volgende pagina</a>
       </div>
     </div>
     <div v-if="data">
       <custom-list :items="data.results" title="Recent aangevraagd" />
-      <div class="flex gap-5 pt-3 float-right">
-        <custom-button v-if="data.previous" text="Vorige" @click="getPreviousInsurances(data.previous)" />
-        <custom-button v-if="data.next" text="Volgende" @click="getNextInsurances(data.next)" />
+      <div class="flex gap-5 pt-1 pb-5 float-right">
+        <a v-if="data.previous" class="link-inline cursor-pointer" @click="getPreviousInsurances(data.previous)">Vorige pagina</a>
+        <a v-if="data.next" class="link-inline cursor-pointer" @click="getNextInsurances(data.next)">Volgende pagina</a>
       </div>
     </div>
   </div>
@@ -23,7 +23,6 @@ import { InsuranceRepository } from '@/repositories/insurances/insuranceReposito
 import { DraftRepository } from '@/repositories/insurances/draftRepository'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import customList from '../components/semantic/CustomList.vue'
-import customButton from '../components/CustomButton.vue'
 import CallToAction from '../components/customHeadlines/CallToAction.vue'
 import { ArrayResult } from '@/serializer/ArrayResult'
 import { defineComponent, ref } from 'vue'
@@ -32,7 +31,6 @@ import { useStore } from 'vuex'
 export default defineComponent({
   name: 'Home',
   components: {
-    'custom-button': customButton,
     'custom-list': customList,
     'call-to-action': CallToAction,
   },
