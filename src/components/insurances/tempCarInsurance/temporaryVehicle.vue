@@ -69,7 +69,6 @@ export default defineComponent({
         }
       })
       store.dispatch('setIsDriverOwnerState', status)
-      console.log('status:', status)
       return status
     }
 
