@@ -23,3 +23,11 @@ export default defineComponent({
   },
 })
 </script>
+
+<style scoped>
+@media (min-width: 992px) {
+  #app {
+    padding-left: 4rem;
+  }
+}
+</style>
