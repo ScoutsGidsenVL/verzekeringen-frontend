@@ -79,7 +79,7 @@
             <vehicle-item :vehicle="vehicle">
               <div>
                 <div class="pb-4 text-right">
-                  <div><custom-button text="Kies" @click="setVehicle(vehicle)" /></div>
+                  <div><custom-button type="button" text="Kies" @click="setVehicle(vehicle)" /></div>
                 </div>
               </div>
             </vehicle-item>
@@ -180,7 +180,7 @@ export default defineComponent({
             licensePlate: '',
             constructionYear: '',
             chassisNumber: '',
-            trailer: { id: '0' },
+            trailer: { id: '0', value: '0', label: 'Geen' },
             group: generalInsuranceState.value.group.id,
           },
           errors: {},
@@ -211,11 +211,6 @@ export default defineComponent({
           }
         }
 
-        if (selected.value === 'BestaandVehicle') {
-          context.emit('addCreatedVehicle', selectedVehicle.value)
-        }
-
-        selectedVehicle.value = {}
         closeSideBar()
       })()
     }
@@ -307,7 +302,10 @@ export default defineComponent({
     }
 
     const setVehicle = (vehicle: Vehicle) => {
-      selectedVehicle.value = vehicle
+      if (selected.value === 'BestaandVehicle') {
+        context.emit('addCreatedVehicle', vehicle)
+      }
+      closeSideBar()
     }
 
     getVehicleTypes()
