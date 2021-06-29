@@ -5,7 +5,7 @@
         <div class="angled-section__bg-image">
           <img src="/bg-texture.jpg" class="img-fluid img-fit-cover" alt="Contacteer Scouts en Gidsen Vlaanderen" loading="lazy" />
         </div>
-        <div class="container angled-section__content pt-5 pb-6 pb-md-8 pt-lg-6 pb-lg-10 pt-xxl-8 pb-xxl-10 pb-xxxl-12">
+        <div class="container angled-section__content pt-5 pb-6 pb-md-8">
           <div class="call-to-action__content">
             <div class="row justify-content-lg-center">
               <div class="col-12">
