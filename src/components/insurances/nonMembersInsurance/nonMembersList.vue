@@ -1,5 +1,5 @@
 <template>
-  <div class="grid lg:grid-cols-2 gap-1">
+  <div class="grid lg:grid-cols-2 bg-gray gap-4 p-4">
     <div v-for="(nonMember, index) in nonMembers" :key="nonMember.id" class="w-full text-center">
       <non-member-item :non-member="nonMember">
         <div v-if="canBeDeleted" class="text-left">
@@ -22,6 +22,7 @@
         </div>
       </non-member-item>
     </div>
+    <div v-show="nonMembers.length === 0" class="font-semibold text-lg">Geen niet-lid geselecteerd</div>
   </div>
 </template>
 <script lang="ts">

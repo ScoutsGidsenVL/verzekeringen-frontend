@@ -1,5 +1,5 @@
 <template>
-  <div v-if="nonMember" class="w-11/12 border-b-2 border-black p-2 h-full inline-block text-left d-flex flex-col justify-content-between">
+  <div v-if="nonMember" class="w-full shadow-md border-b-2 border-black bg-white p-2 h-full inline-block text-left d-flex flex-col justify-content-between">
     <slot name="top"></slot>
     <div class="py-3">
       <div>

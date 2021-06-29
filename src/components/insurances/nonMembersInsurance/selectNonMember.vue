@@ -1,7 +1,8 @@
 <template>
-  <div class="text-lightGreen"><a class="cursor-pointer link-inline" @click="openSideBar()"> + Voeg niet-lid toe </a><required :rules="rules" /></div>
-  <non-member-list :can-be-deleted="true" :non-members-list="nonMembers" @deleteNonMemberFromList="deleteNonMemberFromList($event)" @editNonMember="editNonMember($event)" />
   <ErrorMessage :name="id" class="text-red text-sm block mt-1 w-80" />
+
+  <a class="cursor-pointer btn-simple-green mb-4" @click="openSideBar()"> + Voeg niet-lid toe </a>
+  <non-member-list :can-be-deleted="true" :non-members-list="nonMembers" @deleteNonMemberFromList="deleteNonMemberFromList($event)" @editNonMember="editNonMember($event)" />
 
   <non-member-side-bar
     v-model:side-bar-state="sideBarState"
@@ -19,7 +20,6 @@ import NonMemberList from '@/components/insurances/nonMembersInsurance/nonMember
 import { ErrorMessage, useField } from 'vee-validate'
 import { NonMember } from '@/serializer/NonMember'
 import { defineComponent, ref } from 'vue'
-import Required from '@/components/semantic/Required.vue'
 import { sideBarState } from '@/components/semantic/BaseSideBar.vue'
 
 export default defineComponent({
@@ -28,7 +28,6 @@ export default defineComponent({
     'non-member-side-bar': NonMemberSideBar,
     'non-member-list': NonMemberList,
     ErrorMessage,
-    Required,
   },
   props: {
     id: {

@@ -1,6 +1,6 @@
 <template>
-  <div class="grid lg:grid-cols-2 gap-1">
-    <div v-for="(member, index) in members" :key="member.id" class="w-96">
+  <div class="grid lg:grid-cols-2 bg-gray gap-4 p-4">
+    <div v-for="(member, index) in members" :key="member.id" class="w-full">
       <member-item :member="member">
         <div v-if="canBeDeleted" class="text-left">
           <a class="hover:text-lightGreen cursor-pointer link-inline" for="" @click="deleteMemberFromList(index)">
@@ -17,6 +17,7 @@
         </div>
       </member-item>
     </div>
+    <div v-show="members.length === 0" class="font-semibold text-lg">Geen lid geselecteerd</div>
   </div>
 </template>
 <script lang="ts">

@@ -44,9 +44,7 @@
       <custom-headline-2 text="Niet leden" />
     </div>
 
-    <div class="px-5">
-      <select-non-member id="nonMembers" :is-extra-information-comment="true" rules="required" />
-    </div>
+    <select-non-member id="nonMembers" :is-extra-information-comment="true" rules="required" />
 
     <div>
       <custom-headline-2 text="Opmerkingen" />

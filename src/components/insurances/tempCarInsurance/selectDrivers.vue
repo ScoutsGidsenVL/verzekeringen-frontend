@@ -1,16 +1,14 @@
 <template>
-  <driver-list :canBeDeleted="true" :membersList="selectDriverField.drivers" v-model:owner="selectDriverField.isDriverOwner" @deleteMemberFromList="deleteMemberFromList($event)" />
-  <ErrorMessage :name="id" class="text-red text-sm block mt-1 w-80" />
-
-  <div class="mt-2 text-lightGreen"><strong class="cursor-pointer" @click="openSideBar()"> + Voeg bestuurder toe </strong><required :rules="'required'" /></div>
-
+  <ErrorMessage :name="id" class="text-red text-sm block w-80" />
+  <a class="cursor-pointer btn-simple-green mb-4" @click="openSideBar()"> + Voeg bestuurder toe </a>
+  <driver-list v-model:owner="selectDriverField.isDriverOwner" :can-be-deleted="true" :members-list="selectDriverField.drivers" @deleteMemberFromList="deleteMemberFromList($event)" />
   <div class="mt-5">
     <tip-temp-vehicle />
   </div>
   <div class="mt-5">
-    <input class="mr-2 cursor-pointer" v-model="selectDriverField.isDriverOwner" type="radio" id="isOwnerInput" name="isOwnerInput" :value="IS_NO_DRIVER" />
+    <input id="isOwnerInput" v-model="selectDriverField.isDriverOwner" class="mr-2 cursor-pointer" type="radio" name="isOwnerInput" :value="IS_NO_DRIVER" />
     <label class="cursor-pointer" for="isOwnerInput">Eigenaar is geen bestuurder of het is een huurwagen</label>
-    <div v-show="selectDriverField.isDriverOwner === IS_NO_DRIVER">
+    <div v-show="selectDriverField.isDriverOwner === IS_NO_DRIVER" class="px-5">
       <div v-if="!input.firstName && !input.lastName" class="w-96 mt-3">
         <custom-input :type="InputTypes.TEXT" name="input.companyName" label="Firma naam" :rules="'customRequired'" />
       </div>
@@ -59,7 +57,7 @@
     </div>
   </div>
 
-  <members-side-bar :existingList="selectDriverField.drivers" v-model:isDisplay="isDisplay" title="Lid" @addMemberToList="addMemberToDriverList($event)" />
+  <members-side-bar v-model:isDisplay="isDisplay" :existing-list="selectDriverField.drivers" title="Lid" @addMemberToList="addMemberToDriverList($event)" />
 </template>
 
 <script lang="ts">
@@ -76,7 +74,6 @@ import { ErrorMessage, useField } from 'vee-validate'
 import { Driver } from '@/serializer/Driver'
 import { Owner } from '@/serializer/Owner'
 import { useStore } from 'vuex'
-import Required from '@/components/semantic/Required.vue'
 
 export default defineComponent({
   name: 'SelectParticipant',
@@ -87,7 +84,6 @@ export default defineComponent({
     'multi-select': MultiSelect,
     'tip-temp-vehicle': TipTempVehicle,
     ErrorMessage,
-    Required,
   },
   props: {
     id: {

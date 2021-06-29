@@ -1,5 +1,5 @@
 <template>
-  <div class="grid lg:grid-cols-2 gap-1">
+  <div class="grid lg:grid-cols-2 bg-gray gap-1 gap-4 p-4">
     <div v-for="(material, index) in equipment" :key="material.id" class="w-full text-center">
       <equipment-item :equipment="material">
         <template #top>
@@ -29,6 +29,7 @@
         </div>
       </equipment-item>
     </div>
+    <div v-show="equipment.length === 0" class="font-semibold text-lg">Geen materiaal geselecteerd</div>
   </div>
 </template>
 

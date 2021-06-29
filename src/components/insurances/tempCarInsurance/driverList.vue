@@ -1,5 +1,5 @@
 <template>
-  <div class="grid lg:grid-cols-2 gap-1">
+  <div class="grid lg:grid-cols-2 bg-gray gap-4 p-4">
     <div v-for="(member, index) in membersList" :key="member.id" class="w-full">
       <member-item :member="member">
         <div v-if="canBeDeleted" class="text-left">
@@ -26,6 +26,7 @@
         </div>
       </member-item>
     </div>
+    <div v-show="membersList.length === 0" class="font-semibold text-lg">Geen bestuurder geselecteerd</div>
   </div>
 </template>
 <script lang="ts">

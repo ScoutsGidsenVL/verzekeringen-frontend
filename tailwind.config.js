@@ -12,6 +12,9 @@ module.exports = {
       lightGray: {
         DEFAULT: "#ECECEC",
       },
+      gray: {
+        DEFAULT: "#f9f9f9",
+      },
       lightGreen: {
         DEFAULT: "#C7D121",
       },

@@ -3,9 +3,8 @@
     <div v-if="values">
       <div class="mt-3">
         <custom-headline-2 text="Bestuurders" />
-        <div class="px-5">
-          <select-drivers id="selectDriverField" rules="RequiredDrivers:selectDriverField" />
-        </div>
+
+        <select-drivers id="selectDriverField" rules="RequiredDrivers:selectDriverField" />
       </div>
 
       <div class="mt-3">
