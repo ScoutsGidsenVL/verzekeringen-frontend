@@ -87,4 +87,12 @@ export const defineRules = (store: any) => {
     }
     return true
   })
+
+  // @ts-ignore
+  defineRule('isGroupOwnerOrOwner', (isGroupOwner: boolean, [member, nonMember]) => {
+    if (isGroupOwner === false && member === undefined && nonMember === undefined) {
+      return 'Gelieve een eigenaar te selecteren.'
+    }
+    return true
+  })
 }

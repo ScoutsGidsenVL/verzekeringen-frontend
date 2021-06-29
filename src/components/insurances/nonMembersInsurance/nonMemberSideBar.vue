@@ -100,7 +100,7 @@ import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRep
 import { NonMemberRepository } from '@/repositories/nonMemberRepository'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 import RepositoryFactory from '@/repositories/repositoryFactory'
-import BaseSideBar from '@/components/semantic/BaseSideBar.vue'
+import BaseSideBar, { sideBarState } from '@/components/semantic/BaseSideBar.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomButton from '@/components/CustomButton.vue'
@@ -112,15 +112,6 @@ import { useStore } from 'vuex'
 import SearchInput from '@/components/inputs/SearchInput.vue'
 import { scrollToFirstError, useScrollToTop, useFormSendWithSuccess } from '@/veeValidate/helpers'
 import SuccessToast from '@/components/semantic/successToast.vue'
-
-export type sideBarState<T> =
-  | {
-      state: 'edit'
-      entity: T
-    }
-  | { state: 'list' }
-  | { state: 'new' }
-  | { state: 'hide' }
 
 export default defineComponent({
   name: 'NonMemberSideBar',
@@ -219,7 +210,6 @@ export default defineComponent({
       handleSubmit(async (values: NonMember) => {
         if (props.sideBarState.state === 'new' || props.sideBarState.state === 'edit') {
           const generalInsuranceState = ref<any>(store.getters.generalInsuranceState)
-
           const nonMember = ref<NonMember>({
             id: values.id,
             lastName: values.lastName,
@@ -293,7 +283,6 @@ export default defineComponent({
     }
 
     const changeSideBar = (options: 'NieuwNonMember' | 'BestaandNonMember') => {
-      console.log(options)
       if (options === 'NieuwNonMember') {
         context.emit('update:sideBarState', { state: 'new' })
       }

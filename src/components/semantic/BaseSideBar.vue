@@ -31,6 +31,15 @@
 import header2 from '@/components/customHeadlines/CustomHeadline2.vue'
 import { defineComponent, PropType, ref, toRefs, watch } from 'vue'
 
+export type sideBarState<T> =
+  | {
+      state: 'edit'
+      entity: T
+    }
+  | { state: 'list' }
+  | { state: 'new' }
+  | { state: 'hide' }
+
 export default defineComponent({
   name: 'BaseSideBar',
   components: {

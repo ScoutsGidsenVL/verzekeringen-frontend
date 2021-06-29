@@ -9,6 +9,7 @@ export interface Equipment {
   ownerMember?: Member | null
   ownerNonMember?: NonMember | null
   readonly group?: string
+  readonly owner?: any
 }
 
 export const EquipmentDeserializer = (input: any): Equipment => {

@@ -1,15 +1,12 @@
 <template>
-  <equipment-list :canBeDeleted="true" :equipmentList="equipment" @deleteEquipmentFromList="deleteEquipmentFromList($event)" @editEquipment="editEquipment($event)" />
+  <equipment-list :can-be-deleted="true" :equipment-list="equipment" @deleteEquipmentFromList="deleteEquipmentFromList($event)" @editEquipment="editEquipment($event)" />
 
   <div class="mt-2 text-lightGreen"><strong class="cursor-pointer" @click="openSideBar()"> + Voeg materiaal toe </strong><required :rules="rules" /></div>
 
   <equipment-side-bar
-    v-if="isDisplay"
-    v-model:isEdit="isEdit"
-    :inputEquipment="equipmentToEdit"
-    :existingList="equipment"
-    v-model:isDisplay="isDisplay"
-    :title="isEdit ? 'Bewerk materiaal' : 'Materiaal'"
+    v-model:side-bar-state="sideBarState"
+    :existing-list="equipment"
+    :title="sideBarState.state === 'edit' ? 'Bewerk materiaal' : 'Materiaal'"
     @addEquipmentToList="addEquipmentToList($event)"
     @updateEquipmentInList="updateEquipmentInList($event)"
   />
@@ -22,6 +19,7 @@ import { Equipment } from '@/serializer/Equipment'
 import { defineComponent, ref } from 'vue'
 import { useField } from 'vee-validate'
 import Required from '@/components/semantic/Required.vue'
+import { sideBarState } from '@/components/semantic/BaseSideBar.vue'
 
 export default defineComponent({
   name: 'SelectMaterial',
@@ -45,11 +43,12 @@ export default defineComponent({
     const { value: equipment } = useField<any>(props.id, props.rules, {
       initialValue: [],
     })
+    const sideBarState = ref<sideBarState<Equipment>>({ state: 'hide' })
 
     const isDisplay = ref<boolean>(false)
 
     const openSideBar = () => {
-      isDisplay.value = true
+      sideBarState.value = { state: 'new' }
     }
 
     const addEquipmentToList = (material: Equipment) => {
@@ -65,10 +64,11 @@ export default defineComponent({
     const equipmentToEdit = ref<Equipment>()
     const isEdit = ref<boolean>(false)
 
-    const editEquipment = (editVehicle: Equipment) => {
-      equipmentToEdit.value = editVehicle
-      isEdit.value = true
-      isDisplay.value = true
+    const editEquipment = (editEquipment: Equipment) => {
+      sideBarState.value = {
+        state: 'edit',
+        entity: editEquipment,
+      }
     }
 
     const updateEquipmentInList = (quipment: Equipment) => {
@@ -94,6 +94,7 @@ export default defineComponent({
       equipment,
       isDisplay,
       isEdit,
+      sideBarState,
     }
   },
 })

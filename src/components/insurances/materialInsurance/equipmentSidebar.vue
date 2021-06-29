@@ -1,46 +1,30 @@
 <template>
   <div>
-    <base-side-bar v-model:isDisplay="display" v-model:selection="selected" name="Equipment" :title="title" :options="['Nieuw', 'Bestaand']">
-      <form v-if="selected === 'NieuwEquipment'" ref="formDiv" class="d-flex flex-col relative overflow-y-scroll h-full" @submit.prevent="onSubmit">
+    <base-side-bar
+      :selection="selected"
+      :is-display="sideBarState.state !== 'hide'"
+      name="Equipment"
+      :title="title"
+      :options="['Nieuw', 'Bestaand']"
+      @options="changeSideBar"
+      @hideSidebar="closeSideBar"
+    >
+      <form
+        :class="{ 'd-flex': sideBarState.state === 'new' || sideBarState.state === 'edit', 'd-none': sideBarState.state === 'list' }"
+        ref="formDiv"
+        class="flex-col relative overflow-y-scroll h-full"
+        @submit.prevent="onSubmit"
+      >
         <success-toast v-model:showOrHide="formSendWithSuccess" label="Materiaal succesvol toegevoegd" />
-        <div class="mt-4">
-          <div class="mt-4">
-            <p>Wil je een fiets verzekeren</p>
-            <div class="flex gap-7">
-              <div>
-                <input :id="'ja'" v-model="isBicycle" class="cursor-pointer" type="radio" :name="'ja'" :value="true" />
-                <label :for="'ja'" class="ml-2">Ja</label>
-              </div>
-
-              <div>
-                <input :id="'nee'" v-model="isBicycle" class="cursor-pointer" type="radio" :name="'nee'" :value="false" />
-                <label :for="'nee'" class="ml-2">Nee</label>
-              </div>
-            </div>
-          </div>
-
-          <div v-if="!isBicycle && !values.ownerMember" class="w-96 mt-4">
-            <div>
-              <custom-input extra-info="bv: Tent, Geluidsinstallatie" :type="InputTypes.TEXT" name="nature" label="Soort" />
-            </div>
-          </div>
-
-          <div class="w-96 mt-4">
-            <custom-input
-              :extra-info="isBicycle ? 'Merk, model en type. bv: Gazelle, Paris Plus, stads fiets' : 'Materie, model. bv: Senior, JB Systems ME2 mixer'"
-              :type="InputTypes.TEXT_AREA"
-              rules="required"
-              name="description"
-              label="Omschrijving"
-            />
-          </div>
-
-          <div class="w-96 mt-4">
+        <div>
+          <div class="w-96 mt-3">
             <strong>Eigenaar</strong><strong v-if="owner">{{ lidType }}</strong>
-            <div class="w-full mt-2">
+            <div v-show="!owner" class="w-full mt-2">
               <input id="equipement-group" v-model="isGroupEquipement" class="mr-2" type="checkbox" />
               <label for="equipement-group">Materiaal is van groep</label>
+              <ErrorMessage name="equipement-group" class="text-red text-sm block mt-1 w-80" />
             </div>
+
             <div class="py-3">
               <hr v-if="owner" class="border-t-2 border-black" />
               <member-item :member="owner">
@@ -60,11 +44,41 @@
             <div class="mt-3">
               <strong class="cursor-pointer text-lightGreen" @click="openNonMemberSideBar()"> Selecteer niet-lid </strong>
               <non-member-side-bar
-                v-model:isDisplay="isNonMemberSideBarDisplay"
+                v-model:side-bar-state="nonMemberSideBarState"
                 :close-on-add="true"
                 :existing-list="nonMembers"
                 title="Niet lid"
                 @addCreatedNonMemberToList="addCreatedNonMember($event)"
+              />
+            </div>
+            <div class="mt-4">
+              <p>Wil je een fiets verzekeren</p>
+              <div class="flex gap-7">
+                <div>
+                  <input :id="'ja'" v-model="isBicycle" class="cursor-pointer" type="radio" :name="'ja'" :value="true" />
+                  <label :for="'ja'" class="ml-2">Ja</label>
+                </div>
+
+                <div>
+                  <input :id="'nee'" v-model="isBicycle" class="cursor-pointer" type="radio" :name="'nee'" :value="false" />
+                  <label :for="'nee'" class="ml-2">Nee</label>
+                </div>
+              </div>
+            </div>
+
+            <div v-if="!isBicycle && !values.ownerMember" class="w-96 mt-4">
+              <div>
+                <custom-input extra-info="bv: Tent, Geluidsinstallatie" :type="InputTypes.TEXT" name="nature" label="Soort" />
+              </div>
+            </div>
+
+            <div class="w-96 mt-4">
+              <custom-input
+                :extra-info="isBicycle ? 'Merk, model en type. bv: Gazelle, Paris Plus, stads fiets' : 'Materie, model. bv: Senior, JB Systems ME2 mixer'"
+                :type="InputTypes.TEXT_AREA"
+                rules="required"
+                name="description"
+                label="Omschrijving"
               />
             </div>
           </div>
@@ -74,12 +88,12 @@
           </div>
 
           <div class="mt-5 py-4 sticky bottom-0 bg-white">
-            <custom-button :text="isEdit ? 'Bewerk' : 'Voeg toe'" />
+            <custom-button :text="sideBarState.state === 'edit' ? 'Bewerk' : 'Voeg toe'" />
           </div>
         </div>
       </form>
 
-      <form v-if="selected === 'BestaandEquipment'" class="d-flex flex-col h-full" @submit.prevent="onSubmit">
+      <form :class="{ 'd-flex': sideBarState.state === 'list', 'd-none': sideBarState.state === 'new' || sideBarState.state === 'edit' }" class="flex-col h-full" @submit.prevent="onSubmit">
         <div>
           <search-input v-model:loading="loading" name="equipment" placeholder="Zoek op beschrijving" :repository="EquipmentRepository" @fetchedOptions="fetchedOptions($event)" />
         </div>
@@ -109,17 +123,17 @@ import MemberItem from '@/components/insurances/travelAssistance/memberItem.vue'
 import { EquipmentRepository } from '@/repositories/equipmentRepository'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 import RepositoryFactory from '@/repositories/repositoryFactory'
-import BaseSideBar from '@/components/semantic/BaseSideBar.vue'
+import BaseSideBar, { sideBarState } from '@/components/semantic/BaseSideBar.vue'
 import SearchInput from '@/components/inputs/SearchInput.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import CustomButton from '@/components/CustomButton.vue'
 import { NonMember } from '@/serializer/NonMember'
 import { Equipment } from '@/serializer/Equipment'
-import { computed, defineComponent, PropType, ref, watch } from 'vue'
+import { computed, defineComponent, PropType, ref, toRefs, watch } from 'vue'
 import { InputTypes } from '@/enums/inputTypes'
 import { Member } from '@/serializer/Member'
 import { Owner } from '@/serializer/Owner'
-import { useForm } from 'vee-validate'
+import { useField, useForm, ErrorMessage } from 'vee-validate'
 import { useStore } from 'vuex'
 import { scrollToFirstError, useFormSendWithSuccess, useScrollToTop } from '@/veeValidate/helpers'
 import SuccessToast from '@/components/semantic/successToast.vue'
@@ -136,14 +150,11 @@ export default defineComponent({
     'members-side-bar': MemberSiderbar,
     'member-item': MemberItem,
     'success-toast': SuccessToast,
+    ErrorMessage,
   },
   props: {
     title: {
       type: String,
-      required: true,
-    },
-    isDisplay: {
-      type: Boolean,
       required: true,
     },
     existingList: {
@@ -152,41 +163,68 @@ export default defineComponent({
         return []
       },
     },
-    isEdit: {
-      type: Boolean,
+    sideBarState: {
+      type: Object as PropType<sideBarState<Equipment>>,
       required: true,
-    },
-    inputEquipment: {
-      type: Object as PropType<Equipment>,
-      required: true,
+      default: () => {
+        'hide'
+      },
     },
   },
+  emits: ['update:sideBarState', 'addEquipmentToList', 'updateEquipmentInList'],
   setup(props, context) {
     const store = useStore()
-    const display = ref<boolean>(props.isDisplay)
-    const selected = ref<string>('NieuwEquipment')
+    const selected = computed(() => (props.sideBarState.state === 'list' ? 'BestaandEquipment' : 'NieuwEquipment'))
     const loading = ref<boolean>(false)
     const searchedEquipmentList = ref<Array<Equipment>>([])
     const isBicycle = ref<boolean>(false)
     const userData = ref<ResponsibleMember>(store.getters.user)
     const owner = ref<Owner | null>()
     const lidType = ref<String>()
-    const { handleSubmit, values, validate, resetForm, meta } = useForm<Equipment>({
-      initialValues: {
-        id: props.isEdit ? props.inputEquipment.id : undefined,
-        nature: props.isEdit ? props.inputEquipment.nature : '',
-        description: props.isEdit ? props.inputEquipment.description : '',
-        totalValue: props.isEdit ? props.inputEquipment.totalValue : '',
-        ownerMember: props.isEdit ? props.inputEquipment.ownerMember : undefined,
-        ownerNonMember: props.isEdit ? props.inputEquipment.ownerNonMember : undefined,
-      },
+    const { resetForm, handleSubmit, validate, meta, values } = useForm<Equipment>()
+    const { value: isGroupEquipement } = useField('equipement-group', 'isGroupOwnerOrOwner:@ownerMember,@ownerNonMember', {
+      initialValue: false,
     })
-
     const { formSendWithSuccess } = useFormSendWithSuccess<Equipment>(meta)
     const { formDiv, scrollToTop } = useScrollToTop()
-    const isGroupEquipement = ref<boolean>(false)
+    const { sideBarState } = toRefs(props)
+    const nonMemberSideBarState = ref<sideBarState<NonMember>>({ state: 'hide' })
+    const memberSideBarState = ref<sideBarState<NonMember>>({ state: 'hide' })
 
-    if (props.isEdit) {
+    watch(sideBarState, (value: sideBarState<Equipment>) => {
+      if (value.state === 'edit') {
+        formSendWithSuccess.value = false
+        resetForm({
+          values: {
+            id: value.entity.id,
+            nature: value.entity.nature,
+            description: value.entity.description,
+            totalValue: value.entity.totalValue,
+            ownerMember: value.entity.ownerMember,
+            ownerNonMember: value.entity.ownerNonMember,
+            group: value.entity.group,
+          },
+        })
+      }
+
+      if (value.state === 'new') {
+        formSendWithSuccess.value = false
+        resetForm({
+          values: {
+            id: '',
+            nature: '',
+            description: '',
+            totalValue: '',
+            ownerMember: undefined,
+            ownerNonMember: undefined,
+            group: '',
+          },
+          errors: {},
+        })
+      }
+    })
+
+    if (sideBarState.value.state === 'edit') {
       if (values.ownerMember || values.ownerNonMember) {
         owner.value = values.ownerMember ? values.ownerMember : values.ownerNonMember
       } else {
@@ -201,7 +239,7 @@ export default defineComponent({
     const onSubmit = async () => {
       await validate().then((validation: any) => scrollToFirstError(validation, 'addNewNonMember'))
       handleSubmit(async (values: Equipment) => {
-        if (selected.value === 'NieuwEquipment') {
+        if (props.sideBarState.state === 'new' || props.sideBarState.state === 'edit') {
           const equipment = ref<Equipment>({
             id: values.id ? values.id : undefined,
             nature: values.nature && isBicycle.value === false && !values.ownerMember ? values.nature : undefined,
@@ -209,12 +247,12 @@ export default defineComponent({
             totalValue: values.totalValue ? values.totalValue : undefined,
             ownerMember: values.ownerMember && isGroupEquipement.value === false ? values.ownerMember : undefined,
             ownerNonMember: values.ownerNonMember && isGroupEquipement.value === false ? values.ownerNonMember : undefined,
-            group: generalInsuranceState.value.group.name,
+            group: generalInsuranceState.value.group.id,
           })
-          if (!props.isEdit) {
-            postEquipment(equipment.value)
+          if (props.sideBarState.state === 'edit') {
+            await updateEquipment(equipment.value)
           } else {
-            updateEquipment(equipment.value)
+            await postEquipment(equipment.value)
           }
         }
       })()
@@ -280,9 +318,8 @@ export default defineComponent({
       isMemberSideBarDisplay.value = true
     }
 
-    const isNonMemberSideBarDisplay = ref<boolean>(false)
     const openNonMemberSideBar = () => {
-      isNonMemberSideBarDisplay.value = true
+      nonMemberSideBarState.value = { state: 'new' }
     }
 
     const addMember = (member: Member) => {
@@ -307,22 +344,19 @@ export default defineComponent({
       values.ownerNonMember = undefined
     }
 
-    watch(
-      () => props.isDisplay,
-      () => {
-        display.value = props.isDisplay
-      }
-    )
+    const closeSideBar = () => {
+      context.emit('update:sideBarState', { state: 'hide' })
+    }
 
-    watch(
-      () => display.value,
-      () => {
-        context.emit('update:isDisplay', display.value)
-        if (!display.value) {
-          context.emit('update:isEdit', display.value)
-        }
+    const changeSideBar = (options: 'NieuwEquipment' | 'BestaandEquipment') => {
+      if (options === 'NieuwEquipment') {
+        context.emit('update:sideBarState', { state: 'new' })
       }
-    )
+
+      if (options === 'BestaandEquipment') {
+        context.emit('update:sideBarState', { state: 'list' })
+      }
+    }
 
     return {
       EquipmentRepository,
@@ -330,7 +364,6 @@ export default defineComponent({
       addEquipment,
       InputTypes,
       selected,
-      display,
       onSubmit,
       fetchedOptions,
       loading,
@@ -340,8 +373,6 @@ export default defineComponent({
       values,
       setTotalValueInfo,
       openNonMemberSideBar,
-      isNonMemberSideBarDisplay,
-      isMemberSideBarDisplay,
       openMemberSideBar,
       addMember,
       addCreatedNonMember,
@@ -351,6 +382,11 @@ export default defineComponent({
       formSendWithSuccess,
       formDiv,
       isGroupEquipement,
+      changeSideBar,
+      closeSideBar,
+      nonMemberSideBarState,
+      memberSideBarState,
+      isMemberSideBarDisplay,
     }
   },
 })

@@ -18,14 +18,7 @@
 
   <div class="mt-2 text-lightGreen"><strong class="cursor-pointer" @click="openSideBar()"> + Selecteer voertuig </strong><required :rules="rules" /></div>
 
-  <vehicle-side-bar
-    v-if="isDisplay"
-    v-model:isEdit="isEdit"
-    :inputVehicle="vehicleToEdit"
-    v-model:isDisplay="isDisplay"
-    :title="isEdit ? 'Bewerk voertuig' : 'Voertuig'"
-    @addCreatedVehicle="addCreatedVehicle($event)"
-  />
+  <vehicle-side-bar v-model:side-bar-state="sideBarState" :title="sideBarState.state === 'edit' ? 'Bewerk voertuig' : 'Voertuig'" @addCreatedVehicle="addCreatedVehicle($event)" />
 </template>
 
 <script lang="ts">
@@ -35,6 +28,7 @@ import { Vehicle } from '@/serializer/Vehicle'
 import { defineComponent, ref } from 'vue'
 import { ErrorMessage, useField } from 'vee-validate'
 import Required from '@/components/semantic/Required.vue'
+import { sideBarState } from '@/components/semantic/BaseSideBar.vue'
 
 export default defineComponent({
   name: 'SelectVehicle',
@@ -59,11 +53,12 @@ export default defineComponent({
     const { value: vehicle } = useField<Vehicle | undefined>(props.id, props.rules, {
       initialValue: undefined,
     })
+    const sideBarState = ref<sideBarState<Vehicle>>({ state: 'hide' })
 
     const isDisplay = ref<boolean>(false)
 
     const openSideBar = () => {
-      isDisplay.value = true
+      sideBarState.value = { state: 'new' }
     }
     const addCreatedVehicle = (vehicleEvent: Vehicle) => {
       vehicle.value = vehicleEvent
@@ -77,9 +72,10 @@ export default defineComponent({
     const isEdit = ref<boolean>(false)
 
     const editVehicle = (editVehicle: Vehicle) => {
-      vehicleToEdit.value = editVehicle
-      isEdit.value = true
-      isDisplay.value = true
+      sideBarState.value = {
+        state: 'edit',
+        entity: editVehicle,
+      }
     }
 
     return {
@@ -91,6 +87,7 @@ export default defineComponent({
       editVehicle,
       isEdit,
       vehicleToEdit,
+      sideBarState,
     }
   },
 })
