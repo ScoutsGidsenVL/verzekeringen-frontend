@@ -132,7 +132,7 @@
 
     <div class="mt-5">
       <custom-button text="Volgende" />
-      <custom-button v-if="!isEdit" @click="saveAsDraft()" type="button" class="ml-3" text="OPSLAAN" />
+      <a class="hover:text-lightGreen underline cursor-pointer ml-3" v-if="!isEdit" @click="saveAsDraft()">Opslaan</a>
     </div>
   </form>
 </template>

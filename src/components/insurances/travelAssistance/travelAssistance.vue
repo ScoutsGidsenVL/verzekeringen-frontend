@@ -38,7 +38,7 @@
       <div class="flex gap-3 px-5 mt-5">
         <custom-button @click="back()" type="button" text="Vorige" />
         <custom-button text="Volgende" />
-        <custom-button v-if="!isEdit" @click="saveAsDraft()" type="button" class="float-right" text="OPSLAAN" />
+        <a class="hover:text-lightGreen underline cursor-pointer ml-3" v-if="!isEdit" @click="saveAsDraft()">Opslaan</a>
       </div>
     </div>
   </form>
