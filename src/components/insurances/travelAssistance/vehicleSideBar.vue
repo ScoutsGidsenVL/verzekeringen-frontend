@@ -142,7 +142,7 @@ export default defineComponent({
   setup(props, context) {
     const store = useStore()
     const user = ref<ResponsibleMember>(store.getters.user)
-    const { resetForm, handleSubmit, validate, meta, values } = useForm<Vehicle>()
+    const { resetForm, handleSubmit, validate, meta, values } = useForm<Vehicle>({ initialValues: { trailer: { id: '0', value: '0', label: 'Geen' } } })
     const { formSendWithSuccess } = useFormSendWithSuccess<Vehicle>(meta)
     const selected = computed(() => (props.sideBarState.state === 'list' ? 'BestaandVehicle' : 'NieuwVehicle'))
     const selectedVehicle = ref<Vehicle>({})
@@ -151,7 +151,6 @@ export default defineComponent({
       return store.state.insurance.generalInsuranceState
     })
     const loading = ref<boolean>(false)
-
     const { sideBarState } = toRefs(props)
 
     watch(sideBarState, (value: sideBarState<Vehicle>) => {
@@ -181,7 +180,7 @@ export default defineComponent({
             licensePlate: '',
             constructionYear: '',
             chassisNumber: '',
-            trailer: undefined,
+            trailer: { id: '0' },
             group: generalInsuranceState.value.group.id,
           },
           errors: {},
