@@ -1,5 +1,5 @@
 <template>
-  <div v-if="member" class="w-96">
+  <div v-if="member" class="w-11/12 border-b-2 border-black p-2 h-full inline-block text-left d-flex flex-col justify-content-between">
     <div class="py-3">
       <div>
         <strong>Naam</strong>
@@ -29,7 +29,6 @@
       </div>
     </div>
     <slot />
-    <hr class="border-t-2 border-black" />
   </div>
 </template>
 

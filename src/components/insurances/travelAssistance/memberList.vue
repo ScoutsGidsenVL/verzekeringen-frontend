@@ -1,18 +1,9 @@
 <template>
-  <div class="grid grid-cols-2 gap-1" style="width: 850px">
-    <div v-if="members.length > 0" class="w-96">
-      <hr class="border-t-2 border-black" />
-    </div>
-    <div v-if="members.length > 1" class="w-96">
-      <hr class="border-t-2 border-black" />
-    </div>
-  </div>
-
-  <div class="grid grid-cols-2 gap-1" style="width: 850px">
-    <div class="w-96" v-for="(member, index) in members" :key="member.id">
+  <div class="grid lg:grid-cols-2 gap-1">
+    <div v-for="(member, index) in members" :key="member.id" class="w-96">
       <member-item :member="member">
         <div v-if="canBeDeleted" class="text-right">
-          <label @click="deleteMemberFromList(index)" class="hover:text-lightGreen cursor-pointer" for="">Verwijder</label>
+          <label class="hover:text-lightGreen cursor-pointer" for="" @click="deleteMemberFromList(index)">Verwijder</label>
         </div>
       </member-item>
     </div>
