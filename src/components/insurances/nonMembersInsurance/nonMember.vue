@@ -48,6 +48,13 @@
       <select-non-member :isExtraInformationComment="true" id="nonMembers" rules="required" />
     </div>
 
+    <div>
+      <custom-headline-2 text="Opmerkingen" />
+      <div class="px-5">
+        <custom-input :type="InputTypes.TEXT_AREA" name="comment" label="" />
+      </div>
+    </div>
+
     <div class="flex gap-3 px-5 mt-5">
       <custom-button type="button" text="Vorige" @click="back()" />
       <custom-button text="Volgende" />
@@ -97,6 +104,7 @@ export default defineComponent({
         country: data.country ? data.country : initialCountry.value,
         postCodeCity: data.postCodeCity ? (data.postCodeCity.city === undefined ? undefined : data.postCodeCity) : undefined,
         nonMembers: data.nonMembers ? data.nonMembers : [],
+        comment: data.comment ? data.comment : '',
       },
     })
 
@@ -112,7 +120,7 @@ export default defineComponent({
           postCodeCity: values.postCodeCity ? values.postCodeCity : undefined,
           country: values.country ? values.country : undefined,
           nonMembers: values.nonMembers ? values.nonMembers : [],
-          comment: data.comment,
+          comment: values.comment ? values.comment : '',
         },
       })
 
@@ -144,7 +152,7 @@ export default defineComponent({
           postCodeCity: values.postCodeCity ? values.postCodeCity : undefined,
           country: values.country ? values.country : undefined,
           nonMembers: values.nonMembers ? values.nonMembers : [],
-          comment: data.comment,
+          comment: values.comment ? values.comment : '',
         },
       })
 

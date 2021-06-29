@@ -38,6 +38,14 @@
         />
       </div>
     </div>
+
+    <div>
+      <custom-headline-2 text="Opmerkingen" />
+      <div class="px-5">
+        <custom-input :type="InputTypes.TEXT_AREA" name="comment" label="" />
+      </div>
+    </div>
+
     <div class="flex gap-3 px-5 mt-5">
       <custom-button @click="back()" type="button" text="Vorige" />
       <custom-button text="Volgende" />
@@ -68,6 +76,7 @@ type eventInsuranceFormType = {
   nature: string
   location: Location
   eventSize: number
+  comment: string
 }
 
 export default defineComponent({
@@ -88,6 +97,7 @@ export default defineComponent({
         nature: data.nature ? data.nature : '',
         location: data.location ? data.location : '',
         eventSize: data.eventSize ? data.eventSize : '',
+        comment: data.comment ? data.comment : '',
       },
     })
     const isEdit = !!route.params.id
@@ -114,7 +124,7 @@ export default defineComponent({
           nature: values.nature,
           location: values.location,
           eventSize: values.eventSize,
-          comment: data.comment,
+          comment: values.comment ? values.comment : '',
         },
       })
 
@@ -146,7 +156,7 @@ export default defineComponent({
           nature: values.nature,
           location: values.location,
           eventSize: values.eventSize,
-          comment: data.comment,
+          comment: values.comment ? values.comment : '',
         },
       })
 

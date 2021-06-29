@@ -7,10 +7,18 @@
           <select-drivers id="selectDriverField" rules="RequiredDrivers:selectDriverField" />
         </div>
       </div>
+
       <div class="mt-3">
         <custom-headline-2 text="Voertuig" />
         <div class="px-5">
           <select-vehicle id="vehicle" rules="required|RequiredVehicle:vehicle" />
+        </div>
+      </div>
+
+      <div>
+        <custom-headline-2 text="Opmerkingen" />
+        <div class="px-5">
+          <custom-input :type="InputTypes.TEXT_AREA" name="comment" label="" />
         </div>
       </div>
 
@@ -32,6 +40,7 @@ import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
 import { CountryRepository } from '@/repositories/countriesRepository'
 import { BaseInsurance } from '@/serializer/insurances/BaseInsurance'
 import CustomButton from '@/components/CustomButton.vue'
+import CustomInput from '@/components/inputs/CustomInput.vue'
 import { IS_NO_DRIVER } from '@/serializer/selectDriver'
 import { computed, defineComponent, ref } from 'vue'
 import { HolderStates } from '@/enums/holderStates'
@@ -52,6 +61,7 @@ export default defineComponent({
     'select-drivers': SelectDrivers,
     'select-vehicle': SelectVehicle,
     'custom-button': CustomButton,
+    'custom-input': CustomInput,
   },
   setup() {
     const route = useRoute()
@@ -82,6 +92,7 @@ export default defineComponent({
           drivers: data.drivers ? data.drivers : [],
           isDriverOwner: checkIfOwnerIsDriver(data.owner ? data.owner : { firstName: '', lastName: '' }, data.drivers ? data.drivers : []),
         },
+        comment: data.comment ? data.comment : '',
       },
     })
 
@@ -107,7 +118,7 @@ export default defineComponent({
                     }
                   }
                 }),
-          comment: data.comment,
+          comment: values.comment ? values.comment : '',
         },
       })
 
@@ -150,7 +161,7 @@ export default defineComponent({
                     }
                   }
                 }),
-          comment: data.comment,
+          comment: values.comment ? values.comment : '',
         },
       })
 

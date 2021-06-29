@@ -43,6 +43,13 @@
       <select-equipment id="equipment" rules="required" />
     </div>
 
+    <div>
+      <custom-headline-2 text="Opmerkingen" />
+      <div class="px-5">
+        <custom-input :type="InputTypes.TEXT_AREA" name="comment" label="" />
+      </div>
+    </div>
+
     <div class="flex gap-3 px-5 mt-5">
       <custom-button type="button" text="Vorige" @click="back()" />
       <custom-button text="Volgende" />
@@ -106,7 +113,7 @@ export default defineComponent({
           nature: values.nature,
           postCodeCity: values.postCodeCity ? values.postCodeCity : undefined,
           country: values.country ? values.country : undefined,
-          comment: data.comment,
+          comment: values.comment ? values.comment : '',
           equipment: values.equipment ? values.equipment : undefined,
         },
       })
@@ -138,7 +145,7 @@ export default defineComponent({
           nature: values.nature,
           postCodeCity: values.postCodeCity ? values.postCodeCity : undefined,
           country: values.country ? values.country : undefined,
-          comment: data.comment,
+          comment: values.comment ? values.comment : '',
           equipment: values.equipment ? values.equipment : undefined,
         },
       })

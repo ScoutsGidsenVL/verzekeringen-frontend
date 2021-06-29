@@ -38,6 +38,14 @@
         />
       </div>
     </div>
+
+    <div>
+      <custom-headline-2 text="Opmerkingen" />
+      <div class="px-5">
+        <custom-input :type="InputTypes.TEXT_AREA" name="comment" label="" />
+      </div>
+    </div>
+
     <div class="flex gap-3 px-5 mt-5 w-96">
       <custom-button @click="back()" type="button" text="Vorige" />
       <custom-button text="Volgende" />
@@ -68,6 +76,7 @@ type oneTimeActivityFormType = {
   nature: string
   location: Location
   groupSize: number
+  comment: string
 }
 
 export default defineComponent({
@@ -87,6 +96,7 @@ export default defineComponent({
         nature: data.nature ? data.nature : '',
         location: data.location ? data.location : '',
         groupSize: data.groupSize ? data.groupSize : '',
+        comment: data.comment ? data.comment : '',
       },
     })
     const isEdit = !!route.params.id
@@ -111,7 +121,7 @@ export default defineComponent({
           nature: values.nature,
           location: values.location,
           groupSize: values.groupSize,
-          comment: data.comment,
+          comment: values.comment ? values.comment : '',
         },
       })
 
@@ -143,7 +153,7 @@ export default defineComponent({
           nature: values.nature,
           location: values.location,
           groupSize: values.groupSize,
-          comment: data.comment,
+          comment: values.comment ? values.comment : '',
         },
       })
 

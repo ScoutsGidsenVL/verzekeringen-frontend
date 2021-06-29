@@ -35,6 +35,13 @@
         </div>
       </div>
 
+      <div>
+        <custom-headline-2 text="Opmerkingen" />
+        <div class="px-5">
+          <custom-input :type="InputTypes.TEXT_AREA" name="comment" label="" />
+        </div>
+      </div>
+
       <div class="flex gap-3 px-5 mt-5">
         <custom-button @click="back()" type="button" text="Vorige" />
         <custom-button text="Volgende" />
@@ -62,6 +69,7 @@ import RepositoryFactory from '@/repositories/repositoryFactory'
 import { InsuranceTypeRepos, InsuranceTypes } from '@/enums/insuranceTypes'
 import { useRoute } from 'vue-router'
 import router from '@/router'
+import CustomInput from '@/components/inputs/CustomInput.vue'
 
 export default defineComponent({
   name: 'TravelAssistance',
@@ -71,6 +79,7 @@ export default defineComponent({
     'select-vehicle': SelectVehicle,
     'custom-button': CustomButton,
     'multi-select': MultiSelect,
+    'custom-input': CustomInput,
   },
   setup() {
     const route = useRoute()
@@ -81,6 +90,7 @@ export default defineComponent({
         country: data.country ? data.country : undefined,
         participants: data.participants ? data.participants : [],
         vehicle: data.vehicle ? data.vehicle : undefined,
+        comment: data.comment ? data.comment : '',
       },
     })
     const isEdit = !!route.params.id
@@ -98,7 +108,7 @@ export default defineComponent({
           vehicle: values.vehicle ? values.vehicle : undefined,
           responsiblePhoneNumber:
             generalInsuranceState.value.responsibleMember && generalInsuranceState.value.responsibleMember.phoneNumber ? generalInsuranceState.value.responsibleMember.phoneNumber : '/',
-          comment: data.comment,
+          comment: values.comment ? values.comment : '',
         },
       })
 
@@ -131,7 +141,7 @@ export default defineComponent({
           vehicle: values.vehicle ? values.vehicle : undefined,
           responsiblePhoneNumber:
             generalInsuranceState.value.responsibleMember && generalInsuranceState.value.responsibleMember.phoneNumber ? generalInsuranceState.value.responsibleMember.phoneNumber : '/',
-          comment: data.comment,
+          comment: values.comment ? values.comment : '',
         },
       })
       //@ts-ignore
