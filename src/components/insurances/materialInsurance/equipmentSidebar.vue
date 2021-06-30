@@ -13,7 +13,7 @@
             <strong>Eigenaar</strong><strong v-if="owner">{{ lidType }}</strong>
             <div v-show="!owner" class="w-full mt-2">
               <input id="equipement-group" v-model="isGroupEquipement" class="mr-2" type="checkbox" />
-              <label for="equipement-group">Materiaal is van groep</label>
+              <label for="equipement-group">Onze groep</label>
               <ErrorMessage name="equipement-group" class="text-red text-sm block mt-1 w-80" />
             </div>
 
@@ -30,12 +30,12 @@
           <div>
             <div v-show="isGroupEquipement === false">
               <div>
-                <strong class="cursor-pointer text-lightGreen" @click="openMemberSideBar()"> Selecteer lid </strong>
+                <strong class="cursor-pointer text-lightGreen" @click="openMemberSideBar()"> Een lid (persoonlijk materiaal) </strong>
                 <members-side-bar v-model:isDisplay="isMemberSideBarDisplay" :close-on-add="true" :existing-list="members" title="Lid" @addMemberToList="addMember($event)" />
               </div>
 
               <div class="mt-3">
-                <strong class="cursor-pointer text-lightGreen" @click="openNonMemberSideBar()"> Selecteer niet-lid </strong>
+                <strong class="cursor-pointer text-lightGreen" @click="openNonMemberSideBar()"> Een niet-lid (derde) </strong>
                 <non-member-side-bar
                   v-model:side-bar-state="nonMemberSideBarState"
                   :close-on-add="true"
@@ -47,7 +47,7 @@
             </div>
 
             <div class="mt-4">
-              <p>Wil je een fiets verzekeren</p>
+              <p>Wil je een fiets verzekeren?</p>
               <div class="flex gap-7">
                 <div>
                   <input :id="'ja'" v-model="isBicycle" class="cursor-pointer" type="radio" :name="'ja'" :value="true" />
@@ -69,7 +69,7 @@
 
             <div class="w-96 mt-4">
               <custom-input
-                :extra-info="isBicycle ? 'Merk, model en type. bv: Gazelle, Paris Plus, stads fiets' : 'Materie, model. bv: Senior, JB Systems ME2 mixer'"
+                :extra-info="isBicycle ? 'Merk, model en type. bv: Gazelle, Paris Plus, stadsfiets' : 'Merk, model. bv: Senior, JB Systems ME2 mixer'"
                 :type="InputTypes.TEXT_AREA"
                 rules="required"
                 name="description"
