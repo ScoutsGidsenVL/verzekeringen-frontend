@@ -103,7 +103,7 @@
               track-by="fullInfo"
               value-prop="id"
               :options="userData.scoutsGroups"
-              label="Selecteer groep"
+              label="Selecteer je groep"
             />
           </div>
         </div>
