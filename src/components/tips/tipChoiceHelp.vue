@@ -1,4 +1,14 @@
 <template>
+  <div class="mt-2">
+    <info-alert>
+      <div>
+        <strong>
+          <a target="_blank" href="https://www.scoutsengidsenvlaanderen.be/leiding/ondersteuning/groepsleiding/verzekeringen/autoverzekering">Meer info --></a>
+        </strong>
+      </div>
+    </info-alert>
+  </div>
+
   <div class="py-2">
     <choice-help-item id="0" text="Heb je de auto gehuurd?" v-model:choice="choices[0]" />
   </div>
@@ -31,14 +41,9 @@
     <choice-help-item id="5" text="Wil je een omnium verzekering afsluiten?" v-model:choice="choices[5]" />
   </div>
 
-  <div class="mt-2">
+  <div v-if="displayText() !== ''" class="mt-2">
     <info-alert>
       <p v-html="displayText()"></p>
-      <div class="mt-3">
-        <strong>
-          <a target="_blank" href="https://www.scoutsengidsenvlaanderen.be/leiding/ondersteuning/groepsleiding/verzekeringen/autoverzekering">Meer info --></a>
-        </strong>
-      </div>
     </info-alert>
   </div>
 </template>
@@ -57,7 +62,7 @@ export default defineComponent({
   },
   setup() {
     const choices = ref<Array<boolean | string>>(['', '', '', '', '', ''])
-    const text = ref<string>()
+    const text = ref<string>('')
     const displayText = () => {
       // NEE NEE NEE
       if (choices.value[0] === false && choices.value[3] === false && choices.value[5] === false) {

@@ -2,7 +2,7 @@
   <div v-if="options" class="pt-4">
     <strong>
       <label>{{ label }}</label>
-      <required :rules="rules" />
+      <required v-if="label" :rules="rules" />
     </strong>
     <div class="min-w-0">
       <multi-select

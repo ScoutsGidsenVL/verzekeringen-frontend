@@ -5,29 +5,28 @@
 
       <insurance-type-menu :disabled="isEdit" />
       <div v-if="insuranceTypeState === InsuranceTypes.TIJDELIJKE_AUTO_VERZEKERING" class="mt-3">
-        <div><strong>Keuze hulp</strong><required rules="required" /></div>
+        <custom-headline-2 text="Je hebt drie opties voor een tijdelijke autoverzekering" />
+        <div><strong>Gebruik bij twijfel deze keuzehulp</strong></div>
 
         <div class="px-5">
           <tip-choice-help />
         </div>
 
-        <div class="mt-4 px-5">
+        <div class="mt-4"><strong>Vink hier je optie(s) aan</strong></div>
+
+        <div class="mt-2 px-5">
           <div>
-            <p style="font-size: 0.7em">
-              Verzekering stoffelijke schade - brand - diefstal van een gehuurd voertuig of een voertuig toebehorend aan leden van Scouts en Gidsen Vlaanderen of vrijwillige medewerkers.
-            </p>
             <input id="choice-1" v-model="values.insuranceOptions" class="mr-2" type="checkbox" :value="1" />
-            <label for="choice-1">Keuze 1: omnium</label>
+            <label for="choice-1">Optie 1: Omniumverzekering (voor stoffelijke schade, brand en diefstal van je eigen voertuig).</label>
           </div>
 
           <div class="mt-4">
-            <p style="font-size: 0.7em">Dekking van vrijstelling in stoffelijke schade OF diefstal (voor voertuigen die gebruikt worden door een groep van Scouts en Gidsen Vlaanderen.)</p>
-            <input id="choice-2" v-model="values.insuranceOptions" class="mr-2" type="checkbox" :value="2" />
-            <label for="choice-2">Keuze 2: reeds afgesloten omnium afdekken</label>
+            <div class="flex">
+              <input id="choice-2" v-model="values.insuranceOptions" class="mr-2" type="checkbox" :value="2" />
+              <label class="custom-label" for="choice-2">Optie 2: Heb je al een omniumverzekering? Koop je vrijstelling af: de verzekering dekt de vrijstelling (franchise) van je eigen omnium.</label>
+            </div>
 
             <div v-if="values.insuranceOptions.includes(2)" class="px-5">
-              <p>Maximum vrijstellingsbedrag</p>
-              <p style="font-size: 0.7em">Om de vrijstelling (=franchise) van een reeds afgesloten omnium verzekering af te kopen.</p>
               <div style="margin-top: -2em" class="w-80">
                 <multi-select
                   id="maxCoverage"
@@ -37,16 +36,17 @@
                   value-prop="value"
                   :repository="maxCoverageRepository"
                   :options="maxCoverageOptions"
-                  placeholder="Maximum vrijstellingsbedrag"
+                  placeholder="vrijstelling dekken tot"
                 />
               </div>
             </div>
           </div>
 
-          <div class="mt-4">
-            <p style="font-size: 0.7em">Dekking van vrijstelling in burgerlijke aansprakelijkheid (voor voertuigen die gehuurd worden door een groep van Scouts en Gidsen Vlaanderen.)</p>
+          <div class="flex mt-4">
             <input id="choice-3" v-model="values.insuranceOptions" class="mr-2" type="checkbox" :value="3" />
-            <label for="choice-3">Keuze 3: huurvoertuigen</label>
+            <label class="custom-label" for="choice-3"
+              >Optie 3: Huur je een voertuig? Koop dan de vrijstelling af van de wettelijk verplichte verzekering burgerlijke aansprakelijkheid tot maximum 500 euro.</label
+            >
           </div>
         </div>
 
@@ -160,7 +160,6 @@ import { useForm } from 'vee-validate'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import moment from 'moment'
-import Required from '@/components/semantic/Required.vue'
 import { InsuranceTypeRepos } from '@/enums/insuranceTypes'
 import router from '@/router'
 
@@ -178,7 +177,6 @@ export default defineComponent({
     'custom-input': CustomInput,
     'multi-select': MultiSelect,
     'info-alert': InfoAlert,
-    Required,
   },
   setup() {
     const route = useRoute()
@@ -299,3 +297,9 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss" scoped>
+.custom-label {
+  margin-top: -5px;
+}
+</style>
