@@ -1,5 +1,5 @@
 <template>
-  <form @submit="onSubmit">
+  <form id="RequestInsuranceGeneral" @submit.prevent="onSubmit">
     <div class="mb-5">
       <custom-headline-2 text="Welke" />
 
@@ -72,17 +72,32 @@
       <custom-headline-2 text="Wanneer" />
       <div class="px-5 flex gap-4">
         <div class="flex gap-4" :class="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING ? 'w-96' : 'w-70'">
-          <custom-input :min="minDate" :type="InputTypes.DATE" rules="required" name="startDate" label="Startdatum" />
-          <custom-input v-if="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING" rules="required" :type="InputTypes.TIME" name="startTime" label="Start tijd" />
+          <custom-input :loading-submit="isSubmitting" :min="minDate" :type="InputTypes.DATE" rules="required" name="startDate" label="Startdatum" />
+          <custom-input
+            v-if="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING"
+            :oading-submit="isSubmitting"
+            rules="required"
+            :type="InputTypes.TIME"
+            name="startTime"
+            label="Start tijd"
+          />
         </div>
         <div class="flex gap-4" :class="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING ? 'w-96' : 'w-80'">
-          <custom-input :min="minDate" :type="InputTypes.DATE" rules="required|startDateBeforeEndDate:startDate|maximumDateTerm:startDate" name="endDate" label="Einddatum" />
+          <custom-input
+            :oading-submit="isSubmitting"
+            :min="minDate"
+            :type="InputTypes.DATE"
+            rules="required|startDateBeforeEndDate:startDate|maximumDateTerm:startDate"
+            name="endDate"
+            label="Einddatum"
+          />
           <custom-input
             v-if="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING"
             rules="required|checkEventDate:@endDate,@startDate,@startTime"
             :type="InputTypes.TIME"
             name="endTime"
             label="Eind tijd"
+            :oading-submit="isSubmitting"
           />
         </div>
       </div>
@@ -104,6 +119,7 @@
               value-prop="id"
               :options="userData.scoutsGroups"
               label="Selecteer je groep"
+              :loading-submit="isSubmitting"
             />
           </div>
         </div>
@@ -162,6 +178,7 @@ import { useStore } from 'vuex'
 import moment from 'moment'
 import { InsuranceTypeRepos } from '@/enums/insuranceTypes'
 import router from '@/router'
+import { scrollToFirstError } from '@/veeValidate/helpers'
 
 export default defineComponent({
   name: 'RequestInsuranceGeneral',
@@ -185,7 +202,7 @@ export default defineComponent({
     const userData = ref<ResponsibleMember>(store.getters.user)
     let data: any = store.getters.getCurrentInsuranceState
     const maxCoverageOptions = ref<Array<Coverage>>()
-    const { handleSubmit, values } = useForm<BaseInsurance>({
+    const { handleSubmit, values, validate, isSubmitting } = useForm<BaseInsurance>({
       initialValues: {
         startDate: data.startDate ? data.startDate : '2022-06-29T14:41:39',
         startTime: data.startTime ? data.startTime : '07:00',
@@ -203,21 +220,24 @@ export default defineComponent({
     })
     const minDate = moment().add(1, 'days').format('YYYY-MM-DD')
 
-    const onSubmit = handleSubmit(async (values: any) => {
-      const generalInsuranceState = ref<BaseInsurance>({
-        startDate: values.startDate,
-        startTime: values.startTime ? values.startTime : undefined,
-        endDate: values.endDate,
-        endTime: values.endTime ? values.endTime : undefined,
-        group: values.group,
-        responsibleMember: values.responsibleMember ? values.responsibleMember : userData.value,
-        totalCost: '1.00',
-        insuranceOptions: values.insuranceOptions ? values.insuranceOptions : [],
-        maxCoverage: values.maxCoverage ? values.maxCoverage : undefined,
-      })
-      store.dispatch('setGeneralInsuranceState', generalInsuranceState)
-      store.dispatch('setHolderState', HolderStates.TYPE)
-    })
+    const onSubmit = async () => {
+      await validate().then((validation: any) => scrollToFirstError(validation, 'RequestInsuranceGeneral'))
+      handleSubmit(async (values: any) => {
+        const generalInsuranceState = ref<BaseInsurance>({
+          startDate: values.startDate,
+          startTime: values.startTime ? values.startTime : undefined,
+          endDate: values.endDate,
+          endTime: values.endTime ? values.endTime : undefined,
+          group: values.group,
+          responsibleMember: values.responsibleMember ? values.responsibleMember : userData.value,
+          totalCost: '1.00',
+          insuranceOptions: values.insuranceOptions ? values.insuranceOptions : [],
+          maxCoverage: values.maxCoverage ? values.maxCoverage : undefined,
+        })
+        store.dispatch('setGeneralInsuranceState', generalInsuranceState)
+        store.dispatch('setHolderState', HolderStates.TYPE)
+      })()
+    }
 
     const fetchMaxCoverages = () => {
       RepositoryFactory.get(MaxCoverageRepository)
@@ -293,6 +313,7 @@ export default defineComponent({
       values,
       refreshGroups,
       saveAsDraft,
+      isSubmitting,
     }
   },
 })

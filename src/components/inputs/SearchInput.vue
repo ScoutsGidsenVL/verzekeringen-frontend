@@ -1,11 +1,18 @@
 <template>
-  <div class="flex">
+  <div
+    class="flex"
+    :class="{
+      'text-lightGray animate-pulse2 bg-lightGray': loadingSubmit,
+    }"
+  >
     <input
-      @input="search()"
       v-model="query"
       :placeholder="placeholder"
       type="text"
+      :disabled="loadingSubmit"
+      :class="{ 'opacity-0': loadingSubmit }"
       class="appearance-none border rounded w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      @input="search()"
     />
     <div v-if="loading" style="margin-left: -2em" class="mt-2">
       <svg class="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
@@ -38,6 +45,11 @@ export default defineComponent({
       default: Function as unknown as PropType<new () => BaseRepository>,
     },
     loading: Boolean,
+    loadingSubmit: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
   },
   setup(props, context) {
     let debounce: any
