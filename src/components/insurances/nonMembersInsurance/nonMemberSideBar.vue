@@ -49,7 +49,7 @@
           </div>
 
           <div class="w-96 mt-4">
-            <custom-input :loading-submit="isSubmitting" :type="InputTypes.TEXT" rules="required" name="number" label="Nr" />
+            <custom-input :loading-submit="isSubmitting" :type="InputTypes.TEXT" maxlength="5" rules="required" name="number" label="Nr" />
           </div>
 
           <div class="w-96 mt-4">
