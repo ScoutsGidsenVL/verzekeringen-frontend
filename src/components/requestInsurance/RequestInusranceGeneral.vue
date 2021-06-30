@@ -91,7 +91,7 @@
     <div class="mb-5">
       <custom-headline-2 text="Groep" />
       <div class="px-5">
-        <p>De factuur wordt naar de financieel verantwoordelijke van deze groep gestuurd.</p>
+        <p>De factuur wordt naar de financieel verantwoordelijke van je groep gestuurd.</p>
         <div class="flex">
           <div style="width: 65%">
             <multi-select
