@@ -5,13 +5,13 @@
         <div class="angled-section__bg-image">
           <img src="/bg-texture.jpg" class="img-fluid img-fit-cover" alt="Contacteer Scouts en Gidsen Vlaanderen" loading="lazy" />
         </div>
-        <div class="container angled-section__content pt-5 pb-6 pb-md-8 pt-lg-6 pb-lg-10 pt-xxl-8 pb-xxl-10 pb-xxxl-12">
+        <div class="container angled-section__content pt-5 pb-6 pb-md-8">
           <div class="call-to-action__content">
             <div class="row justify-content-lg-center">
-              <div class="col-12 col-lg-10">
+              <div class="col-12">
                 <div class="row">
-                  <div class="col-12 col-md-7 col-lg-8 offset-md-3 offset-lg-4">
-                    <router-link :to="link" class="btn btn-blob mt-0">
+                  <div class="col-12 col-md-7 col-lg-8">
+                    <router-link v-if="link" :to="link" class="btn btn-blob mt-0">
                       {{ text
                       }}<span class="btn-blob__inner">
                         <span class="btn-blob__blobs">
@@ -19,6 +19,9 @@
                         </span>
                       </span>
                     </router-link>
+                    <div v-else>
+                      <h1 class="text-2xl font-extrabold">{{ text }}</h1>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -42,7 +45,7 @@ export default defineComponent({
     },
     link: {
       type: String,
-      required: true,
+      required: false,
     },
   },
 })

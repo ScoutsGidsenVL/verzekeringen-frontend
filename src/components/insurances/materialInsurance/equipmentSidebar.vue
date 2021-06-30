@@ -10,9 +10,9 @@
       @hideSidebar="closeSideBar"
     >
       <form
-        :class="{ 'd-flex': sideBarState.state === 'new' || sideBarState.state === 'edit', 'd-none': sideBarState.state === 'list' }"
         ref="formDiv"
-        class="flex-col relative overflow-y-scroll h-full"
+        :class="{ 'd-flex': sideBarState.state === 'new' || sideBarState.state === 'edit', 'd-none': sideBarState.state === 'list' }"
+        class="flex-col relative overflow-y-scroll h-full px-4 pt-3"
         @submit.prevent="onSubmit"
       >
         <success-toast v-model:showOrHide="formSendWithSuccess" label="Materiaal succesvol toegevoegd" />
@@ -96,7 +96,7 @@
         </div>
       </form>
 
-      <form :class="{ 'd-flex': sideBarState.state === 'list', 'd-none': sideBarState.state === 'new' || sideBarState.state === 'edit' }" class="flex-col h-full" @submit.prevent="onSubmit">
+      <form :class="{ 'd-flex': sideBarState.state === 'list', 'd-none': sideBarState.state === 'new' || sideBarState.state === 'edit' }" class="flex-col h-full px-4 pt-3" @submit.prevent="onSubmit">
         <div>
           <search-input v-model:loading="loading" name="equipment" placeholder="Zoek op beschrijving" :repository="EquipmentRepository" @fetchedOptions="fetchedOptions($event)" />
         </div>

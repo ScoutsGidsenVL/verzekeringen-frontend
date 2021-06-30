@@ -1,20 +1,15 @@
 <template>
-  <div>
+  <div :class="{ container: singlePage }">
     <div v-if="isDetail" class="mt-4">
       <navigation-arrow to="/home" text="Terug naar overzicht" />
     </div>
     <div class="mt-3">
       <div v-html="titelText"></div>
     </div>
-
-    <div v-if="details" class="my-3 cw-auto pl-5 pt-5 pb-5 bg-lightGray">
-      <h1 class="text-2xl font-extrabold">€{{ details.totalCost }}</h1>
-    </div>
-
     <slot :details="details" :isDetail="isDetail" />
   </div>
-
-  <div v-if="holderState === HolderStates.COMPLETED" class="mt-4 inline-block">
+  <call-to-action v-if="details" class="mt-4" :text="'&euro; ' + details.totalCost" />
+  <div v-if="holderState === HolderStates.COMPLETED" class="mt-4 container inline-block">
     <navigation-arrow to="/home" text="Terug naar overzicht" />
   </div>
 </template>
@@ -27,11 +22,13 @@ import { computed, defineComponent, PropType, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { HolderStates } from '@/enums/holderStates'
+import CallToAction from '@/components/customHeadlines/CallToAction.vue'
 
 export default defineComponent({
   name: 'BaseDetail',
   components: {
     'navigation-arrow': NavigationArrow,
+    'call-to-action': CallToAction,
   },
   props: {
     title: {
@@ -45,6 +42,11 @@ export default defineComponent({
     data: {
       type: Object as PropType<any>,
       required: true,
+    },
+    singlePage: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   setup(props) {

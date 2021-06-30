@@ -1,5 +1,5 @@
 <template>
-  <base-detail :data="oneTimeActivityState" :repository="OneTimeActivityRepository" title="Eenmalige activiteit">
+  <base-detail :single-page="singlePage" :data="oneTimeActivityState" :repository="OneTimeActivityRepository" title="Eenmalige activiteit">
     <template #default="{ details }">
       <div v-if="details" class="mt-1">
         <div v-if="!(holderState === HolderStates.DETAIL)">
@@ -45,6 +45,13 @@ export default defineComponent({
     'activity-detail': ActivityDetail,
     'label-output': LabelOutput,
     'base-detail': BaseDetail,
+  },
+  props: {
+    singlePage: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
   },
   setup() {
     const store = useStore()

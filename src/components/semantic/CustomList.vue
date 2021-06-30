@@ -1,6 +1,6 @@
 <template>
-  <h2 class="py-5">{{ title }}</h2>
-  <div class="custom-grid py-2 border-t-2 border-black">
+  <h2 class="pt-4 pb-2">{{ title }}</h2>
+  <div class="grid-cols-list py-2 border-t-2 border-black grid opacity-0 md:opacity-100">
     <div>
       <p class="font-semibold">Datum</p>
     </div>

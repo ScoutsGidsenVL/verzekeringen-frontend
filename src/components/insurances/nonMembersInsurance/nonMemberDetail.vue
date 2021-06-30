@@ -1,5 +1,5 @@
 <template>
-  <base-detail :data="nonMemberState" :repository="NonMemberInsuranceRepository" title="Niet leden">
+  <base-detail :single-page="singlePage" :data="nonMemberState" :repository="NonMemberInsuranceRepository" title="Niet leden">
     <template #default="{ details }">
       <div v-if="details" class="mt-1">
         <div v-if="!(holderState === HolderStates.DETAIL)">
@@ -25,7 +25,7 @@
         <div class="mb-3">
           <p class="font-semibold">Deelnemers</p>
           <div class="px-5 mt-3">
-            <non-members-list :nonMembersList="details.nonMembers" />
+            <non-members-list :non-members-list="details.nonMembers" />
           </div>
         </div>
       </div>
@@ -55,6 +55,13 @@ export default defineComponent({
     'label-output': LabelOutput,
     'base-detail': BaseDetail,
     'non-members-list': NonMembersList,
+  },
+  props: {
+    singlePage: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
   },
   setup() {
     const store = useStore()

@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="pb-10">
     <base-page>
       <router-view />
     </base-page>
@@ -23,3 +23,11 @@ export default defineComponent({
   },
 })
 </script>
+
+<style scoped>
+@media (min-width: 992px) {
+  #app {
+    padding-left: 4rem;
+  }
+}
+</style>

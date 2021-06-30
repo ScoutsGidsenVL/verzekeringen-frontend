@@ -3,9 +3,8 @@
     <div v-if="values">
       <div class="mt-3">
         <custom-headline-2 text="Bestuurders" />
-        <div class="px-5">
-          <select-drivers id="selectDriverField" rules="RequiredDrivers:selectDriverField" />
-        </div>
+
+        <select-drivers id="selectDriverField" rules="RequiredDrivers:selectDriverField" />
       </div>
 
       <div class="mt-3">
@@ -22,10 +21,10 @@
         </div>
       </div>
 
-      <div class="flex gap-3 px-5 mt-5">
-        <custom-button @click="back()" type="button" text="Vorige" />
+      <div class="flex gap-3 px-5 mt-5 items-center">
+        <custom-button type="button" text="Vorige" @click="back()" />
         <custom-button text="Volgende" />
-        <a class="hover:text-lightGreen underline cursor-pointer ml-3" v-if="!isEdit" @click="saveAsDraft()">Opslaan</a>
+        <a v-if="!isEdit" class="link-inline cursor-pointer" @click="saveAsDraft()">Opslaan</a>
       </div>
     </div>
   </form>

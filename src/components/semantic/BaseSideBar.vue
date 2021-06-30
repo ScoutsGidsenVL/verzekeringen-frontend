@@ -1,34 +1,36 @@
 <template>
   <div v-if="isDisplay" class="h-full w-full fixed top-0 left-0 overflow-x-hidden z-0 bg-black bg-opacity-20" @click="hideSideBar()"></div>
-  <div :class="{ 'd-flex': isDisplay, 'd-none': !isDisplay }" class="bg-white x fixed flex-col top-0 right-0 h-full z-20 pt-5 px-4 'w-2/5">
-    <div class="mb-3 cursor-pointer" @click="hideSideBar()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-        <path
-          d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z"
-        />
-      </svg>
-    </div>
-    <header-2 :text="title" />
-    <form v-if="options && !isEdit" action="">
-      <div class="flex gap-7">
-        <div>
-          <input :id="options[0] + name" v-model="selected" class="cursor-pointer" type="radio" :name="options[0] + name" :value="options[0] + name" @change="emitOption()" />
-          <label :for="options[0] + name" class="ml-2">{{ options[0] }}</label>
-        </div>
-
-        <div>
-          <input :id="options[1] + name" v-model="selected" class="cursor-pointer" type="radio" :name="options[1] + name" :value="options[1] + name" @change="emitOption()" />
-          <label :for="options[1] + name" class="ml-2">{{ options[1] }}</label>
-        </div>
+  <div :class="{ 'd-flex': isDisplay, 'd-none': !isDisplay }" class="bg-white fixed flex-col top-0 right-0 h-full z-20 'w-2/5">
+    <header class="px-4 pb-2 pt-3">
+      <div class="mb-4 cursor-pointer" @click="hideSideBar()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+          <path
+            d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z"
+          />
+        </svg>
       </div>
-    </form>
+      <h1 class="group-search__title mb-3 mt-0 inline-block relative text-xl" style="font-size: 2rem; position: initial; transition: none !important">
+        <span class="animate-none">{{ title }} toevoegen</span>
+      </h1>
+      <form v-if="options && !isEdit" action="">
+        <div class="flex gap-7">
+          <div>
+            <input :id="options[0] + name" v-model="selected" class="cursor-pointer" type="radio" :name="options[0] + name" :value="options[0] + name" @change="emitOption()" />
+            <label :for="options[0] + name" class="ml-2">{{ options[0] }}</label>
+          </div>
 
+          <div>
+            <input :id="options[1] + name" v-model="selected" class="cursor-pointer" type="radio" :name="options[1] + name" :value="options[1] + name" @change="emitOption()" />
+            <label :for="options[1] + name" class="ml-2">{{ options[1] }}</label>
+          </div>
+        </div>
+      </form>
+    </header>
     <slot />
   </div>
 </template>
 
 <script lang="ts">
-import header2 from '@/components/customHeadlines/CustomHeadline2.vue'
 import { defineComponent, PropType, ref, toRefs, watch } from 'vue'
 
 export type sideBarState<T> =
@@ -42,9 +44,6 @@ export type sideBarState<T> =
 
 export default defineComponent({
   name: 'BaseSideBar',
-  components: {
-    'header-2': header2,
-  },
   props: {
     title: {
       type: String,
@@ -102,3 +101,25 @@ export default defineComponent({
   },
 })
 </script>
+<style scoped>
+header {
+  background: #f9f9f9 url(/bg-texture-small.jpg) no-repeat;
+  background-size: cover;
+  box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%);
+  display: block;
+  position: sticky;
+  top: 0;
+}
+
+.group-search__title:before {
+  animation: backgroundReveal 0s 0s both;
+}
+
+.group-search__title:after {
+  animation: backgroundReveal 0s 0s both;
+}
+
+.group-search__title span {
+  animation: fadeIn 0s 0s both;
+}
+</style>

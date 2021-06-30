@@ -1,7 +1,8 @@
 <template>
-  <equipment-list :can-be-deleted="true" :equipment-list="equipment" @deleteEquipmentFromList="deleteEquipmentFromList($event)" @editEquipment="editEquipment($event)" />
+  <ErrorMessage :name="id" class="text-red text-sm block mt-1 w-80" />
+  <a class="cursor-pointer btn-simple-green mb-4" @click="openSideBar()"> + Voeg materiaal toe </a>
 
-  <div class="mt-2 text-lightGreen"><strong class="cursor-pointer" @click="openSideBar()"> + Voeg materiaal toe </strong><required :rules="rules" /></div>
+  <equipment-list :can-be-deleted="true" :equipment-list="equipment" @deleteEquipmentFromList="deleteEquipmentFromList($event)" @editEquipment="editEquipment($event)" />
 
   <equipment-side-bar
     v-model:side-bar-state="sideBarState"
@@ -18,7 +19,6 @@ import EquipmentList from '@/components/insurances/materialInsurance/equipmentLi
 import { Equipment } from '@/serializer/Equipment'
 import { defineComponent, ref } from 'vue'
 import { useField } from 'vee-validate'
-import Required from '@/components/semantic/Required.vue'
 import { sideBarState } from '@/components/semantic/BaseSideBar.vue'
 
 export default defineComponent({
@@ -26,7 +26,6 @@ export default defineComponent({
   components: {
     'equipment-side-bar': EquipmentSidebar,
     'equipment-list': EquipmentList,
-    Required,
   },
   props: {
     id: {

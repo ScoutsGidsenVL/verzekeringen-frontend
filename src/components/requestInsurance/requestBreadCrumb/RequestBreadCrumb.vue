@@ -1,5 +1,5 @@
 <template>
-  <div class="flex pt-5 pb-4">
+  <div class="flex smo:flex-col py-3">
     <bread-crumb-item :is-change-state-possible="holderState === HolderStates.TYPE || holderState === HolderStates.DETAIL" :visible-on-state="HolderStates.GENERAL" :index="'1'" :text="'Algemeen'" />
     <bread-crumb-item :is-change-state-possible="holderState === HolderStates.DETAIL" :visible-on-state="HolderStates.TYPE" :index="'2'" :text="displayCorrectTypeLabel(insuranceTypeState)" />
     <bread-crumb-item :is-change-state-possible="false" :visible-on-state="HolderStates.DETAIL" :index="'3'" :text="'Overzicht'" />

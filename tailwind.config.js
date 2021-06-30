@@ -12,6 +12,9 @@ module.exports = {
       lightGray: {
         DEFAULT: "#ECECEC",
       },
+      gray: {
+        DEFAULT: "#f9f9f9",
+      },
       lightGreen: {
         DEFAULT: "#C7D121",
       },
@@ -31,7 +34,14 @@ module.exports = {
         "2xl": "6rem",
       },
     },
-    extend: {},
+    extend: {
+      gridTemplateColumns: {
+        list: "25% 30% 25% 15% 5%",
+      },
+      screens: {
+        smo: { min: "0px", max: "768px" },
+      },
+    },
   },
   variants: {
     extend: {},

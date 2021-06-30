@@ -1,6 +1,6 @@
 <template>
   <base-side-bar v-model:isDisplay="display" name="Member" :title="title">
-    <div class="d-flex flex-col h-full">
+    <div class="d-flex flex-col h-full px-4 pt-4">
       <div>
         <search-input v-model:loading="loading" name="member" placeholder="Zoek op naam" :repository="MemberRepository" @fetchedOptions="fetchedOptions($event)" />
       </div>

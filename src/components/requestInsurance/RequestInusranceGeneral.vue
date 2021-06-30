@@ -4,7 +4,7 @@
       <custom-headline-2 text="Welke" />
 
       <insurance-type-menu :disabled="isEdit" />
-      <div class="mt-3" v-if="insuranceTypeState === InsuranceTypes.TIJDELIJKE_AUTO_VERZEKERING">
+      <div v-if="insuranceTypeState === InsuranceTypes.TIJDELIJKE_AUTO_VERZEKERING" class="mt-3">
         <div><strong>Keuze hulp</strong><required rules="required" /></div>
 
         <div class="px-5">
@@ -16,13 +16,13 @@
             <p style="font-size: 0.7em">
               Verzekering stoffelijke schade - brand - diefstal van een gehuurd voertuig of een voertuig toebehorend aan leden van Scouts en Gidsen Vlaanderen of vrijwillige medewerkers.
             </p>
-            <input class="mr-2" type="checkbox" id="choice-1" :value="1" v-model="values.insuranceOptions" />
+            <input id="choice-1" v-model="values.insuranceOptions" class="mr-2" type="checkbox" :value="1" />
             <label for="choice-1">Keuze 1: omnium</label>
           </div>
 
           <div class="mt-4">
             <p style="font-size: 0.7em">Dekking van vrijstelling in stoffelijke schade OF diefstal (voor voertuigen die gebruikt worden door een groep van Scouts en Gidsen Vlaanderen.)</p>
-            <input class="mr-2" type="checkbox" id="choice-2" :value="2" v-model="values.insuranceOptions" />
+            <input id="choice-2" v-model="values.insuranceOptions" class="mr-2" type="checkbox" :value="2" />
             <label for="choice-2">Keuze 2: reeds afgesloten omnium afdekken</label>
 
             <div v-if="values.insuranceOptions.includes(2)" class="px-5">
@@ -30,8 +30,8 @@
               <p style="font-size: 0.7em">Om de vrijstelling (=franchise) van een reeds afgesloten omnium verzekering af te kopen.</p>
               <div style="margin-top: -2em" class="w-80">
                 <multi-select
-                  rules="required"
                   id="maxCoverage"
+                  rules="required"
                   :object="true"
                   track-by="label"
                   value-prop="value"
@@ -45,13 +45,13 @@
 
           <div class="mt-4">
             <p style="font-size: 0.7em">Dekking van vrijstelling in burgerlijke aansprakelijkheid (voor voertuigen die gehuurd worden door een groep van Scouts en Gidsen Vlaanderen.)</p>
-            <input class="mr-2" type="checkbox" id="choice-3" :value="3" v-model="values.insuranceOptions" />
+            <input id="choice-3" v-model="values.insuranceOptions" class="mr-2" type="checkbox" :value="3" />
             <label for="choice-3">Keuze 3: huurvoertuigen</label>
           </div>
         </div>
 
         <div class="px-5">
-          <custom-input hideInput="true" v-show="true" :type="InputTypes.TEXT" rules="required" name="insuranceOptions" />
+          <custom-input v-show="true" hide-input="true" :type="InputTypes.TEXT" rules="required" name="insuranceOptions" />
         </div>
       </div>
 
@@ -95,9 +95,9 @@
         <div class="flex">
           <div style="width: 65%">
             <multi-select
+              id="group"
               :object="true"
               :disabled="isEdit"
-              id="group"
               rules="required"
               placeholder="Group"
               track-by="fullInfo"
@@ -121,14 +121,14 @@
       <info-alert>
         <p>
           Om informatie van de aanvrager te wijzigen <strong><a target="_blank" href="https://groepsadmin.scoutsengidsenvlaanderen.be/">klik hier.</a></strong>
-          <custom-button @click="refreshGroups()" type="button" class="ml-5 mt-2" text="Herlaad" />
+          <custom-button type="button" class="ml-5 mt-2" text="Herlaad" @click="refreshGroups()" />
         </p>
       </info-alert>
     </div>
 
-    <div class="mt-5">
+    <div class="flex gap-3 px-5 mt-5 items-center">
       <custom-button text="Volgende" />
-      <a class="hover:text-lightGreen underline cursor-pointer ml-3" v-if="!isEdit" @click="saveAsDraft()">Opslaan</a>
+      <a v-if="!isEdit" class="link-inline cursor-pointer" @click="saveAsDraft()">Opslaan</a>
     </div>
   </form>
 </template>

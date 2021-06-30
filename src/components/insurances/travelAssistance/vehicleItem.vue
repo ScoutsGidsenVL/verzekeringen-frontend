@@ -1,6 +1,6 @@
 <template>
   <slot name="top"></slot>
-  <div v-if="vehicle && vehicle.licensePlate" class="w-96">
+  <div v-if="vehicle && vehicle.licensePlate" class="w-full shadow-md border-b-2 border-black bg-white p-2 h-full inline-block text-left d-flex flex-col justify-content-between">
     <div v-if="vehicle.brand">
       <strong>Merk</strong>
       <p>{{ vehicle.brand }}</p>
@@ -32,7 +32,6 @@
     </div>
 
     <slot />
-    <hr v-if="!noLine" class="border-t-2 border-black mt-3" />
   </div>
 </template>
 
