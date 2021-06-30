@@ -4,7 +4,9 @@ import { Coverage } from '@/serializer/Coverage'
 
 export interface BaseInsurance {
   startDate?: string
+  startTime?: string
   endDate?: string
+  endTime?: string
   group?: Group
   responsibleMember?: ResponsibleMember
   totalCost?: string

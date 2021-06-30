@@ -71,22 +71,18 @@
     <div class="mb-5">
       <custom-headline-2 text="Wanneer" />
       <div class="px-5 flex gap-4">
-        <div class="w-80">
-          <custom-input
-            :min="minDate"
-            :type="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING ? InputTypes.DATE_TIME_LOCAL : InputTypes.DATE"
-            rules="required"
-            name="startDate"
-            label="Start datum"
-          />
+        <div class="flex gap-4" :class="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING ? 'w-96' : 'w-70'">
+          <custom-input :min="minDate" :type="InputTypes.DATE" rules="required" name="startDate" label="Start datum" />
+          <custom-input v-if="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING" rules="required" :type="InputTypes.TIME" name="startTime" label="Start tijd" />
         </div>
-        <div class="w-80">
+        <div class="flex gap-4" :class="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING ? 'w-96' : 'w-80'">
+          <custom-input :min="minDate" :type="InputTypes.DATE" rules="required|startDateBeforeEndDate:startDate|maximumDateTerm:startDate" name="endDate" label="Eind datum" />
           <custom-input
-            :min="minDate"
-            :type="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING ? InputTypes.DATE_TIME_LOCAL : InputTypes.DATE"
-            rules="required|startDateBeforeEndDate:startDate|maximumDateTerm:startDate"
-            name="endDate"
-            label="Eind datum"
+            v-if="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING"
+            rules="required|checkEventDate:@endDate,@startDate,@startTime"
+            :type="InputTypes.TIME"
+            name="endTime"
+            label="Eind tijd"
           />
         </div>
       </div>
@@ -192,8 +188,10 @@ export default defineComponent({
     const maxCoverageOptions = ref<Array<Coverage>>()
     const { handleSubmit, values } = useForm<BaseInsurance>({
       initialValues: {
-        startDate: data.startDate ? data.startDate : '',
-        endDate: data.endDate ? data.endDate : '',
+        startDate: data.startDate ? data.startDate : '2022-06-29T14:41:39',
+        startTime: data.startTime ? data.startTime : '07:00',
+        endDate: data.endDate ? data.endDate : '2021-06-29T9',
+        endTime: data.endTime ? data.endTime : '08:00',
         group: data.group ? data.group : userData.value.scoutsGroups ? userData.value.scoutsGroups[0] : undefined,
         responsibleMember: data.responsibleMember ? data.responsibleMember : userData.value,
         insuranceOptions: data.insuranceOptions ? data.insuranceOptions : [],
@@ -209,7 +207,9 @@ export default defineComponent({
     const onSubmit = handleSubmit(async (values: any) => {
       const generalInsuranceState = ref<BaseInsurance>({
         startDate: values.startDate,
+        startTime: values.startTime ? values.startTime : undefined,
         endDate: values.endDate,
+        endTime: values.endTime ? values.endTime : undefined,
         group: values.group,
         responsibleMember: values.responsibleMember ? values.responsibleMember : userData.value,
         totalCost: '1.00',

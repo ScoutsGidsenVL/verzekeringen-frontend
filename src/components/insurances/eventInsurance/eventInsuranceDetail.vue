@@ -16,7 +16,7 @@
         <div>
           <p class="font-semibold">Datum</p>
           <div class="px-5">
-            <label-output label="Periode" :text="formatEventDate(details.startDate, details.endDate)" />
+            <label-output label="Periode" :text="formatEventDate(details.startDate, details.startTime, details.endDate, details.endTime)" />
           </div>
         </div>
 

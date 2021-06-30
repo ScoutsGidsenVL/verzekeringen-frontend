@@ -7,7 +7,9 @@ import moment from 'moment'
 export interface EventInsurance {
   readonly id?: number
   readonly startDate?: string
+  readonly startTime?: string
   readonly endDate?: string
+  readonly endTime?: string
   readonly comment?: string
   readonly responsibleMember?: ResponsibleMember
   readonly responsiblePhoneNumber?: string
@@ -21,8 +23,10 @@ export interface EventInsurance {
 export const EventInsuranceDeserializer = (input: any): EventInsurance => {
   const single: EventInsurance = {
     id: input.id ? input.id : undefined,
-    startDate: input.start_date ? moment(input.start_date).format('YYYY-MM-DD h:mm') : undefined,
-    endDate: input.end_date ? moment(input.end_date).format('YYYY-MM-DD h:mm') : undefined,
+    startDate: input.start_date ? moment(input.start_date).format('YYYY-MM-DD') : undefined,
+    startTime: input.start_date ? moment(input.start_date).format('HH:mm') : undefined,
+    endDate: input.end_date ? moment(input.end_date).format('YYYY-MM-DD') : undefined,
+    endTime: input.end_date ? moment(input.end_date).format('HH:mm') : undefined,
     comment: input.comment ? input.comment : undefined,
     responsibleMember: input.responsible_member ? ResponsibleMemberDeserializer(input.responsible_member) : undefined,
     responsiblePhoneNumber: input.responsible_phone_number ? input.responsible_phone_number : undefined,
@@ -38,8 +42,8 @@ export const EventInsuranceDeserializer = (input: any): EventInsurance => {
 
 export const EventInsuranceSerializer = (input: EventInsurance): EventInsurance => {
   const single: any = {
-    start_date: input.startDate ? input.startDate : undefined,
-    end_date: input.endDate ? input.endDate : undefined,
+    start_date: input.startDate ? input.startDate + 'T' + input.startTime + ':00.000Z' : undefined,
+    end_date: input.endDate ? input.endDate + 'T' + input.endTime + ':00.000Z' : undefined,
     comment: input.comment ? input.comment : undefined,
     responsible_phone_number: input.responsibleMember ? ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number : undefined,
     group: input.group ? GroupSerializer(input.group).id : undefined,

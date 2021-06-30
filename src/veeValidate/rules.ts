@@ -95,4 +95,22 @@ export const defineRules = (store: any) => {
     }
     return true
   })
+
+  // @ts-ignore
+  defineRule('checkEventDate', (endTime: string, [endDate, startDate, startTime]) => {
+    const end: any = moment(endDate + 'T' + endTime + ':00.000Z')
+    const start: any = moment(startDate + 'T' + startTime + ':00.000Z')
+    const result = (end - start) / 1000
+
+    if (result < 86400) {
+      scrollTo()
+      return 'De start datum en eind datum mogen niet minder dan 24 uur bedragen.'
+    }
+
+    return true
+  })
+}
+
+export const scrollTo = () => {
+  window.scrollTo(0, 300)
 }
