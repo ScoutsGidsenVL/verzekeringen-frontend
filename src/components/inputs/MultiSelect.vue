@@ -4,14 +4,20 @@
       <label>{{ label }}</label>
       <required v-if="label" :rules="rules" />
     </strong>
-    <div class="min-w-0">
+    <div
+      class="min-w-0"
+      :class="{
+        'text-lightGray animate-pulse2 bg-lightGray': loadingSubmit,
+      }"
+    >
       <multi-select
+        :id="id"
         ref="multiselect"
         v-model="inputValue"
+        :class="{ 'opacity-0': loadingSubmit }"
         :name="id"
         :value-prop="valueProp"
-        :id="id"
-        :disabled="disabled"
+        :disabled="disabled || loadingSubmit"
         :filter-results="false"
         :min-chars="1"
         :resolve-on-load="true"
@@ -29,7 +35,7 @@
               }
             : options
         "
-        noOptionsText="-geen resultaten-"
+        no-options-text="-geen resultaten-"
       />
       <error-message class="text-red font-light ml-1 mt-1 text-sm inline-block" :name="id" />
     </div>
@@ -121,6 +127,11 @@ export default defineComponent({
     },
     extraOption: {
       type: Object as PropType<any>,
+      required: false,
+    },
+    loadingSubmit: {
+      type: Boolean,
+      default: false,
       required: false,
     },
   },

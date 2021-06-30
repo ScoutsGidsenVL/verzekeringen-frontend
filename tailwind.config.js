@@ -41,6 +41,20 @@ module.exports = {
       screens: {
         smo: { min: "0px", max: "768px" },
       },
+      keyframes: {
+        pulse2: {
+          "0%, 100%": { opacity: 1 },
+          "50%": { opacity: 0.5 },
+        },
+        wiggle: {
+          "0%, 100%": { transform: "rotate(-3deg)" },
+          "50%": { transform: "rotate(3deg)" },
+        },
+      },
+      animation: {
+        wiggle: "wiggle 1s ease-in-out infinite",
+        pulse2: "pulse2 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+      },
     },
   },
   variants: {

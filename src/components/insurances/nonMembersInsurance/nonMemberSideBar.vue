@@ -20,16 +20,17 @@
         <success-toast v-model:showOrHide="formSendWithSuccess" label="Persoon succesvol toegevoegd" />
         <div class="mt-4">
           <div class="w-96">
-            <custom-input :type="InputTypes.TEXT" rules="required" name="firstName" label="Voornaam" />
+            <custom-input :loading-submit="isSubmitting" :type="InputTypes.TEXT" rules="required" name="firstName" label="Voornaam" />
           </div>
 
           <div class="w-96 mt-4">
-            <custom-input :type="InputTypes.TEXT" rules="required" name="lastName" label="Achternaam" />
+            <custom-input :loading-submit="isSubmitting" :type="InputTypes.TEXT" rules="required" name="lastName" label="Achternaam" />
           </div>
 
           <div class="w-96">
             <multi-select
               id="postCodeCity"
+              :loading-submit="isSubmitting"
               :object="true"
               track-by="label"
               value-prop="label"
@@ -44,23 +45,23 @@
           </div>
 
           <div class="w-96 mt-4">
-            <custom-input :type="InputTypes.TEXT" rules="required" name="street" label="Straat" />
+            <custom-input :loading-submit="isSubmitting" :type="InputTypes.TEXT" rules="required" name="street" label="Straat" />
           </div>
 
           <div class="w-96 mt-4">
-            <custom-input :type="InputTypes.TEXT" rules="required" name="number" label="Nr" />
+            <custom-input :loading-submit="isSubmitting" :type="InputTypes.TEXT" rules="required" name="number" label="Nr" />
           </div>
 
           <div class="w-96 mt-4">
-            <custom-input :type="InputTypes.TEXT" name="letterBox" label="Bus" />
+            <custom-input :loading-submit="isSubmitting" :type="InputTypes.TEXT" name="letterBox" label="Bus" />
           </div>
 
           <div class="w-96 mt-4">
-            <custom-input :type="InputTypes.DATE" rules="required" name="birthDate" label="Geboortedatum" />
+            <custom-input :loading-submit="isSubmitting" :type="InputTypes.DATE" rules="required" name="birthDate" label="Geboortedatum" />
           </div>
 
           <div class="w-96 mt-4">
-            <custom-input :type="InputTypes.TEXT_AREA" name="comment" label="Opmerking">
+            <custom-input :loading-submit="isSubmitting" :type="InputTypes.TEXT_AREA" name="comment" label="Opmerking">
               <p v-if="isExtraInformationComment">
                 Indien je niet-leden wil verzekeren die in het buitenland wonen moet je in dit tekstvak de buitenlands gemeente, postcode en land opgeven. En bij adres, het belgisch adres van de
                 persoon die de verzekering aanvraagt.
@@ -70,7 +71,7 @@
         </div>
 
         <div class="mt-5 py-4 sticky bottom-0 bg-white">
-          <custom-button :text="sideBarState.state === 'edit' ? 'Bewerk' : 'Voeg toe'" />
+          <custom-button :loading-submit="isSubmitting" :text="sideBarState.state === 'edit' ? 'Bewerk' : 'Voeg toe'" />
         </div>
       </form>
 
@@ -161,7 +162,7 @@ export default defineComponent({
     ])
     const store = useStore()
     const user = ref<ResponsibleMember>(store.getters.user)
-    const { resetForm, errors, handleSubmit, validate, meta, values } = useForm<NonMember>()
+    const { resetForm, errors, handleSubmit, validate, meta, values, isSubmitting } = useForm<NonMember>()
     const { formSendWithSuccess } = useFormSendWithSuccess<NonMember>(meta)
     const selected = computed(() => (props.sideBarState.state === 'list' ? 'BestaandNonMember' : 'NieuwNonMember'))
     const selectedNonMembers = ref<NonMember[]>([])
@@ -315,6 +316,7 @@ export default defineComponent({
       changeSideBar,
       values,
       options,
+      isSubmitting,
     }
   },
 })
