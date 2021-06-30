@@ -120,7 +120,8 @@
     <div>
       <info-alert>
         <p>
-          Om informatie van de aanvrager te wijzigen <strong><a target="_blank" href="https://groepsadmin.scoutsengidsenvlaanderen.be/">klik hier.</a></strong>
+          Om het e-mailadres of gsm-nummer van de aanvrager te wijzigen <strong><a target="_blank" href="https://groepsadmin.scoutsengidsenvlaanderen.be/">klik hier</a></strong> en vervolgens op
+          Herlaad.
           <custom-button type="button" class="ml-5 mt-2" text="Herlaad" @click="refreshGroups()" />
         </p>
       </info-alert>
