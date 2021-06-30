@@ -6,7 +6,7 @@
       :is-edit="sideBarState.state === 'edit'"
       name="NonMember"
       :title="title"
-      :options="['Nieuw', 'Bestaand']"
+      :options="options"
       @options="changeSideBar"
       @hideSidebar="closeSideBar"
     >
@@ -17,7 +17,7 @@
         class="flex-col relative overflow-y-scroll h-full px-4 pt-3"
         @submit.prevent="onSubmit"
       >
-        <success-toast v-model:showOrHide="formSendWithSuccess" label="Niet lid succesvol toegevoegd" />
+        <success-toast v-model:showOrHide="formSendWithSuccess" label="Persoon succesvol toegevoegd" />
         <div class="mt-4">
           <div class="w-96">
             <custom-input :type="InputTypes.TEXT" rules="required" name="firstName" label="Voornaam" />
@@ -100,7 +100,7 @@ import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRep
 import { NonMemberRepository } from '@/repositories/nonMemberRepository'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 import RepositoryFactory from '@/repositories/repositoryFactory'
-import BaseSideBar, { sideBarState } from '@/components/semantic/BaseSideBar.vue'
+import BaseSideBar, { option, sideBarState } from '@/components/semantic/BaseSideBar.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomButton from '@/components/CustomButton.vue'
@@ -155,6 +155,10 @@ export default defineComponent({
   },
   emits: ['update:sideBarState', 'addCreatedNonMemberToList', 'updateMemberInList'],
   setup(props, context) {
+    const options = ref<option[]>([
+      { text: 'Nieuw', value: 'Nieuw' },
+      { text: 'Uit eerdere aanvragen', value: 'Bestaand' },
+    ])
     const store = useStore()
     const user = ref<ResponsibleMember>(store.getters.user)
     const { resetForm, errors, handleSubmit, validate, meta, values } = useForm<NonMember>()
@@ -310,6 +314,7 @@ export default defineComponent({
       closeSideBar,
       changeSideBar,
       values,
+      options,
     }
   },
 })

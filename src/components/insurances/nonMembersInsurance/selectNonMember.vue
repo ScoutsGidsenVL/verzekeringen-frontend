@@ -1,14 +1,14 @@
 <template>
   <ErrorMessage :name="id" class="text-red text-sm block mt-1 w-80" />
 
-  <a class="cursor-pointer btn-simple-green mb-4" @click="openSideBar()"> + Voeg niet-lid toe </a>
+  <a class="cursor-pointer btn-simple-green mb-4" @click="openSideBar()"> + Voeg persoon toe </a>
   <non-member-list :can-be-deleted="true" :non-members-list="nonMembers" @deleteNonMemberFromList="deleteNonMemberFromList($event)" @editNonMember="editNonMember($event)" />
 
   <non-member-side-bar
     v-model:side-bar-state="sideBarState"
     :is-extra-information-comment="isExtraInformationComment"
     :existing-list="nonMembers"
-    :title="sideBarState.state === 'edit' ? 'Bewerk niet lid' : 'Niet lid'"
+    :title="sideBarState.state === 'edit' ? 'Bewerk persoonsgegevens' : 'Persoonsgegevens toevoegen'"
     @addCreatedNonMemberToList="addCreatedNonMemberToList($event)"
     @updateMemberInList="updateMemberInList($event)"
   />

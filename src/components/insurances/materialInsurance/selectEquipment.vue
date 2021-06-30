@@ -7,7 +7,7 @@
   <equipment-side-bar
     v-model:side-bar-state="sideBarState"
     :existing-list="equipment"
-    :title="sideBarState.state === 'edit' ? 'Bewerk materiaal' : 'Materiaal'"
+    :title="sideBarState.state === 'edit' ? 'Bewerk materiaal' : 'Materiaal toevoegen'"
     @addEquipmentToList="addEquipmentToList($event)"
     @updateEquipmentInList="updateEquipmentInList($event)"
   />

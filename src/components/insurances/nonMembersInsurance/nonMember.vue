@@ -41,7 +41,7 @@
     </div>
 
     <div class="mt-3">
-      <custom-headline-2 text="Niet leden" />
+      <custom-headline-2 text="Te verzekeren personen" />
     </div>
 
     <select-non-member id="nonMembers" :is-extra-information-comment="true" rules="required" />

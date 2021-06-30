@@ -1,14 +1,6 @@
 <template>
   <div>
-    <base-side-bar
-      :selection="selected"
-      :is-display="sideBarState.state !== 'hide'"
-      name="Vehicle"
-      :title="title"
-      :options="['Nieuw', 'Bestaand']"
-      @options="changeSideBar"
-      @hideSidebar="closeSideBar"
-    >
+    <base-side-bar :selection="selected" :is-display="sideBarState.state !== 'hide'" name="Vehicle" :title="title" :options="options" @options="changeSideBar" @hideSidebar="closeSideBar">
       <form
         id="addNewVehicle"
         :class="{ 'd-flex': sideBarState.state === 'new' || sideBarState.state === 'edit', 'd-none': sideBarState.state === 'list' }"
@@ -93,7 +85,7 @@
 <script lang="ts">
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 import RepositoryFactory from '@/repositories/repositoryFactory'
-import BaseSideBar, { sideBarState } from '@/components/semantic/BaseSideBar.vue'
+import BaseSideBar, { option, sideBarState } from '@/components/semantic/BaseSideBar.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import SearchInput from '@/components/inputs/SearchInput.vue'
 import CustomButton from '@/components/CustomButton.vue'
@@ -140,6 +132,10 @@ export default defineComponent({
   },
   emits: ['update:sideBarState', 'addCreatedVehicle', 'updateMemberInList'],
   setup(props, context) {
+    const options = ref<option[]>([
+      { text: 'Nieuw', value: 'Nieuw' },
+      { text: 'Uit eerdere aanvragen', value: 'Bestaand' },
+    ])
     const store = useStore()
     const user = ref<ResponsibleMember>(store.getters.user)
     const { resetForm, handleSubmit, validate, meta, values } = useForm<Vehicle>({ initialValues: { trailer: { id: '0', value: '0', label: 'Geen' } } })
@@ -331,6 +327,7 @@ export default defineComponent({
       loading,
       changeSideBar,
       closeSideBar,
+      options,
     }
   },
 })

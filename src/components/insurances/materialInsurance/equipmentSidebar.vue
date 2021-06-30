@@ -1,14 +1,6 @@
 <template>
   <div>
-    <base-side-bar
-      :selection="selected"
-      :is-display="sideBarState.state !== 'hide'"
-      name="Equipment"
-      :title="title"
-      :options="['Nieuw', 'Bestaand']"
-      @options="changeSideBar"
-      @hideSidebar="closeSideBar"
-    >
+    <base-side-bar :selection="selected" :is-display="sideBarState.state !== 'hide'" name="Equipment" :title="title" :options="options" @options="changeSideBar" @hideSidebar="closeSideBar">
       <form
         ref="formDiv"
         :class="{ 'd-flex': sideBarState.state === 'new' || sideBarState.state === 'edit', 'd-none': sideBarState.state === 'list' }"
@@ -126,7 +118,7 @@ import MemberItem from '@/components/insurances/travelAssistance/memberItem.vue'
 import { EquipmentRepository } from '@/repositories/equipmentRepository'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 import RepositoryFactory from '@/repositories/repositoryFactory'
-import BaseSideBar, { sideBarState } from '@/components/semantic/BaseSideBar.vue'
+import BaseSideBar, { option, sideBarState } from '@/components/semantic/BaseSideBar.vue'
 import SearchInput from '@/components/inputs/SearchInput.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import CustomButton from '@/components/CustomButton.vue'
@@ -176,6 +168,10 @@ export default defineComponent({
   },
   emits: ['update:sideBarState', 'addEquipmentToList', 'updateEquipmentInList'],
   setup(props, context) {
+    const options = ref<option[]>([
+      { text: 'Nieuw', value: 'Nieuw' },
+      { text: 'Uit eerdere aanvragen', value: 'Bestaand' },
+    ])
     const store = useStore()
     const selected = computed(() => (props.sideBarState.state === 'list' ? 'BestaandEquipment' : 'NieuwEquipment'))
     const loading = ref<boolean>(false)
@@ -393,6 +389,7 @@ export default defineComponent({
       nonMemberSideBarState,
       memberSideBarState,
       isMemberSideBarDisplay,
+      options,
     }
   },
 })

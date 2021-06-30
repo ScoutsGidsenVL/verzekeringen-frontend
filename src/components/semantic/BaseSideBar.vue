@@ -10,18 +10,18 @@
         </svg>
       </div>
       <h1 class="group-search__title mb-3 mt-0 inline-block relative text-xl" style="font-size: 2rem; position: initial; transition: none !important">
-        <span class="animate-none">{{ title }} toevoegen</span>
+        <span class="animate-none">{{ title }}</span>
       </h1>
       <form v-if="options && !isEdit" action="">
         <div class="flex gap-7">
           <div>
-            <input :id="options[0] + name" v-model="selected" class="cursor-pointer" type="radio" :name="options[0] + name" :value="options[0] + name" @change="emitOption()" />
-            <label :for="options[0] + name" class="ml-2">{{ options[0] }}</label>
+            <input :id="options[0].value + name" v-model="selected" class="cursor-pointer" type="radio" :name="options[0].value + name" :value="options[0].value + name" @change="emitOption()" />
+            <label :for="options[0].value + name" class="ml-2">{{ options[0].text }}</label>
           </div>
 
           <div>
-            <input :id="options[1] + name" v-model="selected" class="cursor-pointer" type="radio" :name="options[1] + name" :value="options[1] + name" @change="emitOption()" />
-            <label :for="options[1] + name" class="ml-2">{{ options[1] }}</label>
+            <input :id="options[1].value + name" v-model="selected" class="cursor-pointer" type="radio" :name="options[1].value + name" :value="options[1].value + name" @change="emitOption()" />
+            <label :for="options[1].value + name" class="ml-2">{{ options[1].text }}</label>
           </div>
         </div>
       </form>
@@ -41,6 +41,11 @@ export type sideBarState<T> =
   | { state: 'list' }
   | { state: 'new' }
   | { state: 'hide' }
+
+export interface option {
+  text: string
+  value: string
+}
 
 export default defineComponent({
   name: 'BaseSideBar',

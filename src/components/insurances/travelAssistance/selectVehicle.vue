@@ -25,7 +25,7 @@
     <div v-show="!vehicle" class="font-semibold text-lg">Geen voertuig geselecteerd</div>
   </div>
 
-  <vehicle-side-bar v-model:side-bar-state="sideBarState" :title="sideBarState.state === 'edit' ? 'Bewerk voertuig' : 'Voertuig'" @addCreatedVehicle="addCreatedVehicle($event)" />
+  <vehicle-side-bar v-model:side-bar-state="sideBarState" :title="sideBarState.state === 'edit' ? 'Bewerk voertuig' : 'Voertuig toevoegen'" @addCreatedVehicle="addCreatedVehicle($event)" />
 </template>
 
 <script lang="ts">

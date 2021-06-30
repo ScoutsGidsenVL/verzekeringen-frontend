@@ -70,6 +70,7 @@
 
     <div class="mb-5">
       <custom-headline-2 text="Wanneer" />
+      {{ values.startDate }}
       <div class="px-5 flex gap-4">
         <div class="flex gap-4" :class="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING ? 'w-96' : 'w-70'">
           <custom-input :min="minDate" :type="InputTypes.DATE" rules="required" name="startDate" label="Startdatum" />
@@ -187,10 +188,10 @@ export default defineComponent({
     const maxCoverageOptions = ref<Array<Coverage>>()
     const { handleSubmit, values } = useForm<BaseInsurance>({
       initialValues: {
-        startDate: data.startDate ? data.startDate : '2022-06-29T14:41:39',
-        startTime: data.startTime ? data.startTime : '07:00',
-        endDate: data.endDate ? data.endDate : '2021-06-29T9',
-        endTime: data.endTime ? data.endTime : '08:00',
+        startDate: data.startDate ? data.startDate : '',
+        startTime: data.startTime ? data.startTime : '',
+        endDate: data.endDate ? data.endDate : '',
+        endTime: data.endTime ? data.endTime : '',
         group: data.group ? data.group : userData.value.scoutsGroups ? userData.value.scoutsGroups[0] : undefined,
         responsibleMember: data.responsibleMember ? data.responsibleMember : userData.value,
         insuranceOptions: data.insuranceOptions ? data.insuranceOptions : [],
