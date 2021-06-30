@@ -58,7 +58,7 @@ export const defineRules = (store: any) => {
     const startDate: number = Number(moment(ctx.form[target]).format('YYYYMMDD'))
 
     if (startDate >= endDate) {
-      return 'Start datum moet voor eind datum zijn'
+      return 'Startdatum moet voor einddatum zijn'
     }
 
     return true
@@ -104,7 +104,7 @@ export const defineRules = (store: any) => {
 
     if (result < 86400) {
       scrollTo()
-      return 'De start datum en eind datum mogen niet minder dan 24 uur bedragen.'
+      return 'De startdatum en einddatum mogen niet minder dan 24 uur bedragen.'
     }
 
     return true

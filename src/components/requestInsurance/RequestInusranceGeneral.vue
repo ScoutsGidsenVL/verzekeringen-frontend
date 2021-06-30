@@ -72,11 +72,11 @@
       <custom-headline-2 text="Wanneer" />
       <div class="px-5 flex gap-4">
         <div class="flex gap-4" :class="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING ? 'w-96' : 'w-70'">
-          <custom-input :min="minDate" :type="InputTypes.DATE" rules="required" name="startDate" label="Start datum" />
+          <custom-input :min="minDate" :type="InputTypes.DATE" rules="required" name="startDate" label="Startdatum" />
           <custom-input v-if="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING" rules="required" :type="InputTypes.TIME" name="startTime" label="Start tijd" />
         </div>
         <div class="flex gap-4" :class="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING ? 'w-96' : 'w-80'">
-          <custom-input :min="minDate" :type="InputTypes.DATE" rules="required|startDateBeforeEndDate:startDate|maximumDateTerm:startDate" name="endDate" label="Eind datum" />
+          <custom-input :min="minDate" :type="InputTypes.DATE" rules="required|startDateBeforeEndDate:startDate|maximumDateTerm:startDate" name="endDate" label="Einddatum" />
           <custom-input
             v-if="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING"
             rules="required|checkEventDate:@endDate,@startDate,@startTime"
