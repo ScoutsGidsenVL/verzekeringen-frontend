@@ -99,7 +99,7 @@
               :object="true"
               :disabled="isEdit"
               rules="required"
-              placeholder="Group"
+              placeholder="Groep"
               track-by="fullInfo"
               value-prop="id"
               :options="userData.scoutsGroups"
