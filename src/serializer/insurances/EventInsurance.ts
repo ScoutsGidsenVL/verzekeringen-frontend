@@ -24,9 +24,9 @@ export const EventInsuranceDeserializer = (input: any): EventInsurance => {
   const single: EventInsurance = {
     id: input.id ? input.id : undefined,
     startDate: input.start_date ? moment(input.start_date).format('YYYY-MM-DD') : undefined,
-    startTime: input.start_date ? moment(input.start_date).format('HH:mm') : undefined,
+    startTime: input.start_date ? moment(input.start_date).add(2, 'hours').format('HH:mm') : undefined,
     endDate: input.end_date ? moment(input.end_date).format('YYYY-MM-DD') : undefined,
-    endTime: input.end_date ? moment(input.end_date).format('HH:mm') : undefined,
+    endTime: input.end_date ? moment(input.end_date).add(2, 'hours').format('HH:mm') : undefined,
     comment: input.comment ? input.comment : undefined,
     responsibleMember: input.responsible_member ? ResponsibleMemberDeserializer(input.responsible_member) : undefined,
     responsiblePhoneNumber: input.responsible_phone_number ? input.responsible_phone_number : undefined,
