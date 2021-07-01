@@ -11,9 +11,16 @@
         </div>
       </div>
     </request-insurance-detail>
+
+    <call-to-action v-if="data" class="mt-4" :text="'&euro; ' + data.totalCost">
+      <template v-slot:info>
+        <div class="pb-5">Je staat op het punt een verzekering aan te vragen met de volgende gegevens. <strong>Kijk ze nog eens grondig na</strong> en ga terug indien er iets niet correct is.</div>
+        <custom-button text="Bevestig" />
+      </template>
+    </call-to-action>
+
     <div class="flex gap-3 px-5 mt-5">
-      <custom-button @click="back()" type="button" text="Vorige" />
-      <custom-button text="Bevestig" />
+      <back-button :backToState="HolderStates.TYPE" />
     </div>
   </form>
 </template>
@@ -24,6 +31,7 @@ import RequestInsuranceDetail from './RequestInsuranceDetail.vue'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import CustomButton from '@/components/CustomButton.vue'
+import BackButton from '@/components/semantic/BackButton.vue'
 import { defineComponent, ref } from 'vue'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
@@ -31,13 +39,16 @@ import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { DraftRepository } from '@/repositories/insurances/draftRepository'
+import CallToAction from '@/components/customHeadlines/CallToAction.vue'
 
 export default defineComponent({
   name: 'RequestInsuranceSubmit',
   components: {
+    'request-insurance-detail': RequestInsuranceDetail,
+    'call-to-action': CallToAction,
     'custom-button': CustomButton,
     'custom-input': CustomInput,
-    'request-insurance-detail': RequestInsuranceDetail,
+    'back-button': BackButton,
   },
   setup() {
     const route = useRoute()
@@ -101,10 +112,12 @@ export default defineComponent({
     }
 
     return {
+      HolderStates,
       onSubmit,
       InputTypes,
       error,
       back,
+      data,
     }
   },
 })

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <strong v-if="!hideInput">
+    <strong v-if="!hideInput && label">
       <label>{{ label }}</label>
       <required :rules="rules" />
     </strong>

@@ -3,14 +3,23 @@
     <div v-if="isDetail" class="mt-4">
       <navigation-arrow to="/home" text="Terug naar overzicht" />
     </div>
+
     <div class="mt-3">
       <div v-html="titelText"></div>
     </div>
+
+    <h1 class="group-search__title my-5 inline-block relative text-xl" style="font-size: 2rem; position: initial; transition: none !important">
+      <span class="animate-none">Totaalprijs:{{ '&euro; ' + details.totalCost }}</span>
+    </h1>
+
     <slot :details="details" :isDetail="isDetail" />
   </div>
-  <call-to-action v-if="details" class="mt-4" :text="'&euro; ' + details.totalCost" />
-  <div v-if="holderState === HolderStates.COMPLETED" class="mt-4 container inline-block">
-    <navigation-arrow to="/home" text="Terug naar overzicht" />
+
+  <div v-if="holderState === HolderStates.COMPLETED">
+    <call-to-action v-if="details" class="mt-4" :text="'&euro; ' + details.totalCost" />
+    <div class="mt-4 container inline-block">
+      <navigation-arrow to="/home" text="Terug naar overzicht" />
+    </div>
   </div>
 </template>
 

@@ -10,10 +10,10 @@
             <div class="row justify-content-lg-center">
               <div class="col-12">
                 <div class="row">
-                  <div class="col-12 col-md-7 col-lg-8">
+                  <div class="col-12 col-md-7 col-lg-10">
                     <router-link v-if="link" :to="link" class="btn btn-blob mt-0">
-                      {{ text
-                      }}<span class="btn-blob__inner">
+                      {{ text }}
+                      <span class="btn-blob__inner">
                         <span class="btn-blob__blobs">
                           <span class="btn-blob__blob"></span> <span class="btn-blob__blob"></span> <span class="btn-blob__blob"></span> <span class="btn-blob__blob"></span>
                         </span>
@@ -21,6 +21,7 @@
                     </router-link>
                     <div v-else>
                       <h1 class="text-2xl font-extrabold">{{ text }}</h1>
+                      <slot name="info"></slot>
                     </div>
                   </div>
                 </div>

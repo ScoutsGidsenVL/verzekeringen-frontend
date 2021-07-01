@@ -43,7 +43,8 @@
       </div>
 
       <div class="flex gap-3 px-5 mt-5 items-center">
-        <custom-button type="button" text="Vorige" @click="back()" />
+        <back-button :backToState="HolderStates.GENERAL" />
+
         <custom-button text="Volgende" />
         <a v-if="!isEdit" class="link-inline cursor-pointer" @click="saveAsDraft()">Opslaan</a>
       </div>
@@ -70,6 +71,7 @@ import { InsuranceTypeRepos, InsuranceTypes } from '@/enums/insuranceTypes'
 import { useRoute } from 'vue-router'
 import router from '@/router'
 import CustomInput from '@/components/inputs/CustomInput.vue'
+import BackButton from '@/components/semantic/BackButton.vue'
 
 export default defineComponent({
   name: 'TravelAssistance',
@@ -80,6 +82,7 @@ export default defineComponent({
     'custom-button': CustomButton,
     'multi-select': MultiSelect,
     'custom-input': CustomInput,
+    'back-button': BackButton,
   },
   setup() {
     const route = useRoute()
@@ -124,10 +127,6 @@ export default defineComponent({
         })
     })
 
-    const back = () => {
-      store.dispatch('setHolderState', HolderStates.GENERAL)
-    }
-
     const insuranceTypeState = computed((): InsuranceTypes => {
       return store.state.insurance.insuranceTypeState
     })
@@ -158,9 +157,9 @@ export default defineComponent({
       InputTypes,
       onSubmit,
       values,
-      back,
       isEdit,
       saveAsDraft,
+      HolderStates,
     }
   },
 })
