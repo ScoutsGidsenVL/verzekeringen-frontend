@@ -178,7 +178,7 @@ import { useStore } from 'vuex'
 import moment from 'moment'
 import { InsuranceTypeRepos } from '@/enums/insuranceTypes'
 import router from '@/router'
-import { scrollToFirstError } from '@/veeValidate/helpers'
+import { scrollToFirstError, useScrollToTop } from '@/veeValidate/helpers'
 
 export default defineComponent({
   name: 'RequestInsuranceGeneral',
@@ -196,6 +196,7 @@ export default defineComponent({
     'info-alert': InfoAlert,
   },
   setup() {
+    const { scrollToTopOfPage } = useScrollToTop()
     const route = useRoute()
     const store = useStore()
     const isEdit = !!route.params.id
@@ -278,6 +279,7 @@ export default defineComponent({
     }
 
     fetchMaxCoverages()
+    scrollToTopOfPage()
 
     watch(
       () => insuranceTypeState.value,

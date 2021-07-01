@@ -8,7 +8,7 @@
       <div v-html="titelText"></div>
     </div>
 
-    <h1 class="group-search__title my-5 inline-block relative text-xl" style="font-size: 2rem; position: initial; transition: none !important">
+    <h1 v-if="details" class="group-search__title my-5 inline-block relative text-xl" style="font-size: 2rem; position: initial; transition: none !important">
       <span class="animate-none">Totaalprijs:{{ '&euro; ' + details.totalCost }}</span>
     </h1>
 

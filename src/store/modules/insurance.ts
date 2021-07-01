@@ -8,6 +8,7 @@ import { TemporaryVehicleInsurance } from '@/serializer/insurances/TemporaryVehi
 import { EventInsurance } from '@/serializer/insurances/EventInsurance'
 import { IS_NO_DRIVER } from '@/serializer/selectDriver'
 import { MaterialInsurance } from '@/serializer/insurances/MaterialInsurance'
+import { useScrollToTop } from '@/veeValidate/helpers'
 
 export interface InsuranceState {
   holderState: string
@@ -100,6 +101,8 @@ export default {
   actions: {
     setHolderState({ commit }: any, holderState: HolderStates) {
       commit('SET_HOLDER_STATE', holderState)
+      const { scrollToTopOfPage } = useScrollToTop()
+      scrollToTopOfPage()
     },
     setInsuranceTypeState({ commit }: any, insuranceTypeState: InsuranceTypes) {
       commit('SET_INSURANCE_TYPE_STATE', insuranceTypeState)

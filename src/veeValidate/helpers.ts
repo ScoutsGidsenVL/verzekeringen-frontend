@@ -28,6 +28,7 @@ export const scrollToFirstError = (validation: any, container: string) => {
 export const useScrollToTop = (): {
   formDiv: Ref<HTMLDivElement | undefined>
   scrollToTop: () => void
+  scrollToTopOfPage: () => void
 } => {
   const formDiv = ref<HTMLDivElement | undefined>(undefined)
 
@@ -37,9 +38,14 @@ export const useScrollToTop = (): {
     }
   }
 
+  const scrollToTopOfPage = () => {
+    window.scrollTo({ top: 0, behavior: 'auto' })
+  }
+
   return {
     formDiv,
     scrollToTop,
+    scrollToTopOfPage,
   }
 }
 

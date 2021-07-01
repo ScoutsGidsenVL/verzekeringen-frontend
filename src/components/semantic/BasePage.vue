@@ -16,3 +16,9 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss">
+html {
+  scroll-behavior: auto !important;
+}
+</style>
