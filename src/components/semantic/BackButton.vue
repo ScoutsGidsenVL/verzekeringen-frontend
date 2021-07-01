@@ -1,5 +1,5 @@
 <template>
-  <a class="link-inline cursor-pointer text-lg mr-3" @click="back()">Vorige</a>
+  <a class="link-inline cursor-pointer mr-3" @click="back()">Vorige</a>
 </template>
 
 <script lang="ts">

@@ -8,11 +8,6 @@
       </div>
 
       <div class="mt-3">
-        <strong>Gsm</strong>
-        <p>{{ nonMember.phoneNumber }}</p>
-      </div>
-
-      <div class="mt-3">
         <strong>Adres</strong>
         <p>
           {{ nonMember.street + ' ' + nonMember.number + (nonMember.letterBox ? ' Bus ' + nonMember.letterBox : '') + ', ' + nonMember.postCodeCity.postalCode + ' ' + nonMember.postCodeCity.city }}
