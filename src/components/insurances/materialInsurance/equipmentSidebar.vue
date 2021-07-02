@@ -9,9 +9,11 @@
         @submit.prevent="onSubmit"
       >
         <success-toast v-model:showOrHide="formSendWithSuccess" label="Materiaal succesvol toegevoegd" />
+
         <div>
           <div class="w-96 mt-3">
             <strong>Eigenaar</strong><strong v-if="owner">{{ lidType }}</strong>
+
             <div v-show="!owner" class="w-full mt-2">
               <input id="equipement-group" v-model="isGroupEquipement" class="mr-2" type="checkbox" />
               <label for="equipement-group">Onze groep</label>
@@ -194,7 +196,6 @@ export default defineComponent({
     watch(sideBarState, (value: sideBarState<Equipment>) => {
       if (value.state === 'edit') {
         formSendWithSuccess.value = false
-        console.log('VALUE: ', value.entity)
         resetForm({
           values: {
             id: value.entity.id,
@@ -203,10 +204,21 @@ export default defineComponent({
             totalValue: value.entity.totalValue,
             ownerMember: value.entity.ownerMember,
             ownerNonMember: value.entity.ownerNonMember,
+            owner: value.entity.ownerMember ? value.entity.ownerMember : value.entity.ownerNonMember ? value.entity.ownerNonMember : undefined,
             group: value.entity.group,
           },
         })
-        if (!value.entity.ownerMember && !value.entity.ownerMember) {
+        owner.value = values.owner
+
+        if (value.entity.ownerMember) {
+          lidType.value = ' (Lid)'
+        }
+
+        if (value.entity.ownerNonMember) {
+          lidType.value = ' (Niet lid)'
+        }
+
+        if (value.entity.ownerMember === undefined && value.entity.ownerNonMember === undefined) {
           isGroupEquipement.value = true
         }
       }
