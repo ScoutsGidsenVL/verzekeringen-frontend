@@ -41,7 +41,7 @@ export const EquipmentSerializer = (input: any): any => {
 
 export const EquipmentSerializerToPostInsurance = (input: any): any => {
   const single: any = {
-    nature: input.nature ? input.email : undefined,
+    nature: input.nature ? input.nature : undefined,
     description: input.description ? input.description : undefined,
     total_value: input.totalValue ? input.totalValue : undefined,
     owner_member: input.ownerMember ? MemberSerializer(input.ownerMember) : undefined,

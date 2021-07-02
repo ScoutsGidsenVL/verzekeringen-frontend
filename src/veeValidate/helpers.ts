@@ -7,9 +7,12 @@ export const scrollToFirstError = (validation: any, container: string) => {
 
   let el = null
   const { errors } = validation
+  console.log('ERRORS: ', errors)
 
   if (errors) {
     const [first] = Object.keys(errors)
+    // console.log('FIRST: ', first)
+    // console.log('CONTAINER: ', container)
 
     if (first) {
       if (!el) {
@@ -27,6 +30,7 @@ export const scrollToFirstError = (validation: any, container: string) => {
   if (el) {
     el = el.parentElement
     if (el) {
+      // console.log('EL: ', el)
       el.scrollIntoView()
     }
   }

@@ -261,11 +261,12 @@ export default defineComponent({
 
     const onSubmit = async () => {
       await validate().then((validation: any) => scrollToFirstError(validation, 'addNewEquipment'))
+
       handleSubmit(async (values: Equipment) => {
         if (props.sideBarState.state === 'new' || props.sideBarState.state === 'edit') {
           const equipment = ref<Equipment>({
             id: values.id ? values.id : undefined,
-            nature: values.nature && isBicycle.value === false && !values.ownerMember ? values.nature : undefined,
+            nature: (values.nature && values.ownerNonMember) || (values.nature && values.ownerNonMember === undefined && values.ownerMember === undefined) ? values.nature : undefined,
             description: values.description ? values.description : undefined,
             totalValue: values.totalValue ? values.totalValue : undefined,
             ownerMember: values.ownerMember && isGroupEquipement.value === false ? values.ownerMember : undefined,
@@ -281,9 +282,9 @@ export default defineComponent({
       })()
     }
 
-    const addEquipment = (equipment: Equipment) => {
+    const addEquipment = async (equipment: Equipment) => {
       if (equipment.id) {
-        RepositoryFactory.get(EquipmentRepository)
+        await RepositoryFactory.get(EquipmentRepository)
           .getById(equipment.id)
           .then((result: Equipment) => {
             context.emit('addEquipmentToList', result)
@@ -292,6 +293,7 @@ export default defineComponent({
     }
 
     const updateEquipment = async (data: Equipment) => {
+      console.log('HIT', data)
       if (data.id) {
         await RepositoryFactory.get(EquipmentRepository)
           .update(data.id, data)
