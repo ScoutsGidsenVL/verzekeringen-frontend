@@ -1,9 +1,11 @@
 <template>
-  <ErrorMessage :name="'vehicle'" class="text-red text-sm block mt-1 w-80" />
+  <span name="vehicle">
+    <ErrorMessage name="vehicle" class="text-red text-sm block mt-1 w-80" />
+  </span>
   <a class="cursor-pointer btn-simple-green mb-4" @click="openSideBar()"> {{ vehicle ? 'Verander voertuig' : '+ Voeg voertuig toe' }} </a>
   <div v-if="vehicle" class="grid bg-gray gap-4 p-4">
     <vehicle-item :vehicle="vehicle" :no-line="true">
-      <div class="text-left mt-3">
+      <div v-show="!isSubmitting" class="text-left mt-3">
         <a class="hover:text-lightGreen cursor-pointer link-inline inline-block mr-3" for="" @click="editVehicle(vehicle)">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hover:text-lightGreen cursor-pointer inline-block mt-n1 mr-0" viewBox="0 0 20 20" fill="currentColor">
             <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /></svg
@@ -32,9 +34,10 @@
 import VehicleSiderbar from '@/components/insurances/travelAssistance/vehicleSideBar.vue'
 import VehicleItem from '@/components/insurances/travelAssistance/vehicleItem.vue'
 import { Vehicle } from '@/serializer/Vehicle'
-import { defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import { ErrorMessage, useField } from 'vee-validate'
 import { sideBarState } from '@/components/semantic/BaseSideBar.vue'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'SelectVehicle',
@@ -83,6 +86,12 @@ export default defineComponent({
       }
     }
 
+    const store = useStore()
+
+    const isSubmitting = computed((): boolean => {
+      return store.state.insurance.isSubmittingState
+    })
+
     return {
       addCreatedVehicle,
       deleteVehicle,
@@ -93,6 +102,7 @@ export default defineComponent({
       isEdit,
       vehicleToEdit,
       sideBarState,
+      isSubmitting,
     }
   },
 })

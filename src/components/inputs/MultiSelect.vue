@@ -14,10 +14,9 @@
         :id="id"
         ref="multiselect"
         v-model="inputValue"
-        :class="{ 'opacity-0': loadingSubmit }"
         :name="id"
         :value-prop="valueProp"
-        :disabled="disabled || loadingSubmit"
+        :disabled="disabled || loadingSubmit || isSubmitting"
         :filter-results="false"
         :min-chars="1"
         :resolve-on-load="true"
@@ -46,10 +45,11 @@
 import { defineComponent } from '@vue/runtime-core'
 import { ErrorMessage, useField } from 'vee-validate'
 import Multiselect from '@vueform/multiselect'
-import { PropType, ref, watch } from 'vue'
+import { computed, PropType, ref, watch } from 'vue'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import { BaseRepository } from '@/repositories/baseRepository'
 import Required from '@/components/semantic/Required.vue'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'AppMultiSelect',
@@ -160,6 +160,12 @@ export default defineComponent({
       return data
     }
 
+    const store = useStore()
+
+    const isSubmitting = computed((): boolean => {
+      return store.state.insurance.isSubmittingState
+    })
+
     watch(
       () => inputValue.value,
       () => {
@@ -171,6 +177,7 @@ export default defineComponent({
       inputValue,
       multiselect,
       fetchSearchData,
+      isSubmitting,
     }
   },
 })

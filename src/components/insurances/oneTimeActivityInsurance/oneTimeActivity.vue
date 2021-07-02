@@ -1,5 +1,5 @@
 <template>
-  <form @submit="onSubmit">
+  <form id="OneTimeActivity" @submit.prevent="onSubmit">
     <custom-headline-2 text="Activiteit" />
     <div class="px-5">
       <custom-input :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" />
@@ -64,7 +64,7 @@ import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import { InsuranceTypeRepos, InsuranceTypes } from '@/enums/insuranceTypes'
 import CustomButton from '@/components/CustomButton.vue'
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
@@ -72,6 +72,7 @@ import { useStore } from 'vuex'
 import router from '@/router'
 import { useRoute } from 'vue-router'
 import BackButton from '@/components/semantic/BackButton.vue'
+import { scrollToFirstError } from '@/veeValidate/helpers'
 
 type oneTimeActivityFormType = {
   nature: string
@@ -93,7 +94,7 @@ export default defineComponent({
     const route = useRoute()
     const store = useStore()
     const data: any = store.getters.getCurrentInsuranceState
-    const { handleSubmit, values } = useForm<oneTimeActivityFormType>({
+    const { handleSubmit, values, isSubmitting, validate } = useForm<oneTimeActivityFormType>({
       initialValues: {
         nature: data.nature ? data.nature : '',
         location: data.location ? data.location : '',
@@ -116,29 +117,39 @@ export default defineComponent({
         })
     }
 
-    const onSubmit = handleSubmit(async (values: oneTimeActivityFormType) => {
-      const oneTimeActivity = ref<OneTimeActivity>({
-        ...generalInsuranceState.value,
-        ...{
-          nature: values.nature,
-          location: values.location,
-          groupSize: values.groupSize,
-          comment: values.comment ? values.comment : '',
-        },
-      })
+    watch(
+      () => isSubmitting.value,
+      () => {
+        store.dispatch('setIsSubmittingState', isSubmitting.value)
+      }
+    )
 
-      //@ts-ignore
-      RepositoryFactory.get(InsuranceTypeRepos[store.getters.insuranceTypeState])
-        //@ts-ignore
-        .getCalculatedCost(oneTimeActivity.value)
-        .then((cost: any) => {
-          oneTimeActivity.value.totalCost = cost
-
-          store.dispatch('setOneTimeActivityState', oneTimeActivity.value).then(() => {
-            store.dispatch('setHolderState', HolderStates.DETAIL)
-          })
+    const onSubmit = async () => {
+      await validate().then((validation: any) => scrollToFirstError(validation, 'OneTimeActivity'))
+      handleSubmit(async (values: oneTimeActivityFormType) => {
+        const oneTimeActivity = ref<OneTimeActivity>({
+          ...generalInsuranceState.value,
+          ...{
+            nature: values.nature,
+            location: values.location,
+            groupSize: values.groupSize,
+            comment: values.comment ? values.comment : '',
+          },
         })
-    })
+
+        //@ts-ignore
+        await RepositoryFactory.get(InsuranceTypeRepos[store.getters.insuranceTypeState])
+          //@ts-ignore
+          .getCalculatedCost(oneTimeActivity.value)
+          .then((cost: any) => {
+            oneTimeActivity.value.totalCost = cost
+
+            store.dispatch('setOneTimeActivityState', oneTimeActivity.value).then(() => {
+              store.dispatch('setHolderState', HolderStates.DETAIL)
+            })
+          })
+      })()
+    }
 
     const insuranceTypeState = computed((): InsuranceTypes => {
       return store.state.insurance.insuranceTypeState

@@ -1,5 +1,7 @@
 <template>
-  <ErrorMessage :name="id" class="text-red text-sm block mt-1 w-80" />
+  <span :name="id">
+    <ErrorMessage :name="id" class="text-red text-sm block mt-1 w-80" />
+  </span>
   <a class="cursor-pointer btn-simple-green mb-4" @click="openSideBar()"> + Voeg materiaal toe </a>
 
   <equipment-list :can-be-deleted="true" :equipment-list="equipment" @deleteEquipmentFromList="deleteEquipmentFromList($event)" @editEquipment="editEquipment($event)" />
@@ -18,7 +20,7 @@ import EquipmentSidebar from '@/components/insurances/materialInsurance/equipmen
 import EquipmentList from '@/components/insurances/materialInsurance/equipmentList.vue'
 import { Equipment } from '@/serializer/Equipment'
 import { defineComponent, ref } from 'vue'
-import { useField } from 'vee-validate'
+import { useField, ErrorMessage } from 'vee-validate'
 import { sideBarState } from '@/components/semantic/BaseSideBar.vue'
 
 export default defineComponent({
@@ -26,6 +28,7 @@ export default defineComponent({
   components: {
     'equipment-side-bar': EquipmentSidebar,
     'equipment-list': EquipmentList,
+    ErrorMessage,
   },
   props: {
     id: {

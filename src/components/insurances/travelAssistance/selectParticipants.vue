@@ -1,5 +1,7 @@
 <template>
-  <ErrorMessage :name="id" class="text-red text-sm block mt-1 w-80" />
+  <span :name="id">
+    <ErrorMessage :name="id" class="text-red text-sm block mt-1 w-80" />
+  </span>
   <a class="cursor-pointer btn-simple-green mb-4" @click="openSideBar()"> + Voeg lid toe </a>
   <member-list :can-be-deleted="true" :members-list="members" @deleteMemberFromList="deleteMemberFromList($event)" />
   <members-side-bar v-model:isDisplay="isDisplay" :existing-list="members" title="Lid" @addMemberToList="addMemberToList($event)" />

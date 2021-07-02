@@ -2,7 +2,7 @@
   <div class="grid lg:grid-cols-2 bg-gray gap-4 p-4">
     <div v-for="(member, index) in membersList" :key="member.id" class="w-full">
       <member-item :member="member">
-        <div v-if="canBeDeleted" class="text-left">
+        <div v-show="!isSubmitting" v-if="canBeDeleted" class="text-left">
           <a class="hover:text-lightGreen cursor-pointer link-inline" for="" @click="deleteDriverFromList(index)">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hover:text-lightGreen cursor-pointer inline-block mt-n1 mr-n1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path
@@ -32,6 +32,7 @@
 <script lang="ts">
 import MemberItem from '@/components/insurances/travelAssistance/memberItem.vue'
 import { computed, defineComponent, PropType } from 'vue'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'MembersList',
@@ -65,8 +66,15 @@ export default defineComponent({
     const deleteDriverFromList = (id: string) => {
       context.emit('deleteMemberFromList', id)
     }
+
+    const store = useStore()
+
+    const isSubmitting = computed((): boolean => {
+      return store.state.insurance.isSubmittingState
+    })
     return {
       deleteDriverFromList,
+      isSubmitting,
       ownerComputed,
     }
   },

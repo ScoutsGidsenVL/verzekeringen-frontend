@@ -2,6 +2,7 @@
   <div>
     <base-side-bar :selection="selected" :is-display="sideBarState.state !== 'hide'" name="Equipment" :title="title" :options="options" @options="changeSideBar" @hideSidebar="closeSideBar">
       <form
+        id="addNewEquipment"
         ref="formDiv"
         :class="{ 'd-flex': sideBarState.state === 'new' || sideBarState.state === 'edit', 'd-none': sideBarState.state === 'list' }"
         class="flex-col relative overflow-y-scroll h-full px-4 pt-3"
@@ -20,7 +21,7 @@
             <div class="py-3">
               <hr v-if="owner" class="border-t-2 border-black" />
               <member-item :member="owner">
-                <div class="text-right">
+                <div v-show="!isSubmitting" class="text-right">
                   <label class="hover:text-lightGreen cursor-pointer" for="" @click="removeOwner()">Verwijder</label>
                 </div>
               </member-item>
@@ -180,7 +181,7 @@ export default defineComponent({
     const userData = ref<ResponsibleMember>(store.getters.user)
     const owner = ref<Owner | null>()
     const lidType = ref<String>()
-    const { resetForm, handleSubmit, validate, meta, values } = useForm<Equipment>()
+    const { resetForm, handleSubmit, validate, meta, values, isSubmitting } = useForm<Equipment>()
     const { value: isGroupEquipement } = useField('equipement-group', 'isGroupOwnerOrOwner:@ownerMember,@ownerNonMember', {
       initialValue: false,
     })
@@ -193,6 +194,7 @@ export default defineComponent({
     watch(sideBarState, (value: sideBarState<Equipment>) => {
       if (value.state === 'edit') {
         formSendWithSuccess.value = false
+        console.log('VALUE: ', value.entity)
         resetForm({
           values: {
             id: value.entity.id,
@@ -204,7 +206,7 @@ export default defineComponent({
             group: value.entity.group,
           },
         })
-        if (!values.ownerMember && !values.ownerMember) {
+        if (!value.entity.ownerMember && !value.entity.ownerMember) {
           isGroupEquipement.value = true
         }
       }
@@ -237,9 +239,16 @@ export default defineComponent({
     const generalInsuranceState = computed(() => {
       return store.state.insurance.generalInsuranceState
     })
+    isSubmitting
+    watch(
+      () => isSubmitting.value,
+      () => {
+        store.dispatch('setIsSubmittingState', isSubmitting.value)
+      }
+    )
 
     const onSubmit = async () => {
-      await validate().then((validation: any) => scrollToFirstError(validation, 'addNewNonMember'))
+      await validate().then((validation: any) => scrollToFirstError(validation, 'addNewEquipment'))
       handleSubmit(async (values: Equipment) => {
         if (props.sideBarState.state === 'new' || props.sideBarState.state === 'edit') {
           const equipment = ref<Equipment>({
@@ -270,9 +279,9 @@ export default defineComponent({
       }
     }
 
-    const updateEquipment = (data: Equipment) => {
+    const updateEquipment = async (data: Equipment) => {
       if (data.id) {
-        RepositoryFactory.get(EquipmentRepository)
+        await RepositoryFactory.get(EquipmentRepository)
           .update(data.id, data)
           .then((completed: Equipment) => {
             context.emit('updateEquipmentInList', completed)
@@ -280,9 +289,9 @@ export default defineComponent({
       }
     }
 
-    const postEquipment = (data: Equipment) => {
+    const postEquipment = async (data: Equipment) => {
       formSendWithSuccess.value = false
-      RepositoryFactory.get(EquipmentRepository)
+      await RepositoryFactory.get(EquipmentRepository)
         .create(data)
         .then((completed: Equipment) => {
           context.emit('addEquipmentToList', completed)

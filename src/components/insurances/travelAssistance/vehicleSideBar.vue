@@ -138,7 +138,7 @@ export default defineComponent({
     ])
     const store = useStore()
     const user = ref<ResponsibleMember>(store.getters.user)
-    const { resetForm, handleSubmit, validate, meta, values } = useForm<Vehicle>({ initialValues: { trailer: { id: '0', value: '0', label: 'Geen' } } })
+    const { resetForm, handleSubmit, validate, meta, values, isSubmitting } = useForm<Vehicle>({ initialValues: { trailer: { id: '0', value: '0', label: 'Geen' } } })
     const { formSendWithSuccess } = useFormSendWithSuccess<Vehicle>(meta)
     const selected = computed(() => (props.sideBarState.state === 'list' ? 'BestaandVehicle' : 'NieuwVehicle'))
     const selectedVehicle = ref<Vehicle>({})
@@ -148,6 +148,13 @@ export default defineComponent({
     })
     const loading = ref<boolean>(false)
     const { sideBarState } = toRefs(props)
+
+    watch(
+      () => isSubmitting.value,
+      () => {
+        store.dispatch('setIsSubmittingState', isSubmitting.value)
+      }
+    )
 
     watch(sideBarState, (value: sideBarState<Vehicle>) => {
       if (value.state === 'edit') {
@@ -217,8 +224,8 @@ export default defineComponent({
       }
     }
 
-    const postVehicle = (data: Vehicle) => {
-      RepositoryFactory.get(VehicleRepository)
+    const postVehicle = async (data: Vehicle) => {
+      await RepositoryFactory.get(VehicleRepository)
         .create(data)
         .then((completed: Vehicle) => {
           selectedVehicle.value = completed
@@ -228,9 +235,9 @@ export default defineComponent({
         })
     }
 
-    const updateVehicle = (data: Vehicle) => {
+    const updateVehicle = async (data: Vehicle) => {
       if (data.id) {
-        RepositoryFactory.get(VehicleRepository)
+        await RepositoryFactory.get(VehicleRepository)
           .update(data.id, data)
           .then((completed: Vehicle) => {
             selectedVehicle.value = completed

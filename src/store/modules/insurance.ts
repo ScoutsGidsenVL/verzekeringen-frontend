@@ -21,6 +21,7 @@ export interface InsuranceState {
   eventState: EventInsurance
   materialInsuranceState: MaterialInsurance
   isDriverOwnerState: String
+  isSubmittingState: boolean
 }
 
 export default {
@@ -35,6 +36,7 @@ export default {
     eventState: {},
     materialInsuranceState: {},
     isDriverOwnerState: IS_NO_DRIVER,
+    isSubmittingState: false,
   }),
   getters: {
     holderState(state: any): HolderStates {
@@ -52,6 +54,9 @@ export default {
     },
     getIsDriverOwnerState(state: any): string {
       return state.isDriverOwnerState
+    },
+    getIsSubmittingState(state: any): boolean {
+      return state.isSubmittingState
     },
   },
   mutations: {
@@ -96,6 +101,10 @@ export default {
       state.eventState = {}
       state.materialInsuranceState = {}
       state.isDriverOwnerState = IS_NO_DRIVER
+      state.isSubmittingState = false
+    },
+    SET_IS_SUBMITTING_STATE(state: any, isSubmittingState: boolean) {
+      state.isSubmittingState = isSubmittingState
     },
   },
   actions: {
@@ -133,6 +142,9 @@ export default {
     },
     resetStates({ commit }: any) {
       commit('RESET_STATES')
+    },
+    setIsSubmittingState({ commit }: any, isSubmittingState: boolean) {
+      commit('SET_IS_SUBMITTING_STATE', isSubmittingState)
     },
   },
 }

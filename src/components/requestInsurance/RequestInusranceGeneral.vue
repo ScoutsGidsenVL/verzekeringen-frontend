@@ -137,8 +137,7 @@
       <info-alert>
         <p>
           Om het e-mailadres of gsm-nummer van de aanvrager te wijzigen <strong><a target="_blank" href="https://groepsadmin.scoutsengidsenvlaanderen.be/">klik hier</a></strong> en vervolgens op
-          Herlaad.
-          <custom-button type="button" class="ml-5 mt-2" text="Herlaad" @click="refreshGroups()" />
+          Herlaad. <custom-button :loadingSubmit="isRefreshing" type="button" class="ml-5 mt-2" text="Herlaad" @click="refreshGroups()" />
         </p>
       </info-alert>
     </div>
@@ -248,12 +247,15 @@ export default defineComponent({
         })
     }
 
+    const isRefreshing = ref<boolean>(false)
     const refreshGroups = () => {
+      isRefreshing.value = true
       RepositoryFactory.get(AuthRepository)
         .me()
         .then((user: any) => {
           store.dispatch('setUser', user).then(() => {
             values.responsibleMember = store.getters.user
+            isRefreshing.value = false
           })
         })
     }
@@ -316,6 +318,7 @@ export default defineComponent({
       refreshGroups,
       saveAsDraft,
       isSubmitting,
+      isRefreshing,
     }
   },
 })

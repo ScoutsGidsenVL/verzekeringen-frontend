@@ -1,5 +1,5 @@
 <template>
-  <form @submit="onSubmit">
+  <form id="EventInsurance" @submit.prevent="onSubmit">
     <custom-headline-2 text="Activiteit" />
     <div class="px-5">
       <custom-input :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" />
@@ -63,7 +63,7 @@ import RepositoryFactory from '@/repositories/repositoryFactory'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import CustomButton from '@/components/CustomButton.vue'
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
@@ -72,6 +72,7 @@ import { InsuranceTypeRepos, InsuranceTypes } from '@/enums/insuranceTypes'
 import { useRoute } from 'vue-router'
 import router from '@/router'
 import BackButton from '@/components/semantic/BackButton.vue'
+import { scrollToFirstError } from '@/veeValidate/helpers'
 
 type eventInsuranceFormType = {
   nature: string
@@ -91,10 +92,9 @@ export default defineComponent({
   },
   setup() {
     const route = useRoute()
-
     const store = useStore()
     const data: any = store.getters.getCurrentInsuranceState
-    const { handleSubmit, values } = useForm<eventInsuranceFormType>({
+    const { handleSubmit, values, isSubmitting, validate } = useForm<eventInsuranceFormType>({
       initialValues: {
         nature: data.nature ? data.nature : '',
         location: data.location ? data.location : '',
@@ -119,29 +119,39 @@ export default defineComponent({
 
     fetchEventSizes()
 
-    const onSubmit = handleSubmit(async (values: eventInsuranceFormType) => {
-      const eventInsurance = ref<EventInsurance>({
-        ...generalInsuranceState.value,
-        ...{
-          nature: values.nature,
-          location: values.location,
-          eventSize: values.eventSize,
-          comment: values.comment ? values.comment : '',
-        },
-      })
+    watch(
+      () => isSubmitting.value,
+      () => {
+        store.dispatch('setIsSubmittingState', isSubmitting.value)
+      }
+    )
 
-      //@ts-ignore
-      RepositoryFactory.get(InsuranceTypeRepos[store.getters.insuranceTypeState])
-        //@ts-ignore
-        .getCalculatedCost(eventInsurance.value)
-        .then((cost: any) => {
-          eventInsurance.value.totalCost = cost
-
-          store.dispatch('setEventState', eventInsurance.value).then(() => {
-            store.dispatch('setHolderState', HolderStates.DETAIL)
-          })
+    const onSubmit = async () => {
+      await validate().then((validation: any) => scrollToFirstError(validation, 'EventInsurance'))
+      handleSubmit(async (values: eventInsuranceFormType) => {
+        const eventInsurance = ref<EventInsurance>({
+          ...generalInsuranceState.value,
+          ...{
+            nature: values.nature,
+            location: values.location,
+            eventSize: values.eventSize,
+            comment: values.comment ? values.comment : '',
+          },
         })
-    })
+
+        //@ts-ignore
+        await RepositoryFactory.get(InsuranceTypeRepos[store.getters.insuranceTypeState])
+          //@ts-ignore
+          .getCalculatedCost(eventInsurance.value)
+          .then((cost: any) => {
+            eventInsurance.value.totalCost = cost
+
+            store.dispatch('setEventState', eventInsurance.value).then(() => {
+              store.dispatch('setHolderState', HolderStates.DETAIL)
+            })
+          })
+      })()
+    }
 
     const insuranceTypeState = computed((): InsuranceTypes => {
       return store.state.insurance.insuranceTypeState

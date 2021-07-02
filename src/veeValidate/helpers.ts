@@ -7,12 +7,19 @@ export const scrollToFirstError = (validation: any, container: string) => {
 
   let el = null
   const { errors } = validation
+
   if (errors) {
     const [first] = Object.keys(errors)
+
     if (first) {
-      el = document.querySelector('#' + container + ' #' + first)
       if (!el) {
         el = document.querySelector('#' + container + ' input[name="' + first + '"]')
+      }
+      if (!el) {
+        el = document.querySelector('#' + container + ' span[name="' + first + '"]')
+      }
+      if (!el) {
+        el = document.querySelector('#' + container + ' #' + first)
       }
     }
   }

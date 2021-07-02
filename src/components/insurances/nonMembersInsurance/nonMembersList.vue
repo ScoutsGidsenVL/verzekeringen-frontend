@@ -2,7 +2,7 @@
   <div class="grid lg:grid-cols-2 bg-gray gap-4 p-4">
     <div v-for="(nonMember, index) in nonMembers" :key="nonMember.id" class="w-full text-center">
       <non-member-item :non-member="nonMember">
-        <div v-if="canBeDeleted" class="text-left">
+        <div v-show="!isSubmitting" v-if="canBeDeleted" class="text-left">
           <a class="hover:text-lightGreen cursor-pointer link-inline inline-block mr-3" for="" @click="editNonMember(nonMember)">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hover:text-lightGreen cursor-pointer inline-block mt-n1 mr-0" viewBox="0 0 20 20" fill="currentColor">
               <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /></svg
@@ -27,8 +27,9 @@
 </template>
 <script lang="ts">
 import NonMemberItem from '@/components/insurances/nonMembersInsurance/nonMemberItem.vue'
-import { defineComponent, PropType, ref, watch } from 'vue'
+import { computed, defineComponent, PropType, ref, watch } from 'vue'
 import { NonMember } from '@/serializer/NonMember'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'NonMembersList',
@@ -68,9 +69,16 @@ export default defineComponent({
       context.emit('editNonMember', nonMember)
     }
 
+    const store = useStore()
+
+    const isSubmitting = computed((): boolean => {
+      return store.state.insurance.isSubmittingState
+    })
+
     return {
       deleteNonMember,
       editNonMember,
+      isSubmitting,
       nonMembers,
     }
   },

@@ -1,5 +1,5 @@
 <template>
-  <form @submit="onSubmit">
+  <form id="NonMember" @submit.prevent="onSubmit">
     <custom-headline-2 text="Activiteit" />
     <div v-if="values" class="px-5">
       <custom-input :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" />
@@ -41,7 +41,10 @@
     </div>
 
     <div class="mt-3">
-      <custom-headline-2 text="Te verzekeren personen" />
+      <div class="flex gap-1">
+        <custom-headline-2 text="Te verzekeren personen" />
+        <required rules="required" class="mt-3" />
+      </div>
     </div>
 
     <select-non-member id="nonMembers" :is-extra-information-comment="true" rules="required" />
@@ -69,7 +72,7 @@ import { CountryRepository } from '@/repositories/countriesRepository'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import CustomButton from '@/components/CustomButton.vue'
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
@@ -80,6 +83,8 @@ import RepositoryFactory from '@/repositories/repositoryFactory'
 import router from '@/router'
 import { useRoute } from 'vue-router'
 import BackButton from '@/components/semantic/BackButton.vue'
+import { scrollToFirstError } from '@/veeValidate/helpers'
+import required from '@/components/semantic/Required.vue'
 
 export default defineComponent({
   name: 'NonMember',
@@ -90,6 +95,7 @@ export default defineComponent({
     'multi-select': MultiSelect,
     'custom-input': CustomInput,
     'back-button': BackButton,
+    required,
   },
   setup() {
     const route = useRoute()
@@ -97,7 +103,7 @@ export default defineComponent({
     const store = useStore()
     const initialCountry = ref<Country>(CountryDeserializer({ id: '3232', name: 'België' }))
     const data: NonMemberInsurance = store.getters.getCurrentInsuranceState
-    const { handleSubmit, values } = useForm<NonMemberInsurance>({
+    const { handleSubmit, values, isSubmitting, validate } = useForm<NonMemberInsurance>({
       initialValues: {
         nature: data.nature ? data.nature : '',
         country: data.country ? data.country : initialCountry.value,
@@ -111,29 +117,39 @@ export default defineComponent({
       return store.state.insurance.generalInsuranceState
     })
 
-    const onSubmit = handleSubmit(async (values: any) => {
-      const nonMember = ref<NonMemberInsurance>({
-        ...generalInsuranceState.value,
-        ...{
-          nature: values.nature,
-          postCodeCity: values.postCodeCity ? values.postCodeCity : undefined,
-          country: values.country ? values.country : undefined,
-          nonMembers: values.nonMembers ? values.nonMembers : [],
-          comment: values.comment ? values.comment : '',
-        },
-      })
+    watch(
+      () => isSubmitting.value,
+      () => {
+        store.dispatch('setIsSubmittingState', isSubmitting.value)
+      }
+    )
 
-      //@ts-ignore
-      RepositoryFactory.get(InsuranceTypeRepos[store.getters.insuranceTypeState])
-        //@ts-ignore
-        .getCalculatedCost(nonMember.value)
-        .then((cost: any) => {
-          nonMember.value.totalCost = cost
-
-          store.dispatch('setNonMemberState', nonMember)
-          store.dispatch('setHolderState', HolderStates.DETAIL)
+    const onSubmit = async () => {
+      await validate().then((validation: any) => scrollToFirstError(validation, 'NonMember'))
+      handleSubmit(async (values: any) => {
+        const nonMember = ref<NonMemberInsurance>({
+          ...generalInsuranceState.value,
+          ...{
+            nature: values.nature,
+            postCodeCity: values.postCodeCity ? values.postCodeCity : undefined,
+            country: values.country ? values.country : undefined,
+            nonMembers: values.nonMembers ? values.nonMembers : [],
+            comment: values.comment ? values.comment : '',
+          },
         })
-    })
+
+        //@ts-ignore
+        await RepositoryFactory.get(InsuranceTypeRepos[store.getters.insuranceTypeState])
+          //@ts-ignore
+          .getCalculatedCost(nonMember.value)
+          .then((cost: any) => {
+            nonMember.value.totalCost = cost
+
+            store.dispatch('setNonMemberState', nonMember)
+            store.dispatch('setHolderState', HolderStates.DETAIL)
+          })
+      })()
+    }
 
     const insuranceTypeState = computed((): InsuranceTypes => {
       return store.state.insurance.insuranceTypeState
@@ -170,6 +186,7 @@ export default defineComponent({
       saveAsDraft,
       isEdit,
       HolderStates,
+      isSubmitting,
     }
   },
 })

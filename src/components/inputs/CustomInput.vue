@@ -12,7 +12,7 @@
     </div>
     <div
       :class="{
-        'text-lightGray animate-pulse2 bg-lightGray': loadingSubmit,
+        'text-lightGray animate-pulse2 bg-lightGray': loadingSubmit || isSubmitting,
       }"
     >
       <input
@@ -24,19 +24,10 @@
         step="1"
         :maxlength="maxlength"
         :name="name"
-        :class="{ 'opacity-0': loadingSubmit }"
-        :disabled="disabled || loadingSubmit"
+        :class="{ 'opacity-0': loadingSubmit || isSubmitting }"
+        :disabled="disabled || loadingSubmit || isSubmitting"
       />
-      <textarea
-        v-if="type === InputTypes.TEXT_AREA && !hideInput && type !== InputTypes.TIME"
-        v-model="inputValue"
-        class="bg-lightGray p-2 w-96 h-32 min-w-0"
-        :type="'text'"
-        :name="name"
-        maxlength="500"
-        :class="{ 'opacity-0': loadingSubmit }"
-        :disabled="disabled || loadingSubmit"
-      />
+
       <input
         v-if="type === InputTypes.TIME"
         :id="name"
@@ -45,19 +36,31 @@
         style="max-width: 100px"
         type="time"
         :name="name"
-        :class="{ 'opacity-0': loadingSubmit }"
-        :disabled="disabled || loadingSubmit"
+        :class="{ 'opacity-0': loadingSubmit || isSubmitting }"
+        :disabled="disabled || loadingSubmit || isSubmitting"
       />
     </div>
-    <ErrorMessage :name="name" class="text-red text-sm block mt-1 w-80" />
+    <textarea
+      v-if="type === InputTypes.TEXT_AREA && !hideInput && type !== InputTypes.TIME"
+      v-model="inputValue"
+      class="bg-lightGray p-2 w-96 h-32 min-w-0"
+      :type="'text'"
+      :name="name"
+      maxlength="500"
+      :disabled="disabled || loadingSubmit || isSubmitting"
+    />
+    <span :name="name">
+      <ErrorMessage :name="name" class="text-red text-sm block mt-1 w-80" />
+    </span>
   </div>
 </template>
 
 <script lang="ts">
 import { ErrorMessage, useField } from 'vee-validate'
 import { InputTypes } from '@/enums/inputTypes'
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 import Required from '@/components/semantic/Required.vue'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'CustomInput',
@@ -121,9 +124,16 @@ export default defineComponent({
       initialValue: props.value,
     })
 
+    const store = useStore()
+
+    const isSubmitting = computed((): boolean => {
+      return store.state.insurance.isSubmittingState
+    })
+
     return {
       InputTypes,
       inputValue,
+      isSubmitting,
     }
   },
 })

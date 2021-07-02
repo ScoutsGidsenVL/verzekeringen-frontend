@@ -1,14 +1,20 @@
 <template>
-  <form @submit="onSubmit">
+  <form id="TemporaryVehicle" @submit.prevent="onSubmit">
     <div v-if="values">
       <div class="mt-3">
-        <custom-headline-2 text="Bestuurders" />
+        <div class="flex gap-1">
+          <custom-headline-2 text="Bestuurders" />
+          <required rules="required" class="mt-3" />
+        </div>
 
         <select-drivers id="selectDriverField" rules="RequiredDrivers:selectDriverField" />
       </div>
 
       <div class="mt-3">
-        <custom-headline-2 text="Voertuig" />
+        <div class="flex gap-1">
+          <custom-headline-2 text="Voertuig" />
+          <required rules="required" class="mt-3" />
+        </div>
         <div class="px-5">
           <select-vehicle id="vehicle" rules="required|RequiredVehicle:vehicle" />
         </div>
@@ -41,7 +47,7 @@ import { BaseInsurance } from '@/serializer/insurances/BaseInsurance'
 import CustomButton from '@/components/CustomButton.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import { IS_NO_DRIVER } from '@/serializer/selectDriver'
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { Driver } from '@/serializer/Driver'
@@ -53,6 +59,8 @@ import { InsuranceTypeRepos, InsuranceTypes } from '@/enums/insuranceTypes'
 import { useRoute } from 'vue-router'
 import router from '@/router'
 import BackButton from '@/components/semantic/BackButton.vue'
+import { scrollToFirstError } from '@/veeValidate/helpers'
+import required from '@/components/semantic/Required.vue'
 
 export default defineComponent({
   name: 'TemporaryVehicle',
@@ -63,6 +71,7 @@ export default defineComponent({
     'custom-button': CustomButton,
     'custom-input': CustomInput,
     'back-button': BackButton,
+    required,
   },
   setup() {
     const route = useRoute()
@@ -83,7 +92,7 @@ export default defineComponent({
       return status
     }
 
-    const { handleSubmit, values } = useForm<TemporaryVehicleInsurance>({
+    const { handleSubmit, values, isSubmitting, validate } = useForm<TemporaryVehicleInsurance>({
       initialValues: {
         drivers: data.drivers ? data.drivers : [],
         vehicle: data.vehicle ? data.vehicle : undefined,
@@ -101,39 +110,49 @@ export default defineComponent({
       return store.state.insurance.generalInsuranceState
     })
 
-    const onSubmit = handleSubmit(async (values: any) => {
-      const temporaryVehicleInsurance = ref<TemporaryVehicleInsurance>({
-        ...generalInsuranceState.value,
-        ...{
-          vehicle: values.vehicle ? values.vehicle : undefined,
-          drivers: values.selectDriverField.drivers ? values.selectDriverField.drivers : [],
-          selectDriverField: values.selectDriverField,
-          owner:
-            values.selectDriverField.isDriverOwner === IS_NO_DRIVER
-              ? values.input
-              : values.selectDriverField.drivers.find((driver: Driver) => {
-                  // Nescescarry for a put request
-                  if (driver.firstName && driver.lastName) {
-                    if (driver.firstName + driver.lastName + driver.birthDate === values.selectDriverField.isDriverOwner) {
-                      return driver
+    watch(
+      () => isSubmitting.value,
+      () => {
+        store.dispatch('setIsSubmittingState', isSubmitting.value)
+      }
+    )
+
+    const onSubmit = async () => {
+      await validate().then((validation: any) => scrollToFirstError(validation, 'TemporaryVehicle'))
+      handleSubmit(async (values: any) => {
+        const temporaryVehicleInsurance = ref<TemporaryVehicleInsurance>({
+          ...generalInsuranceState.value,
+          ...{
+            vehicle: values.vehicle ? values.vehicle : undefined,
+            drivers: values.selectDriverField.drivers ? values.selectDriverField.drivers : [],
+            selectDriverField: values.selectDriverField,
+            owner:
+              values.selectDriverField.isDriverOwner === IS_NO_DRIVER
+                ? values.input
+                : values.selectDriverField.drivers.find((driver: Driver) => {
+                    // Nescescarry for a put request
+                    if (driver.firstName && driver.lastName) {
+                      if (driver.firstName + driver.lastName + driver.birthDate === values.selectDriverField.isDriverOwner) {
+                        return driver
+                      }
                     }
-                  }
-                }),
-          comment: values.comment ? values.comment : '',
-        },
-      })
-
-      //@ts-ignore
-      RepositoryFactory.get(InsuranceTypeRepos[store.getters.insuranceTypeState])
-        //@ts-ignore
-        .getCalculatedCost(temporaryVehicleInsurance.value)
-        .then((cost: any) => {
-          temporaryVehicleInsurance.value.totalCost = cost
-
-          store.dispatch('setTemporaryVehicleState', temporaryVehicleInsurance)
-          store.dispatch('setHolderState', HolderStates.DETAIL)
+                  }),
+            comment: values.comment ? values.comment : '',
+          },
         })
-    })
+
+        //@ts-ignore
+        await RepositoryFactory.get(InsuranceTypeRepos[store.getters.insuranceTypeState])
+          //@ts-ignore
+          .getCalculatedCost(temporaryVehicleInsurance.value)
+          .then((cost: any) => {
+            temporaryVehicleInsurance.value.totalCost = cost
+
+            store.dispatch('setTemporaryVehicleState', temporaryVehicleInsurance)
+            store.dispatch('setHolderState', HolderStates.DETAIL)
+          })
+      })()
+    }
     const insuranceTypeState = computed((): InsuranceTypes => {
       return store.state.insurance.insuranceTypeState
     })

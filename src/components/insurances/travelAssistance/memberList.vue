@@ -2,7 +2,7 @@
   <div class="grid lg:grid-cols-2 bg-gray gap-4 p-4">
     <div v-for="(member, index) in members" :key="member.id" class="w-full">
       <member-item :member="member">
-        <div v-if="canBeDeleted" class="text-left">
+        <div v-show="!isSubmitting" v-if="canBeDeleted" class="text-left">
           <a class="hover:text-lightGreen cursor-pointer link-inline" for="" @click="deleteMemberFromList(index)">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hover:text-lightGreen cursor-pointer inline-block mt-n1 mr-n1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path
@@ -22,8 +22,9 @@
 </template>
 <script lang="ts">
 import MemberItem from '@/components/insurances/travelAssistance/memberItem.vue'
-import { defineComponent, PropType, ref, watch } from 'vue'
+import { computed, defineComponent, PropType, ref, watch } from 'vue'
 import { Member } from '@/serializer/Member'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'MembersList',
@@ -48,6 +49,12 @@ export default defineComponent({
   setup(props, context) {
     const members = ref<Member[]>(props.membersList)
 
+    const store = useStore()
+
+    const isSubmitting = computed((): boolean => {
+      return store.state.insurance.isSubmittingState
+    })
+
     watch(
       () => props.membersList,
       () => {
@@ -61,6 +68,7 @@ export default defineComponent({
 
     return {
       deleteMemberFromList,
+      isSubmitting,
       members,
     }
   },

@@ -1,13 +1,17 @@
 <template>
-  <ErrorMessage :name="id" class="text-red text-sm block w-80" />
+  <span :name="id">
+    <ErrorMessage :name="id" class="text-red text-sm block w-80" />
+  </span>
   <a class="cursor-pointer btn-simple-green mb-4" @click="openSideBar()"> + Voeg bestuurder toe </a>
   <driver-list v-model:owner="selectDriverField.isDriverOwner" :can-be-deleted="true" :members-list="selectDriverField.drivers" @deleteMemberFromList="deleteMemberFromList($event)" />
   <div class="mt-5">
     <tip-temp-vehicle />
   </div>
   <div class="mt-5">
-    <input id="isOwnerInput" v-model="selectDriverField.isDriverOwner" class="mr-2 cursor-pointer" type="radio" name="isOwnerInput" :value="IS_NO_DRIVER" />
-    <label class="cursor-pointer" for="isOwnerInput">Eigenaar is geen bestuurder of het is een huurwagen</label>
+    <div v-show="!isSubmitting">
+      <input id="isOwnerInput" v-model="selectDriverField.isDriverOwner" class="mr-2 cursor-pointer" type="radio" name="isOwnerInput" :value="IS_NO_DRIVER" />
+      <label class="cursor-pointer" for="isOwnerInput">Eigenaar is geen bestuurder of het is een huurwagen</label>
+    </div>
     <div v-show="selectDriverField.isDriverOwner === IS_NO_DRIVER" class="px-5">
       <div v-if="!input.firstName && !input.lastName" class="w-96 mt-3">
         <custom-input :type="InputTypes.TEXT" name="input.companyName" label="Firma naam" :rules="'customRequired'" />
@@ -69,7 +73,7 @@ import TipTempVehicle from '@/components/tips/tipTempVehicle.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import { InputTypes } from '@/enums/inputTypes'
-import { defineComponent, ref, watch } from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
 import { ErrorMessage, useField } from 'vee-validate'
 import { Driver } from '@/serializer/Driver'
 import { Owner } from '@/serializer/Owner'
@@ -130,6 +134,10 @@ export default defineComponent({
       selectDriverField.value.drivers.splice(Number(id), 1)
     }
 
+    const isSubmitting = computed((): boolean => {
+      return store.state.insurance.isSubmittingState
+    })
+
     return {
       BelgianCitySearchRepository,
       addMemberToDriverList,
@@ -140,6 +148,7 @@ export default defineComponent({
       selectDriverField,
       IS_NO_DRIVER,
       input,
+      isSubmitting,
     }
   },
 })

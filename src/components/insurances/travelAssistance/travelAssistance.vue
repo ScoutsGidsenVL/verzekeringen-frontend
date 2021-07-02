@@ -1,5 +1,5 @@
 <template>
-  <form @submit="onSubmit">
+  <form id="TravelAssistance" @submit.prevent="onSubmit">
     <div v-if="values">
       <div>
         <custom-headline-2 text="Bestemming" />
@@ -22,7 +22,10 @@
       </div>
 
       <div class="mt-3">
-        <custom-headline-2 text="Deelnemers" />
+        <div class="flex gap-1">
+          <custom-headline-2 text="Deelnemers" />
+          <required rules="required" class="mt-3" />
+        </div>
         <div class="px-5">
           <select-participants id="participants" rules="required" />
         </div>
@@ -60,7 +63,7 @@ import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
 import { CountryRepository } from '@/repositories/countriesRepository'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomButton from '@/components/CustomButton.vue'
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
@@ -72,6 +75,8 @@ import { useRoute } from 'vue-router'
 import router from '@/router'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import BackButton from '@/components/semantic/BackButton.vue'
+import { scrollToFirstError } from '@/veeValidate/helpers'
+import Required from '@/components/semantic/Required.vue'
 
 export default defineComponent({
   name: 'TravelAssistance',
@@ -83,12 +88,13 @@ export default defineComponent({
     'multi-select': MultiSelect,
     'custom-input': CustomInput,
     'back-button': BackButton,
+    Required,
   },
   setup() {
     const route = useRoute()
     const store = useStore()
     const data: TravelAssistanceInsurance = store.getters.getCurrentInsuranceState
-    const { handleSubmit, values } = useForm<TravelAssistanceInsurance>({
+    const { handleSubmit, values, isSubmitting, validate } = useForm<TravelAssistanceInsurance>({
       initialValues: {
         country: data.country ? data.country : undefined,
         participants: data.participants ? data.participants : [],
@@ -102,30 +108,40 @@ export default defineComponent({
       return store.state.insurance.generalInsuranceState
     })
 
-    const onSubmit = handleSubmit(async (values: any) => {
-      const travelAssistance = ref<TravelAssistanceInsurance>({
-        ...generalInsuranceState.value,
-        ...{
-          country: values.country ? values.country : undefined,
-          participants: values.participants ? values.participants : [],
-          vehicle: values.vehicle ? values.vehicle : undefined,
-          responsiblePhoneNumber:
-            generalInsuranceState.value.responsibleMember && generalInsuranceState.value.responsibleMember.phoneNumber ? generalInsuranceState.value.responsibleMember.phoneNumber : '/',
-          comment: values.comment ? values.comment : '',
-        },
-      })
+    watch(
+      () => isSubmitting.value,
+      () => {
+        store.dispatch('setIsSubmittingState', isSubmitting.value)
+      }
+    )
 
-      //@ts-ignore
-      RepositoryFactory.get(InsuranceTypeRepos[store.getters.insuranceTypeState])
-        //@ts-ignore
-        .getCalculatedCost(travelAssistance.value)
-        .then((cost: any) => {
-          travelAssistance.value.totalCost = cost
-
-          store.dispatch('setTravelAssistanceState', travelAssistance)
-          store.dispatch('setHolderState', HolderStates.DETAIL)
+    const onSubmit = async () => {
+      await validate().then((validation: any) => scrollToFirstError(validation, 'TravelAssistance'))
+      handleSubmit(async (values: any) => {
+        const travelAssistance = ref<TravelAssistanceInsurance>({
+          ...generalInsuranceState.value,
+          ...{
+            country: values.country ? values.country : undefined,
+            participants: values.participants ? values.participants : [],
+            vehicle: values.vehicle ? values.vehicle : undefined,
+            responsiblePhoneNumber:
+              generalInsuranceState.value.responsibleMember && generalInsuranceState.value.responsibleMember.phoneNumber ? generalInsuranceState.value.responsibleMember.phoneNumber : '/',
+            comment: values.comment ? values.comment : '',
+          },
         })
-    })
+
+        //@ts-ignore
+        await RepositoryFactory.get(InsuranceTypeRepos[store.getters.insuranceTypeState])
+          //@ts-ignore
+          .getCalculatedCost(travelAssistance.value)
+          .then((cost: any) => {
+            travelAssistance.value.totalCost = cost
+
+            store.dispatch('setTravelAssistanceState', travelAssistance)
+            store.dispatch('setHolderState', HolderStates.DETAIL)
+          })
+      })()
+    }
 
     const insuranceTypeState = computed((): InsuranceTypes => {
       return store.state.insurance.insuranceTypeState
@@ -160,6 +176,7 @@ export default defineComponent({
       isEdit,
       saveAsDraft,
       HolderStates,
+      isSubmitting,
     }
   },
 })

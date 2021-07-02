@@ -32,7 +32,7 @@ import RepositoryFactory from '@/repositories/repositoryFactory'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import CustomButton from '@/components/CustomButton.vue'
 import BackButton from '@/components/semantic/BackButton.vue'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
@@ -58,25 +58,32 @@ export default defineComponent({
     const isDraft = route.meta.isDraft ? route.meta.isDraft : false
 
     const data: any = store.getters.getCurrentInsuranceState
-    const { handleSubmit } = useForm({
+    const { handleSubmit, isSubmitting } = useForm({
       initialValues: {
         comment: data.comment ? data.comment : '',
       },
     })
 
+    watch(
+      () => isSubmitting.value,
+      () => {
+        store.dispatch('setIsSubmittingState', isSubmitting.value)
+      }
+    )
+
     const onSubmit = handleSubmit(async (values: any) => {
       //@ts-ignore
       store.dispatch(InsuranceTypeStoreSetters[store.getters.insuranceTypeState], { ...store.getters.getCurrentInsuranceState, ...{ comment: values.comment } })
       if (isEdit && !isDraft) {
-        editInsurance()
+        await editInsurance()
       } else {
-        postInsurance()
+        await postInsurance()
       }
     })
 
-    const postInsurance = () => {
+    const postInsurance = async () => {
       //@ts-ignore
-      RepositoryFactory.get(InsuranceTypeRepos[store.getters.insuranceTypeState])
+      await RepositoryFactory.get(InsuranceTypeRepos[store.getters.insuranceTypeState])
         //@ts-ignore
         .create(store.getters.getCurrentInsuranceState)
         .then((completed: any) => {
@@ -92,9 +99,9 @@ export default defineComponent({
         })
     }
 
-    const editInsurance = () => {
+    const editInsurance = async () => {
       // @ts-ignore
-      RepositoryFactory.get(InsuranceTypeRepos[store.getters.insuranceTypeState])
+      await RepositoryFactory.get(InsuranceTypeRepos[store.getters.insuranceTypeState])
         //@ts-ignore
         .editById(route.params.id, store.getters.getCurrentInsuranceState)
         .then((completed: any) => {
@@ -118,6 +125,7 @@ export default defineComponent({
       error,
       back,
       data,
+      isSubmitting,
     }
   },
 })

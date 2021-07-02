@@ -1,5 +1,5 @@
 <template>
-  <form @submit="onSubmit">
+  <form id="MaterialInsurance" @submit.prevent="onSubmit">
     <custom-headline-2 text="Activiteit" />
     <div v-if="values" class="px-5">
       <custom-input :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" />
@@ -38,7 +38,10 @@
       </div>
     </div>
 
-    <custom-headline-2 class="mt-2" text="Materiaal" />
+    <div class="flex gap-1">
+      <custom-headline-2 class="mt-2" text="Materiaal" />
+      <required rules="required" class="mt-3" />
+    </div>
     <div class="px-5 mt-3">
       <select-equipment id="equipment" rules="required" />
     </div>
@@ -70,7 +73,7 @@ import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import { InsuranceTypeRepos, InsuranceTypes } from '@/enums/insuranceTypes'
 import CustomButton from '@/components/CustomButton.vue'
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
@@ -78,6 +81,8 @@ import { useStore } from 'vuex'
 import router from '@/router'
 import { useRoute } from 'vue-router'
 import BackButton from '@/components/semantic/BackButton.vue'
+import { scrollToFirstError } from '@/veeValidate/helpers'
+import required from '@/components/semantic/Required.vue'
 
 export default defineComponent({
   name: 'MaterialInsurance',
@@ -88,13 +93,14 @@ export default defineComponent({
     'custom-input': CustomInput,
     'select-equipment': SelectEquipment,
     'back-button': BackButton,
+    required,
   },
   setup() {
     const route = useRoute()
     const store = useStore()
     const initialCountry = ref<Country>(CountryDeserializer({ id: '3232', name: 'België' }))
     const data: MaterialInsurance = store.getters.getCurrentInsuranceState
-    const { handleSubmit, values } = useForm<MaterialInsurance>({
+    const { handleSubmit, values, isSubmitting, validate } = useForm<MaterialInsurance>({
       initialValues: {
         nature: data.nature ? data.nature : '',
         country: data.country ? data.country : initialCountry.value,
@@ -108,29 +114,39 @@ export default defineComponent({
       return store.state.insurance.generalInsuranceState
     })
 
-    const onSubmit = handleSubmit(async (values: any) => {
-      const materialInsurance = ref<MaterialInsurance>({
-        ...generalInsuranceState.value,
-        ...{
-          nature: values.nature,
-          postCodeCity: values.postCodeCity ? values.postCodeCity : undefined,
-          country: values.country ? values.country : undefined,
-          comment: values.comment ? values.comment : '',
-          equipment: values.equipment ? values.equipment : undefined,
-        },
-      })
+    watch(
+      () => isSubmitting.value,
+      () => {
+        store.dispatch('setIsSubmittingState', isSubmitting.value)
+      }
+    )
 
-      //@ts-ignore
-      RepositoryFactory.get(InsuranceTypeRepos[store.getters.insuranceTypeState])
-        //@ts-ignore
-        .getCalculatedCost(materialInsurance.value)
-        .then((cost: any) => {
-          materialInsurance.value.totalCost = cost
-
-          store.dispatch('setMaterialInsuranceState', materialInsurance.value)
-          store.dispatch('setHolderState', HolderStates.DETAIL)
+    const onSubmit = async () => {
+      await validate().then((validation: any) => scrollToFirstError(validation, 'MaterialInsurance'))
+      handleSubmit(async (values: any) => {
+        const materialInsurance = ref<MaterialInsurance>({
+          ...generalInsuranceState.value,
+          ...{
+            nature: values.nature,
+            postCodeCity: values.postCodeCity ? values.postCodeCity : undefined,
+            country: values.country ? values.country : undefined,
+            comment: values.comment ? values.comment : '',
+            equipment: values.equipment ? values.equipment : undefined,
+          },
         })
-    })
+
+        //@ts-ignore
+        await RepositoryFactory.get(InsuranceTypeRepos[store.getters.insuranceTypeState])
+          //@ts-ignore
+          .getCalculatedCost(materialInsurance.value)
+          .then((cost: any) => {
+            materialInsurance.value.totalCost = cost
+
+            store.dispatch('setMaterialInsuranceState', materialInsurance.value)
+            store.dispatch('setHolderState', HolderStates.DETAIL)
+          })
+      })()
+    }
 
     const insuranceTypeState = computed((): InsuranceTypes => {
       return store.state.insurance.insuranceTypeState

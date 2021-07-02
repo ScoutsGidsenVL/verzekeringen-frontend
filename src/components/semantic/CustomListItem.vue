@@ -21,13 +21,16 @@
         </div>
 
         <div v-if="isDraft" @click="deleteDraft(item.id)">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hover:text-red cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
-            <path
-              fill-rule="evenodd"
-              d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-              clip-rule="evenodd"
-            />
-          </svg>
+          <div class="flex gap-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hover:text-red cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
+              <path
+                fill-rule="evenodd"
+                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <loader :isLoading="isDeletingDraft" />
+          </div>
         </div>
 
         <div v-if="!isDraft" @click="fetchInsuranceById(item.id, item.type.name)">
@@ -55,12 +58,16 @@ import RepositoryFactory from '@/repositories/repositoryFactory'
 import { DraftRepository } from '@/repositories/insurances/draftRepository'
 import { formatDate } from '@/helpers/formatHelper'
 import { Insurance } from '@/serializer/Insurance'
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, ref } from 'vue'
 import { useStore } from 'vuex'
 import router from '@/router'
+import Loader from '@/components/semantic/Loader.vue'
 
 export default defineComponent({
   name: 'CustomListItem',
+  components: {
+    loader: Loader,
+  },
   props: {
     item: {
       type: Object as PropType<Insurance>,
@@ -101,12 +108,18 @@ export default defineComponent({
         })
     }
 
+    const isDeletingDraft = ref<boolean>(false)
+
     const deleteDraft = (id: string) => {
-      RepositoryFactory.get(DraftRepository)
-        .removeById(id)
-        .then(() => {
-          context.emit('removeDraft', id)
-        })
+      if (isDeletingDraft.value === false) {
+        isDeletingDraft.value = true
+        RepositoryFactory.get(DraftRepository)
+          .removeById(id)
+          .then(() => {
+            context.emit('removeDraft', id)
+            isDeletingDraft.value = false
+          })
+      }
     }
 
     const setInsuranceType = (type: string) => {
@@ -152,6 +165,7 @@ export default defineComponent({
       deleteDraft,
       formatDate,
       goToDraft,
+      isDeletingDraft,
     }
   },
 })
