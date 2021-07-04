@@ -66,32 +66,32 @@ import SelectEquipment from '@/components/insurances/materialInsurance/selectEqu
 import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRepository'
 import { MaterialInsurance } from '@/serializer/insurances/MaterialInsurance'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
+import { InsuranceTypeRepos, InsuranceTypes } from '@/enums/insuranceTypes'
 import { CountryRepository } from '@/repositories/countriesRepository'
 import { Country, CountryDeserializer } from '@/serializer/Country'
 import RepositoryFactory from '@/repositories/repositoryFactory'
+import BackButton from '@/components/semantic/BackButton.vue'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
-import { InsuranceTypeRepos, InsuranceTypes } from '@/enums/insuranceTypes'
-import CustomButton from '@/components/CustomButton.vue'
 import { computed, defineComponent, ref, watch } from 'vue'
+import { scrollToFirstError } from '@/veeValidate/helpers'
+import required from '@/components/semantic/Required.vue'
+import CustomButton from '@/components/CustomButton.vue'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
+import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import router from '@/router'
-import { useRoute } from 'vue-router'
-import BackButton from '@/components/semantic/BackButton.vue'
-import { scrollToFirstError } from '@/veeValidate/helpers'
-import required from '@/components/semantic/Required.vue'
 
 export default defineComponent({
   name: 'MaterialInsurance',
   components: {
     'custom-headline-2': CustomHeadline2,
+    'select-equipment': SelectEquipment,
     'custom-button': CustomButton,
     'multi-select': MultiSelect,
     'custom-input': CustomInput,
-    'select-equipment': SelectEquipment,
     'back-button': BackButton,
     required,
   },
@@ -113,13 +113,6 @@ export default defineComponent({
     const generalInsuranceState = computed(() => {
       return store.state.insurance.generalInsuranceState
     })
-
-    watch(
-      () => isSubmitting.value,
-      () => {
-        store.dispatch('setIsSubmittingState', isSubmitting.value)
-      }
-    )
 
     const onSubmit = async () => {
       await validate().then((validation: any) => scrollToFirstError(validation, 'MaterialInsurance'))
@@ -172,6 +165,13 @@ export default defineComponent({
           router.push('/home')
         })
     }
+
+    watch(
+      () => isSubmitting.value,
+      () => {
+        store.dispatch('setIsSubmittingState', isSubmitting.value)
+      }
+    )
 
     return {
       BelgianCitySearchRepository,

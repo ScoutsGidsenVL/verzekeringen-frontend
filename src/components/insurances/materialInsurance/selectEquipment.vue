@@ -73,17 +73,20 @@ export default defineComponent({
       }
     }
 
-    const updateEquipmentInList = (quipment: Equipment) => {
+    const updateEquipmentInList = (material: Equipment) => {
+      console.log('EDIT MATERIAL 2: ', material)
+
       const tempArr: Array<Equipment> = []
 
       equipment.value.forEach((listedEquipment: Equipment) => {
-        if (listedEquipment.id === quipment.id) {
-          tempArr.push(quipment)
+        if (listedEquipment.id === material.id) {
+          tempArr.push(material)
         } else {
           tempArr.push(listedEquipment)
         }
       })
       equipment.value = tempArr
+      console.log('MATERIAL ARRAY: ', equipment.value)
     }
 
     return {

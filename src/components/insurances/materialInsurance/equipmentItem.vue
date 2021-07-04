@@ -59,7 +59,7 @@
 import { Equipment } from '@/serializer/Equipment'
 import { Member } from '@/serializer/Member'
 import { NonMember } from '@/serializer/NonMember'
-import { defineComponent, PropType, ref } from 'vue'
+import { defineComponent, PropType, ref, watch } from 'vue'
 
 export default defineComponent({
   props: {
@@ -71,6 +71,12 @@ export default defineComponent({
   setup(props) {
     const person = ref<Member | NonMember | undefined>(props.equipment.ownerMember ? props.equipment.ownerMember : props.equipment.ownerNonMember ? props.equipment.ownerNonMember : undefined)
 
+    watch(
+      () => props.equipment,
+      () => {
+        person.value = props.equipment.ownerMember ? props.equipment.ownerMember : props.equipment.ownerNonMember ? props.equipment.ownerNonMember : undefined
+      }
+    )
     return {
       person,
     }

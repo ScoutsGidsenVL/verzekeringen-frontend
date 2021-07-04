@@ -1,5 +1,5 @@
 <template>
-  <h1 v-if="details" class="group-search__title my-5 inline-block relative text-xl" style="font-size: 2rem; position: initial; transition: none !important">
+  <h1 v-if="text" class="group-search__title my-5 inline-block relative text-xl" style="font-size: 2rem; position: initial; transition: none !important">
     <span class="animate-none">{{ text }}</span>
   </h1>
 </template>

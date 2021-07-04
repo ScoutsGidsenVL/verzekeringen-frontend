@@ -223,6 +223,7 @@ export default defineComponent({
             group: generalInsuranceState.value.group.id,
           })
           if (props.sideBarState.state === 'edit') {
+            console.log('EDIT MATERIAL 1: ', equipment.value)
             await updateEquipment(equipment.value)
           } else {
             await postEquipment(equipment.value)
@@ -242,7 +243,7 @@ export default defineComponent({
     }
 
     const updateEquipment = async (data: Equipment) => {
-      console.log('HIT', data)
+      // console.log('HIT', data)
       if (data.id) {
         await RepositoryFactory.get(EquipmentRepository)
           .update(data.id, data)
