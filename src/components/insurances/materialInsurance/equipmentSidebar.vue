@@ -114,40 +114,40 @@
 </template>
 
 <script lang="ts">
+import { scrollToFirstError, useFormSendWithSuccess, useScrollToTop } from '@/veeValidate/helpers'
 import NonMemberSideBar from '@/components/insurances/nonMembersInsurance/nonMemberSideBar.vue'
+import BaseSideBar, { option, sideBarState } from '@/components/semantic/BaseSideBar.vue'
 import MemberSiderbar from '@/components/insurances/travelAssistance/membersSideBar.vue'
 import EquipmentItem from '@/components/insurances/materialInsurance/equipmentItem.vue'
 import MemberItem from '@/components/insurances/travelAssistance/memberItem.vue'
+import { computed, defineComponent, PropType, ref, toRefs, watch } from 'vue'
 import { EquipmentRepository } from '@/repositories/equipmentRepository'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
+import SuccessToast from '@/components/semantic/successToast.vue'
 import RepositoryFactory from '@/repositories/repositoryFactory'
-import BaseSideBar, { option, sideBarState } from '@/components/semantic/BaseSideBar.vue'
+import { useField, useForm, ErrorMessage } from 'vee-validate'
 import SearchInput from '@/components/inputs/SearchInput.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import CustomButton from '@/components/CustomButton.vue'
 import { NonMember } from '@/serializer/NonMember'
 import { Equipment } from '@/serializer/Equipment'
-import { computed, defineComponent, PropType, ref, toRefs, watch } from 'vue'
 import { InputTypes } from '@/enums/inputTypes'
 import { Member } from '@/serializer/Member'
 import { Owner } from '@/serializer/Owner'
-import { useField, useForm, ErrorMessage } from 'vee-validate'
 import { useStore } from 'vuex'
-import { scrollToFirstError, useFormSendWithSuccess, useScrollToTop } from '@/veeValidate/helpers'
-import SuccessToast from '@/components/semantic/successToast.vue'
 
 export default defineComponent({
   name: 'EquipmentSideBar',
   components: {
-    'custom-button': CustomButton,
-    'base-side-bar': BaseSideBar,
-    'equipment-item': EquipmentItem,
-    'search-input': SearchInput,
-    'custom-input': CustomInput,
     'non-member-side-bar': NonMemberSideBar,
     'members-side-bar': MemberSiderbar,
-    'member-item': MemberItem,
+    'equipment-item': EquipmentItem,
     'success-toast': SuccessToast,
+    'custom-button': CustomButton,
+    'base-side-bar': BaseSideBar,
+    'search-input': SearchInput,
+    'custom-input': CustomInput,
+    'member-item': MemberItem,
     ErrorMessage,
   },
   props: {
@@ -171,10 +171,6 @@ export default defineComponent({
   },
   emits: ['update:sideBarState', 'addEquipmentToList', 'updateEquipmentInList'],
   setup(props, context) {
-    const options = ref<option[]>([
-      { text: 'Nieuw', value: 'Nieuw' },
-      { text: 'Uit eerdere aanvragen', value: 'Bestaand' },
-    ])
     const store = useStore()
     const selected = computed(() => (props.sideBarState.state === 'list' ? 'BestaandEquipment' : 'NieuwEquipment'))
     const loading = ref<boolean>(false)
@@ -184,61 +180,21 @@ export default defineComponent({
     const owner = ref<Owner | null>()
     const lidType = ref<String>()
     const { resetForm, handleSubmit, validate, meta, values, isSubmitting } = useForm<Equipment>()
-    const { value: isGroupEquipement } = useField('equipement-group', 'isGroupOwnerOrOwner:@ownerMember,@ownerNonMember', {
-      initialValue: false,
-    })
     const { formSendWithSuccess } = useFormSendWithSuccess<Equipment>(meta)
     const { formDiv, scrollToTop } = useScrollToTop()
     const { sideBarState } = toRefs(props)
     const nonMemberSideBarState = ref<sideBarState<NonMember>>({ state: 'hide' })
     const memberSideBarState = ref<sideBarState<NonMember>>({ state: 'hide' })
+    const isMemberSideBarDisplay = ref<boolean>(false)
 
-    watch(sideBarState, (value: sideBarState<Equipment>) => {
-      if (value.state === 'edit') {
-        formSendWithSuccess.value = false
-        resetForm({
-          values: {
-            id: value.entity.id,
-            nature: value.entity.nature,
-            description: value.entity.description,
-            totalValue: value.entity.totalValue,
-            ownerMember: value.entity.ownerMember,
-            ownerNonMember: value.entity.ownerNonMember,
-            owner: value.entity.ownerMember ? value.entity.ownerMember : value.entity.ownerNonMember ? value.entity.ownerNonMember : undefined,
-            group: value.entity.group,
-          },
-        })
-        owner.value = values.owner
-
-        if (value.entity.ownerMember) {
-          lidType.value = ' (Lid)'
-        }
-
-        if (value.entity.ownerNonMember) {
-          lidType.value = ' (Niet lid)'
-        }
-
-        if (value.entity.ownerMember === undefined && value.entity.ownerNonMember === undefined) {
-          isGroupEquipement.value = true
-        }
-      }
-
-      if (value.state === 'new') {
-        formSendWithSuccess.value = false
-        resetForm({
-          values: {
-            id: '',
-            nature: '',
-            description: '',
-            totalValue: '',
-            ownerMember: undefined,
-            ownerNonMember: undefined,
-            group: '',
-          },
-          errors: {},
-        })
-      }
+    const { value: isGroupEquipement } = useField('equipement-group', 'isGroupOwnerOrOwner:@ownerMember,@ownerNonMember', {
+      initialValue: false,
     })
+
+    const options = ref<option[]>([
+      { text: 'Nieuw', value: 'Nieuw' },
+      { text: 'Uit eerdere aanvragen', value: 'Bestaand' },
+    ])
 
     if (sideBarState.value.state === 'edit') {
       if (values.ownerMember || values.ownerNonMember) {
@@ -251,13 +207,6 @@ export default defineComponent({
     const generalInsuranceState = computed(() => {
       return store.state.insurance.generalInsuranceState
     })
-    isSubmitting
-    watch(
-      () => isSubmitting.value,
-      () => {
-        store.dispatch('setIsSubmittingState', isSubmitting.value)
-      }
-    )
 
     const onSubmit = async () => {
       await validate().then((validation: any) => scrollToFirstError(validation, 'addNewEquipment'))
@@ -338,7 +287,6 @@ export default defineComponent({
       return text
     }
 
-    const isMemberSideBarDisplay = ref<boolean>(false)
     const openMemberSideBar = () => {
       isMemberSideBarDisplay.value = true
     }
@@ -382,6 +330,60 @@ export default defineComponent({
         context.emit('update:sideBarState', { state: 'list' })
       }
     }
+
+    watch(sideBarState, (value: sideBarState<Equipment>) => {
+      if (value.state === 'edit') {
+        formSendWithSuccess.value = false
+        resetForm({
+          values: {
+            id: value.entity.id,
+            nature: value.entity.nature,
+            description: value.entity.description,
+            totalValue: value.entity.totalValue,
+            ownerMember: value.entity.ownerMember,
+            ownerNonMember: value.entity.ownerNonMember,
+            owner: value.entity.ownerMember ? value.entity.ownerMember : value.entity.ownerNonMember ? value.entity.ownerNonMember : undefined,
+            group: value.entity.group,
+          },
+        })
+        owner.value = values.owner
+
+        if (value.entity.ownerMember) {
+          lidType.value = ' (Lid)'
+        }
+
+        if (value.entity.ownerNonMember) {
+          lidType.value = ' (Niet lid)'
+        }
+
+        if (value.entity.ownerMember === undefined && value.entity.ownerNonMember === undefined) {
+          isGroupEquipement.value = true
+        }
+      }
+
+      if (value.state === 'new') {
+        formSendWithSuccess.value = false
+        resetForm({
+          values: {
+            id: '',
+            nature: '',
+            description: '',
+            totalValue: '',
+            ownerMember: undefined,
+            ownerNonMember: undefined,
+            group: '',
+          },
+          errors: {},
+        })
+      }
+    })
+
+    watch(
+      () => isSubmitting.value,
+      () => {
+        store.dispatch('setIsSubmittingState', isSubmitting.value)
+      }
+    )
 
     return {
       EquipmentRepository,

@@ -8,6 +8,8 @@
       <div v-html="titelText"></div>
     </div>
 
+    <custom-headline-sticker :text="'Totaalprijs: ' + '&euro; ' + details.totalCost" />
+
     <h1 v-if="details" class="group-search__title my-5 inline-block relative text-xl" style="font-size: 2rem; position: initial; transition: none !important">
       <span class="animate-none">Totaalprijs:{{ '&euro; ' + details.totalCost }}</span>
     </h1>
@@ -24,18 +26,20 @@
 </template>
 
 <script lang="ts">
+import CustomHeadlineSticker from '@/components/customHeadlines/CustomHeadlineSticker.vue'
+import CallToAction from '@/components/customHeadlines/CallToAction.vue'
 import NavigationArrow from '@/components/semantic/NavigationArrow.vue'
+import { computed, defineComponent, PropType, ref, watch } from 'vue'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import { BaseRepository } from '@/repositories/baseRepository'
-import { computed, defineComponent, PropType, ref, watch } from 'vue'
+import { HolderStates } from '@/enums/holderStates'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-import { HolderStates } from '@/enums/holderStates'
-import CallToAction from '@/components/customHeadlines/CallToAction.vue'
 
 export default defineComponent({
   name: 'BaseDetail',
   components: {
+    'custom-headline-sticker': CustomHeadlineSticker,
     'navigation-arrow': NavigationArrow,
     'call-to-action': CallToAction,
   },

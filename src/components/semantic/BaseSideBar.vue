@@ -74,8 +74,16 @@ export default defineComponent({
   },
   setup(props, context) {
     const selected = ref<string>(props.selection)
-
     const { isDisplay, selection } = toRefs(props)
+
+    const hideSideBar: () => void = () => {
+      context.emit('update:isDisplay', false)
+      context.emit('hideSidebar')
+    }
+
+    const emitOption = () => {
+      context.emit('options', selected.value)
+    }
 
     watch(selection, (value: string) => {
       selected.value = value
@@ -88,15 +96,6 @@ export default defineComponent({
         document.body.classList.remove('overflow-hidden')
       }
     })
-
-    const hideSideBar: () => void = () => {
-      context.emit('update:isDisplay', false)
-      context.emit('hideSidebar')
-    }
-
-    const emitOption = () => {
-      context.emit('options', selected.value)
-    }
 
     return {
       hideSideBar,
