@@ -86,6 +86,7 @@ export default defineComponent({
         }
       })
       equipment.value = tempArr
+      sideBarState.value = { state: 'hide' }
       console.log('MATERIAL ARRAY: ', equipment.value)
     }
 

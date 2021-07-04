@@ -12,7 +12,8 @@
 
         <div>
           <div class="w-96 mt-3">
-            <strong>Eigenaar</strong><strong v-if="owner">{{ lidType }}</strong>
+            <strong>Eigenaar</strong><strong v-if="owner">{{ lidType }}</strong
+            ><required rules="required" />
 
             <div v-show="!owner" class="w-full mt-2">
               <input id="equipement-group" v-model="isGroupEquipement" class="mr-2" type="checkbox" />
@@ -128,6 +129,7 @@ import RepositoryFactory from '@/repositories/repositoryFactory'
 import { useField, useForm, ErrorMessage } from 'vee-validate'
 import SearchInput from '@/components/inputs/SearchInput.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
+import Required from '@/components/semantic/Required.vue'
 import CustomButton from '@/components/CustomButton.vue'
 import { NonMember } from '@/serializer/NonMember'
 import { Equipment } from '@/serializer/Equipment'
@@ -149,6 +151,7 @@ export default defineComponent({
     'custom-input': CustomInput,
     'member-item': MemberItem,
     ErrorMessage,
+    Required,
   },
   props: {
     title: {
@@ -215,7 +218,7 @@ export default defineComponent({
         if (props.sideBarState.state === 'new' || props.sideBarState.state === 'edit') {
           const equipment = ref<Equipment>({
             id: values.id ? values.id : undefined,
-            nature: (values.nature && values.ownerNonMember) || (values.nature && values.ownerNonMember === undefined && values.ownerMember === undefined) ? values.nature : undefined,
+            nature: values.nature && values.ownerMember ? '' : values.nature,
             description: values.description ? values.description : undefined,
             totalValue: values.totalValue ? values.totalValue : undefined,
             ownerMember: values.ownerMember && isGroupEquipement.value === false ? values.ownerMember : undefined,

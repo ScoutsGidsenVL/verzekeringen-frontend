@@ -28,7 +28,7 @@ export const EquipmentDeserializer = (input: any): Equipment => {
 
 export const EquipmentSerializer = (input: any): any => {
   const single: any = {
-    nature: input.nature ? input.nature : undefined,
+    nature: input.nature ? input.nature : null,
     description: input.description ? input.description : undefined,
     total_value: input.totalValue ? input.totalValue : undefined,
     owner_member: input.ownerMember ? MemberSerializer(input.ownerMember).id : null,
