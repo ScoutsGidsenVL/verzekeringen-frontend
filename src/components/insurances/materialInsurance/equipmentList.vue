@@ -6,7 +6,7 @@
           <div>
             <div v-if="material.ownerMember">(Equipment van lid)</div>
             <div v-if="material.ownerNonMember">(Equipment van niet-lid)</div>
-            <div v-if="!material.ownerNonMember && !material.ownerMember">(Equipment van groep)</div>
+            <div v-if="!material.ownerNonMember && !material.ownerMember">(Groepsmateriaal)</div>
           </div>
         </template>
 
