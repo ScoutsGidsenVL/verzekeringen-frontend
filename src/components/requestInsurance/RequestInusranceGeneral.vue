@@ -101,6 +101,7 @@
           />
         </div>
       </div>
+      <div class="px-5 pt-2"><date-disclaimer /></div>
     </div>
 
     <div class="mb-5">
@@ -154,9 +155,11 @@ import InsuranceTypeMenu from '@/components/requestInsurance/insuranceTypeMenu/I
 import TipGeneralMaterialInsurance from '@/components/tips/tipGeneralMaterialInsurance.vue'
 import tipGeneralTravelAssistance from '@/components/tips/tipGeneralTravelAssistance.vue'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
-import TipGeneralNonMember from '@/components/tips/tipGeneralNonMember.vue'
 import InsuranceApplicant from './insuranceApplicant/insuranceApplicant.vue'
 import { MaxCoverageRepository } from '@/repositories/maxCoverageRepository'
+import TipGeneralNonMember from '@/components/tips/tipGeneralNonMember.vue'
+import { scrollToFirstError, useScrollToTop } from '@/veeValidate/helpers'
+import dateDisclaimer from '@/components/disclaimers/dateDisclaimer.vue'
 import { BaseInsurance } from '@/serializer/insurances/BaseInsurance'
 import InfoAlert from '@/components/requestInsurance/InfoAlert.vue'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
@@ -165,6 +168,7 @@ import TipChoiceHelp from '@/components/tips/tipChoiceHelp.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import { defineComponent, computed, ref, watch } from 'vue'
+import { InsuranceTypeRepos } from '@/enums/insuranceTypes'
 import AuthRepository from '@/repositories/authRepository'
 import CustomButton from '@/components/CustomButton.vue'
 import { InsuranceTypes } from '@/enums/insuranceTypes'
@@ -174,10 +178,8 @@ import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-import moment from 'moment'
-import { InsuranceTypeRepos } from '@/enums/insuranceTypes'
 import router from '@/router'
-import { scrollToFirstError, useScrollToTop } from '@/veeValidate/helpers'
+import moment from 'moment'
 
 export default defineComponent({
   name: 'RequestInsuranceGeneral',
@@ -188,6 +190,7 @@ export default defineComponent({
     'insurance-applicant': InsuranceApplicant,
     'insurance-type-menu': InsuranceTypeMenu,
     'custom-headline-2': CustomHeadline2,
+    'date-disclaimer': dateDisclaimer,
     'tip-choice-help': TipChoiceHelp,
     'custom-button': CustomButton,
     'custom-input': CustomInput,
@@ -308,17 +311,17 @@ export default defineComponent({
       maxCoverageOptions,
       insuranceTypeState,
       InsuranceTypes,
-      InputTypes,
-      minDate,
-      userData,
-      onSubmit,
-      data,
-      isEdit,
-      values,
       refreshGroups,
-      saveAsDraft,
       isSubmitting,
       isRefreshing,
+      saveAsDraft,
+      InputTypes,
+      userData,
+      onSubmit,
+      minDate,
+      isEdit,
+      values,
+      data,
     }
   },
 })
