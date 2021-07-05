@@ -11,7 +11,7 @@
     </div>
     <div v-if="data">
       <custom-list :items="data.results" title="Recent aangevraagd">
-        <div class="w-80 pb-3">
+        <div v-if="false" class="w-80 pb-3">
           <multi-select id="group" :object="true" placeholder="Filter op groep" track-by="fullInfo" value-prop="id" :options="userData.scoutsGroups" :loading-submit="isSubmitting" />
         </div>
       </custom-list>
