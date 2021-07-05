@@ -215,10 +215,10 @@ export default defineComponent({
       }
     }
 
-    const editNonMember = (data: NonMember) => {
+    const editNonMember = async (data: NonMember) => {
       formSendWithSuccess.value = false
       if (data.id) {
-        RepositoryFactory.get(NonMemberRepository)
+        await RepositoryFactory.get(NonMemberRepository)
           .update(data.id, data)
           .then((completed: NonMember) => {
             context.emit('updateMemberInList', completed)
@@ -227,9 +227,9 @@ export default defineComponent({
       }
     }
 
-    const postNonMember = (data: NonMember) => {
+    const postNonMember = async (data: NonMember) => {
       formSendWithSuccess.value = false
-      RepositoryFactory.get(NonMemberRepository)
+      await RepositoryFactory.get(NonMemberRepository)
         .create(data)
         .then((completed: NonMember) => {
           context.emit('addCreatedNonMemberToList', completed)
