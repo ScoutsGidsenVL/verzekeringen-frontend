@@ -3,9 +3,16 @@
     <div>
       <p>{{ item.createdOn ? formatCreatedOn(item.createdOn) : '' }}</p>
     </div>
-    <div>
+    <router-link v-if="!isDraft" :to="routeDetailLinkBasedOnType(item.type.name) + '/' + item.id">
+      <div>
+        <p>{{ item.startDate && item.endDate ? formatDate(item.startDate, item.endDate) : '' }}</p>
+      </div>
+    </router-link>
+
+    <div class="hover:underline cursor-pointer text-green hover:text-darkGreen" @click="goToDraft(item.id, item.type.name)" v-if="isDraft">
       <p>{{ item.startDate && item.endDate ? formatDate(item.startDate, item.endDate) : '' }}</p>
     </div>
+
     <div>
       <p>{{ item.group && item.group.name ? item.group.name : '' }} {{ item.group && item.group.id ? item.group.id : '' }}</p>
     </div>
