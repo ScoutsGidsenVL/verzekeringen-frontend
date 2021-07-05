@@ -1,6 +1,15 @@
 <template>
   <div>
-    <base-side-bar :selection="selected" :is-display="sideBarState.state !== 'hide'" name="Equipment" :title="title" :options="options" @options="changeSideBar" @hideSidebar="closeSideBar">
+    <base-side-bar
+      :is-edit="sideBarState.state === 'edit'"
+      :selection="selected"
+      :is-display="sideBarState.state !== 'hide'"
+      name="Equipment"
+      :title="title"
+      :options="options"
+      @options="changeSideBar"
+      @hideSidebar="closeSideBar"
+    >
       <form
         id="addNewEquipment"
         ref="formDiv"
@@ -35,12 +44,13 @@
             <div v-show="isGroupEquipement === false">
               <div>
                 <strong class="cursor-pointer text-lightGreen" @click="openMemberSideBar()"> Een lid (persoonlijk materiaal) </strong>
-                <members-side-bar v-model:isDisplay="isMemberSideBarDisplay" :close-on-add="true" :existing-list="members" title="Lid" @addMemberToList="addMember($event)" />
+                <members-side-bar isOverflowHidden="false" v-model:isDisplay="isMemberSideBarDisplay" :close-on-add="true" :existing-list="members" title="Lid" @addMemberToList="addMember($event)" />
               </div>
 
               <div class="mt-3">
                 <strong class="cursor-pointer text-lightGreen" @click="openNonMemberSideBar()"> Een niet-lid (derde) </strong>
                 <non-member-side-bar
+                  isOverflowHidden="false"
                   v-model:side-bar-state="nonMemberSideBarState"
                   :close-on-add="true"
                   :existing-list="nonMembers"
@@ -226,7 +236,6 @@ export default defineComponent({
             group: generalInsuranceState.value.group.id,
           })
           if (props.sideBarState.state === 'edit') {
-            console.log('EDIT MATERIAL 1: ', equipment.value)
             await updateEquipment(equipment.value)
           } else {
             await postEquipment(equipment.value)
@@ -246,7 +255,6 @@ export default defineComponent({
     }
 
     const updateEquipment = async (data: Equipment) => {
-      // console.log('HIT', data)
       if (data.id) {
         await RepositoryFactory.get(EquipmentRepository)
           .update(data.id, data)
@@ -390,35 +398,35 @@ export default defineComponent({
     )
 
     return {
-      EquipmentRepository,
+      isMemberSideBarDisplay,
       searchedEquipmentList,
+      nonMemberSideBarState,
+      openNonMemberSideBar,
+      EquipmentRepository,
+      addCreatedNonMember,
+      formSendWithSuccess,
+      memberSideBarState,
+      setTotalValueInfo,
+      openMemberSideBar,
+      isGroupEquipement,
+      fetchedOptions,
+      postEquipment,
+      changeSideBar,
       addEquipment,
+      closeSideBar,
+      removeOwner,
       InputTypes,
+      isBicycle,
+      addMember,
       selected,
       onSubmit,
-      fetchedOptions,
-      loading,
-      isBicycle,
       userData,
-      postEquipment,
-      values,
-      setTotalValueInfo,
-      openNonMemberSideBar,
-      openMemberSideBar,
-      addMember,
-      addCreatedNonMember,
-      owner,
-      removeOwner,
+      loading,
       lidType,
-      formSendWithSuccess,
       formDiv,
-      isGroupEquipement,
-      changeSideBar,
-      closeSideBar,
-      nonMemberSideBarState,
-      memberSideBarState,
-      isMemberSideBarDisplay,
       options,
+      values,
+      owner,
     }
   },
 })

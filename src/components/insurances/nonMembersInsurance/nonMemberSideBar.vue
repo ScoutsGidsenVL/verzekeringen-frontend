@@ -1,6 +1,7 @@
 <template>
   <div>
     <base-side-bar
+      :isOverflowHidden="isOverflowHidden"
       :selection="selected"
       :is-display="sideBarState.state !== 'hide'"
       :is-edit="sideBarState.state === 'edit'"
@@ -96,23 +97,23 @@
 </template>
 
 <script lang="ts">
+import { scrollToFirstError, useScrollToTop, useFormSendWithSuccess } from '@/veeValidate/helpers'
 import NonMemberItem from '@/components/insurances/nonMembersInsurance/nonMemberItem.vue'
+import BaseSideBar, { option, sideBarState } from '@/components/semantic/BaseSideBar.vue'
 import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRepository'
+import { computed, defineComponent, PropType, ref, toRefs, watch } from 'vue'
 import { NonMemberRepository } from '@/repositories/nonMemberRepository'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
+import SuccessToast from '@/components/semantic/successToast.vue'
 import RepositoryFactory from '@/repositories/repositoryFactory'
-import BaseSideBar, { option, sideBarState } from '@/components/semantic/BaseSideBar.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
+import SearchInput from '@/components/inputs/SearchInput.vue'
 import CustomButton from '@/components/CustomButton.vue'
 import { NonMember } from '@/serializer/NonMember'
-import { computed, defineComponent, PropType, ref, toRefs, watch } from 'vue'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
-import SearchInput from '@/components/inputs/SearchInput.vue'
-import { scrollToFirstError, useScrollToTop, useFormSendWithSuccess } from '@/veeValidate/helpers'
-import SuccessToast from '@/components/semantic/successToast.vue'
 
 export default defineComponent({
   name: 'NonMemberSideBar',
@@ -153,13 +154,14 @@ export default defineComponent({
       required: false,
       default: false,
     },
+    isOverflowHidden: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
   emits: ['update:sideBarState', 'addCreatedNonMemberToList', 'updateMemberInList'],
   setup(props, context) {
-    const options = ref<option[]>([
-      { text: 'Nieuw', value: 'Nieuw' },
-      { text: 'Uit eerdere aanvragen', value: 'Bestaand' },
-    ])
     const store = useStore()
     const user = ref<ResponsibleMember>(store.getters.user)
     const { resetForm, errors, handleSubmit, validate, meta, values, isSubmitting } = useForm<NonMember>()
@@ -168,47 +170,12 @@ export default defineComponent({
     const selectedNonMembers = ref<NonMember[]>([])
     const loading = ref<boolean>(false)
     const { formDiv, scrollToTop } = useScrollToTop()
-
     const { sideBarState } = toRefs(props)
 
-    watch(sideBarState, (value: sideBarState<NonMember>) => {
-      if (value.state === 'edit') {
-        formSendWithSuccess.value = false
-        resetForm({
-          values: {
-            id: value.entity.id,
-            lastName: value.entity.lastName,
-            firstName: value.entity.firstName,
-            phoneNumber: value.entity.phoneNumber,
-            birthDate: value.entity.birthDate,
-            street: value.entity.street,
-            number: value.entity.number,
-            letterBox: value.entity.letterBox,
-            comment: value.entity.comment,
-            postCodeCity: value.entity.postCodeCity,
-          },
-        })
-      }
-
-      if (value.state === 'new') {
-        formSendWithSuccess.value = false
-        resetForm({
-          values: {
-            id: '',
-            lastName: '',
-            firstName: '',
-            phoneNumber: '',
-            birthDate: '',
-            street: '',
-            number: '',
-            letterBox: '',
-            comment: '',
-            postCodeCity: {},
-          },
-          errors: {},
-        })
-      }
-    })
+    const options = ref<option[]>([
+      { text: 'Nieuw', value: 'Nieuw' },
+      { text: 'Uit eerdere aanvragen', value: 'Bestaand' },
+    ])
 
     const onSubmit = async () => {
       await validate().then((validation: any) => scrollToFirstError(validation, 'addNewNonMember'))
@@ -297,26 +264,65 @@ export default defineComponent({
       }
     }
 
+    watch(sideBarState, (value: sideBarState<NonMember>) => {
+      if (value.state === 'edit') {
+        formSendWithSuccess.value = false
+        resetForm({
+          values: {
+            id: value.entity.id,
+            lastName: value.entity.lastName,
+            firstName: value.entity.firstName,
+            phoneNumber: value.entity.phoneNumber,
+            birthDate: value.entity.birthDate,
+            street: value.entity.street,
+            number: value.entity.number,
+            letterBox: value.entity.letterBox,
+            comment: value.entity.comment,
+            postCodeCity: value.entity.postCodeCity,
+          },
+        })
+      }
+
+      if (value.state === 'new') {
+        formSendWithSuccess.value = false
+        resetForm({
+          values: {
+            id: '',
+            lastName: '',
+            firstName: '',
+            phoneNumber: '',
+            birthDate: '',
+            street: '',
+            number: '',
+            letterBox: '',
+            comment: '',
+            postCodeCity: {},
+          },
+          errors: {},
+        })
+      }
+    })
+
     return {
       BelgianCitySearchRepository,
       NonMemberRepository,
+      formSendWithSuccess,
       selectedNonMembers,
+      fetchedOptions,
+      editNonMember,
+      changeSideBar,
       addNonMember,
+      closeSideBar,
+      isSubmitting,
       InputTypes,
       selected,
       onSubmit,
-      user,
-      fetchedOptions,
       loading,
-      formSendWithSuccess,
       formDiv,
-      errors,
-      editNonMember,
-      closeSideBar,
-      changeSideBar,
-      values,
       options,
-      isSubmitting,
+      errors,
+      values,
+      user,
     }
   },
 })

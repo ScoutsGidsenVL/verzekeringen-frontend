@@ -81,7 +81,6 @@ export default defineComponent({
     watch(
       () => props.equipmentList,
       () => {
-        console.log('EQUIPMENT LIST CHANGED: ', props.equipmentList)
         equipment.value = props.equipmentList
       }
     )

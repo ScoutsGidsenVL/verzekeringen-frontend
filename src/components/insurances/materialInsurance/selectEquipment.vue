@@ -74,8 +74,6 @@ export default defineComponent({
     }
 
     const updateEquipmentInList = (material: Equipment) => {
-      console.log('EDIT MATERIAL 2: ', material)
-
       const tempArr: Array<Equipment> = []
 
       equipment.value.forEach((listedEquipment: Equipment) => {
@@ -87,7 +85,6 @@ export default defineComponent({
       })
       equipment.value = tempArr
       sideBarState.value = { state: 'hide' }
-      console.log('MATERIAL ARRAY: ', equipment.value)
     }
 
     return {

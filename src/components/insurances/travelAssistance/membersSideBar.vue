@@ -1,5 +1,5 @@
 <template>
-  <base-side-bar v-model:isDisplay="display" name="Member" :title="title">
+  <base-side-bar :isOverflowHidden="isOverflowHidden" v-model:isDisplay="display" name="Member" :title="title">
     <div class="d-flex flex-col h-full px-4 pt-4">
       <div>
         <search-input v-model:loading="loading" name="member" placeholder="Zoek op naam" :repository="MemberRepository" @fetchedOptions="fetchedOptions($event)" />
@@ -22,8 +22,8 @@
 </template>
 
 <script lang="ts">
-import MemberItem from '@/components/insurances/travelAssistance/memberItem.vue'
 import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRepository'
+import MemberItem from '@/components/insurances/travelAssistance/memberItem.vue'
 import { MemberRepository } from '@/repositories/memberRepository'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 import RepositoryFactory from '@/repositories/repositoryFactory'
@@ -62,6 +62,11 @@ export default defineComponent({
       type: Boolean,
       default: false,
       required: false,
+    },
+    isOverflowHidden: {
+      type: Boolean,
+      required: false,
+      default: true,
     },
   },
   setup(props, context) {
@@ -113,12 +118,12 @@ export default defineComponent({
       BelgianCitySearchRepository,
       MemberRepository,
       selectedMembers,
-      InputTypes,
-      display,
-      user,
       fetchedOptions,
-      loading,
+      InputTypes,
       addMember,
+      display,
+      loading,
+      user,
     }
   },
 })

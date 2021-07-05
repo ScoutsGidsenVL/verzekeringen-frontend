@@ -71,6 +71,11 @@ export default defineComponent({
     },
     isEdit: Boolean,
     name: String,
+    isOverflowHidden: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
   setup(props, context) {
     const selected = ref<string>(props.selection)
@@ -90,10 +95,12 @@ export default defineComponent({
     })
 
     watch(isDisplay, (value: boolean) => {
-      if (value == true) {
-        document.body.classList.add('overflow-hidden')
-      } else {
-        document.body.classList.remove('overflow-hidden')
+      if (props.isOverflowHidden === true) {
+        if (value == true) {
+          document.body.classList.add('overflow-hidden')
+        } else {
+          document.body.classList.remove('overflow-hidden')
+        }
       }
     })
 
@@ -105,6 +112,7 @@ export default defineComponent({
   },
 })
 </script>
+
 <style scoped>
 header {
   background: #f9f9f9 url(/bg-texture-small.jpg) no-repeat;
