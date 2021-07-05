@@ -8,7 +8,9 @@
       <div v-html="titelText"></div>
     </div>
 
-    <custom-headline-sticker :text="'Totaalprijs: ' + '&euro; ' + details.totalCost" />
+    <custom-headline-sticker v-if="details" :text="'Totaalprijs: ' + '&euro; ' + details.totalCost" />
+
+    <important-message style="width: 484px" v-if="details.vvksComment" :message="details.vvksComment" />
 
     <slot :details="details" :isDetail="isDetail" />
   </div>
@@ -23,6 +25,7 @@
 
 <script lang="ts">
 import CustomHeadlineSticker from '@/components/customHeadlines/CustomHeadlineSticker.vue'
+import ImportantMessage from '@/components/semantic/ImportantMessage.vue'
 import CallToAction from '@/components/customHeadlines/CallToAction.vue'
 import NavigationArrow from '@/components/semantic/NavigationArrow.vue'
 import { computed, defineComponent, PropType, ref, watch } from 'vue'
@@ -36,6 +39,7 @@ export default defineComponent({
   name: 'BaseDetail',
   components: {
     'custom-headline-sticker': CustomHeadlineSticker,
+    'important-message': ImportantMessage,
     'navigation-arrow': NavigationArrow,
     'call-to-action': CallToAction,
   },
@@ -94,6 +98,9 @@ export default defineComponent({
       }
       if (props.title === 'Materiaal') {
         titelText.value = '<p style="font-size: 30px">Je <strong class="font-semibold">' + 'Materiaal verzekering' + '</strong> is aangevraagd</p>'
+      }
+      if (props.title === 'Tijdelijke') {
+        titelText.value = '<p style="font-size: 30px">Je <strong class="font-semibold">' + 'Tijdelijke autoverzekering' + '</strong> is aangevraagd</p>'
       }
     }
 

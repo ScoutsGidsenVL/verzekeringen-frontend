@@ -3,7 +3,10 @@
   <slot />
   <div class="grid-cols-list py-2 border-t-2 border-black grid opacity-0 md:opacity-100">
     <div>
-      <p class="font-semibold">Datum</p>
+      <p class="font-semibold">Aanvraag datum</p>
+    </div>
+    <div>
+      <p class="font-semibold">Wanneer</p>
     </div>
     <div>
       <p class="font-semibold">Groep</p>
@@ -50,10 +53,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style lang="scss" scoped>
-.custom-grid {
-  display: grid;
-  grid-template-columns: 25% 30% 25% 15% 5%;
-}
-</style>

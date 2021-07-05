@@ -18,6 +18,7 @@ export interface EventInsurance {
   readonly eventSize?: EventSize
   readonly location?: Location
   totalCost?: string
+  readonly vvksComment?: string
 }
 
 export const EventInsuranceDeserializer = (input: any): EventInsurance => {
@@ -35,6 +36,7 @@ export const EventInsuranceDeserializer = (input: any): EventInsurance => {
     nature: input.nature ? input.nature : undefined,
     location: input.location ? LocationDeserializer(input.location) : undefined,
     eventSize: input.event_size ? (typeof input.event_size === 'object' ? EventSizeDeserializer(input.event_size) : { id: input.event_size }) : undefined,
+    vvksComment: input.vvks_comment && input.vvks_comment.length > 0 ? input.vvks_comment : '',
   }
 
   return single

@@ -79,6 +79,7 @@ type oneTimeActivityFormType = {
   location: Location
   groupSize: number
   comment: string
+  vvksComment: string
 }
 
 export default defineComponent({
@@ -100,6 +101,7 @@ export default defineComponent({
         location: data.location ? data.location : '',
         groupSize: data.groupSize ? data.groupSize : '',
         comment: data.comment ? data.comment : '',
+        vvksComment: data.vvksComment ? data.vvksComment : '',
       },
     })
     const isEdit = !!route.params.id
@@ -134,6 +136,7 @@ export default defineComponent({
             location: values.location,
             groupSize: values.groupSize,
             comment: values.comment ? values.comment : '',
+            vvksComment: values.vvksComment ? values.vvksComment : '',
           },
         })
 

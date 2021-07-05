@@ -11,6 +11,7 @@ export interface Insurance {
   readonly group: Group | undefined
   readonly status: Status | undefined
   readonly type: Type | undefined
+  readonly createdOn: string
 }
 
 export const insuranceDeserializer = (input: any): Insurance => {
@@ -22,13 +23,14 @@ export const insuranceDeserializer = (input: any): Insurance => {
     group: input.group ? GroupDeserializer(input.group) : undefined,
     status: input.status ? StatusDeserializer(input.status) : undefined,
     type: input.type ? TypeDeserializer(input.type) : undefined,
+    createdOn: input.created_on ? input.created_on : undefined,
   }
 
   return single
 }
 
 export const insuranceSerializer = (input: any): Insurance => {
-  const single: Insurance = {
+  const single: any = {
     id: input.id,
     startDate: input.start_date,
     endDate: input.end_date,

@@ -266,7 +266,9 @@ export default defineComponent({
     const saveAsDraft = () => {
       const draftData = ref<BaseInsurance>({
         startDate: values.startDate,
+        startTime: values.startTime ? values.startTime : undefined,
         endDate: values.endDate,
+        endTime: values.endTime ? values.endTime : undefined,
         group: values.group,
         responsibleMember: values.responsibleMember ? values.responsibleMember : userData.value,
         totalCost: '1.00',

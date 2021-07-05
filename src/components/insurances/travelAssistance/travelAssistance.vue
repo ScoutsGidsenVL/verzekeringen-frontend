@@ -100,6 +100,7 @@ export default defineComponent({
         participants: data.participants ? data.participants : [],
         vehicle: data.vehicle ? data.vehicle : undefined,
         comment: data.comment ? data.comment : '',
+        vvksComment: data.vvksComment ? data.vvksComment : '',
       },
     })
     const isEdit = !!route.params.id
@@ -127,6 +128,7 @@ export default defineComponent({
             responsiblePhoneNumber:
               generalInsuranceState.value.responsibleMember && generalInsuranceState.value.responsibleMember.phoneNumber ? generalInsuranceState.value.responsibleMember.phoneNumber : '/',
             comment: values.comment ? values.comment : '',
+            vvksComment: values.vvksComment ? values.vvksComment : '',
           },
         })
 

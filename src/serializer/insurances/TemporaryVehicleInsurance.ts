@@ -25,6 +25,7 @@ export interface TemporaryVehicleInsurance {
   readonly insuranceOptions?: Array<number>
   readonly selectDriverField?: SelectDriver
   readonly responsibleMember?: ResponsibleMember
+  readonly vvksComment?: string
 }
 
 export const TemporaryVehicleDeserializer = (input: any): TemporaryVehicleInsurance => {
@@ -42,6 +43,7 @@ export const TemporaryVehicleDeserializer = (input: any): TemporaryVehicleInsura
     maxCoverage: input.max_coverage ? roundLabel(input.max_coverage) : undefined,
     insuranceOptions: input.insurance_options ? (typeof input.insurance_options[0] === 'object' ? returnArrayWithValues(input.insurance_options) : input.insurance_options) : undefined,
     responsibleMember: input.responsible_member ? ResponsibleMemberDeserializer(input.responsible_member) : undefined,
+    vvksComment: input.vvks_comment && input.vvks_comment.length > 0 ? input.vvks_comment : '',
   }
 
   return single

@@ -11,6 +11,7 @@ export interface Draft {
   readonly group: Group | undefined
   readonly status: Status | undefined
   readonly type: Type | undefined
+  readonly createdOn: string
 }
 
 export const draftDeserializer = (input: any): Draft => {
@@ -22,13 +23,14 @@ export const draftDeserializer = (input: any): Draft => {
     group: input.group ? GroupDeserializer({ id: input.group }) : undefined,
     status: input.status ? StatusDeserializer({ label: input.status }) : StatusDeserializer({ label: 'draft' }),
     type: input.type ? TypeDeserializer(input.type) : undefined,
+    createdOn: input.created_on ? input.created_on : undefined,
   }
 
   return single
 }
 
 export const draftSerializer = (input: any): Draft => {
-  const single: Draft = {
+  const single: any = {
     id: input.id,
     startDate: input.start_date,
     endDate: input.end_date,

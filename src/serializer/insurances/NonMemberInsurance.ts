@@ -39,9 +39,9 @@ export const nonMemberInsuranceDeserializer = (input: any): NonMemberInsurance =
     status: input.status ? StatusDeserializer(input.status) : undefined,
     totalCost: input.total_cost ? input.total_cost : undefined,
     type: input.type ? TypeDeserializer(input.type) : undefined,
-    vvksComment: input.vvks_comment ? input.vvks_comment : undefined,
     nonMembers: input.non_members ? input.non_members.map((nonMember: any) => NonMemberDeserializer(nonMember)) : undefined,
     country: input.country ? CountryDeserializer(input.country) : undefined,
+    vvksComment: input.vvks_comment && input.vvks_comment.length > 0 ? input.vvks_comment : '',
   }
 
   return single

@@ -106,6 +106,7 @@ export default defineComponent({
         country: data.country ? data.country : initialCountry.value,
         postCodeCity: data.postCodeCity ? (data.postCodeCity.city === undefined ? {} : data.postCodeCity) : undefined,
         equipment: data.equipment ? data.equipment : [],
+        vvksComment: data.vvksComment ? data.vvksComment : '',
       },
     })
     const isEdit = !!route.params.id
@@ -125,6 +126,7 @@ export default defineComponent({
             country: values.country ? values.country : undefined,
             comment: values.comment ? values.comment : '',
             equipment: values.equipment ? values.equipment : undefined,
+            vvksComment: values.vvksComment ? values.vvksComment : '',
           },
         })
 

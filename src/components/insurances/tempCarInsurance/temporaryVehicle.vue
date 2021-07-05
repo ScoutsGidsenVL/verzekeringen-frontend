@@ -103,6 +103,7 @@ export default defineComponent({
           isDriverOwner: checkIfOwnerIsDriver(data.owner ? data.owner : { firstName: '', lastName: '' }, data.drivers ? data.drivers : []),
         },
         comment: data.comment ? data.comment : '',
+        vvksComment: data.vvksComment ? data.vvksComment : '',
       },
     })
 
@@ -138,6 +139,7 @@ export default defineComponent({
                     }
                   }),
             comment: values.comment ? values.comment : '',
+            vvksComment: values.vvksComment ? values.vvksComment : '',
           },
         })
 

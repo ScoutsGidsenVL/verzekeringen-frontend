@@ -52,7 +52,7 @@ export default defineComponent({
 
     const getInsurances = () => {
       RepositoryFactory.get(InsuranceRepository)
-        .getArray('/insurances/?page=1&page_size=5')
+        .getArray('/insurances/?page=1&page_size=10')
         .then((res: ArrayResult) => {
           data.value = res
         })
@@ -76,7 +76,7 @@ export default defineComponent({
 
     const getDrafts = () => {
       RepositoryFactory.get(DraftRepository)
-        .getArray('/insurance_drafts/?page=1&page_size=5')
+        .getArray('/insurance_drafts/?page=1&page_size=10')
         .then((res: ArrayResult) => {
           drafts.value = res
         })

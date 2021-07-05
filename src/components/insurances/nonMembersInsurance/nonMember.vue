@@ -110,6 +110,7 @@ export default defineComponent({
         postCodeCity: data.postCodeCity ? (data.postCodeCity.city === undefined ? undefined : data.postCodeCity) : undefined,
         nonMembers: data.nonMembers ? data.nonMembers : [],
         comment: data.comment ? data.comment : '',
+        vvksComment: data.vvksComment ? data.vvksComment : '',
       },
     })
 
@@ -135,6 +136,7 @@ export default defineComponent({
             country: values.country ? values.country : undefined,
             nonMembers: values.nonMembers ? values.nonMembers : [],
             comment: values.comment ? values.comment : '',
+            vvksComment: values.vvksComment ? values.vvksComment : '',
           },
         })
 

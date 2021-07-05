@@ -1,6 +1,9 @@
 <template>
   <div v-if="item" class="md:grid-cols-list grid py-2 border-t-2 border-black">
     <div>
+      <p>{{ item.createdOn ? formatCreatedOn(item.createdOn) : '' }}</p>
+    </div>
+    <div>
       <p>{{ item.startDate && item.endDate ? formatDate(item.startDate, item.endDate) : '' }}</p>
     </div>
     <div>
@@ -13,7 +16,7 @@
       <p>{{ item.status && item.status.label ? item.status.label : '' }}</p>
     </div>
     <div>
-      <div v-if="item.type && item.type.name" class="float-right flex gap-5">
+      <div v-if="item.type && item.type.name" class="float-right flex gap-3">
         <div v-if="isDraft" @click="goToDraft(item.id, item.type.name)">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hover:text-lightGreen cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
             <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
@@ -52,15 +55,15 @@
 
 <script lang="ts">
 import { InsuranceTypeRepos, InsuranceTypes, InsuranceTypeStoreSetters } from '@/enums/insuranceTypes'
+import { DraftRepository } from '@/repositories/insurances/draftRepository'
+import { formatDate, formatCreatedOn } from '@/helpers/formatHelper'
 import { routeDetailLinkBasedOnType } from '@/helpers/routerHelper'
 import RepositoryFactory from '@/repositories/repositoryFactory'
-import { DraftRepository } from '@/repositories/insurances/draftRepository'
-import { formatDate } from '@/helpers/formatHelper'
-import { Insurance } from '@/serializer/Insurance'
+import Loader from '@/components/semantic/Loader.vue'
 import { defineComponent, PropType, ref } from 'vue'
+import { Insurance } from '@/serializer/Insurance'
 import { useStore } from 'vuex'
 import router from '@/router'
-import Loader from '@/components/semantic/Loader.vue'
 
 export default defineComponent({
   name: 'CustomListItem',
@@ -161,10 +164,11 @@ export default defineComponent({
     return {
       routeDetailLinkBasedOnType,
       fetchInsuranceById,
+      isDeletingDraft,
+      formatCreatedOn,
       deleteDraft,
       formatDate,
       goToDraft,
-      isDeletingDraft,
     }
   },
 })

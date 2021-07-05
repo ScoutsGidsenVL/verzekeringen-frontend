@@ -3,9 +3,11 @@
     <template #default="{ details }">
       <div v-if="details" class="mt-1">
         <div v-if="!(holderState === HolderStates.DETAIL)">
-          <p class="font-semibold">Opmerkingen</p>
-          <div v-if="details.comment" class="px-5">
-            <label-output :text="details.comment" />
+          <div v-if="details.comment">
+            <p class="font-semibold">Opmerkingen</p>
+            <div class="px-5">
+              <label-output :text="details.comment" />
+            </div>
           </div>
         </div>
 

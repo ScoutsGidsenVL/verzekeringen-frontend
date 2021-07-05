@@ -17,6 +17,7 @@ export interface TravelAssistanceInsurance {
   readonly participants?: Member[]
   readonly responsibleMember?: ResponsibleMember
   totalCost?: string
+  readonly vvksComment?: string
 }
 
 export const TravelAssistanceInsuranceDeserializer = (input: any): TravelAssistanceInsurance => {
@@ -32,6 +33,7 @@ export const TravelAssistanceInsuranceDeserializer = (input: any): TravelAssista
     participants: input.participants ? input.participants.map((member: any) => MemberDeserializer(member)) : undefined,
     responsibleMember: input.responsible_member ? ResponsibleMemberDeserializer(input.responsible_member) : undefined,
     totalCost: input.total_cost ? input.total_cost : undefined,
+    vvksComment: input.vvks_comment && input.vvks_comment.length > 0 ? input.vvks_comment : '',
   }
 
   return single

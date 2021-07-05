@@ -24,6 +24,9 @@ module.exports = {
       red: {
         DEFAULT: "#E00A1E",
       },
+      lightRed: {
+        DEFAULT: "#FBCCD4",
+      },
     },
     container: {
       padding: {
@@ -36,7 +39,7 @@ module.exports = {
     },
     extend: {
       gridTemplateColumns: {
-        list: "25% 30% 25% 15% 5%",
+        list: "14% 20% 29% 25% 9% 3%",
       },
       screens: {
         smo: { min: "0px", max: "768px" },
@@ -61,4 +64,4 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-}
+};
