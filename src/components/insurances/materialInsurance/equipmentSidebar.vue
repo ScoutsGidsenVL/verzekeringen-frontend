@@ -20,46 +20,7 @@
         <success-toast v-model:showOrHide="formSendWithSuccess" label="Materiaal succesvol toegevoegd" />
 
         <div>
-          <div class="w-96 mt-3">
-            <strong>Eigenaar</strong><strong v-if="owner">{{ lidType }}</strong
-            ><required rules="required" />
-
-            <div v-show="!owner" class="w-full mt-2">
-              <input id="equipement-group" v-model="isGroupEquipement" class="mr-2" type="checkbox" />
-              <label for="equipement-group">Onze groep</label>
-              <ErrorMessage name="equipement-group" class="text-red text-sm block mt-1 w-80" />
-            </div>
-
-            <div class="py-3">
-              <hr v-if="owner" class="border-t-2 border-black" />
-              <member-item :member="owner">
-                <div v-show="!isSubmitting" class="text-right">
-                  <label class="hover:text-lightGreen cursor-pointer" for="" @click="removeOwner()">Verwijder</label>
-                </div>
-              </member-item>
-            </div>
-          </div>
-
           <div>
-            <div v-show="isGroupEquipement === false">
-              <div>
-                <strong class="cursor-pointer text-lightGreen" @click="openMemberSideBar()"> Een lid (persoonlijk materiaal) </strong>
-                <members-side-bar isOverflowHidden="false" v-model:isDisplay="isMemberSideBarDisplay" :close-on-add="true" :existing-list="members" title="Lid" @addMemberToList="addMember($event)" />
-              </div>
-
-              <div class="mt-3">
-                <strong class="cursor-pointer text-lightGreen" @click="openNonMemberSideBar()"> Een niet-lid (derde) </strong>
-                <non-member-side-bar
-                  isOverflowHidden="false"
-                  v-model:side-bar-state="nonMemberSideBarState"
-                  :close-on-add="true"
-                  :existing-list="nonMembers"
-                  title="Niet lid"
-                  @addCreatedNonMemberToList="addCreatedNonMember($event)"
-                />
-              </div>
-            </div>
-
             <div class="mt-4">
               <p>Wil je een fiets verzekeren?</p>
               <div class="flex gap-7">
@@ -94,6 +55,45 @@
 
           <div class="w-96 mt-4">
             <custom-input :extra-info="setTotalValueInfo()" :type="InputTypes.TEXT" rules="required" name="totalValue" label="Nieuwwaarde" />
+          </div>
+
+          <div class="w-96 mt-3">
+            <strong>Eigenaar</strong><strong v-if="owner">{{ lidType }}</strong
+            ><required rules="required" />
+
+            <div v-show="!owner" class="w-full mt-2">
+              <input id="equipement-group" v-model="isGroupEquipement" class="mr-2" type="checkbox" />
+              <label for="equipement-group">Onze groep</label>
+              <ErrorMessage name="equipement-group" class="text-red text-sm block mt-1 w-80" />
+            </div>
+
+            <div class="py-3">
+              <hr v-if="owner" class="border-t-2 border-black" />
+              <member-item :member="owner">
+                <div v-show="!isSubmitting" class="text-right">
+                  <label class="hover:text-lightGreen cursor-pointer" for="" @click="removeOwner()">Verwijder</label>
+                </div>
+              </member-item>
+            </div>
+          </div>
+
+          <div v-show="isGroupEquipement === false">
+            <div>
+              <strong class="cursor-pointer text-lightGreen" @click="openMemberSideBar()"> Een lid (persoonlijk materiaal) </strong>
+              <members-side-bar isOverflowHidden="false" v-model:isDisplay="isMemberSideBarDisplay" :close-on-add="true" :existing-list="members" title="Lid" @addMemberToList="addMember($event)" />
+            </div>
+
+            <div class="mt-3">
+              <strong class="cursor-pointer text-lightGreen" @click="openNonMemberSideBar()"> Een niet-lid (derde) </strong>
+              <non-member-side-bar
+                isOverflowHidden="false"
+                v-model:side-bar-state="nonMemberSideBarState"
+                :close-on-add="true"
+                :existing-list="nonMembers"
+                title="Niet lid"
+                @addCreatedNonMemberToList="addCreatedNonMember($event)"
+              />
+            </div>
           </div>
 
           <div class="mt-5 py-4 sticky bottom-0 bg-white">
