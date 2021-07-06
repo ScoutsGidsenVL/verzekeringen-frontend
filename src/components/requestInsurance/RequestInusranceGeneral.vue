@@ -87,7 +87,7 @@
             rules="required"
             :type="InputTypes.TIME"
             name="startTime"
-            label="Start tijd"
+            label="Starttijd"
           />
         </div>
         <div class="flex gap-4" :class="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING ? 'w-96' : 'w-80'">
@@ -105,7 +105,7 @@
             rules="required|checkEventDate:@endDate,@startDate,@startTime"
             :type="InputTypes.TIME"
             name="endTime"
-            label="Eind tijd"
+            label="Eindtijd"
             :oading-submit="isSubmitting"
           />
         </div>

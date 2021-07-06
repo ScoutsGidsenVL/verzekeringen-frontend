@@ -8,7 +8,7 @@
 
       <div class="mt-3">
         <strong>Gsm</strong>
-        <p>{{ member.phoneNumber !== '' ? member.phoneNumber : '/' }}</p>
+        <p>{{ member.phoneNumber && member.phoneNumber !== '' ? member.phoneNumber : '/' }}</p>
       </div>
 
       <div v-if="member.email" class="mt-3">
