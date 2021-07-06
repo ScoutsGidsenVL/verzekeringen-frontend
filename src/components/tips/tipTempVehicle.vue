@@ -1,7 +1,7 @@
 <template>
   <div>
     <info-alert>
-      <p>Als de bestuurder geen lid is van Scouts en Gidsen Vlaanderen, vraag dan een tijdelijke verzekering niet-leden aan en je ontvangt een tijdelijk lidnummer.</p>
+      <p>Als een bestuurder geen lid (of leiding) is van Scouts en Gidsen Vlaanderen, vraag dan eerst een tijdelijke verzekering niet-leden aan en je ontvangt een tijdelijk lidnummer.</p>
     </info-alert>
   </div>
 </template>
