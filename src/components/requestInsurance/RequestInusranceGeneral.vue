@@ -72,7 +72,15 @@
       <custom-headline-2 text="Wanneer" />
       <div class="px-5 flex gap-4">
         <div class="flex gap-4" :class="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING ? 'w-96' : 'w-70'">
-          <custom-input :loading-submit="isSubmitting" :min="minDate" :type="InputTypes.DATE" rules="required" name="startDate" label="Startdatum" />
+          <custom-input
+            onInvalid="this.setCustomValidity('De verzekering moet minstens 1 dag op voorhand aangevraagd worden.')"
+            :loading-submit="isSubmitting"
+            :min="minDate"
+            :type="InputTypes.DATE"
+            rules="required"
+            name="startDate"
+            label="Startdatum"
+          />
           <custom-input
             v-if="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING"
             :oading-submit="isSubmitting"
@@ -84,6 +92,7 @@
         </div>
         <div class="flex gap-4" :class="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING ? 'w-96' : 'w-80'">
           <custom-input
+            onInvalid="this.setCustomValidity('De verzekering moet minstens 1 dag op voorhand aangevraagd worden.')"
             :oading-submit="isSubmitting"
             :min="minDate"
             :type="InputTypes.DATE"

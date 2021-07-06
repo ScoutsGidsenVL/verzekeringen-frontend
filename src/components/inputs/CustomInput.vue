@@ -16,6 +16,7 @@
       }"
     >
       <input
+        :oninvalid="onInvalid"
         v-if="type !== InputTypes.TEXT_AREA && !hideInput && type !== InputTypes.TIME"
         v-model="inputValue"
         class="bg-lightGray p-2 min-w-0 w-100"
@@ -116,6 +117,11 @@ export default defineComponent({
     loadingSubmit: {
       type: Boolean,
       default: false,
+      required: false,
+    },
+    onInvalid: {
+      type: String,
+      default: '',
       required: false,
     },
   },
