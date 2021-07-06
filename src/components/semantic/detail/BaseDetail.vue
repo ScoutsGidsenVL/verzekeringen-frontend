@@ -8,11 +8,13 @@
       <div v-html="titelText"></div>
     </div>
 
+    <div v-if="detail && details.vvksComment && holderState !== HolderStates.COMPLETED">
+      <important-message :message="details.vvksComment" />
+    </div>
+
     <custom-headline-sticker v-if="details" :text="'Totaalprijs: ' + '&euro; ' + details.totalCost">
       <price-disclaimer>Deze prijs is slechts een indicatie.</price-disclaimer>
     </custom-headline-sticker>
-
-    <important-message style="width: 484px" v-if="details.vvksComment" :message="details.vvksComment" />
 
     <slot :details="details" :isDetail="isDetail" />
   </div>
@@ -32,7 +34,6 @@
 
 <script lang="ts">
 import CustomHeadlineSticker from '@/components/customHeadlines/CustomHeadlineSticker.vue'
-import ImportantMessage from '@/components/semantic/ImportantMessage.vue'
 import CallToAction from '@/components/customHeadlines/CallToAction.vue'
 import NavigationArrow from '@/components/semantic/NavigationArrow.vue'
 import { computed, defineComponent, PropType, ref, watch } from 'vue'
@@ -42,15 +43,16 @@ import { HolderStates } from '@/enums/holderStates'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import PriceDisclaimer from '@/components/disclaimers/priceDisclaimer.vue'
+import ImportantMessage from '@/components/semantic/ImportantMessage.vue'
 
 export default defineComponent({
   name: 'BaseDetail',
   components: {
     'custom-headline-sticker': CustomHeadlineSticker,
-    'important-message': ImportantMessage,
     'navigation-arrow': NavigationArrow,
     'price-disclaimer': PriceDisclaimer,
     'call-to-action': CallToAction,
+    'important-message': ImportantMessage,
   },
   props: {
     title: {
