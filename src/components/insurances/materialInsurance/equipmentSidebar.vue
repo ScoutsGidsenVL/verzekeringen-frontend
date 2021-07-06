@@ -77,7 +77,7 @@
             </div>
           </div>
 
-          <div v-show="isGroupEquipement === false">
+          <div v-show="isGroupEquipement === false && !owner">
             <div>
               <strong class="cursor-pointer text-lightGreen" @click="openMemberSideBar()"> Een lid (persoonlijk materiaal) </strong>
               <members-side-bar isOverflowHidden="false" v-model:isDisplay="isMemberSideBarDisplay" :close-on-add="true" :existing-list="members" title="Lid" @addMemberToList="addMember($event)" />
