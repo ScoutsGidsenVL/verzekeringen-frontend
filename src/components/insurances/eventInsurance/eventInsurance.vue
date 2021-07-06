@@ -50,6 +50,7 @@
 
       <custom-button text="Volgende" />
       <a v-if="!isEdit" class="link-inline cursor-pointer" @click="saveAsDraft()">Opslaan</a>
+      <loader :is-loading="isSavingDraft" />
     </div>
   </form>
 </template>
@@ -57,22 +58,23 @@
 <script lang="ts">
 import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRepository'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
+import { InsuranceTypeRepos, InsuranceTypes } from '@/enums/insuranceTypes'
 import { EventSizeRepository } from '@/repositories/eventSizeRepository'
 import { EventInsurance } from '@/serializer/insurances/EventInsurance'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
-import CustomButton from '@/components/CustomButton.vue'
+import BackButton from '@/components/semantic/BackButton.vue'
 import { computed, defineComponent, ref, watch } from 'vue'
+import { scrollToFirstError } from '@/veeValidate/helpers'
+import CustomButton from '@/components/CustomButton.vue'
+import Loader from '@/components/semantic/Loader.vue'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
-import { useStore } from 'vuex'
-import { InsuranceTypeRepos, InsuranceTypes } from '@/enums/insuranceTypes'
 import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 import router from '@/router'
-import BackButton from '@/components/semantic/BackButton.vue'
-import { scrollToFirstError } from '@/veeValidate/helpers'
 
 type eventInsuranceFormType = {
   nature: string
@@ -90,6 +92,7 @@ export default defineComponent({
     'multi-select': MultiSelect,
     'custom-input': CustomInput,
     'back-button': BackButton,
+    Loader,
   },
   setup() {
     const route = useRoute()
@@ -159,7 +162,7 @@ export default defineComponent({
     const insuranceTypeState = computed((): InsuranceTypes => {
       return store.state.insurance.insuranceTypeState
     })
-
+    const isSavingDraft = ref<boolean>(false)
     const saveAsDraft = () => {
       const draftData = ref<EventInsurance>({
         ...generalInsuranceState.value,
@@ -171,25 +174,29 @@ export default defineComponent({
         },
       })
 
-      //@ts-ignore
-      RepositoryFactory.get(InsuranceTypeRepos[insuranceTypeState.value])
+      if (!isSavingDraft.value) {
+        isSavingDraft.value = true
         //@ts-ignore
-        .createDraft(draftData.value, insuranceTypeState.value)
-        .then(() => {
-          router.push('/home')
-        })
+        RepositoryFactory.get(InsuranceTypeRepos[insuranceTypeState.value])
+          //@ts-ignore
+          .createDraft(draftData.value, insuranceTypeState.value)
+          .then(() => {
+            router.push('/home')
+          })
+      }
     }
 
     return {
-      eventSizes,
       BelgianCitySearchRepository,
+      generalInsuranceState,
+      isSavingDraft,
+      HolderStates,
+      saveAsDraft,
+      eventSizes,
       InputTypes,
       onSubmit,
-      generalInsuranceState,
       values,
-      saveAsDraft,
       isEdit,
-      HolderStates,
     }
   },
 })

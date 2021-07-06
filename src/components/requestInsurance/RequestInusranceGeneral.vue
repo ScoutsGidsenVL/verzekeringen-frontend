@@ -155,6 +155,7 @@
     <div class="flex gap-3 px-5 mt-5 items-center">
       <custom-button text="Volgende" />
       <a v-if="!isEdit" class="link-inline cursor-pointer" @click="saveAsDraft()">Opslaan</a>
+      <loader :is-loading="isSavingDraft" />
     </div>
   </form>
 </template>
@@ -181,6 +182,7 @@ import { InsuranceTypeRepos } from '@/enums/insuranceTypes'
 import AuthRepository from '@/repositories/authRepository'
 import CustomButton from '@/components/CustomButton.vue'
 import { InsuranceTypes } from '@/enums/insuranceTypes'
+import Loader from '@/components/semantic/Loader.vue'
 import { HolderStates } from '@/enums/holderStates'
 import { Coverage } from '@/serializer/Coverage'
 import { InputTypes } from '@/enums/inputTypes'
@@ -205,6 +207,7 @@ export default defineComponent({
     'custom-input': CustomInput,
     'multi-select': MultiSelect,
     'info-alert': InfoAlert,
+    Loader,
   },
   setup() {
     const { scrollToTopOfPage } = useScrollToTop()
@@ -272,6 +275,7 @@ export default defineComponent({
         })
     }
 
+    const isSavingDraft = ref<boolean>(false)
     const saveAsDraft = () => {
       const draftData = ref<BaseInsurance>({
         startDate: values.startDate,
@@ -285,13 +289,16 @@ export default defineComponent({
         maxCoverage: values.maxCoverage ? values.maxCoverage : undefined,
       })
 
-      //@ts-ignore
-      RepositoryFactory.get(InsuranceTypeRepos[insuranceTypeState.value])
+      if (!isSavingDraft.value) {
+        isSavingDraft.value = true
         //@ts-ignore
-        .createDraft(draftData.value, insuranceTypeState.value)
-        .then(() => {
-          router.push('/home')
-        })
+        RepositoryFactory.get(InsuranceTypeRepos[insuranceTypeState.value])
+          //@ts-ignore
+          .createDraft(draftData.value, insuranceTypeState.value)
+          .then(() => {
+            router.push('/home')
+          })
+      }
     }
 
     fetchMaxCoverages()
@@ -323,6 +330,7 @@ export default defineComponent({
       insuranceTypeState,
       InsuranceTypes,
       refreshGroups,
+      isSavingDraft,
       isSubmitting,
       isRefreshing,
       saveAsDraft,

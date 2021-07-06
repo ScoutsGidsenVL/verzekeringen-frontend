@@ -50,45 +50,48 @@
 
         <custom-button text="Volgende" />
         <a v-if="!isEdit" class="link-inline cursor-pointer" @click="saveAsDraft()">Opslaan</a>
+        <loader :is-loading="isSavingDraft" />
       </div>
     </div>
   </form>
 </template>
 
 <script lang="ts">
-import { TravelAssistanceInsurance } from '@/serializer/insurances/TravelAssistanceInsurance'
 import SelectParticipants from '@/components/insurances/travelAssistance/selectParticipants.vue'
+import { TravelAssistanceInsurance } from '@/serializer/insurances/TravelAssistanceInsurance'
 import SelectVehicle from '@/components/insurances/travelAssistance/selectVehicle.vue'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
+import { InsuranceTypeRepos, InsuranceTypes } from '@/enums/insuranceTypes'
 import { CountryRepository } from '@/repositories/countriesRepository'
+import { BaseInsurance } from '@/serializer/insurances/BaseInsurance'
+import RepositoryFactory from '@/repositories/repositoryFactory'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
-import CustomButton from '@/components/CustomButton.vue'
+import CustomInput from '@/components/inputs/CustomInput.vue'
+import BackButton from '@/components/semantic/BackButton.vue'
 import { computed, defineComponent, ref, watch } from 'vue'
+import { scrollToFirstError } from '@/veeValidate/helpers'
+import Required from '@/components/semantic/Required.vue'
+import CustomButton from '@/components/CustomButton.vue'
+import Loader from '@/components/semantic/Loader.vue'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
-import { useStore } from 'vuex'
-import { BaseInsurance } from '@/serializer/insurances/BaseInsurance'
-import RepositoryFactory from '@/repositories/repositoryFactory'
-import { InsuranceTypeRepos, InsuranceTypes } from '@/enums/insuranceTypes'
 import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 import router from '@/router'
-import CustomInput from '@/components/inputs/CustomInput.vue'
-import BackButton from '@/components/semantic/BackButton.vue'
-import { scrollToFirstError } from '@/veeValidate/helpers'
-import Required from '@/components/semantic/Required.vue'
 
 export default defineComponent({
   name: 'TravelAssistance',
   components: {
-    'custom-headline-2': CustomHeadline2,
     'select-participants': SelectParticipants,
+    'custom-headline-2': CustomHeadline2,
     'select-vehicle': SelectVehicle,
     'custom-button': CustomButton,
     'multi-select': MultiSelect,
     'custom-input': CustomInput,
     'back-button': BackButton,
     Required,
+    Loader,
   },
   setup() {
     const route = useRoute()
@@ -149,6 +152,7 @@ export default defineComponent({
       return store.state.insurance.insuranceTypeState
     })
 
+    const isSavingDraft = ref<boolean>(false)
     const saveAsDraft = () => {
       const draftData = ref<TravelAssistanceInsurance>({
         ...generalInsuranceState.value,
@@ -161,24 +165,28 @@ export default defineComponent({
           comment: values.comment ? values.comment : '',
         },
       })
-      //@ts-ignore
-      RepositoryFactory.get(InsuranceTypeRepos[insuranceTypeState.value])
+      if (!isSavingDraft.value) {
+        isSavingDraft.value = true
         //@ts-ignore
-        .createDraft(draftData.value, insuranceTypeState.value)
-        .then(() => {
-          router.push('/home')
-        })
+        RepositoryFactory.get(InsuranceTypeRepos[insuranceTypeState.value])
+          //@ts-ignore
+          .createDraft(draftData.value, insuranceTypeState.value)
+          .then(() => {
+            router.push('/home')
+          })
+      }
     }
 
     return {
       CountryRepository,
+      isSavingDraft,
+      HolderStates,
+      isSubmitting,
+      saveAsDraft,
       InputTypes,
       onSubmit,
       values,
       isEdit,
-      saveAsDraft,
-      HolderStates,
-      isSubmitting,
     }
   },
 })
