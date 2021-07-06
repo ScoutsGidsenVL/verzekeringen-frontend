@@ -21,4 +21,10 @@ export default defineComponent({
 html {
   scroll-behavior: auto !important;
 }
+
+@media (min-width: 0px) and (max-width: 400px) {
+  .container {
+    max-width: 100% !important;
+  }
+}
 </style>

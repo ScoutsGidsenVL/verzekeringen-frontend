@@ -11,3 +11,7 @@ export const formatEventDate = (startDate: string, startTime: string, endDate: s
 export const formatCreatedOn = (createdOn: string): string => {
   return moment(createdOn).format('DD MMM YYYY')
 }
+
+export const formatSingleDate = (createdOn: string): string => {
+  return moment(createdOn).format('DD MMM YYYY')
+}

@@ -5,12 +5,26 @@
     </div>
     <router-link v-if="!isDraft" :to="routeDetailLinkBasedOnType(item.type.name) + '/' + item.id">
       <div>
-        <p>{{ item.startDate && item.endDate ? formatDate(item.startDate, item.endDate) : '' }}</p>
+        <div class="date-normal">
+          <p>{{ item.startDate && item.endDate ? formatDate(item.startDate, item.endDate) : '' }}</p>
+        </div>
+        <div class="date-under">
+          <p>{{ item.startDate && item.endDate ? formatSingleDate(item.startDate) : '' }}</p>
+          <p style="margin-top: -1em">{{ item.startDate && item.endDate ? formatSingleDate(item.endDate) : '' }}</p>
+        </div>
       </div>
     </router-link>
 
     <div class="hover:underline cursor-pointer text-green hover:text-darkGreen" @click="goToDraft(item.id, item.type.name)" v-if="isDraft">
-      <p>{{ item.startDate && item.endDate ? formatDate(item.startDate, item.endDate) : '' }}</p>
+      <div>
+        <div class="date-normal">
+          <p>{{ item.startDate && item.endDate ? formatDate(item.startDate, item.endDate) : '' }}</p>
+        </div>
+        <div class="date-under">
+          <p>{{ item.startDate && item.endDate ? formatSingleDate(item.startDate) : '' }}</p>
+          <p style="margin-top: -1em">{{ item.startDate && item.endDate ? formatSingleDate(item.endDate) : '' }}</p>
+        </div>
+      </div>
     </div>
 
     <div>
@@ -63,7 +77,7 @@
 <script lang="ts">
 import { InsuranceTypeRepos, InsuranceTypes, InsuranceTypeStoreSetters } from '@/enums/insuranceTypes'
 import { DraftRepository } from '@/repositories/insurances/draftRepository'
-import { formatDate, formatCreatedOn } from '@/helpers/formatHelper'
+import { formatDate, formatCreatedOn, formatSingleDate } from '@/helpers/formatHelper'
 import { routeDetailLinkBasedOnType } from '@/helpers/routerHelper'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import Loader from '@/components/semantic/Loader.vue'
@@ -171,6 +185,7 @@ export default defineComponent({
     return {
       routeDetailLinkBasedOnType,
       fetchInsuranceById,
+      formatSingleDate,
       isDeletingDraft,
       formatCreatedOn,
       deleteDraft,
@@ -180,3 +195,22 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss" scoped>
+.date-under {
+  display: none !important;
+}
+
+.date-normal {
+  display: block !important;
+}
+@media (min-width: 767px) and (max-width: 1200px) {
+  .date-under {
+    display: block !important;
+  }
+
+  .date-normal {
+    display: none !important;
+  }
+}
+</style>
