@@ -22,7 +22,7 @@
         </div>
       </non-member-item>
     </div>
-    <div v-show="nonMembers.length === 0" class="font-semibold text-lg">Geen niet-lid geselecteerd</div>
+    <div v-show="nonMembers.length === 0" class="font-semibold text-lg">Geen persoon geselecteerd</div>
   </div>
 </template>
 <script lang="ts">

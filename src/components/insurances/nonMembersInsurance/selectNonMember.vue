@@ -9,7 +9,7 @@
     v-model:side-bar-state="sideBarState"
     :is-extra-information-comment="isExtraInformationComment"
     :existing-list="nonMembers"
-    :title="sideBarState.state === 'edit' ? 'Bewerk persoonsgegevens' : 'Persoonsgegevens toevoegen'"
+    :title="sideBarState.state === 'edit' ? 'Bewerk persoonsgegevens' : 'Persoonsgegevens'"
     @addCreatedNonMemberToList="addCreatedNonMemberToList($event)"
     @updateMemberInList="updateMemberInList($event)"
   />
