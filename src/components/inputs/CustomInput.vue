@@ -16,7 +16,6 @@
       }"
     >
       <input
-        oninvalid="this.setCustomValidity('De verzekering moet minstens 1 dag op voorhand aangevraagd worden.')"
         v-if="type !== InputTypes.TEXT_AREA && !hideInput && type !== InputTypes.TIME"
         v-model="inputValue"
         class="bg-lightGray p-2 min-w-0 w-100"
