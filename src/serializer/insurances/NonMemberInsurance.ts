@@ -41,7 +41,7 @@ export const nonMemberInsuranceDeserializer = (input: any): NonMemberInsurance =
     type: input.type ? TypeDeserializer(input.type) : undefined,
     nonMembers: input.non_members ? input.non_members.map((nonMember: any) => NonMemberDeserializer(nonMember)) : undefined,
     country: input.country ? CountryDeserializer(input.country) : undefined,
-    vvksComment: input.vvks_comment && input.vvks_comment.length > 0 ? input.vvks_comment : '',
+    vvksComment: input.vvks_comment && input.vvks_comment.length > 0 ? input.vvks_comment : 'EEN EBRICHY',
   }
 
   return single

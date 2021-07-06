@@ -14,7 +14,9 @@
 
     <call-to-action v-if="data" class="mt-4" :text="'&euro; ' + data.totalCost">
       <template v-slot:info>
-        <div class="pb-5">Je staat op het punt een verzekering aan te vragen met de volgende gegevens. <strong>Kijk ze nog eens grondig na</strong> en ga terug indien er iets niet correct is.</div>
+        <span class="inline-block mb-3 ml-1 mt-0.5 text-xs w-100">*prijs is indicatie</span>
+
+        <div class="pb-5">verzekering aan te vragen met de volgende gegevens. <strong>Kijk ze nog eens grondig na</strong> en ga terug indien er iets niet correct is.</div>
         <custom-button text="Bevestig" />
       </template>
     </call-to-action>

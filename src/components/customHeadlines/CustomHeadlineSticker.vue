@@ -1,7 +1,10 @@
 <template>
-  <h1 v-if="text" class="group-search__title my-5 inline-block relative text-xl" style="font-size: 2rem; position: initial; transition: none !important">
-    <span class="animate-none">{{ text }}</span>
-  </h1>
+  <div class="my-5 flex gap-3 w-96">
+    <h1 v-if="text" class="group-search__title inline-block relative text-xl" style="font-size: 2rem; position: initial; transition: none !important; margin-right: 0.3em !important">
+      <span class="animate-none">{{ text }} </span>
+    </h1>
+    <slot />
+  </div>
 </template>
 
 <script lang="ts">
