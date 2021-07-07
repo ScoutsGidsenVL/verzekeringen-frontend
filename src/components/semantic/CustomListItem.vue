@@ -204,7 +204,7 @@ export default defineComponent({
 .date-normal {
   display: block !important;
 }
-@media (min-width: 767px) and (max-width: 1200px) {
+@media (min-width: 768px) and (max-width: 1200px) {
   .date-under {
     display: block !important;
   }

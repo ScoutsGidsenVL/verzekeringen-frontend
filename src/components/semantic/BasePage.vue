@@ -22,7 +22,7 @@ html {
   scroll-behavior: auto !important;
 }
 
-@media (min-width: 0px) and (max-width: 400px) {
+@media (min-width: 0px) and (max-width: 640px) {
   .container {
     max-width: 100% !important;
   }

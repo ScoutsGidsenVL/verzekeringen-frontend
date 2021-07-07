@@ -9,7 +9,7 @@
         <a v-if="drafts.next" class="link-inline cursor-pointer" @click="getNextDrafts(drafts.next)">Volgende pagina</a>
       </div>
     </div>
-    <div v-if="data">
+    <div class="mt-5" v-if="data">
       <custom-list :items="data.results" title="Recent aangevraagd">
         <div v-if="false" class="w-80 pb-3">
           <multi-select id="group" :object="true" placeholder="Filter op groep" track-by="fullInfo" value-prop="id" :options="userData.scoutsGroups" :loading-submit="isSubmitting" />
