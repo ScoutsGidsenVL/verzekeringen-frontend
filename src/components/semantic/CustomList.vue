@@ -1,5 +1,5 @@
 <template>
-  <h2 class="pt-4 pb-2">{{ title }}</h2>
+  <custom-headline-2 :text="title" />
   <slot />
   <div class="grid-cols-list py-2 border-t-2 border-black grid opacity-0 md:opacity-100">
     <div>
@@ -24,12 +24,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
 import CustomListItem from '../semantic/CustomListItem.vue'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'CustomList',
   components: {
+    'custom-headline-2': CustomHeadline2,
     'custom-list-item': CustomListItem,
   },
   props: {
