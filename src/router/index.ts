@@ -7,6 +7,7 @@ import nonMemberDetail from '@/components/insurances/nonMembersInsurance/nonMemb
 import { createRouter, createWebHashHistory } from 'vue-router'
 import RequestInsurance from '../views/RequestInsurance.vue'
 import InsurancesHome from '../views/InsurancesHome.vue'
+import RequestClaim from '../views/RequestClaim.vue'
 import ClaimsHome from '../views/ClaimsHome.vue'
 import StartView from '@/components/start.vue'
 
@@ -31,10 +32,10 @@ const routes: any[] = [
   {
     path: '/aanvraag/schade-aangifte',
     name: 'AanvraagSchadeAangifte',
-    component: RequestInsurance,
+    component: RequestClaim,
     meta: {
       requiresOpenIdAuth: true,
-      title: 'Verzekering aanvragen',
+      title: 'Schade aangifte aanvragen',
     },
   },
   {

@@ -1,5 +1,5 @@
 <template>
-  <call-to-action link="/aanvraag/schade-aangiftes" text="Vraag nieuwe schade aangifte aan" />
+  <call-to-action link="/aanvraag/schade-aangifte" text="Vraag nieuwe schade aangifte aan" />
   <div class="container">
     <div>SCHADE AANGIFTES</div>
   </div>
