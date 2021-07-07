@@ -83,25 +83,24 @@
 </template>
 
 <script lang="ts">
-import { ResponsibleMember } from '@/serializer/ResponsibleMember'
-import RepositoryFactory from '@/repositories/repositoryFactory'
 import BaseSideBar, { option, sideBarState } from '@/components/semantic/BaseSideBar.vue'
-import CustomInput from '@/components/inputs/CustomInput.vue'
-import SearchInput from '@/components/inputs/SearchInput.vue'
-import CustomButton from '@/components/CustomButton.vue'
+import VehicleItem from '@/components/insurances/travelAssistance/vehicleItem.vue'
+import { scrollToFirstError, useFormSendWithSuccess } from '@/veeValidate/helpers'
 import { computed, defineComponent, PropType, ref, toRefs, watch } from 'vue'
-
-import { InputTypes } from '@/enums/inputTypes'
-import { useForm } from 'vee-validate'
-import { useStore } from 'vuex'
-import { Vehicle } from '@/serializer/Vehicle'
-import { VehicleType } from '@/serializer/VehicleType'
 import { VehicleTypeRepository } from '@/repositories/vehicleTypeRepository'
 import { VehicleRepository } from '@/repositories//vehicleRepository'
 import { TrailerRepository } from '@/repositories/trailerRepository'
-import VehicleItem from '@/components/insurances/travelAssistance/vehicleItem.vue'
+import { ResponsibleMember } from '@/serializer/ResponsibleMember'
+import RepositoryFactory from '@/repositories/repositoryFactory'
+import CustomInput from '@/components/inputs/CustomInput.vue'
+import SearchInput from '@/components/inputs/SearchInput.vue'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
-import { scrollToFirstError, useFormSendWithSuccess } from '@/veeValidate/helpers'
+import CustomButton from '@/components/CustomButton.vue'
+import { VehicleType } from '@/serializer/VehicleType'
+import { InputTypes } from '@/enums/inputTypes'
+import { Vehicle } from '@/serializer/Vehicle'
+import { useForm } from 'vee-validate'
+import { useStore } from 'vuex'
 
 export interface vehicleSideBar {
   vehicle: Vehicle
@@ -148,48 +147,6 @@ export default defineComponent({
     })
     const loading = ref<boolean>(false)
     const { sideBarState } = toRefs(props)
-
-    watch(
-      () => isSubmitting.value,
-      () => {
-        store.dispatch('setIsSubmittingState', isSubmitting.value)
-      }
-    )
-
-    watch(sideBarState, (value: sideBarState<Vehicle>) => {
-      if (value.state === 'edit') {
-        formSendWithSuccess.value = false
-        resetForm({
-          values: {
-            id: value.entity.id,
-            type: value.entity.type,
-            brand: value.entity.brand,
-            licensePlate: value.entity.licensePlate,
-            constructionYear: value.entity.constructionYear,
-            chassisNumber: value.entity.chassisNumber,
-            trailer: value.entity.trailer,
-            group: generalInsuranceState.value.group.id,
-          },
-        })
-      }
-
-      if (value.state === 'new') {
-        formSendWithSuccess.value = false
-        resetForm({
-          values: {
-            id: '',
-            type: undefined,
-            brand: '',
-            licensePlate: '',
-            constructionYear: '',
-            chassisNumber: '',
-            trailer: { id: '0', value: '0', label: 'Geen' },
-            group: generalInsuranceState.value.group.id,
-          },
-          errors: {},
-        })
-      }
-    })
 
     const onSubmit = async () => {
       await validate().then((validation: any) => scrollToFirstError(validation, 'addNewVehicle'))
@@ -313,6 +270,48 @@ export default defineComponent({
 
     getVehicleTypes()
     getTrailers()
+
+    watch(
+      () => isSubmitting.value,
+      () => {
+        store.dispatch('setIsSubmittingState', isSubmitting.value)
+      }
+    )
+
+    watch(sideBarState, (value: sideBarState<Vehicle>) => {
+      if (value.state === 'edit') {
+        formSendWithSuccess.value = false
+        resetForm({
+          values: {
+            id: value.entity.id,
+            type: value.entity.type,
+            brand: value.entity.brand,
+            licensePlate: value.entity.licensePlate,
+            constructionYear: value.entity.constructionYear,
+            chassisNumber: value.entity.chassisNumber,
+            trailer: value.entity.trailer,
+            group: generalInsuranceState.value.group.id,
+          },
+        })
+      }
+
+      if (value.state === 'new') {
+        formSendWithSuccess.value = false
+        resetForm({
+          values: {
+            id: '',
+            type: undefined,
+            brand: '',
+            licensePlate: '',
+            constructionYear: '',
+            chassisNumber: '',
+            trailer: { id: '0', value: '0', label: 'Geen' },
+            group: generalInsuranceState.value.group.id,
+          },
+          errors: {},
+        })
+      }
+    })
 
     return {
       VehicleTypeRepository,

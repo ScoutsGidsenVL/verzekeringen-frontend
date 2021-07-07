@@ -72,9 +72,9 @@ import { IS_NO_DRIVER, SelectDriver } from '@/serializer/selectDriver'
 import TipTempVehicle from '@/components/tips/tipTempVehicle.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
-import { InputTypes } from '@/enums/inputTypes'
 import { computed, defineComponent, ref, watch } from 'vue'
 import { ErrorMessage, useField } from 'vee-validate'
+import { InputTypes } from '@/enums/inputTypes'
 import { Driver } from '@/serializer/Driver'
 import { Owner } from '@/serializer/Owner'
 import { useStore } from 'vuex'
@@ -142,13 +142,13 @@ export default defineComponent({
       BelgianCitySearchRepository,
       addMemberToDriverList,
       deleteMemberFromList,
+      selectDriverField,
+      IS_NO_DRIVER,
+      isSubmitting,
       openSideBar,
       InputTypes,
       isDisplay,
-      selectDriverField,
-      IS_NO_DRIVER,
       input,
-      isSubmitting,
     }
   },
 })

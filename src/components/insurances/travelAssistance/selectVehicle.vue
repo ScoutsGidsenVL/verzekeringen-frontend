@@ -33,10 +33,10 @@
 <script lang="ts">
 import VehicleSiderbar from '@/components/insurances/travelAssistance/vehicleSideBar.vue'
 import VehicleItem from '@/components/insurances/travelAssistance/vehicleItem.vue'
-import { Vehicle } from '@/serializer/Vehicle'
-import { computed, defineComponent, ref } from 'vue'
-import { ErrorMessage, useField } from 'vee-validate'
 import { sideBarState } from '@/components/semantic/BaseSideBar.vue'
+import { ErrorMessage, useField } from 'vee-validate'
+import { computed, defineComponent, ref } from 'vue'
+import { Vehicle } from '@/serializer/Vehicle'
 import { useStore } from 'vuex'
 
 export default defineComponent({
@@ -95,14 +95,14 @@ export default defineComponent({
     return {
       addCreatedVehicle,
       deleteVehicle,
-      openSideBar,
-      vehicle,
-      isDisplay,
-      editVehicle,
-      isEdit,
       vehicleToEdit,
       sideBarState,
       isSubmitting,
+      openSideBar,
+      editVehicle,
+      isDisplay,
+      vehicle,
+      isEdit,
     }
   },
 })
