@@ -10,7 +10,7 @@
         </div>
         <div class="date-under">
           <p>{{ item.startDate && item.endDate ? formatSingleDate(item.startDate) : '' }}</p>
-          <p style="margin-top: -1em">{{ item.startDate && item.endDate ? formatSingleDate(item.endDate) : '' }}</p>
+          <p>{{ item.startDate && item.endDate ? formatSingleDate(item.endDate) : '' }}</p>
         </div>
       </div>
     </router-link>
@@ -22,7 +22,7 @@
         </div>
         <div class="date-under">
           <p>{{ item.startDate && item.endDate ? formatSingleDate(item.startDate) : '' }}</p>
-          <p style="margin-top: -1em">{{ item.startDate && item.endDate ? formatSingleDate(item.endDate) : '' }}</p>
+          <p>{{ item.startDate && item.endDate ? formatSingleDate(item.endDate) : '' }}</p>
         </div>
       </div>
     </div>
