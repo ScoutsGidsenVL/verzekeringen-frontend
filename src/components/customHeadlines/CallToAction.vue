@@ -47,6 +47,7 @@ export default defineComponent({
     link: {
       type: String,
       required: false,
+      default: undefined,
     },
   },
 })

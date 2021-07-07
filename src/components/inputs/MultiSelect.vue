@@ -58,6 +58,7 @@ export default defineComponent({
     'multi-select': Multiselect,
     Required,
   },
+  emits: ['fetchedOptions', 'addSelection'],
   props: {
     id: {
       type: String,

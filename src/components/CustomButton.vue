@@ -10,7 +10,7 @@
     <a class="btn-simple-dark mt-0 relative">
       <span :class="{ 'opacity-0': loadingSubmit || isSubmitting }">{{ text }}</span>
       <div v-show="loadingSubmit || isSubmitting" class="absolute flex justify-center items-center w-full left-0 top-0 h-full">
-        <loader :isLoading="loadingSubmit || isSubmitting" />
+        <loader :is-loading="loadingSubmit || isSubmitting" />
       </div>
     </a>
   </button>
