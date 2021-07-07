@@ -1,9 +1,10 @@
 import { ClaimHolderStates } from '@/enums/ClaimholderStates'
 import { useScrollToTop } from '@/veeValidate/helpers'
+import { Claim } from '@/serializer/claims/claim'
 
 export interface ClaimState {
   claimHolderState: string
-  claimState: any
+  claimState: Claim
 }
 
 export default {
@@ -20,7 +21,7 @@ export default {
     SET_CLAIM_HOLDER_STATE(state: any, claimHolderState: ClaimHolderStates) {
       state.claimHolderState = claimHolderState
     },
-    SET_CLAIM_STATE(state: any, claimState: any) {
+    SET_CLAIM_STATE(state: any, claimState: Claim) {
       state.claimState = claimState
     },
     RESET_STATES(state: any) {
@@ -34,7 +35,7 @@ export default {
       const { scrollToTopOfPage } = useScrollToTop()
       scrollToTopOfPage()
     },
-    setClaimState({ commit }: any, claimState: any) {
+    setClaimState({ commit }: any, claimState: Claim) {
       commit('SET_CLAIM_STATE', claimState)
     },
     resetStates({ commit }: any) {
