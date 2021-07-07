@@ -1,13 +1,13 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import RequestInsurance from '../views/RequestInsurance.vue'
 import oneTimeActivityDetail from '@/components/insurances/oneTimeActivityInsurance/oneTimeActivityDetail.vue'
-import nonMemberDetail from '@/components/insurances/nonMembersInsurance/nonMemberDetail.vue'
-import travelAssistanceDetail from '@/components/insurances/travelAssistance/travelAssistanceDetail.vue'
-import eventInsuranceDetail from '@/components/insurances/eventInsurance/eventInsuranceDetail.vue'
-import temporaryVehicleDetail from '@/components/insurances/tempCarInsurance/temporaryVehicleDetail.vue'
 import materialInsuranceDetail from '@/components/insurances/materialInsurance/materialInsuranceDetail.vue'
-
+import travelAssistanceDetail from '@/components/insurances/travelAssistance/travelAssistanceDetail.vue'
+import temporaryVehicleDetail from '@/components/insurances/tempCarInsurance/temporaryVehicleDetail.vue'
+import eventInsuranceDetail from '@/components/insurances/eventInsurance/eventInsuranceDetail.vue'
+import nonMemberDetail from '@/components/insurances/nonMembersInsurance/nonMemberDetail.vue'
+import { createRouter, createWebHashHistory } from 'vue-router'
+import RequestInsurance from '../views/RequestInsurance.vue'
+import InsurancesHome from '../views/InsurancesHome.vue'
+import ClaimsHome from '../views/ClaimsHome.vue'
 import StartView from '@/components/start.vue'
 
 const routes: any[] = [
@@ -20,17 +20,35 @@ const routes: any[] = [
     },
   },
   {
-    path: '/home',
-    name: 'Home',
-    component: Home,
+    path: '/home/schade-aangiftes',
+    name: 'ClaimsHome',
+    component: ClaimsHome,
+    meta: {
+      requiresOpenIdAuth: true,
+      title: 'Schade aangiftes',
+    },
+  },
+  {
+    path: '/aanvraag/schade-aangifte',
+    name: 'AanvraagSchadeAangifte',
+    component: RequestInsurance,
+    meta: {
+      requiresOpenIdAuth: true,
+      title: 'Verzekering aanvragen',
+    },
+  },
+  {
+    path: '/home/verzekeringen',
+    name: 'InsurancesHome',
+    component: InsurancesHome,
     meta: {
       requiresOpenIdAuth: true,
       title: 'Verzekering',
     },
   },
   {
-    path: '/aanvraag',
-    name: 'Aanvraag',
+    path: '/aanvraag/verzekering',
+    name: 'AanvraagVerzekering',
     component: RequestInsurance,
     meta: {
       requiresOpenIdAuth: true,

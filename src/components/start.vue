@@ -27,7 +27,7 @@ export default defineComponent({
         window.location.replace(url.toString())
       })
     } else {
-      router.push('/home')
+      router.push('/home/verzekeringen')
     }
     return {}
   },

@@ -1,7 +1,7 @@
 <template>
   <div :class="{ container: singlePage }">
     <div v-if="isDetail" class="mt-4">
-      <navigation-arrow to="/home" text="Terug naar overzicht" />
+      <navigation-arrow to="/home/verzekeringen" text="Terug naar overzicht" />
     </div>
 
     <div class="mt-3">
@@ -27,7 +27,7 @@
     </call-to-action>
 
     <div class="mt-4 container inline-block">
-      <navigation-arrow to="/home" text="Terug naar overzicht" />
+      <navigation-arrow to="/home/verzekeringen" text="Terug naar overzicht" />
     </div>
   </div>
 </template>

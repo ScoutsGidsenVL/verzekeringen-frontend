@@ -15,7 +15,7 @@
       </div>
     </router-link>
 
-    <div class="hover:underline cursor-pointer text-green hover:text-darkGreen" @click="goToDraft(item.id, item.type.name)" v-if="isDraft">
+    <div class="hover:underline cursor-pointer hover:text-darkGreen" @click="goToDraft(item.id, item.type.name)" v-if="isDraft">
       <div>
         <div class="date-normal">
           <p>{{ item.startDate && item.endDate ? formatDate(item.startDate, item.endDate) : '' }}</p>

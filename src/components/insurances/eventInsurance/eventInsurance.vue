@@ -181,7 +181,7 @@ export default defineComponent({
           //@ts-ignore
           .createDraft(draftData.value, insuranceTypeState.value)
           .then(() => {
-            router.push('/home')
+            router.push('/home/verzekeringen')
           })
       }
     }
