@@ -45,7 +45,7 @@ module.exports = {
     },
     extend: {
       gridTemplateColumns: {
-        list: "14% 19% 28% 25% 10% 4%",
+        list: "14% 19% 25% 25% 9% 8%",
       },
       screens: {
         smo: { min: "0px", max: "768px" },
