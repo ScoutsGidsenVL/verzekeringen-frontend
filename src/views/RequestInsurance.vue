@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import RequestBreadCrumb from '@/components/requestInsurance/requestBreadCrumb/RequestBreadCrumb.vue'
+import RequestBreadCrumb from '@/components/requestInsurance/requestBreadCrumb/RequestBreadCrumbInsurance.vue'
 import ImportantMessage from '@/components/semantic/ImportantMessage.vue'
 import StateFormHolder from '@/components/semantic/HolderStateForm.vue'
 import { computed, defineComponent } from 'vue'
