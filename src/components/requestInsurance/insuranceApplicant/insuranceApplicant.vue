@@ -1,8 +1,9 @@
 <template>
-  <label-output label="Naam" :text="user.firstName + ' ' + (user.lastName ? user.lastName : '')" />
+  <p>{{ user.firstName + ' ' + (user.lastName ? user.lastName : '') }}</p>
+  <p>{{ user.email }}</p>
+  <phone-number :phoneNumber="user.phoneNumber" />
+
   <label-output label="Lidnummer" :text="user.membershipNumber" />
-  <label-output label="E-mailadres" :text="user.email" />
-  <label-output label="Gsm" :text="user.phoneNumber" />
 </template>
 
 <script lang="ts">
@@ -11,11 +12,13 @@ import LabelOutput from '@/components/semantic/LabelOutput.vue'
 import { defineComponent, PropType, ref, watch } from 'vue'
 import { InputTypes } from '@/enums/inputTypes'
 import store from '@/store/store'
+import PhoneNumber from '@/components/semantic/PhoneNumber.vue'
 
 export default defineComponent({
   name: 'InsuranceApplicant',
   components: {
     'label-output': LabelOutput,
+    'phone-number': PhoneNumber,
   },
   props: {
     applicant: {

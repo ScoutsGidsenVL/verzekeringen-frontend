@@ -1,10 +1,10 @@
 <template>
   <p class="font-semibold">Aanvrager</p>
   <div class="px-5">
-    <label-output label="Naam" :text="responsibleMember.firstName + ' ' + (responsibleMember.lastName ? responsibleMember.lastName : '')" />
+    <p>{{ responsibleMember.firstName + ' ' + (responsibleMember.lastName ? responsibleMember.lastName : '') }}</p>
+    <p>{{ responsibleMember.email }}</p>
+    <phone-number :phoneNumber="responsibleMember.phoneNumber" />
     <label-output label="Lidnummer" :text="responsibleMember.membershipNumber" />
-    <label-output label="E-mailadres" :text="responsibleMember.email" />
-    <label-output label="Gsm" :text="responsibleMember.phoneNumber" />
   </div>
 </template>
 
@@ -12,11 +12,13 @@
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 import LabelOutput from '@/components/semantic/LabelOutput.vue'
 import { defineComponent, PropType } from 'vue'
+import PhoneNumber from '@/components/semantic/PhoneNumber.vue'
 
 export default defineComponent({
   name: 'ResponsibleMemberDetail',
   components: {
     'label-output': LabelOutput,
+    'phone-number': PhoneNumber,
   },
   props: {
     responsibleMember: {

@@ -4,9 +4,9 @@
       <equipment-item :equipment="material">
         <template #top>
           <div>
-            <div v-if="material.ownerMember">(Equipment van lid)</div>
-            <div v-if="material.ownerNonMember">(Equipment van niet-lid)</div>
-            <div v-if="!material.ownerNonMember && !material.ownerMember">(Groepsmateriaal)</div>
+            <div v-if="material.ownerMember"><i>(Equipment van lid)</i></div>
+            <div v-if="material.ownerNonMember"><i>(Equipment van niet-lid)</i></div>
+            <div v-if="!material.ownerNonMember && !material.ownerMember"><i>(Groepsmateriaal)</i></div>
           </div>
         </template>
 

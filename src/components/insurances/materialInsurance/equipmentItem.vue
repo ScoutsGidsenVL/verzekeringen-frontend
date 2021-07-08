@@ -3,23 +3,17 @@
     <slot name="top"></slot>
     <div class="py-3 flex-grow">
       <div v-if="person" class="mb-5">
-        <div v-if="person.firstName">
-          <strong>Naam</strong>
+        <div class="mb-1" v-if="person.firstName">
           <p>{{ person.firstName + ' ' + person.lastName }}</p>
         </div>
 
-        <div v-if="person.phoneNumber">
-          <strong>Gsm</strong>
-          <p>{{ person.phoneNumber !== '' ? person.phoneNumber : '/' }}</p>
-        </div>
-
-        <div v-if="person.email">
-          <strong>Email</strong>
+        <div class="mb-1" v-if="person.email">
           <p>{{ person.email !== '' ? person.email : '/' }}</p>
         </div>
 
+        <phone-number :phoneNumber="person.phoneNumber" />
+
         <div v-if="person.postCodeCity">
-          <strong>Adres</strong>
           <p>
             {{ person.street + ' ' + person.number + (person.letterBox ? ' Bus ' + person.letterBox : '') + ', ' + person.postCodeCity.postalCode + ' ' + person.postCodeCity.city }}
           </p>
@@ -60,6 +54,7 @@ import { Equipment } from '@/serializer/Equipment'
 import { Member } from '@/serializer/Member'
 import { NonMember } from '@/serializer/NonMember'
 import { defineComponent, PropType, ref, watch } from 'vue'
+import PhoneNumber from '@/components/semantic/PhoneNumber.vue'
 
 export default defineComponent({
   props: {
@@ -67,6 +62,9 @@ export default defineComponent({
       type: Object as PropType<Equipment>,
       required: true,
     },
+  },
+  components: {
+    'phone-number': PhoneNumber,
   },
   setup(props) {
     const person = ref<Member | NonMember | undefined>(props.equipment.ownerMember ? props.equipment.ownerMember : props.equipment.ownerNonMember ? props.equipment.ownerNonMember : undefined)

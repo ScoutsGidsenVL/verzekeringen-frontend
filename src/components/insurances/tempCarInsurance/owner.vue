@@ -1,11 +1,11 @@
 <template>
   <div>
     <label-output v-if="owner.companyName" label="Firma naam" :text="owner.companyName" />
-    <label-output v-if="owner.firstName" label="Naam" :text="owner.firstName + ' ' + owner.lastName" />
-    <label-output label="Gemeente" :text="owner.postCodeCity.postalCode + ' ' + owner.postCodeCity.city" />
-    <label-output label="Gsm" :text="owner.phoneNumber" />
+    <p v-if="owner.firstName">{{ owner.firstName + ' ' + owner.lastName }}</p>
+    <p>{{ owner.street + ' ' + owner.number + (owner.letterBox ? ' Bus ' + owner.letterBox : '') + ', ' + owner.postCodeCity.postalCode + ' ' + owner.postCodeCity.city }}</p>
+    <phone-number :phoneNumber="owner.phoneNumber" />
+
     <label-output v-if="!owner.companyName" label="Geboortedatum" :text="owner.birthDate" />
-    <label-output label="Adres" :text="owner.street + ' ' + owner.number + (owner.letterBox ? ' Bus ' + owner.letterBox : '') + ', ' + owner.postCodeCity.postalCode + ' ' + owner.postCodeCity.city" />
   </div>
 </template>
 
@@ -13,11 +13,13 @@
 import { Owner } from '@/serializer/Owner'
 import { defineComponent, PropType } from 'vue'
 import LabelOutput from '@/components/semantic/LabelOutput.vue'
+import PhoneNumber from '@/components/semantic/PhoneNumber.vue'
 
 export default defineComponent({
   name: 'Owner',
   components: {
     'label-output': LabelOutput,
+    'phone-number': PhoneNumber,
   },
   props: {
     owner: {
