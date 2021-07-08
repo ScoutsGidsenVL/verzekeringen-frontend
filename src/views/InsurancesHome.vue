@@ -2,17 +2,27 @@
   <call-to-action link="/aanvraag/verzekering" text="Vraag nieuwe verzekering aan" />
   <div class="container">
     <div v-if="drafts">
-      <custom-list :is-draft="true" :items="drafts.results" title="Nog te voltooien" @removeDraft="removeDraft($event)" />
+      <custom-list :is-draft="true" :items="drafts.results" title="Nog te voltooien" @removeDraft="removeDraft($event)"> </custom-list>
 
       <div class="flex gap-5 pt-1 pb-5 float-right">
         <a v-if="drafts.previous" class="link-inline cursor-pointer" @click="getPreviousDrafts(drafts.previous)">Vorige pagina</a>
         <a v-if="drafts.next" class="link-inline cursor-pointer" @click="getNextDrafts(drafts.next)">Volgende pagina</a>
       </div>
     </div>
-    <div class="mt-5" v-if="data">
+
+    <div v-if="data">
       <custom-list :items="data.results" title="Recent aangevraagd">
-        <div v-if="false" class="w-80 pb-3">
-          <multi-select id="group" :object="true" placeholder="Filter op groep" track-by="fullInfo" value-prop="id" :options="userData.scoutsGroups" :loading-submit="isSubmitting" />
+        <div class="w-96 pb-3" style="margin-top: -2em">
+          <multi-select
+            id="group"
+            :object="true"
+            placeholder="Filter op groep"
+            @addSelection="addSelectionInsurances($event)"
+            track-by="fullInfo"
+            value-prop="id"
+            :options="userData.scoutsGroups"
+            :loading-submit="isSubmitting"
+          />
         </div>
       </custom-list>
 
@@ -35,6 +45,7 @@ import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import { ArrayResult } from '@/serializer/ArrayResult'
 import { defineComponent, ref } from 'vue'
 import { useStore } from 'vuex'
+import { Group } from '@/serializer/Group'
 
 export default defineComponent({
   name: 'InsurancesHome',
@@ -102,10 +113,21 @@ export default defineComponent({
       getDrafts()
     }
 
+    const addSelectionInsurances = (selection: Group) => {
+      console.log('SELECTION GROUP: ', selection)
+
+      RepositoryFactory.get(InsuranceRepository)
+        .getArray('/insurances/?search=' + selection.id + '&page=1&page_size=10')
+        .then((res: ArrayResult) => {
+          data.value = res
+        })
+    }
+
     getInsurances()
     getDrafts()
 
     return {
+      addSelectionInsurances,
       getPreviousInsurances,
       getNextInsurances,
       getPreviousDrafts,
