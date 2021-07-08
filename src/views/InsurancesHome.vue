@@ -114,8 +114,6 @@ export default defineComponent({
     }
 
     const addSelectionInsurances = (selection: Group) => {
-      console.log('SELECTION GROUP: ', selection)
-
       RepositoryFactory.get(InsuranceRepository)
         .getArray('/insurances/?search=' + selection.id + '&page=1&page_size=10')
         .then((res: ArrayResult) => {

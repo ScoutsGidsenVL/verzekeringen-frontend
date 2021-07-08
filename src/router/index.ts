@@ -27,6 +27,7 @@ const routes: any[] = [
     meta: {
       requiresOpenIdAuth: true,
       title: 'Schade aangiftes',
+      homescreen: '/home/schade-aangiftes',
     },
   },
   {
@@ -36,6 +37,7 @@ const routes: any[] = [
     meta: {
       requiresOpenIdAuth: true,
       title: 'Schade aangifte aanvragen',
+      homescreen: '/home/schade-aangiftes',
     },
   },
   {
@@ -45,6 +47,7 @@ const routes: any[] = [
     meta: {
       requiresOpenIdAuth: true,
       title: 'Verzekering',
+      homescreen: '/home/verzekeringen',
     },
   },
   {
@@ -54,6 +57,7 @@ const routes: any[] = [
     meta: {
       requiresOpenIdAuth: true,
       title: 'Verzekering aanvragen',
+      homescreen: '/home/verzekeringen',
     },
   },
   {
@@ -63,6 +67,7 @@ const routes: any[] = [
     meta: {
       requiresOpenIdAuth: true,
       title: 'Verzekering Bewerken',
+      homescreen: '/home/verzekeringen',
     },
   },
   {
@@ -74,6 +79,7 @@ const routes: any[] = [
       requiresOpenIdAuth: true,
       title: 'Verzekering',
       detail: true,
+      homescreen: '/home/verzekeringen',
     },
   },
   {
@@ -85,6 +91,7 @@ const routes: any[] = [
       requiresOpenIdAuth: true,
       title: 'Verzekering',
       detail: true,
+      homescreen: '/home/verzekeringen',
     },
   },
   {
@@ -96,6 +103,7 @@ const routes: any[] = [
       requiresOpenIdAuth: true,
       title: 'Verzekering',
       detail: true,
+      homescreen: '/home/verzekeringen',
     },
   },
   {
@@ -107,6 +115,7 @@ const routes: any[] = [
       requiresOpenIdAuth: true,
       title: 'Verzekering',
       detail: true,
+      homescreen: '/home/verzekeringen',
     },
   },
   {
@@ -118,6 +127,7 @@ const routes: any[] = [
       requiresOpenIdAuth: true,
       title: 'Verzekering',
       detail: true,
+      homescreen: '/home/verzekeringen',
     },
   },
   {
@@ -129,6 +139,7 @@ const routes: any[] = [
       requiresOpenIdAuth: true,
       title: 'Verzekering',
       detail: true,
+      homescreen: '/home/verzekeringen',
     },
   },
   {
@@ -140,6 +151,7 @@ const routes: any[] = [
       requiresOpenIdAuth: true,
       title: 'Verzekering',
       detail: true,
+      homescreen: '/home/verzekeringen',
     },
   },
   {
@@ -150,6 +162,7 @@ const routes: any[] = [
       requiresOpenIdAuth: true,
       title: 'Verzekering Bewerken',
       isDraft: true,
+      homescreen: '/home/verzekeringen',
     },
   },
 ]
