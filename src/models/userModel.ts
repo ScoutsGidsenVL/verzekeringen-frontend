@@ -1,4 +1,4 @@
-import { Group, GroupDeserializer, orderGroups } from '@/serializer/Group'
+import { Group, GroupDeserializer, orderGroups, removeDuplicates } from '@/serializer/Group'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 
 export default class UserModel implements ResponsibleMember {
@@ -22,6 +22,7 @@ export default class UserModel implements ResponsibleMember {
     // input.scouts_groups.push({ id: 'X1027G', name: 'Personeel Secretariaat', location: ' Borgerhout (Antwerpen)' })
     // input.scouts_groups.push({ id: 'X1123G', name: 'We-Residenten De Winner', location: ' Borgerhout (Antwerpen)' })
 
+    const groups = removeDuplicates(input.scouts_groups)
     return new UserModel(
       input.id,
       input.first_name,
@@ -31,7 +32,7 @@ export default class UserModel implements ResponsibleMember {
       input.membership_number,
       input.birth_date,
       input.phone_number ? input.phone_number.replace(/ /g, '') : undefined,
-      orderGroups(input.scouts_groups.map((group: any) => GroupDeserializer(group)))
+      orderGroups(groups.map((group: any) => GroupDeserializer(group)))
     )
   }
 }

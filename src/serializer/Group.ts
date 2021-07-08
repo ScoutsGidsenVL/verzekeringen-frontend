@@ -1,3 +1,5 @@
+import { group } from 'console'
+
 export interface Group {
   readonly id?: number
   readonly location?: string
@@ -26,4 +28,19 @@ export const GroupSerializer = (input: any): any => {
 
 export const orderGroups = (groups: Array<Group>) => {
   return groups.sort((a: any, b: any) => Number(a.id.replace(/\D/g, '')) - Number(b.id.replace(/\D/g, '')))
+}
+
+export const removeDuplicates = (groups: Array<Group>) => {
+  const results = []
+  const map = new Map()
+  for (const item of groups) {
+    if (!map.has(item.id)) {
+      map.set(item.id, true) // set any value to Map
+      results.push({
+        id: item.id,
+        name: item.name,
+      })
+    }
+  }
+  return results
 }
