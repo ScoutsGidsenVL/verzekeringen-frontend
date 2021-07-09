@@ -118,7 +118,7 @@
       <div class="px-5">
         <p>De factuur wordt naar de financieel verantwoordelijke van je groep gestuurd.</p>
         <div class="flex">
-          <div style="width: 65%">
+          <div style="width: 40%">
             <multi-select
               id="group"
               :object="true"

@@ -58,7 +58,7 @@
 <script lang="ts">
 import { ErrorMessage, useField } from 'vee-validate'
 import { InputTypes } from '@/enums/inputTypes'
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, watch } from 'vue'
 import Required from '@/components/semantic/Required.vue'
 import { useStore } from 'vuex'
 
@@ -134,6 +134,26 @@ export default defineComponent({
     const isSubmitting = computed((): boolean => {
       return store.state.insurance.isSubmittingState
     })
+
+    if (props.name === 'bankrekeningnummer') {
+      inputValue.value = 'BE'
+    }
+
+    const cardNumberSpace = () => {
+      if (props.name === 'bankrekeningnummer') {
+        inputValue.value = inputValue.value
+          .replace(/[^\dA-Z]/g, '')
+          .replace(/(.{4})/g, '$1 ')
+          .trim()
+      }
+    }
+
+    watch(
+      () => inputValue.value,
+      () => {
+        cardNumberSpace()
+      }
+    )
 
     return {
       InputTypes,

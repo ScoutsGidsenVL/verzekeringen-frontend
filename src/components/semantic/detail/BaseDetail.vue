@@ -13,7 +13,7 @@
     </div>
 
     <custom-headline-sticker v-if="details" :text="'Totaalprijs: ' + '&euro; ' + details.totalCost">
-      <price-disclaimer>Deze prijs is slechts een indicatie.</price-disclaimer>
+      <question-disclaimer>Deze prijs is slechts een indicatie.</question-disclaimer>
     </custom-headline-sticker>
 
     <slot :details="details" :isDetail="isDetail" />
@@ -42,7 +42,7 @@ import { BaseRepository } from '@/repositories/baseRepository'
 import { HolderStates } from '@/enums/holderStates'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-import PriceDisclaimer from '@/components/disclaimers/priceDisclaimer.vue'
+import QuestionDisclaimer from '@/components/disclaimers/questionDisclaimer.vue'
 import ImportantMessage from '@/components/semantic/ImportantMessage.vue'
 
 export default defineComponent({
@@ -50,7 +50,7 @@ export default defineComponent({
   components: {
     'custom-headline-sticker': CustomHeadlineSticker,
     'navigation-arrow': NavigationArrow,
-    'price-disclaimer': PriceDisclaimer,
+    'question-disclaimer': QuestionDisclaimer,
     'call-to-action': CallToAction,
     'important-message': ImportantMessage,
   },
