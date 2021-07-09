@@ -20,7 +20,12 @@
         </div>
       </div>
 
-      <div></div>
+      <div class="px-5 mt-5">
+        <strong>
+          <label>Groepleidster</label>
+        </strong>
+        <insurance-applicant :applicant="userData" />
+      </div>
     </div>
 
     <div class="mb-5">
@@ -44,9 +49,14 @@
 </template>
 
 <script lang="ts">
+import InsuranceApplicant from '@/components/requestInsurance/insuranceApplicant/insuranceApplicant.vue'
+import QuestionDisclaimer from '@/components/disclaimers/questionDisclaimer.vue'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
 import { scrollToFirstError, useScrollToTop } from '@/veeValidate/helpers'
+import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 import { ClaimHolderStates } from '@/enums/ClaimholderStates'
+import MultiSelect from '@/components/inputs/MultiSelect.vue'
+import CustomInput from '@/components/inputs/CustomInput.vue'
 import CustomButton from '@/components/CustomButton.vue'
 import { defineComponent, computed, ref } from 'vue'
 import { Claim } from '@/serializer/claims/claim'
@@ -54,19 +64,16 @@ import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-import { ResponsibleMember } from '@/serializer/ResponsibleMember'
-import MultiSelect from '@/components/inputs/MultiSelect.vue'
-import CustomInput from '@/components/inputs/CustomInput.vue'
-import QuestionDisclaimer from '@/components/disclaimers/questionDisclaimer.vue'
 
 export default defineComponent({
   name: 'RequestClaimIdentities',
   components: {
+    'question-disclaimer': QuestionDisclaimer,
+    'insurance-applicant': InsuranceApplicant,
     'custom-headline-2': CustomHeadline2,
     'custom-button': CustomButton,
     'multi-select': MultiSelect,
     'custom-input': CustomInput,
-    'question-disclaimer': QuestionDisclaimer,
   },
   setup() {
     const { scrollToTopOfPage } = useScrollToTop()
