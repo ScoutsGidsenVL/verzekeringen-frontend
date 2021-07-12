@@ -26,6 +26,7 @@
         :name="name"
         :class="{ 'opacity-0': loadingSubmit || isSubmitting }"
         :disabled="disabled || loadingSubmit || isSubmitting"
+        :placeholder="placeholder"
       />
 
       <input
@@ -43,7 +44,8 @@
     <textarea
       v-if="type === InputTypes.TEXT_AREA && !hideInput && type !== InputTypes.TIME"
       v-model="inputValue"
-      class="bg-lightGray p-2 w-96 h-32 min-w-0"
+      class="bg-lightGray p-2 h-32 min-w-0"
+      :class="textAreaWidth"
       :type="'text'"
       :name="name"
       maxlength="500"
@@ -123,6 +125,15 @@ export default defineComponent({
       default: '',
       required: false,
     },
+    textAreaWidth: {
+      type: String,
+      required: false,
+      default: 'w-96',
+    },
+    placeholder: {
+      type: String,
+      required: false,
+    },
   },
   setup(props) {
     const { value: inputValue } = useField(props.name, props.rules, {
@@ -135,12 +146,8 @@ export default defineComponent({
       return store.state.insurance.isSubmittingState
     })
 
-    if (props.name === 'bankrekeningnummer') {
-      inputValue.value = 'BE'
-    }
-
     const cardNumberSpace = () => {
-      if (props.name === 'bankrekeningnummer') {
+      if (props.name === 'victim.bankNumber') {
         inputValue.value = inputValue.value
           .replace(/[^\dA-Z]/g, '')
           .replace(/(.{4})/g, '$1 ')

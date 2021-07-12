@@ -1,14 +1,20 @@
 <template>
   <div class="flex smo:flex-col py-3">
     <bread-crumb-item
-      :is-change-state-possible="claimHolderState === ClaimHolderStates.TWO || claimHolderState === ClaimHolderStates.THREE"
+      :is-change-state-possible="claimHolderState === ClaimHolderStates.TWO || claimHolderState === ClaimHolderStates.THREE || claimHolderState === ClaimHolderStates.FOUR"
       :visible-on-state="ClaimHolderStates.ONE"
       :index="'1'"
       :text="''"
     />
-    <bread-crumb-item :is-change-state-possible="claimHolderState === ClaimHolderStates.THREE" :visible-on-state="ClaimHolderStates.TWO" :index="'2'" :text="''" />
-    <bread-crumb-item :is-change-state-possible="false" :visible-on-state="ClaimHolderStates.THREE" :index="'3'" :text="''" />
+    <bread-crumb-item
+      :is-change-state-possible="claimHolderState === ClaimHolderStates.THREE || claimHolderState === ClaimHolderStates.FOUR"
+      :visible-on-state="ClaimHolderStates.TWO"
+      :index="'2'"
+      :text="''"
+    />
+    <bread-crumb-item :is-change-state-possible="claimHolderState === ClaimHolderStates.FOUR" :visible-on-state="ClaimHolderStates.THREE" :index="'3'" :text="''" />
     <bread-crumb-item :is-change-state-possible="false" :visible-on-state="ClaimHolderStates.FOUR" :index="'4'" :text="''" />
+    <bread-crumb-item :is-change-state-possible="false" :visible-on-state="ClaimHolderStates.FIVE" :index="'5'" :text="''" />
   </div>
 </template>
 

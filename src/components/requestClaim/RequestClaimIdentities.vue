@@ -26,20 +26,154 @@
         </strong>
         <insurance-applicant :applicant="userData" />
       </div>
+
+      <div class="px-5 mt-5">
+        <info-alert>
+          <p>
+            Is er iets niet juist? pas het dan aan in de <strong><a target="_blank" href="https://groepsadmin.scoutsengidsenvlaanderen.be/">groepsadmin</a></strong> en duw op herladen.<custom-button
+              :loadingSubmit="isRefreshing"
+              type="button"
+              class="ml-5 mt-2"
+              text="Herlaad"
+              @click="refreshGroups()"
+            />
+          </p>
+        </info-alert>
+      </div>
     </div>
 
     <div class="mb-5">
       <custom-headline-2 text="Identiteit van het slachtoffer" />
-      <div class="px-5 w-96">
-        <custom-input :type="InputTypes.TEXT" rules="required" name="bankrekeningnummer" label="Bankrekeningnummer" :maxlength="19" />
-      </div>
-    </div>
 
-    <div class="px-5">
-      <question-disclaimer>
-        Ethias beperkt technisch voorlopig de keuze tot 'M' of 'V'; Scouts en Gidsen Vlaanderen gaat hierover met hen in dialoog om een oplossing te vinden zodat we genderneutraal binnen scouting
-        kunnen communiceren.
-      </question-disclaimer>
+      <div class="px-5 my-3">
+        <div>
+          <strong class="cursor-pointer text-lightGreen hover:text-green" @click="openMemberSideBar()">+ Kies een lid</strong>
+          <members-side-bar isOverflowHidden="false" v-model:isDisplay="isMemberSideBarDisplay" :close-on-add="true" :existing-list="members" title="Lid" @addMemberToList="addMember($event)" />
+        </div>
+
+        <div v-show="false" class="mt-3">
+          <strong class="cursor-pointer text-lightGreen" @click="openNonMemberSideBar()"> Kies een niet-lid</strong>
+          <non-member-side-bar
+            isOverflowHidden="false"
+            v-model:side-bar-state="nonMemberSideBarState"
+            :close-on-add="true"
+            :existing-list="nonMembers"
+            title="Niet lid"
+            @addCreatedNonMemberToList="addCreatedNonMember($event)"
+          />
+        </div>
+      </div>
+
+      <div class="px-5">
+        <div class="flex gap-2">
+          <custom-input :type="InputTypes.TEXT" rules="required" name="victim.lastName" label="Naam" />
+          <custom-input :type="InputTypes.TEXT" rules="required" name="victim.firstName" label="Voornaam" />
+        </div>
+
+        <div class="mt-3 flex gap-2">
+          <custom-input class="streetInput" :type="InputTypes.TEXT" rules="required" name="victim.street" label="Straat" />
+          <custom-input :type="InputTypes.TEXT" rules="required" name="victim.number" label="Nummer" />
+          <custom-input :type="InputTypes.TEXT" name="victim.letterBox" label="Bus" />
+        </div>
+      </div>
+
+      <div :class="'px-5 flex gap-2'">
+        <div v-if="(values.victim && values.victim.country && values.victim.country.name === '') || (values.victim.country && values.victim.country.name === 'België')">
+          <div class="input">
+            <multi-select
+              id="victim.postCodeCity"
+              :object="true"
+              track-by="label"
+              value-prop="label"
+              :repository="BelgianCitySearchRepository"
+              :resolve-on-load="true"
+              :options="[]"
+              :searchable="true"
+              label="Gemeente"
+              rules="required"
+              placeholder="Zoek op naam/postcode"
+            />
+          </div>
+        </div>
+
+        <div>
+          <div class="input">
+            <multi-select
+              id="victim.country"
+              rules="required"
+              insurance-type-id="2"
+              :object="true"
+              track-by="name"
+              value-prop="name"
+              :repository="CountryRepository"
+              :resolve-on-load="true"
+              :options="values.country ? [values.country] : [{ id: '3232', name: 'België' }]"
+              :extra-option="{ id: '3232', name: 'België' }"
+              :searchable="true"
+              label="Land"
+              placeholder="Zoek op naam"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3 px-5 flex gap-5">
+        <div>
+          <custom-input class="input" :loading-submit="isSubmitting" :type="InputTypes.DATE" name="victim.birthDate" label="Geboortedatum" />
+        </div>
+
+        <div class="mt-5">
+          <form action="">
+            <div class="flex gap-4">
+              <div>
+                <input :id="'M'" v-model="selected" class="cursor-pointer" type="radio" :name="'M'" :value="'M'" />
+                <label :for="'M'" class="ml-1">M</label>
+              </div>
+
+              <div>
+                <input :id="'V'" v-model="selected" class="cursor-pointer" type="radio" :name="'V'" :value="'V'" />
+                <label :for="'V'" class="ml-1">V</label>
+              </div>
+
+              <div v-if="false">
+                <input :id="'X'" v-model="selected" class="cursor-pointer" type="radio" :name="'X'" :value="'X'" />
+                <label :for="'X'" class="ml-1">X</label>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="mt-5">
+          <question-disclaimer>
+            Ethias beperkt technisch voorlopig de keuze tot 'M' of 'V'; Scouts en Gidsen Vlaanderen gaat hierover met hen in dialoog om een oplossing te vinden zodat we genderneutraal binnen scouting
+            kunnen communiceren.
+          </question-disclaimer>
+        </div>
+      </div>
+
+      <div class="px-5 mt-3">
+        <div>
+          <custom-input class="input" :type="InputTypes.TEXT" rules="required" name="victim.email" label="E-mail" />
+          <p class="input text-2xs mt-1">
+            <i> Als het slachtoffer minderjarig is, vul dan het mailadres van de opvoedingsverantwoordelijke (ouders, voogd) in. </i>
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-3 px-5 w-96">
+        <custom-input
+          :placeholder="'BE01 2345 6789 4444'"
+          :type="InputTypes.TEXT"
+          rules="required|BankNumberLength:victim.bankNumber"
+          name="victim.bankNumber"
+          label="Bankrekeningnummer"
+          :maxlength="19"
+        />
+      </div>
+
+      <div v-show="values.victim && values.victim.membershipNumber" class="mt-3 px-5 w-96">
+        <custom-input :disabled="true" :type="InputTypes.TEXT" name="victim.membershipNumber" label="Lidnummer" />
+      </div>
     </div>
 
     <div class="flex gap-3 mt-5 items-center">
@@ -50,17 +184,28 @@
 
 <script lang="ts">
 import InsuranceApplicant from '@/components/requestInsurance/insuranceApplicant/insuranceApplicant.vue'
+import NonMemberSideBar from '@/components/insurances/nonMembersInsurance/nonMemberSideBar.vue'
+import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRepository'
+import MemberSideBar from '@/components/insurances/travelAssistance/membersSideBar.vue'
 import QuestionDisclaimer from '@/components/disclaimers/questionDisclaimer.vue'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
 import { scrollToFirstError, useScrollToTop } from '@/veeValidate/helpers'
+import { CountryRepository } from '@/repositories/countriesRepository'
+import InfoAlert from '@/components/requestInsurance/InfoAlert.vue'
+import { Country, CountryDeserializer } from '@/serializer/Country'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
+import RepositoryFactory from '@/repositories/repositoryFactory'
 import { ClaimHolderStates } from '@/enums/ClaimholderStates'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
+import AuthRepository from '@/repositories/authRepository'
+import { sideBarState } from '../semantic/BaseSideBar.vue'
 import CustomButton from '@/components/CustomButton.vue'
 import { defineComponent, computed, ref } from 'vue'
+import { NonMember } from '@/serializer/NonMember'
 import { Claim } from '@/serializer/claims/claim'
 import { InputTypes } from '@/enums/inputTypes'
+import { Member } from '@/serializer/Member'
 import { useForm } from 'vee-validate'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
@@ -70,20 +215,31 @@ export default defineComponent({
   components: {
     'question-disclaimer': QuestionDisclaimer,
     'insurance-applicant': InsuranceApplicant,
+    'non-member-side-bar': NonMemberSideBar,
     'custom-headline-2': CustomHeadline2,
+    'members-side-bar': MemberSideBar,
     'custom-button': CustomButton,
     'multi-select': MultiSelect,
     'custom-input': CustomInput,
+    'info-alert': InfoAlert,
   },
   setup() {
-    const { scrollToTopOfPage } = useScrollToTop()
     const route = useRoute()
     const store = useStore()
-    const isEdit = !!route.params.id
+    const initialCountry = ref<Country>(CountryDeserializer({ id: '3232', name: 'België' }))
+    const nonMemberSideBarState = ref<sideBarState<NonMember>>({ state: 'hide' })
     const userData = ref<ResponsibleMember>(store.getters.user)
+    const isMemberSideBarDisplay = ref<boolean>(false)
+    const { scrollToTopOfPage } = useScrollToTop()
+    const selected = ref<string>('M')
+    const isEdit = !!route.params.id
 
     const { handleSubmit, values, validate, isSubmitting } = useForm<Claim>({
-      initialValues: {},
+      initialValues: {
+        victim: {
+          country: initialCountry.value,
+        },
+      },
     })
 
     const claimState = computed((): Claim => {
@@ -91,30 +247,86 @@ export default defineComponent({
     })
 
     const onSubmit = async () => {
-      await validate().then((validation: any) => scrollToFirstError(validation, 'RequestInsuranceGeneral'))
+      await validate().then((validation: any) => scrollToFirstError(validation, 'RequestClaimIdentities'))
       handleSubmit(async (values: any) => {
-        const claimState = ref<Claim>({
+        const newClaimState = ref<Claim>({
           id: values.id,
           group: values.group,
+          groupLeader: userData.value,
+          victim: values.victim,
         })
-        console.log(values)
 
-        store.dispatch('setClaimState', claimState)
+        store.dispatch('setClaimState', newClaimState)
         store.dispatch('setClaimHolderState', ClaimHolderStates.TWO)
       })()
+    }
+
+    const isRefreshing = ref<boolean>(false)
+    const refreshGroups = () => {
+      isRefreshing.value = true
+      RepositoryFactory.get(AuthRepository)
+        .me()
+        .then((user: any) => {
+          store.dispatch('setUser', user).then(() => {
+            userData.value = store.getters.user
+            isRefreshing.value = false
+          })
+        })
+    }
+
+    const openMemberSideBar = () => {
+      isMemberSideBarDisplay.value = true
+    }
+
+    const openNonMemberSideBar = () => {
+      nonMemberSideBarState.value = { state: 'new' }
+    }
+
+    const addMember = (member: Member) => {
+      if (values.victim) {
+        values.victim.firstName = member.firstName
+        values.victim.lastName = member.lastName
+        values.victim.street = member.street
+        values.victim.number = member.number
+        values.victim.letterBox = member.letterBox
+        values.victim.postCodeCity = member.postCodeCity
+        values.victim.birthDate = member.birthDate
+        values.victim.email = member.email
+        values.victim.membershipNumber = member.membershipNumber
+      }
     }
 
     scrollToTopOfPage()
 
     return {
+      BelgianCitySearchRepository,
+      isMemberSideBarDisplay,
+      nonMemberSideBarState,
+      openNonMemberSideBar,
+      openMemberSideBar,
+      CountryRepository,
+      refreshGroups,
+      isRefreshing,
       isSubmitting,
       InputTypes,
       claimState,
+      addMember,
       userData,
       onSubmit,
+      selected,
       isEdit,
       values,
     }
   },
 })
 </script>
+
+<style lang="scss" scoped>
+.streetInput {
+  width: 435px !important;
+}
+
+.input {
+  width: 288px !important;
+}
+</style>

@@ -1,8 +1,8 @@
 <template>
   <div>
     <strong>{{ label }}</strong>
-    <div class="w-96">
-      <p class="mt-2 w-96">{{ text }}</p>
+    <div :class="textWidth">
+      <p class="mt-2">{{ text }}</p>
     </div>
   </div>
 </template>
@@ -19,6 +19,11 @@ export default defineComponent({
     text: {
       type: [String, Number],
       required: true,
+    },
+    textWidth: {
+      type: String,
+      default: 'w-96',
+      required: false,
     },
   },
 })

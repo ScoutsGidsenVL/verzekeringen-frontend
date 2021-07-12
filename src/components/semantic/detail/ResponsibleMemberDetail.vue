@@ -1,6 +1,6 @@
 <template>
-  <p class="font-semibold">Aanvrager</p>
-  <div class="px-5">
+  <p class="font-semibold">{{ title }}</p>
+  <div :class="title === 'Aanvrager' ? 'px-5' : ''">
     <p>{{ responsibleMember.firstName + ' ' + (responsibleMember.lastName ? responsibleMember.lastName : '') }}</p>
     <p>{{ responsibleMember.email }}</p>
     <phone-number :phoneNumber="responsibleMember.phoneNumber" />
@@ -24,6 +24,11 @@ export default defineComponent({
     responsibleMember: {
       type: Object as PropType<ResponsibleMember>,
       default: Object as PropType<ResponsibleMember>,
+    },
+    title: {
+      type: String,
+      required: false,
+      default: 'Aanvrager',
     },
   },
 })

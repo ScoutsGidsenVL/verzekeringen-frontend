@@ -3,24 +3,22 @@
     <slot name="top"></slot>
     <div class="py-3">
       <div>
-        <strong>Naam</strong>
         <p>{{ nonMember.firstName + ' ' + nonMember.lastName }}</p>
       </div>
 
       <div class="mt-3">
-        <strong>Adres</strong>
         <p>
           {{ nonMember.street + ' ' + nonMember.number + (nonMember.letterBox ? ' Bus ' + nonMember.letterBox : '') + ', ' + nonMember.postCodeCity.postalCode + ' ' + nonMember.postCodeCity.city }}
         </p>
       </div>
 
       <div class="mt-3">
-        <strong>Geboortedatum</strong>
+        <strong v-if="nonMember.birthDate">Geboortedatum</strong>
         <p>{{ nonMember.birthDate }}</p>
       </div>
 
       <div class="mt-3">
-        <strong>Opmerking</strong>
+        <strong v-if="nonMember.comment">Opmerking</strong>
         <p>{{ nonMember.comment }}</p>
       </div>
     </div>

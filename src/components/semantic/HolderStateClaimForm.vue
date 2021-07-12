@@ -10,7 +10,9 @@
   <div v-show="claimHolderState === ClaimHolderStates.THREE">
     <involvement-other-parties />
   </div>
-  <div v-if="claimHolderState === ClaimHolderStates.FOUR">FOUR</div>
+  <div v-if="claimHolderState === ClaimHolderStates.FOUR">
+    <claim-detail />
+  </div>
 </template>
 
 <script lang="ts">
@@ -20,6 +22,7 @@ import InvolvementOtherParties from '@/components/requestClaim/InvolvementOtherP
 import AccidentDetails from '@/components/requestClaim/AccidentDetails.vue'
 import { defineComponent, computed } from 'vue'
 import { useStore } from 'vuex'
+import ClaimDetail from '@/components/requestClaim/detail/claimDetail.vue'
 
 export default defineComponent({
   name: 'HolderStateForm',
@@ -27,6 +30,7 @@ export default defineComponent({
     'involvement-other-parties': InvolvementOtherParties,
     'request-claim-identities': RequestClaimIdentities,
     'accident-details': AccidentDetails,
+    'claim-detail': ClaimDetail,
   },
   setup() {
     const store = useStore()

@@ -3,4 +3,5 @@ export enum ClaimHolderStates {
   TWO = 'TWO',
   THREE = 'THREE',
   FOUR = 'FOUR',
+  FIVE = 'FIVE',
 }

@@ -5,7 +5,7 @@ export interface NonMember {
   readonly lastName: string
   readonly firstName: string
   readonly phoneNumber: string
-  readonly birthDate: string
+  readonly birthDate: string | undefined
   readonly street: string
   readonly number: string
   readonly letterBox: string
@@ -39,7 +39,7 @@ export const NonMemberSerializer = (input: any): any => {
     last_name: input.lastName,
     first_name: input.firstName,
     phone_number: input.phoneNumber ? input.phoneNumber.replace(/ /g, '') : '/',
-    birth_date: input.birthDate,
+    birth_date: input.birthDate ? input.birthDate : undefined,
     street: input.street,
     number: input.number,
     letter_box: input.letterBox,

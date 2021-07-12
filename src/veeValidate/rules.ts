@@ -6,6 +6,7 @@ import { defineRule } from 'vee-validate'
 import moment from 'moment'
 
 import { configure } from 'vee-validate'
+import { ActivityTypes } from '@/enums/activityTypes'
 
 export const defineRules = (store: any) => {
   defineRule('required', required)
@@ -107,6 +108,20 @@ export const defineRules = (store: any) => {
       return 'De startdatum en einddatum mogen niet minder dan 24 uur bedragen.'
     }
 
+    return true
+  })
+
+  defineRule('RequiredActivityTypes', (value: Array<ActivityTypes>) => {
+    if (value.length === 0) {
+      return 'Vereist een keuze te selecteren.'
+    }
+    return true
+  })
+
+  defineRule('BankNumberLength', (value: String) => {
+    if (value.length < 19) {
+      return 'Geen geldige bankrekeningnummer'
+    }
     return true
   })
 }

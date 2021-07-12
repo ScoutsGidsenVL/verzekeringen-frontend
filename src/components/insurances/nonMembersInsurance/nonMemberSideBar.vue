@@ -58,7 +58,7 @@
           </div>
 
           <div class="w-96 mt-4">
-            <custom-input :loading-submit="isSubmitting" :type="InputTypes.DATE" rules="required" name="birthDate" label="Geboortedatum" />
+            <custom-input :loading-submit="isSubmitting" :type="InputTypes.DATE" name="birthDate" label="Geboortedatum" />
           </div>
 
           <div class="w-96 mt-4">
@@ -187,7 +187,7 @@ export default defineComponent({
             lastName: values.lastName,
             firstName: values.firstName,
             phoneNumber: values.phoneNumber ? values.phoneNumber : '/',
-            birthDate: values.birthDate,
+            birthDate: values.birthDate ? values.birthDate : undefined,
             street: values.street,
             number: values.number,
             letterBox: values.letterBox,
