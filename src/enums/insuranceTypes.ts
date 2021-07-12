@@ -54,8 +54,8 @@ export const InsuranceTypeId: Record<InsuranceTypes, string> = {
 export const InsuranceTypeDateDisclaimer: Record<InsuranceTypes, string> = {
   EENMALIGE_ACTIVITEIT: 'Maximum 5 dagen',
   TIJDELIJKE_VERZEKERING_NIET_LEDEN: 'Maximum 1 maand',
-  REIS_BIJSTAND: 'Maximum 32 dagen',
-  TIJDELIJKE_AUTO_VERZEKERING: 'Maximum 30 dagen',
+  REIS_BIJSTAND: 'Maximum 1 maand',
+  TIJDELIJKE_AUTO_VERZEKERING: 'Maximum 1 maand',
   EVENEMENTEN_VERZEKERING: '',
-  MATERIAAL_VERZEKERING: 'Maximum 30 dagen',
+  MATERIAAL_VERZEKERING: 'Maximum 1 maand',
 }

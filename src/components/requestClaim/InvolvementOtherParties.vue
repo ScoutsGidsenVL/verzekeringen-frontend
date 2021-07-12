@@ -1,7 +1,6 @@
 <template>
   <form id="RequestInsuranceGeneral" @submit.prevent="onSubmit">
     <div class="mb-5">
-      {{ claimState }}
       <custom-headline-2 text="Betrokkenheid andere partijen" />
       <div>
         <div>
