@@ -4,7 +4,7 @@
       <div v-if="details" class="mt-1">
         <div v-if="!(holderState === HolderStates.DETAIL) && details.comment">
           <p class="font-semibold">Opmerkingen</p>
-          <div class="px-5">
+          <div class="ml-5">
             <label-output :text="details.comment" />
           </div>
         </div>
@@ -15,7 +15,7 @@
 
         <div>
           <p class="font-semibold">Datum</p>
-          <div class="px-5">
+          <div class="ml-5">
             <label-output label="Periode" :text="formatDate(details.startDate, details.endDate)" />
           </div>
         </div>
@@ -27,7 +27,7 @@
         />
 
         <p class="font-semibold">Materiaal</p>
-        <div class="px-5 py-4">
+        <div class="ml-5 py-4">
           <equipment-list :equipment-list="details.equipment" />
         </div>
       </div>

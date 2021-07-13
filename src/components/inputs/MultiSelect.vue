@@ -1,9 +1,11 @@
 <template>
   <div v-if="options" class="pt-4">
-    <strong>
-      <label>{{ label }}</label>
-      <required v-if="label" :rules="rules" />
-    </strong>
+    <div>
+      <strong>
+        {{ label }}
+      </strong>
+      <strong><required class="inline" v-if="label" :rules="rules" /></strong>
+    </div>
     <div
       class="min-w-0"
       :class="{

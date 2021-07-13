@@ -6,7 +6,7 @@
     <request-insurance-detail>
       <div>
         <p class="font-semibold">Opmerkingen</p>
-        <div class="px-5">
+        <div class="ml-5">
           <custom-input :type="InputTypes.TEXT_AREA" name="comment" label="" />
         </div>
       </div>
@@ -21,7 +21,7 @@
       </template>
     </call-to-action>
 
-    <div class="flex gap-3 px-5 mt-5">
+    <div class="flex gap-3 ml-5 mt-5">
       <back-button :backToState="HolderStates.TYPE" />
     </div>
   </form>

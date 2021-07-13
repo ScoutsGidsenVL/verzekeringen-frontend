@@ -1,6 +1,6 @@
 <template>
   <p class="font-semibold">{{ title }}</p>
-  <div :class="title === 'Aanvrager' ? 'px-5' : ''">
+  <div :class="title === 'Aanvrager' ? 'ml-5' : ''">
     <p>{{ responsibleMember.firstName + ' ' + (responsibleMember.lastName ? responsibleMember.lastName : '') }}</p>
     <p>{{ responsibleMember.email }}</p>
     <phone-number :phoneNumber="responsibleMember.phoneNumber" />

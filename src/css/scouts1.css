@@ -9998,15 +9998,15 @@ button.bg-dark:hover {
   padding-top: 3rem !important;
 }
 .pr-5,
-.px-5 {
+.ml-5 {
   padding-right: 3rem !important;
 }
 .pb-5,
 .py-5 {
   padding-bottom: 3rem !important;
 }
-.pl-5,
-.px-5 {
+.ml-5,
+.ml-5 {
   padding-left: 3rem !important;
 }
 .p-6 {

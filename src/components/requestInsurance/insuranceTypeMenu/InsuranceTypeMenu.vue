@@ -1,5 +1,5 @@
 <template>
-  <div class="px-5">
+  <div class="ml-5">
     <form action="">
       <div v-for="(insuranceType, index) in insuranceTypes" :key="insuranceType.id" class="py-1">
         <input

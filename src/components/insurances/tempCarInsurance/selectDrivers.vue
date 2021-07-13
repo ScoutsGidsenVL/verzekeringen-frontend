@@ -12,7 +12,7 @@
       <input id="isOwnerInput" v-model="selectDriverField.isDriverOwner" class="mr-2 cursor-pointer" type="radio" name="isOwnerInput" :value="IS_NO_DRIVER" />
       <label class="cursor-pointer" for="isOwnerInput">Eigenaar is geen bestuurder of het is een huurwagen</label>
     </div>
-    <div v-show="selectDriverField.isDriverOwner === IS_NO_DRIVER" class="px-5">
+    <div v-show="selectDriverField.isDriverOwner === IS_NO_DRIVER" class="ml-5">
       <div v-if="!input.firstName && !input.lastName" class="w-96 mt-3">
         <custom-input :type="InputTypes.TEXT" name="input.companyName" label="Firma naam" :rules="'customRequired'" />
       </div>

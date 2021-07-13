@@ -5,7 +5,7 @@
     <div>
       <p class="font-semibold">Identiteit van de verzekeringsnemer</p>
 
-      <div class="px-5">
+      <div class="ml-5">
         <label-output label="Groep" :text="claimState.group && claimState.group.fullInfo" />
         <div class="mt-3">
           <responsible-member-detail title="Groepleidster" :responsible-member="claimState.groupLeader" />
@@ -15,7 +15,7 @@
 
     <div class="mt-5">
       <p class="font-semibold">Identiteit van het slachtoffer</p>
-      <div class="px-5">
+      <div class="ml-5">
         <label-output :text="claimState.victim.firstName + ' ' + claimState.victim.lastName" />
         <label-output :text="claimState.victim.country.name" />
         <label-output
@@ -39,7 +39,7 @@
 
     <div class="mt-5">
       <p class="font-semibold">Gegevens van het ongeval</p>
-      <div class="px-5">
+      <div class="ml-5">
         <label-output class="mt-1" label="Datum ongeval" :text="claimState.dateOfAccident" />
         <label-output class="mt-1" label="Tijdens welke activiteit het ongeval plaatsvond" :text="claimState.activity" />
         <div class="mt-2">
@@ -95,14 +95,14 @@
 
     <div class="mt-5">
       <p class="font-semibold">Beschrijving van het ongeval (oorzaken, omstandigheden en gevolgen, opgelopen verwondingen en/of schade</p>
-      <div class="px-5">
+      <div class="ml-5">
         <p style="max-width: 725px !important; text-align: justify">{{ claimState.officialReportDescription }}</p>
       </div>
     </div>
 
     <div v-if="false" class="mt-5">
       <p class="font-semibold">Betrokkenheid andere partijen</p>
-      <div class="px-5 w-96">
+      <div class="ml-5 w-96">
         <div class="flex">
           <label-output class="mt-1 w-72" label="Opgemaakt te" :text="claimState.madeUpAtCountry.postalCode + ' ' + claimState.madeUpAtCountry.city" />
           <label-output class="mt-1 w-48" label="Op" :text="claimState.madeUpOnDate" />
