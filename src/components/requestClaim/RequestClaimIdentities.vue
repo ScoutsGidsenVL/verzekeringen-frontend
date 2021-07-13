@@ -3,7 +3,7 @@
     <div class="mb-5">
       <custom-headline-2 text="Identiteit van de verzekeringsnemer" />
 
-      <div class="flex ml-5" style="margin-top: -2em">
+      <div class="flex md:ml-20" style="margin-top: -2em">
         <div style="width: 430px">
           <multi-select
             id="group"
@@ -20,20 +20,20 @@
         </div>
       </div>
 
-      <div class="ml-5 mt-5">
+      <div class="md:ml-20 mt-5">
         <strong>
           <label>Groepleidster</label>
         </strong>
         <insurance-applicant :applicant="userData" />
       </div>
 
-      <div class="ml-5 mt-5">
+      <div class="md:ml-20 mt-5">
         <info-alert>
           <p>
             Is er iets niet juist? pas het dan aan in de <strong><a target="_blank" href="https://groepsadmin.scoutsengidsenvlaanderen.be/">groepsadmin</a></strong> en duw op herladen.<custom-button
               :loadingSubmit="isRefreshing"
               type="button"
-              class="ml-5 mt-2"
+              class="ml-20 mt-2"
               text="Herlaad"
               @click="refreshGroups()"
             />
@@ -45,7 +45,7 @@
     <div class="mb-5">
       <custom-headline-2 text="Identiteit van het slachtoffer" />
 
-      <div class="ml-5 my-3">
+      <div class="md:ml-20 my-3">
         <div>
           <strong class="cursor-pointer text-lightGreen hover:text-green" @click="openMemberSideBar()">+ Kies een lid</strong>
           <members-side-bar isOverflowHidden="false" v-model:isDisplay="isMemberSideBarDisplay" :close-on-add="true" :existing-list="members" title="Lid" @addMemberToList="addMember($event)" />
@@ -64,7 +64,7 @@
         </div>
       </div>
 
-      <div class="ml-5">
+      <div class="md:ml-20">
         <div class="sm:flex sm:gap-2 xs:w-72 sm:w-100">
           <custom-input :type="InputTypes.TEXT" rules="required" name="victim.lastName" label="Naam" />
           <custom-input :type="InputTypes.TEXT" rules="required" name="victim.firstName" label="Voornaam" />
@@ -80,7 +80,7 @@
         </div>
       </div>
 
-      <div :class="'ml-5 sm:flex sm:gap-2'">
+      <div :class="'md:ml-20 sm:flex sm:gap-2'">
         <div v-if="(values.victim && values.victim.country && values.victim.country.name === '') || (values.victim.country && values.victim.country.name === 'België')">
           <div class="input">
             <multi-select
@@ -120,7 +120,7 @@
         </div>
       </div>
 
-      <div class="mt-3 ml-5 sm:flex sm:gap-5">
+      <div class="mt-3 md:ml-20 sm:flex sm:gap-5">
         <div>
           <custom-input rules="required" class="input" :loading-submit="isSubmitting" :type="InputTypes.DATE" name="victim.birthDate" label="Geboortedatum" />
         </div>
@@ -160,7 +160,7 @@
         </div>
       </div>
 
-      <div class="ml-5 mt-3">
+      <div class="md:ml-20 mt-3">
         <div>
           <custom-input class="input" :type="InputTypes.TEXT" rules="required" name="victim.email" label="E-mail" />
           <p class="input text-2xs mt-1">
@@ -169,11 +169,11 @@
         </div>
       </div>
 
-      <div class="mt-3 ml-5 w-96">
+      <div class="mt-3 md:ml-20 w-96">
         <custom-input :placeholder="'BE01 2345 6789 4444'" :type="InputTypes.TEXT" rules="BankNumberLength:victim.bankNumber" name="victim.bankNumber" label="Bankrekeningnummer" :maxlength="19" />
       </div>
 
-      <div v-show="values.victim && values.victim.membershipNumber" class="mt-3 ml-5 w-96">
+      <div v-show="values.victim && values.victim.membershipNumber" class="mt-3 ml-20 w-96">
         <custom-input :disabled="true" :type="InputTypes.TEXT" name="victim.membershipNumber" label="Lidnummer" />
       </div>
     </div>
