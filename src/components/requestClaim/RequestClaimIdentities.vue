@@ -4,7 +4,7 @@
       <custom-headline-2 text="Identiteit van de verzekeringsnemer" />
 
       <div class="flex px-5" style="margin-top: -2em">
-        <div style="width: 40%">
+        <div>
           <multi-select
             id="group"
             :object="true"
@@ -65,19 +65,19 @@
       </div>
 
       <div class="px-5">
-        <div class="flex gap-2">
+        <div class="sm:flex sm:gap-2 xs:w-72 sm:w-100">
           <custom-input :type="InputTypes.TEXT" rules="required" name="victim.lastName" label="Naam" />
           <custom-input :type="InputTypes.TEXT" rules="required" name="victim.firstName" label="Voornaam" />
         </div>
 
-        <div class="mt-3 flex gap-2">
+        <div class="sm:mt-3 sm:flex sm:gap-2 xs:w-72 sm:w-100">
           <custom-input class="streetInput" :type="InputTypes.TEXT" rules="required" name="victim.street" label="Straat" />
           <custom-input :type="InputTypes.TEXT" rules="required" name="victim.number" label="Nummer" />
           <custom-input :type="InputTypes.TEXT" name="victim.letterBox" label="Bus" />
         </div>
       </div>
 
-      <div :class="'px-5 flex gap-2'">
+      <div :class="'px-5 sm:flex sm:gap-2'">
         <div v-if="(values.victim && values.victim.country && values.victim.country.name === '') || (values.victim.country && values.victim.country.name === 'België')">
           <div class="input">
             <multi-select
@@ -117,14 +117,19 @@
         </div>
       </div>
 
-      <div class="mt-3 px-5 flex gap-5">
+      <div class="mt-3 px-5 sm:flex sm:gap-5">
         <div>
-          <custom-input class="input" :loading-submit="isSubmitting" :type="InputTypes.DATE" name="victim.birthDate" label="Geboortedatum" />
+          <custom-input rules="required" class="input" :loading-submit="isSubmitting" :type="InputTypes.DATE" name="victim.birthDate" label="Geboortedatum" />
         </div>
 
-        <div class="mt-5">
+        <div class="xs:mt-3">
           <form action="">
-            <div class="flex gap-4">
+            <strong>Geslacht</strong>
+            <required rules="required" />
+
+            <div class="mt-2 flex gap-4">
+              <custom-input v-show="false" :type="'victim.gender'" rules="required" name="victim.gender" />
+
               <div>
                 <input :id="'M'" v-model="selected" class="cursor-pointer" type="radio" :name="'M'" :value="'M'" />
                 <label :for="'M'" class="ml-1">M</label>
@@ -139,15 +144,17 @@
                 <input :id="'X'" v-model="selected" class="cursor-pointer" type="radio" :name="'X'" :value="'X'" />
                 <label :for="'X'" class="ml-1">X</label>
               </div>
-            </div>
-          </form>
-        </div>
 
-        <div class="mt-5">
-          <question-disclaimer>
-            Ethias beperkt technisch voorlopig de keuze tot 'M' of 'V'; Scouts en Gidsen Vlaanderen gaat hierover met hen in dialoog om een oplossing te vinden zodat we genderneutraal binnen scouting
-            kunnen communiceren.
-          </question-disclaimer>
+              <div style="margin-top: 1px">
+                <question-disclaimer>
+                  Ethias beperkt technisch voorlopig de keuze tot 'M' of 'V'; Scouts en Gidsen Vlaanderen gaat hierover met hen in dialoog om een oplossing te vinden zodat we genderneutraal binnen
+                  scouting kunnen communiceren.
+                </question-disclaimer>
+              </div>
+            </div>
+
+            <ErrorMessage name="victim.gender" class="text-red text-sm block my-2 w-36" />
+          </form>
         </div>
       </div>
 
@@ -161,14 +168,7 @@
       </div>
 
       <div class="mt-3 px-5 w-96">
-        <custom-input
-          :placeholder="'BE01 2345 6789 4444'"
-          :type="InputTypes.TEXT"
-          rules="required|BankNumberLength:victim.bankNumber"
-          name="victim.bankNumber"
-          label="Bankrekeningnummer"
-          :maxlength="19"
-        />
+        <custom-input :placeholder="'BE01 2345 6789 4444'" :type="InputTypes.TEXT" rules="BankNumberLength:victim.bankNumber" name="victim.bankNumber" label="Bankrekeningnummer" :maxlength="19" />
       </div>
 
       <div v-show="values.victim && values.victim.membershipNumber" class="mt-3 px-5 w-96">
@@ -201,14 +201,15 @@ import CustomInput from '@/components/inputs/CustomInput.vue'
 import AuthRepository from '@/repositories/authRepository'
 import { sideBarState } from '../semantic/BaseSideBar.vue'
 import CustomButton from '@/components/CustomButton.vue'
-import { defineComponent, computed, ref } from 'vue'
+import { defineComponent, computed, ref, watch } from 'vue'
 import { NonMember } from '@/serializer/NonMember'
 import { Claim } from '@/serializer/claims/claim'
 import { InputTypes } from '@/enums/inputTypes'
 import { Member } from '@/serializer/Member'
-import { useForm } from 'vee-validate'
+import { useForm, ErrorMessage } from 'vee-validate'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
+import Required from '@/components/semantic/Required.vue'
 
 export default defineComponent({
   name: 'RequestClaimIdentities',
@@ -222,6 +223,8 @@ export default defineComponent({
     'multi-select': MultiSelect,
     'custom-input': CustomInput,
     'info-alert': InfoAlert,
+    ErrorMessage,
+    Required,
   },
   setup() {
     const route = useRoute()
@@ -231,7 +234,7 @@ export default defineComponent({
     const userData = ref<ResponsibleMember>(store.getters.user)
     const isMemberSideBarDisplay = ref<boolean>(false)
     const { scrollToTopOfPage } = useScrollToTop()
-    const selected = ref<string>('M')
+    const selected = ref<string>()
     const isEdit = !!route.params.id
 
     const { handleSubmit, values, validate, isSubmitting } = useForm<Claim>({
@@ -298,6 +301,15 @@ export default defineComponent({
 
     scrollToTopOfPage()
 
+    watch(
+      () => selected.value,
+      () => {
+        if (values.victim) {
+          values.victim.gender = selected.value
+        }
+      }
+    )
+
     return {
       BelgianCitySearchRepository,
       isMemberSideBarDisplay,
@@ -322,8 +334,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.streetInput {
-  width: 435px !important;
+@media only screen and (min-width: 640px) {
+  .streetInput {
+    width: 435px !important;
+  }
 }
 
 .input {

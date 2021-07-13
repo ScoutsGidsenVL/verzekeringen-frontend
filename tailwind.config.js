@@ -49,6 +49,7 @@ module.exports = {
       },
       screens: {
         smo: { min: "0px", max: "768px" },
+        xs: { min: "0px", max: "640px" },
       },
       keyframes: {
         pulse2: {
