@@ -156,7 +156,7 @@
           </div>
           <div class="mt-4">
             <strong>Op <span class="text-red ml-1">*</span></strong>
-            <custom-input class="w-96" style="margin-top: 0.5em" :type="InputTypes.DATE" rules="required" name="madeUpOnDate" />
+            <custom-input class="w-96" :type="InputTypes.DATE" rules="required" name="madeUpOnDate" />
           </div>
         </div>
         <custom-input class="mt-4 w-96" :type="InputTypes.TEXT" name="identityDeclarant" rules="required" label="Identiteit van de aangever (Naam en voornaam)" />
