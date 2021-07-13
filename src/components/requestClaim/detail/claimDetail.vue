@@ -108,7 +108,7 @@
       <div class="ml-5 mb-5" v-if="claimState.involvedPartiesChoices[0] === true">
         <strong>Is het ongeval te wijten aan een fout van een andere verzekerde/ of derde?</strong>
         <div>
-          <label-output v-if="claimState.involvedPartyDescription" class="mt-1" label="Naam en adres" :text="claimState.involvedPartyDescription" />
+          <label-output v-if="claimState.involvedPartyDescription" class="mt-1" :text="claimState.involvedPartyDescription" />
           <label-output v-if="claimState.involvedPartyBirthdate" class="mt-1" label="Geboortedatum" :text="claimState.involvedPartyBirthdate" />
         </div>
       </div>
@@ -116,7 +116,7 @@
       <div class="ml-5 mb-5" v-if="claimState.involvedPartiesChoices[1] === true">
         <strong>Werd er een vastelling gedaan door een verbaliserende autoriteit?</strong>
         <div>
-          <label-output v-if="claimState.authorityDescription" class="mt-1" label="Welke" :text="claimState.authorityDescription" />
+          <label-output v-if="claimState.authorityDescription" class="mt-1" :text="claimState.authorityDescription" />
           <label-output v-if="claimState.pvNumber" class="mt-1" label="Eventueel nummer van proces-verbaal" :text="claimState.pvNumber" />
         </div>
       </div>
@@ -124,14 +124,14 @@
       <div class="ml-5 mb-5" v-if="claimState.involvedPartiesChoices[2] === true">
         <strong>Waren er getuigen van het ongeval?</strong>
         <div>
-          <label-output v-if="claimState.witnessDescription" class="mt-1" label="Welke" :text="claimState.witnessDescription" />
+          <label-output v-if="claimState.witnessDescription" class="mt-1" :text="claimState.witnessDescription" />
         </div>
       </div>
 
       <div class="ml-5 mb-5" v-if="claimState.involvedPartiesChoices[2] === true">
         <strong>Hield iemand van de leiding toezicht op het moment dat het ongeval plaatsvond?</strong>
         <div>
-          <label-output v-if="claimState.leadershipDescription" class="mt-1" label="Naam en voornaam" :text="claimState.leadershipDescription" />
+          <label-output v-if="claimState.leadershipDescription" class="mt-1" :text="claimState.leadershipDescription" />
         </div>
       </div>
     </div>
