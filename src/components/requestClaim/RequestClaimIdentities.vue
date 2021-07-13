@@ -4,7 +4,7 @@
       <custom-headline-2 text="Identiteit van de verzekeringsnemer" />
 
       <div class="flex px-5" style="margin-top: -2em">
-        <div>
+        <div style="width: 430px">
           <multi-select
             id="group"
             :object="true"

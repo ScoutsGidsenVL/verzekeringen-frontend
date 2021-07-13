@@ -6,7 +6,7 @@
       <p class="font-semibold">Identiteit van de verzekeringsnemer</p>
 
       <div class="px-5">
-        <label-output label="Groep" :text="claimState.group.fullInfo" />
+        <label-output label="Groep" :text="claimState.group && claimState.group.fullInfo" />
         <div class="mt-3">
           <responsible-member-detail title="Groepleidster" :responsible-member="claimState.groupLeader" />
         </div>
@@ -100,7 +100,7 @@
       </div>
     </div>
 
-    <div class="mt-5">
+    <div v-if="false" class="mt-5">
       <p class="font-semibold">Betrokkenheid andere partijen</p>
       <div class="px-5 w-96">
         <div class="flex">
@@ -108,6 +108,33 @@
           <label-output class="mt-1 w-48" label="Op" :text="claimState.madeUpOnDate" />
         </div>
         <label-output class="mt-1" label="Identiteit van de aangever" :text="claimState.identityDeclarant" />
+      </div>
+    </div>
+
+    <div>
+      <div>
+        <div class="md:flex md:gap-5">
+          <div class="w-96">
+            <multi-select
+              id="madeUpAtCountry"
+              :object="true"
+              track-by="label"
+              value-prop="label"
+              :repository="BelgianCitySearchRepository"
+              :resolve-on-load="true"
+              :options="[]"
+              :searchable="true"
+              label="Opgemaakt te"
+              rules="required"
+              placeholder="Zoek op naam/postcode"
+            />
+          </div>
+          <div class="mt-4">
+            <strong>Op <span class="text-red ml-1">*</span></strong>
+            <custom-input class="w-96" style="margin-top: 0.5em" :type="InputTypes.DATE" rules="required" name="madeUpOnDate" />
+          </div>
+        </div>
+        <custom-input class="mt-4 w-96" :type="InputTypes.TEXT" name="identityDeclarant" rules="required" label="Identiteit van de aangever (Naam en voornaam)" />
       </div>
     </div>
 
@@ -132,6 +159,8 @@ import { useStore } from 'vuex'
 import LabelOutput from '@/components/semantic/LabelOutput.vue'
 import { ActivityTypes } from '@/enums/activityTypes'
 import { DamageTypes } from '@/enums/damageTypes'
+import MultiSelect from '@/components/inputs/MultiSelect.vue'
+import CustomInput from '@/components/inputs/CustomInput.vue'
 
 export default defineComponent({
   name: 'AccidentDetails',
@@ -139,6 +168,8 @@ export default defineComponent({
     'custom-button': CustomButton,
     'label-output': LabelOutput,
     'responsible-member-detail': ResponsibleMemberDetail,
+    'multi-select': MultiSelect,
+    'custom-input': CustomInput,
   },
   setup() {
     const { scrollToTopOfPage } = useScrollToTop()

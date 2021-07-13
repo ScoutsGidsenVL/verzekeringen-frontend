@@ -28,31 +28,6 @@
             </div>
           </display-content-checkbox>
         </div>
-
-        <div>
-          <div>
-            <div class="flex gap-5">
-              <div class="w-96">
-                <multi-select
-                  id="madeUpAtCountry"
-                  :object="true"
-                  track-by="label"
-                  value-prop="label"
-                  :repository="BelgianCitySearchRepository"
-                  :resolve-on-load="true"
-                  :options="[]"
-                  :searchable="true"
-                  label="Opgemaakt te"
-                  rules="required"
-                  placeholder="Zoek op naam/postcode"
-                />
-              </div>
-
-              <custom-input class="mt-4 w-96" :type="InputTypes.DATE" rules="required" name="madeUpOnDate" label="Op" />
-            </div>
-            <custom-input class="mt-4 w-96" :type="InputTypes.TEXT" name="identityDeclarant" rules="required" label="Identiteit van de aangever (Naam en voornaam)" />
-          </div>
-        </div>
       </div>
     </div>
 
@@ -76,7 +51,6 @@ import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import DisplayContentCheckBox from '@/components/semantic/displayContentCheckbox.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
-import MultiSelect from '@/components/inputs/MultiSelect.vue'
 
 export default defineComponent({
   name: 'AccidentDetails',
@@ -85,7 +59,6 @@ export default defineComponent({
     'custom-button': CustomButton,
     'display-content-checkbox': DisplayContentCheckBox,
     'custom-input': CustomInput,
-    'multi-select': MultiSelect,
   },
   setup() {
     const { scrollToTopOfPage } = useScrollToTop()

@@ -11,10 +11,12 @@
       <div class="mt-3">
         <form>
           <strong>
-            <label>Tijdens welke soort ongeval vond de activiteit plaats?</label>
+            <label>
+              Tijdens welke soort ongeval vond de activiteit plaats?
+              <required rules="required" />
+            </label>
           </strong>
 
-          <required rules="required" />
           <custom-input v-show="false" :type="'activityTypes'" rules="RequiredActivityTypes" name="activityTypes" />
 
           <div>
