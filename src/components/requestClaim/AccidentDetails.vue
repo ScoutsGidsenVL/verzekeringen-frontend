@@ -3,9 +3,9 @@
     <div class="mb-5">
       <custom-headline-2 text="Gegevens van het ongeval" />
 
-      <div class="w-96">
+      <div style="width: 460px">
         <custom-input :type="InputTypes.DATE" rules="required" name="dateOfAccident" label="Datum ongeval" />
-        <custom-input class="mt-3" :type="InputTypes.TEXT_AREA" rules="required" name="activity" label="Tijdens welke activiteit vond het ongeval plaats?" />
+        <custom-input :textAreaWidth="'w-100'" class="mt-3" :type="InputTypes.TEXT_AREA" rules="required" name="activity" label="Tijdens welke activiteit vond het ongeval plaats?" />
       </div>
 
       <div class="mt-3">
@@ -72,7 +72,7 @@
 
     <div class="mb-5">
       <custom-headline-2 text="Beschrijving van het ongeval" />
-      <div style="max-width: 850px">
+      <div style="max-width: 1025px">
         <custom-input
           class="mt-3"
           :type="InputTypes.TEXT_AREA"

@@ -39,6 +39,7 @@
         :name="name"
         :class="{ 'opacity-0': loadingSubmit || isSubmitting }"
         :disabled="disabled || loadingSubmit || isSubmitting"
+        :step="step"
       />
     </div>
     <textarea
@@ -131,6 +132,10 @@ export default defineComponent({
       default: 'w-96',
     },
     placeholder: {
+      type: String,
+      required: false,
+    },
+    step: {
       type: String,
       required: false,
     },

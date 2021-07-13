@@ -88,6 +88,7 @@
             :type="InputTypes.TIME"
             name="startTime"
             label="Starttijd"
+            step="3600000"
           />
         </div>
         <div class="flex gap-4" :class="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING ? 'w-96' : 'w-80'">
@@ -102,7 +103,8 @@
           />
           <custom-input
             v-if="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING"
-            rules="required|checkEventDate:@endDate,@startDate,@startTime"
+            rules="required"
+            step="3600000"
             :type="InputTypes.TIME"
             name="endTime"
             label="Eindtijd"

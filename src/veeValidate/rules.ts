@@ -97,20 +97,6 @@ export const defineRules = (store: any) => {
     return true
   })
 
-  // @ts-ignore
-  defineRule('checkEventDate', (endTime: string, [endDate, startDate, startTime]) => {
-    const end: any = moment(endDate + 'T' + endTime + ':00.000Z')
-    const start: any = moment(startDate + 'T' + startTime + ':00.000Z')
-    const result = (end - start) / 1000
-
-    if (result < 86400) {
-      scrollTo()
-      return 'De startdatum en einddatum mogen niet minder dan 24 uur bedragen.'
-    }
-
-    return true
-  })
-
   defineRule('RequiredActivityTypes', (value: Array<ActivityTypes>) => {
     if (value.length === 0) {
       return 'Vereist een keuze te selecteren.'
