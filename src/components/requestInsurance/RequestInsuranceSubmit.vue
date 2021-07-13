@@ -29,19 +29,19 @@
 
 <script lang="ts">
 import { InsuranceTypeRepos, InsuranceTypeStoreSetters } from '@/enums/insuranceTypes'
+import { DraftRepository } from '@/repositories/insurances/draftRepository'
+import CallToAction from '@/components/customHeadlines/CallToAction.vue'
 import RequestInsuranceDetail from './RequestInsuranceDetail.vue'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import CustomInput from '@/components/inputs/CustomInput.vue'
-import CustomButton from '@/components/CustomButton.vue'
 import BackButton from '@/components/semantic/BackButton.vue'
-import { defineComponent, ref, watch } from 'vue'
+import CustomButton from '@/components/CustomButton.vue'
 import { HolderStates } from '@/enums/holderStates'
+import { defineComponent, ref, watch } from 'vue'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
-import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
-import { DraftRepository } from '@/repositories/insurances/draftRepository'
-import CallToAction from '@/components/customHeadlines/CallToAction.vue'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'RequestInsuranceSubmit',
@@ -66,13 +66,6 @@ export default defineComponent({
       },
     })
 
-    watch(
-      () => isSubmitting.value,
-      () => {
-        store.dispatch('setIsSubmittingState', isSubmitting.value)
-      }
-    )
-
     const onSubmit = handleSubmit(async (values: any) => {
       //@ts-ignore
       store.dispatch(InsuranceTypeStoreSetters[store.getters.insuranceTypeState], { ...store.getters.getCurrentInsuranceState, ...{ comment: values.comment } })
@@ -94,7 +87,9 @@ export default defineComponent({
           store.dispatch(InsuranceTypeStoreSetters[store.getters.insuranceTypeState], completed)
 
           //IF POSTED FROM A DRAFT, DRAFT WILL BE DELETED
-          RepositoryFactory.get(DraftRepository).removeById(route.params.id)
+          if (isEdit) {
+            RepositoryFactory.get(DraftRepository).removeById(route.params.id)
+          }
         })
         .catch(() => {
           error.value = true
@@ -120,14 +115,21 @@ export default defineComponent({
       store.dispatch('setHolderState', HolderStates.TYPE)
     }
 
+    watch(
+      () => isSubmitting.value,
+      () => {
+        store.dispatch('setIsSubmittingState', isSubmitting.value)
+      }
+    )
+
     return {
       HolderStates,
-      onSubmit,
+      isSubmitting,
       InputTypes,
+      onSubmit,
       error,
       back,
       data,
-      isSubmitting,
     }
   },
 })
