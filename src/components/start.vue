@@ -27,7 +27,11 @@ export default defineComponent({
         window.location.replace(url.toString())
       })
     } else {
-      router.push('/home/verzekeringen')
+      if (localStorage.getItem('homescreen')) {
+        router.push(String(localStorage.getItem('homescreen')))
+      } else {
+        router.push('/home/verzekeringen')
+      }
     }
     return {}
   },

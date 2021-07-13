@@ -172,4 +172,13 @@ const router = createRouter({
   routes,
 })
 
+router.beforeEach((to, from, next) => {
+  if (to.meta.homescreen) {
+    localStorage.setItem('homescreen', String(to.meta.homescreen))
+    next()
+  } else {
+    next()
+  }
+})
+
 export default router
