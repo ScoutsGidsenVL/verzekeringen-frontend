@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 
 export default defineComponent({
   name: 'DisplayContentCheckBox',
@@ -37,8 +37,16 @@ export default defineComponent({
       required: true,
     },
   },
-  setup() {
+  emits: ['changeBoolean'],
+  setup(props, context) {
     const choice = ref<boolean>(false)
+
+    watch(
+      () => choice.value,
+      () => {
+        context.emit('changeBoolean', choice.value)
+      }
+    )
 
     return {
       choice,

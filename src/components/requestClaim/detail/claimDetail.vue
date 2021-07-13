@@ -88,8 +88,10 @@
           </form>
         </div>
         <strong>Schade aan medisch hulpmiddel</strong>
-
-        <label-output class="mt-1" :text="claimState.damageType === DamageTypes.GLASSES ? 'Bril schade' : 'Materiële schade'" />
+        <div>
+          <input :disabled="true" :id="'damage'" v-model="claimState.isDamage" class="cursor-pointer" type="checkbox" :name="'damage'" :value="true" />
+          <label :for="'damage'" class="ml-1">Bril-/materiële schade</label>
+        </div>
       </div>
     </div>
 
@@ -100,14 +102,37 @@
       </div>
     </div>
 
-    <div v-if="false" class="mt-5">
+    <div v-if="claimState.involvedPartiesChoices.includes(true)" class="mt-5">
       <p class="font-semibold">Betrokkenheid andere partijen</p>
-      <div class="ml-5 w-96">
-        <div class="flex">
-          <label-output class="mt-1 w-72" label="Opgemaakt te" :text="claimState.madeUpAtCountry.postalCode + ' ' + claimState.madeUpAtCountry.city" />
-          <label-output class="mt-1 w-48" label="Op" :text="claimState.madeUpOnDate" />
+
+      <div class="ml-5 mb-5" v-if="claimState.involvedPartiesChoices[0] === true">
+        <strong>Is het ongeval te wijten aan een fout van een andere verzekerde/ of derde?</strong>
+        <div>
+          <label-output v-if="claimState.involvedPartyDescription" class="mt-1" label="Naam en adres" :text="claimState.involvedPartyDescription" />
+          <label-output v-if="claimState.involvedPartyBirthdate" class="mt-1" label="Geboortedatum" :text="claimState.involvedPartyBirthdate" />
         </div>
-        <label-output class="mt-1" label="Identiteit van de aangever" :text="claimState.identityDeclarant" />
+      </div>
+
+      <div class="ml-5 mb-5" v-if="claimState.involvedPartiesChoices[1] === true">
+        <strong>Werd er een vastelling gedaan door een verbaliserende autoriteit?</strong>
+        <div>
+          <label-output v-if="claimState.authorityDescription" class="mt-1" label="Welke" :text="claimState.authorityDescription" />
+          <label-output v-if="claimState.pvNumber" class="mt-1" label="Eventueel nummer van proces-verbaal" :text="claimState.pvNumber" />
+        </div>
+      </div>
+
+      <div class="ml-5 mb-5" v-if="claimState.involvedPartiesChoices[2] === true">
+        <strong>Waren er getuigen van het ongeval?</strong>
+        <div>
+          <label-output v-if="claimState.witnessDescription" class="mt-1" label="Welke" :text="claimState.witnessDescription" />
+        </div>
+      </div>
+
+      <div class="ml-5 mb-5" v-if="claimState.involvedPartiesChoices[2] === true">
+        <strong>Hield iemand van de leiding toezicht op het moment dat het ongeval plaatsvond?</strong>
+        <div>
+          <label-output v-if="claimState.leadershipDescription" class="mt-1" label="Naam en voornaam" :text="claimState.leadershipDescription" />
+        </div>
       </div>
     </div>
 

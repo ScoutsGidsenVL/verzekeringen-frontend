@@ -54,16 +54,8 @@
           <div>
             <div class="flex gap-5">
               <div>
-                <input :id="DamageTypes.GLASSES" v-model="selectedDamageType" class="cursor-pointer" type="radio" :name="DamageTypes.GLASSES" :value="DamageTypes.GLASSES" />
-                <label :for="DamageTypes.GLASSES" class="ml-1">Bril schade</label>
-              </div>
-              <!-- <custom-input class="mt-3 w-96" :type="InputTypes.TEXT" name="something" /> -->
-            </div>
-
-            <div class="flex gap-5">
-              <div>
-                <input :id="DamageTypes.MATERIAL" v-model="selectedDamageType" class="cursor-pointer" type="radio" :name="DamageTypes.MATERIAL" :value="DamageTypes.MATERIAL" />
-                <label :for="DamageTypes.MATERIAL" class="ml-1">Materiële schade</label>
+                <input :id="'damage'" v-model="isDamage" class="cursor-pointer" type="checkbox" :name="'damage'" :value="true" />
+                <label :for="'damage'" class="ml-1">Bril-/materiële schade</label>
               </div>
               <!-- <custom-input class="mt-3 w-96" :type="InputTypes.TEXT" name="something" /> -->
             </div>
@@ -123,7 +115,7 @@ export default defineComponent({
     const store = useStore()
     const isEdit = !!route.params.id
     const selectedActivityTypes = ref<Array<ActivityTypes>>([])
-    const selectedDamageType = ref<DamageTypes>(DamageTypes.GLASSES)
+    const isDamage = ref<Array<boolean>>([])
 
     const { handleSubmit, values, validate, isSubmitting } = useForm<Claim>({
       initialValues: {},
@@ -140,7 +132,7 @@ export default defineComponent({
           dateOfAccident: values.dateOfAccident,
           activity: values.activity,
           activityTypes: selectedActivityTypes.value,
-          damageType: selectedDamageType.value,
+          isDamage: isDamage.value.length === 1 ? true : false,
           officialReportDescription: values.officialReportDescription,
         })
 
@@ -167,7 +159,7 @@ export default defineComponent({
       values,
       ActivityTypes,
       selectedActivityTypes,
-      selectedDamageType,
+      isDamage,
       DamageTypes,
     }
   },

@@ -4,27 +4,29 @@
       <custom-headline-2 text="Betrokkenheid andere partijen" />
       <div>
         <div>
-          <display-content-checkbox text="Is het ongeval te wijten aan een fout van een andere verzekerde/ of derde?">
+          <display-content-checkbox text="Is het ongeval te wijten aan een fout van een andere verzekerde/ of derde?" @changeBoolean="changeBoolean($event, 0)">
             <div class="w-96">
               <custom-input :type="InputTypes.TEXT_AREA" name="involvedPartyDescription" label="Naam en adres" />
               <custom-input class="mt-1" :type="InputTypes.DATE" name="involvedPartyBirthdate" label="Geboortedatum" />
             </div>
           </display-content-checkbox>
 
-          <display-content-checkbox text="Werd er een vastelling gedaan door een verbaliserende autoriteit?">
+          <display-content-checkbox text="Werd er een vastelling gedaan door een verbaliserende autoriteit?" @changeBoolean="changeBoolean($event, 1)">
             <div class="w-96">
-              <custom-input :type="InputTypes.TEXT" name="pvNumber" label="Welke" />
+              <custom-input :type="InputTypes.TEXT" name="authorityDescription" label="Welke" />
               <custom-input class="mt-1" :type="InputTypes.TEXT" name="pvNumber" label="Eventueel nummer van proces-verbaal" />
             </div>
           </display-content-checkbox>
 
-          <display-content-checkbox text="Waren er getuigen van het ongeval?">
-            <div></div>
+          <display-content-checkbox text="Waren er getuigen van het ongeval?" @changeBoolean="changeBoolean($event, 2)">
+            <div>
+              <custom-input :type="InputTypes.TEXT_AREA" name="witnessDescription" label="Naam en adres van getuigen" />
+            </div>
           </display-content-checkbox>
 
-          <display-content-checkbox text="Hield iemand van de leiding toezicht op het moment dat het ongeval plaatsvond?">
+          <display-content-checkbox text="Hield iemand van de leiding toezicht op het moment dat het ongeval plaatsvond?" @changeBoolean="changeBoolean($event, 3)">
             <div class="w-96">
-              <custom-input :type="InputTypes.TEXT" name="leadershipdescription" label="Naam en voornaam" />
+              <custom-input :type="InputTypes.TEXT" name="leadershipDescription" label="Naam en voornaam" />
             </div>
           </display-content-checkbox>
         </div>
@@ -66,7 +68,9 @@ export default defineComponent({
     const store = useStore()
     const isEdit = !!route.params.id
     const { handleSubmit, values, validate, isSubmitting } = useForm<Claim>({
-      initialValues: {},
+      initialValues: {
+        involvedPartiesChoices: [false, false, false, false],
+      },
     })
 
     const claimState = computed((): Claim => {
@@ -80,6 +84,13 @@ export default defineComponent({
           madeUpAtCountry: values.madeUpAtCountry,
           madeUpOnDate: values.madeUpOnDate,
           identityDeclarant: values.identityDeclarant,
+          involvedPartiesChoices: values.involvedPartiesChoices,
+          involvedPartyDescription: values.involvedPartiesChoices[0] ? values.involvedPartyDescription : undefined,
+          involvedPartyBirthdate: values.involvedPartiesChoices[0] ? values.involvedPartyBirthdate : undefined,
+          authorityDescription: values.involvedPartiesChoices[1] ? values.authorityDescription : undefined,
+          pvNumber: values.involvedPartiesChoices[1] ? values.pvNumber : undefined,
+          witnessDescription: values.involvedPartiesChoices[2] ? values.witnessDescription : undefined,
+          leadershipDescription: values.involvedPartiesChoices[3] ? values.leadershipDescription : undefined,
         })
 
         store.dispatch('setClaimState', { ...claimState.value, ...newClaimState.value })
@@ -89,8 +100,15 @@ export default defineComponent({
 
     scrollToTopOfPage()
 
+    const changeBoolean = (bool: boolean, pos: number) => {
+      if (values.involvedPartiesChoices) {
+        values.involvedPartiesChoices[pos] = bool
+      }
+    }
+
     return {
       BelgianCitySearchRepository,
+      changeBoolean,
       isSubmitting,
       InputTypes,
       claimState,

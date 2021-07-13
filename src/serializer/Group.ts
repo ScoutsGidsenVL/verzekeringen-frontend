@@ -1,5 +1,3 @@
-import { group } from 'console'
-
 export interface Group {
   readonly id?: number
   readonly location?: string

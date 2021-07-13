@@ -17,11 +17,12 @@ export interface Claim {
   readonly activity?: string
   activityTypes?: Array<ActivityTypes>
   readonly usedTransport?: string
-  readonly damageType?: DamageTypes
+  readonly isDamage?: boolean
   readonly description?: string
   readonly involvedPartyDescription?: string
   readonly involvedPartyBirthdate?: string
   readonly officialReportDescription?: string
+  readonly authorityDescription?: string
   readonly pvNumber?: string
   readonly witnessDescription?: string
   readonly leadershipDescription?: string
@@ -30,6 +31,7 @@ export interface Claim {
   readonly madeUpAtCountry?: Country
   readonly madeUpOnDate?: string
   readonly identityDeclarant?: string
+  involvedPartiesChoices?: Array<boolean>
 }
 
 export const ClaimDeserializer = (input: any): Claim => {
@@ -44,16 +46,18 @@ export const ClaimDeserializer = (input: any): Claim => {
     activity: input.activity ? input.activity : undefined,
     activityTypes: input.activity_type ? input.activity_type : undefined,
     usedTransport: input.used_transport ? input.used_transport : undefined,
-    damageType: input.damage_type ? input.damage_type : undefined,
+    isDamage: input.isDamage ? input.isDamage : undefined,
     description: input.description ? input.description : undefined,
     involvedPartyDescription: input.involved_party_description ? input.involved_party_description : undefined,
     involvedPartyBirthdate: input.involved_party_birthdate ? input.involved_party_birthdate : undefined,
     officialReportDescription: input.official_report_description ? input.official_report_description : undefined,
+    authorityDescription: input.authority_description ? input.authority_description : undefined,
     pvNumber: input.pv_number ? input.pv_number : undefined,
     witnessDescription: input.witness_description ? input.witness_description : undefined,
     leadershipDescription: input.leadership_description ? input.leadership_description : undefined,
     country: input.country ? input.country : undefined,
     victim: input.victim ? input.victim : undefined,
+    involvedPartiesChoices: [false, false, false, false],
   }
 
   return single
@@ -72,7 +76,7 @@ export const ClaimSerializer = (input: any): any => {
     activity: input.activity ? input.activity : undefined,
     activity_type: input.activityTypes ? input.activityTypes : undefined,
     used_transport: input.usedTransport ? input.usedTransport : undefined,
-    damage_type: input.damageType ? input.damageType : undefined,
+    isDamage: input.isDamage ? input.isDamage : undefined,
     description: input.description ? input.description : undefined,
     involved_party_description: input.involvedPartyDescription ? input.involvedPartyDescription : undefined,
     involved_party_birthdate: input.involvedPartyBirthdate ? input.involvedPartyBirthdate : undefined,
