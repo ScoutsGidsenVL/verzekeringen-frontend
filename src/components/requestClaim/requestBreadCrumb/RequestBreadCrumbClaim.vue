@@ -1,5 +1,5 @@
 <template>
-  <div class="flex smo:flex-col py-3">
+  <div class="flex py-3">
     <bread-crumb-item
       :is-change-state-possible="claimHolderState === ClaimHolderStates.TWO || claimHolderState === ClaimHolderStates.THREE || claimHolderState === ClaimHolderStates.FOUR"
       :visible-on-state="ClaimHolderStates.ONE"

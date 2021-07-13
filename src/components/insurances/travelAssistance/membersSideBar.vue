@@ -6,8 +6,8 @@
       </div>
 
       <div class="h-full overflow-y-scroll mt-4 pb-24">
-        <hr v-if="selectedMembers.length > 0" class="mt-4 border-t-2 w-96 border-black" />
-        <div v-for="member in selectedMembers" :key="member.id" class="w-96">
+        <hr v-if="selectedMembers.length > 0" class="mt-4 border-t-2 xs:w-72 md:w-96 border-black" />
+        <div v-for="member in selectedMembers" :key="member.id" class="xs:w-72 md:w-96">
           <member-item :member="member">
             <div>
               <div class="pt-3 pb-4 text-right">

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex smo:mb-2" style="margin-right: 2em">
+  <div class="flex" style="margin-right: 1em">
     <div
       v-if="isChangeStatePossible"
       :class="['h-10 w-10 text-center p-2 rounded-full border-2 border-lightGray cursor-pointer', visibleOnState === claimHolderState ? 'bg-lightGreen' : '']"

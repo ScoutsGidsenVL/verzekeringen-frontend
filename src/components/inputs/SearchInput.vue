@@ -11,7 +11,7 @@
       type="text"
       :disabled="loadingSubmit"
       :class="{ 'opacity-0': loadingSubmit }"
-      class="appearance-none border rounded w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      class="appearance-none border rounded xs:w-72 md:w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
       @input="search()"
     />
     <div v-if="loading" style="margin-left: -2em" class="mt-2">

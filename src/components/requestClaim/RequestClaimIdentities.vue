@@ -169,11 +169,11 @@
         </div>
       </div>
 
-      <div class="mt-3 md:ml-20 w-96">
+      <div class="mt-3 md:ml-20 w-72">
         <custom-input :placeholder="'BE01 2345 6789 4444'" :type="InputTypes.TEXT" rules="BankNumberLength:victim.bankNumber" name="victim.bankNumber" label="Bankrekeningnummer" :maxlength="19" />
       </div>
 
-      <div v-show="values.victim && values.victim.membershipNumber" class="mt-3 ml-20 w-96">
+      <div v-show="values.victim && values.victim.membershipNumber" class="mt-3 md:ml-20 w-72">
         <custom-input :disabled="true" :type="InputTypes.TEXT" name="victim.membershipNumber" label="Lidnummer" />
       </div>
     </div>
@@ -241,6 +241,7 @@ export default defineComponent({
 
     const { handleSubmit, values, validate, isSubmitting } = useForm<Claim>({
       initialValues: {
+        group: userData.value.scoutsGroups && userData.value.scoutsGroups[0] ? userData.value.scoutsGroups[0] : undefined,
         victim: {
           country: initialCountry.value,
         },
