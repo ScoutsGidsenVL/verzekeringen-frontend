@@ -32,6 +32,7 @@
         />
         <label-output :text="claimState.victim.email" />
         <label-output class="mt-1" label="Geboortedatum" :text="claimState.victim.birthDate" />
+        <label-output class="mt-1" label="Geslacht" :text="claimState.victim.gender" />
         <label-output label="Lidnummer" :text="claimState.victim.membershipNumber" />
         <label-output label="Bankrekeningnummer" :text="claimState.victim.bankNumber" />
       </div>
