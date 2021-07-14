@@ -5,27 +5,27 @@
       <div>
         <div>
           <display-content-checkbox text="Is het ongeval te wijten aan een fout van een andere verzekerde/ of derde?" @changeBoolean="changeBoolean($event, 0)">
-            <div class="w-96">
+            <div class="md:w-96 xs:w-72">
               <custom-input :type="InputTypes.TEXT_AREA" name="involvedPartyDescription" label="Naam en adres" />
               <custom-input class="mt-1" :type="InputTypes.DATE" name="involvedPartyBirthdate" label="Geboortedatum" />
             </div>
           </display-content-checkbox>
 
           <display-content-checkbox text="Werd er een vastelling gedaan door een verbaliserende autoriteit?" @changeBoolean="changeBoolean($event, 1)">
-            <div class="w-96">
+            <div class="md:w-96 xs:w-72">
               <custom-input :type="InputTypes.TEXT" name="authorityDescription" label="Welke" />
               <custom-input class="mt-1" :type="InputTypes.TEXT" name="pvNumber" label="Eventueel nummer van proces-verbaal" />
             </div>
           </display-content-checkbox>
 
           <display-content-checkbox text="Waren er getuigen van het ongeval?" @changeBoolean="changeBoolean($event, 2)">
-            <div>
+            <div md:w-96 xs:w-72>
               <custom-input :type="InputTypes.TEXT_AREA" name="witnessDescription" label="Naam en adres van getuigen" />
             </div>
           </display-content-checkbox>
 
           <display-content-checkbox text="Hield iemand van de leiding toezicht op het moment dat het ongeval plaatsvond?" @changeBoolean="changeBoolean($event, 3)">
-            <div class="w-96">
+            <div class="md:w-96 xs:w-72">
               <custom-input :type="InputTypes.TEXT" name="leadershipDescription" label="Naam en voornaam" />
             </div>
           </display-content-checkbox>

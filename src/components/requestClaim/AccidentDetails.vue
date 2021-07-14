@@ -3,9 +3,16 @@
     <div class="mb-5">
       <custom-headline-2 text="Gegevens van het ongeval" />
 
-      <div style="width: 460px">
-        <custom-input :type="InputTypes.DATE" rules="required" name="dateOfAccident" label="Datum ongeval" />
-        <custom-input :textAreaWidth="'w-100'" class="mt-3" :type="InputTypes.TEXT_AREA" rules="required" name="activity" label="Tijdens welke activiteit vond het ongeval plaats?" />
+      <div style="width: 470px">
+        <custom-input class="xs:w-72 md:w-100" :type="InputTypes.DATE" rules="required" name="dateOfAccident" label="Datum ongeval" />
+        <custom-input
+          :textAreaWidth="'xs:w-72 md:w-100 md:min-w-full'"
+          class="mt-3"
+          :type="InputTypes.TEXT_AREA"
+          rules="required"
+          name="activity"
+          label="Tijdens welke activiteit vond het ongeval plaats?"
+        />
       </div>
 
       <div class="mt-3">
@@ -21,7 +28,7 @@
 
           <div>
             <input :id="ActivityTypes.REGULAR" v-model="selectedActivityTypes" class="cursor-pointer" type="checkbox" :name="ActivityTypes.REGULAR" :value="ActivityTypes.REGULAR" />
-            <label :for="ActivityTypes.REGULAR" class="ml-1">Tijdens een activiteit van de hierdoor vermelde scoutsgroep</label>
+            <label :for="ActivityTypes.REGULAR" class="inline ml-2">Tijdens een activiteit van de hierdoor vermelde scoutsgroep</label>
           </div>
 
           <div>
@@ -33,12 +40,12 @@
               :name="ActivityTypes.IRREGULAR_LOCATION"
               :value="ActivityTypes.IRREGULAR_LOCATION"
             />
-            <label :for="ActivityTypes.IRREGULAR_LOCATION" class="ml-1">Tijdens een activiteit op verplaatsing</label>
+            <label :for="ActivityTypes.IRREGULAR_LOCATION" class="ml-2">Tijdens een activiteit op verplaatsing</label>
           </div>
 
           <div>
             <input :id="ActivityTypes.TRANSPORT" v-model="selectedActivityTypes" class="cursor-pointer" type="checkbox" :name="ActivityTypes.TRANSPORT" :value="ActivityTypes.TRANSPORT" />
-            <label :for="ActivityTypes.TRANSPORT" class="ml-1">Verplaatsing van of naar activiteit</label>
+            <label :for="ActivityTypes.TRANSPORT" class="ml-2">Verplaatsing van of naar activiteit</label>
           </div>
 
           <ErrorMessage name="activityTypes" class="text-red text-sm block my-2 w-80" />
@@ -73,7 +80,7 @@
           rules="required"
           name="officialReportDescription"
           label="Beschrijving van het ongeval (oorzaken, omstandigheden en gevolgen, opgelopen verwondingen en/of schade)"
-          :textAreaWidth="'w-100'"
+          :textAreaWidth="'xs:w-72 md:w-100 md:min-w-full'"
         />
       </div>
     </div>
