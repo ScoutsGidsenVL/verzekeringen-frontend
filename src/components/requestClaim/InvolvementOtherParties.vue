@@ -4,27 +4,27 @@
       <custom-headline-2 text="Betrokkenheid andere partijen" />
       <div>
         <div>
-          <display-content-checkbox text="Is het ongeval te wijten aan een fout van een andere verzekerde/ of derde?" @changeBoolean="changeBoolean($event, 0)">
+          <display-content-checkbox text="Is het ongeval te wijten aan een fout van een andere verzekerde/ of derde?">
             <div class="md:w-96 xs:w-72">
               <custom-input :type="InputTypes.TEXT_AREA" name="involvedPartyDescription" label="Naam en adres" />
               <custom-input class="mt-1" :type="InputTypes.DATE" name="involvedPartyBirthdate" label="Geboortedatum" />
             </div>
           </display-content-checkbox>
 
-          <display-content-checkbox text="Werd er een vastelling gedaan door een verbaliserende autoriteit?" @changeBoolean="changeBoolean($event, 1)">
+          <display-content-checkbox text="Werd er een vastelling gedaan door een verbaliserende autoriteit?">
             <div class="md:w-96 xs:w-72">
               <custom-input :type="InputTypes.TEXT" name="officialReportDescription" label="Welke" />
               <custom-input class="mt-1" :type="InputTypes.TEXT" name="pvNumber" label="Eventueel nummer van proces-verbaal" />
             </div>
           </display-content-checkbox>
 
-          <display-content-checkbox text="Waren er getuigen van het ongeval?" @changeBoolean="changeBoolean($event, 2)">
-            <div md:w-96 xs:w-72>
+          <display-content-checkbox text="Waren er getuigen van het ongeval?">
+            <div class="md:w-96 xs:w-72">
               <custom-input :type="InputTypes.TEXT_AREA" name="witnessDescription" label="Naam en adres van getuigen" />
             </div>
           </display-content-checkbox>
 
-          <display-content-checkbox text="Hield iemand van de leiding toezicht op het moment dat het ongeval plaatsvond?" @changeBoolean="changeBoolean($event, 3)">
+          <display-content-checkbox text="Hield iemand van de leiding toezicht op het moment dat het ongeval plaatsvond?">
             <div class="md:w-96 xs:w-72">
               <custom-input :type="InputTypes.TEXT" name="leadershipDescription" label="Voornaam en achternaam" />
             </div>
@@ -84,12 +84,12 @@ export default defineComponent({
           madeUpAtCountry: values.madeUpAtCountry,
           madeUpOnDate: values.madeUpOnDate,
           involvedPartiesChoices: values.involvedPartiesChoices,
-          involvedPartyDescription: values.involvedPartiesChoices[0] ? values.involvedPartyDescription : undefined,
-          involvedPartyBirthdate: values.involvedPartiesChoices[0] ? values.involvedPartyBirthdate : undefined,
-          officialReportDescription: values.involvedPartiesChoices[1] ? values.officialReportDescription : undefined,
-          pvNumber: values.involvedPartiesChoices[1] ? values.pvNumber : undefined,
-          witnessDescription: values.involvedPartiesChoices[2] ? values.witnessDescription : undefined,
-          leadershipDescription: values.involvedPartiesChoices[3] ? values.leadershipDescription : undefined,
+          involvedPartyDescription: values.involvedPartyDescription ? values.involvedPartyDescription : undefined,
+          involvedPartyBirthdate: values.involvedPartyBirthdate ? values.involvedPartyBirthdate : undefined,
+          officialReportDescription: values.officialReportDescription ? values.officialReportDescription : undefined,
+          pvNumber: values.pvNumber ? values.pvNumber : undefined,
+          witnessDescription: values.witnessDescription ? values.witnessDescription : undefined,
+          leadershipDescription: values.leadershipDescription ? values.leadershipDescription : undefined,
         })
 
         store.dispatch('setClaimState', { ...claimState.value, ...newClaimState.value })

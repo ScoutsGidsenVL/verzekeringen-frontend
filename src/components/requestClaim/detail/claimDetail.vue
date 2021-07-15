@@ -74,10 +74,10 @@
       </div>
     </div>
 
-    <div v-if="claimState.involvedPartiesChoices.includes(true)" class="mt-5">
+    <div v-if="claimState.involvedPartyDescription || claimState.officialReportDescription || claimState.witnessDescription || claimState.leadershipDescription" class="mt-5">
       <p class="font-semibold">Betrokkenheid andere partijen</p>
 
-      <div class="ml-5 mb-5" v-if="claimState.involvedPartiesChoices[0] === true">
+      <div class="ml-5 mb-5" v-if="claimState.involvedPartyDescription">
         <strong>Is het ongeval te wijten aan een fout van een andere verzekerde/ of derde?</strong>
         <div>
           <label-output v-if="claimState.involvedPartyDescription" class="mt-1" :text="claimState.involvedPartyDescription" />
@@ -85,7 +85,7 @@
         </div>
       </div>
 
-      <div class="ml-5 mb-5" v-if="claimState.involvedPartiesChoices[1] === true">
+      <div class="ml-5 mb-5" v-if="claimState.officialReportDescription">
         <strong>Werd er een vastelling gedaan door een verbaliserende autoriteit?</strong>
         <div>
           <label-output v-if="claimState.officialReportDescription" class="mt-1" :text="claimState.officialReportDescription" />
@@ -93,14 +93,14 @@
         </div>
       </div>
 
-      <div class="ml-5 mb-5" v-if="claimState.involvedPartiesChoices[2] === true">
+      <div class="ml-5 mb-5" v-if="claimState.witnessDescription">
         <strong>Waren er getuigen van het ongeval?</strong>
         <div>
           <label-output v-if="claimState.witnessDescription" class="mt-1" :text="claimState.witnessDescription" />
         </div>
       </div>
 
-      <div class="ml-5 mb-5" v-if="claimState.involvedPartiesChoices[2] === true">
+      <div class="ml-5 mb-5" v-if="claimState.leadershipDescription">
         <strong>Hield iemand van de leiding toezicht op het moment dat het ongeval plaatsvond?</strong>
         <div>
           <label-output v-if="claimState.leadershipDescription" class="mt-1" :text="claimState.leadershipDescription" />
@@ -142,9 +142,9 @@
       <custom-button text="Bevestig" />
     </div>
 
-    <pre>
+    <!-- <pre>
       {{ claimState }}
-    </pre>
+    </pre> -->
   </form>
 </template>
 
