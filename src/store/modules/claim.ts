@@ -9,7 +9,7 @@ export interface ClaimState {
 
 export default {
   state: (): ClaimState => ({
-    claimHolderState: ClaimHolderStates.THREE,
+    claimHolderState: ClaimHolderStates.ONE,
     claimState: {},
   }),
   getters: {

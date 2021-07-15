@@ -13,7 +13,7 @@
 
           <display-content-checkbox text="Werd er een vastelling gedaan door een verbaliserende autoriteit?" @changeBoolean="changeBoolean($event, 1)">
             <div class="md:w-96 xs:w-72">
-              <custom-input :type="InputTypes.TEXT" name="authorityDescription" label="Welke" />
+              <custom-input :type="InputTypes.TEXT" name="officialReportDescription" label="Welke" />
               <custom-input class="mt-1" :type="InputTypes.TEXT" name="pvNumber" label="Eventueel nummer van proces-verbaal" />
             </div>
           </display-content-checkbox>
@@ -87,7 +87,7 @@ export default defineComponent({
           involvedPartiesChoices: values.involvedPartiesChoices,
           involvedPartyDescription: values.involvedPartiesChoices[0] ? values.involvedPartyDescription : undefined,
           involvedPartyBirthdate: values.involvedPartiesChoices[0] ? values.involvedPartyBirthdate : undefined,
-          authorityDescription: values.involvedPartiesChoices[1] ? values.authorityDescription : undefined,
+          officialReportDescription: values.involvedPartiesChoices[1] ? values.officialReportDescription : undefined,
           pvNumber: values.involvedPartiesChoices[1] ? values.pvNumber : undefined,
           witnessDescription: values.involvedPartiesChoices[2] ? values.witnessDescription : undefined,
           leadershipDescription: values.involvedPartiesChoices[3] ? values.leadershipDescription : undefined,

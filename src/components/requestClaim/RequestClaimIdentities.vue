@@ -48,7 +48,7 @@
       <div class="md:ml-20 my-3">
         <div>
           <strong class="cursor-pointer text-lightGreen hover:text-green" @click="openMemberSideBar()">+ Kies een lid</strong>
-          <members-side-bar isOverflowHidden="false" v-model:isDisplay="isMemberSideBarDisplay" :close-on-add="true" :existing-list="members" title="Lid" @addMemberToList="addMember($event)" />
+          <members-side-bar v-model:isDisplay="isMemberSideBarDisplay" :close-on-add="true" :existing-list="members" title="Lid" @addMemberToList="addMember($event)" />
         </div>
 
         <div v-show="false" class="mt-3">
@@ -170,7 +170,7 @@
       </div>
 
       <div class="mt-3 md:ml-20 w-72">
-        <custom-input :placeholder="'BE01 2345 6789 4444'" :type="InputTypes.TEXT" rules="BankNumberLength:victim.bankNumber" name="victim.bankNumber" label="Bankrekeningnummer" :maxlength="19" />
+        <custom-input :placeholder="'BE01 2345 6789 4444'" :type="InputTypes.TEXT" rules="bankAccountLength:victim.bankAccount" name="victim.bankAccount" label="Bankrekeningnummer" :maxlength="19" />
       </div>
 
       <div v-show="values.victim && values.victim.membershipNumber" class="mt-3 md:ml-20 w-72">
@@ -260,6 +260,7 @@ export default defineComponent({
           group: values.group,
           groupLeader: userData.value,
           victim: values.victim,
+          victimMember: values.victimMember,
         })
 
         store.dispatch('setClaimState', newClaimState)
@@ -290,6 +291,8 @@ export default defineComponent({
 
     const addMember = (member: Member) => {
       if (values.victim) {
+        values.victimMember = member.id
+        values.victim.id = member.id
         values.victim.firstName = member.firstName
         values.victim.lastName = member.lastName
         values.victim.street = member.street

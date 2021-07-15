@@ -31,16 +31,26 @@
             <label :for="ActivityTypes.REGULAR" class="inline ml-2">Tijdens een activiteit van de hierdoor vermelde scoutsgroep</label>
           </div>
 
-          <div>
-            <input
-              :id="ActivityTypes.IRREGULAR_LOCATION"
-              v-model="selectedActivityTypes"
-              class="cursor-pointer"
-              type="checkbox"
-              :name="ActivityTypes.IRREGULAR_LOCATION"
-              :value="ActivityTypes.IRREGULAR_LOCATION"
-            />
-            <label :for="ActivityTypes.IRREGULAR_LOCATION" class="ml-2">Tijdens een activiteit op verplaatsing</label>
+          <div class="py-5">
+            <div>
+              <input
+                :id="ActivityTypes.IRREGULAR_LOCATION"
+                v-model="selectedActivityTypes"
+                class="cursor-pointer"
+                type="checkbox"
+                :name="ActivityTypes.IRREGULAR_LOCATION"
+                :value="ActivityTypes.IRREGULAR_LOCATION"
+              />
+              <label :for="ActivityTypes.IRREGULAR_LOCATION" class="ml-2">Tijdens een activiteit op verplaatsing</label>
+              <label class="invisible">
+                <!-- somehow without this code it wont work? -->
+                {{ selectedActivityTypes }}
+              </label>
+            </div>
+
+            <div>
+              <custom-input class="xs:w-72 md:w-72" :type="InputTypes.TEXT" placeholder="Gebruikt voertuig" name="usedTransport" />
+            </div>
           </div>
 
           <div>
@@ -61,10 +71,18 @@
           <div>
             <div class="flex gap-5">
               <div>
-                <input :id="'damage'" v-model="isDamage" class="cursor-pointer" type="checkbox" :name="'damage'" :value="true" />
-                <label :for="'damage'" class="ml-1">Bril-/materiële schade</label>
+                <input :id="'isDamage'" v-model="isDamage" class="cursor-pointer" type="checkbox" :name="'isDamage'" :value="true" />
+                <label :for="'isDamage'" class="ml-1">Bril-/materiële schade</label>
               </div>
+
               <!-- <custom-input class="mt-3 w-96" :type="InputTypes.TEXT" name="something" /> -->
+            </div>
+            <div>
+              <custom-input placeholder="Medisch hulpmiddel" class="xs:w-72 md:w-72" :type="InputTypes.TEXT" name="damage" />
+              <label class="invisible">
+                <!-- somehow without this code it wont work? -->
+                {{ isDamage }}
+              </label>
             </div>
           </div>
         </form>
@@ -78,7 +96,7 @@
           class="mt-3"
           :type="InputTypes.TEXT_AREA"
           rules="required"
-          name="officialReportDescription"
+          name="description"
           label="Beschrijving van het ongeval (oorzaken, omstandigheden en gevolgen, opgelopen verwondingen en/of schade)"
           :textAreaWidth="'xs:w-72 md:w-100 md:min-w-full'"
         />
@@ -140,7 +158,9 @@ export default defineComponent({
           activity: values.activity,
           activityTypes: selectedActivityTypes.value,
           isDamage: isDamage.value.length === 1 ? true : false,
-          officialReportDescription: values.officialReportDescription,
+          description: values.description,
+          usedTransport: values.usedTransport,
+          damage: values.damage,
         })
 
         store.dispatch('setClaimState', { ...claimState.value, ...newClaimState.value })
@@ -151,12 +171,38 @@ export default defineComponent({
     scrollToTopOfPage()
 
     watch(
+      () => values.usedTransport,
+      () => {
+        if (values.usedTransport && values.usedTransport.length > 0) {
+          if (selectedActivityTypes.value.includes(ActivityTypes.IRREGULAR_LOCATION) === false) {
+            selectedActivityTypes.value.push(ActivityTypes.IRREGULAR_LOCATION)
+            values.activityTypes = selectedActivityTypes.value
+          }
+        } else if (selectedActivityTypes.value.includes(ActivityTypes.IRREGULAR_LOCATION)) {
+          selectedActivityTypes.value = selectedActivityTypes.value.filter((e) => e !== ActivityTypes.IRREGULAR_LOCATION)
+        }
+      }
+    )
+
+    watch(
       () => selectedActivityTypes.value,
       () => {
         values.activityTypes = selectedActivityTypes.value
       }
     )
 
+    watch(
+      () => values.damage,
+      () => {
+        if (values.damage && values.damage.length > 0) {
+          if (isDamage.value.length === 0) {
+            isDamage.value = [true]
+          }
+        } else if (isDamage.value.includes(true)) {
+          isDamage.value = []
+        }
+      }
+    )
     return {
       isSubmitting,
       InputTypes,

@@ -34,7 +34,7 @@
         <label-output class="mt-1" label="Geboortedatum" :text="claimState.victim.birthDate" />
         <label-output class="mt-1" label="Geslacht" :text="claimState.victim.gender" />
         <label-output label="Lidnummer" :text="claimState.victim.membershipNumber" />
-        <label-output label="Bankrekeningnummer" :text="claimState.victim.bankNumber" />
+        <label-output label="Bankrekeningnummer" :text="claimState.victim.bankAccount" />
       </div>
     </div>
 
@@ -99,7 +99,7 @@
     <div class="mt-5">
       <p class="font-semibold">Beschrijving van het ongeval (oorzaken, omstandigheden en gevolgen, opgelopen verwondingen en/of schade</p>
       <div class="ml-5">
-        <p style="max-width: 725px !important; text-align: justify">{{ claimState.officialReportDescription }}</p>
+        <p style="max-width: 725px !important; text-align: justify">{{ claimState.description }}</p>
       </div>
     </div>
 
@@ -117,7 +117,7 @@
       <div class="ml-5 mb-5" v-if="claimState.involvedPartiesChoices[1] === true">
         <strong>Werd er een vastelling gedaan door een verbaliserende autoriteit?</strong>
         <div>
-          <label-output v-if="claimState.authorityDescription" class="mt-1" :text="claimState.authorityDescription" />
+          <label-output v-if="claimState.officialReportDescription" class="mt-1" :text="claimState.officialReportDescription" />
           <label-output v-if="claimState.pvNumber" class="mt-1" label="Eventueel nummer van proces-verbaal" :text="claimState.pvNumber" />
         </div>
       </div>
@@ -167,6 +167,10 @@
     <div class="flex gap-3 mt-5 items-center">
       <custom-button text="Bevestig" />
     </div>
+
+    <pre>
+      {{ claimState }}
+    </pre>
   </form>
 </template>
 
@@ -177,7 +181,7 @@ import { scrollToFirstError, useScrollToTop } from '@/veeValidate/helpers'
 import { ClaimHolderStates } from '@/enums/ClaimholderStates'
 import CustomButton from '@/components/CustomButton.vue'
 import { defineComponent, computed, ref } from 'vue'
-import { Claim } from '@/serializer/claims/claim'
+import { Claim, ClaimSerializer } from '@/serializer/claims/claim'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useRoute } from 'vue-router'
@@ -187,6 +191,9 @@ import { ActivityTypes } from '@/enums/activityTypes'
 import { DamageTypes } from '@/enums/damageTypes'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
+import moment from 'moment'
+import RepositoryFactory from '@/repositories/repositoryFactory'
+import { ClaimRepository } from '@/repositories/claims/claimRepository'
 
 export default defineComponent({
   name: 'AccidentDetails',
@@ -203,7 +210,9 @@ export default defineComponent({
     const store = useStore()
     const isEdit = !!route.params.id
     const { handleSubmit, values, validate, isSubmitting } = useForm<Claim>({
-      initialValues: {},
+      initialValues: {
+        madeUpOnDate: moment().format('YYYY-MM-DD'),
+      },
     })
 
     const claimState = computed((): Claim => {
@@ -214,12 +223,25 @@ export default defineComponent({
       await validate().then((validation: any) => scrollToFirstError(validation, 'RequestInsuranceGeneral'))
       handleSubmit(async (values: any) => {
         const newClaimState = ref<Claim>({
-          victimMemberGroupAdminId: values,
+          madeUpAtCountry: values.madeUpAtCountry ? values.madeUpAtCountry : undefined,
+          madeUpOnDate: values.madeUpOnDate ? values.madeUpOnDate : undefined,
+          identityDeclarant: values.identityDeclarant ? values.identityDeclarant : undefined,
         })
 
-        store.dispatch('setClaimState', newClaimState)
-        store.dispatch('setClaimHolderState', ClaimHolderStates.FOUR)
+        store.dispatch('setClaimState', { ...claimState.value, ...newClaimState.value }).then(async () => {
+          console.log('POST CLAIM', ClaimSerializer(claimState.value))
+          await postClaim()
+        })
+        store.dispatch('setClaimHolderState', ClaimHolderStates.FIVE)
       })()
+    }
+
+    const postClaim = async () => {
+      await RepositoryFactory.get(ClaimRepository)
+        .create(claimState.value)
+        .then((completed: any) => {
+          console.log('COMPLETED: ', completed)
+        })
     }
 
     scrollToTopOfPage()

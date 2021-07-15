@@ -17,7 +17,7 @@ export interface Victim {
   isChecked?: boolean
   membershipNumber?: string
   country?: Country
-  bankNumber?: string
+  bankAccount?: string
   gender?: string
 }
 

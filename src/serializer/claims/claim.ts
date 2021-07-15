@@ -9,8 +9,8 @@ export interface Claim {
   readonly id?: number
   readonly group?: Group
   readonly groupLeader?: ResponsibleMember
-  readonly victimMember?: string
-  readonly victimNonMember?: string
+  victimMember?: string
+  victimNonMember?: string
   readonly victimMemberGroupAdminId?: string
   readonly bankAccount?: string
   readonly dateOfAccident?: string
@@ -18,11 +18,11 @@ export interface Claim {
   activityTypes?: Array<ActivityTypes>
   readonly usedTransport?: string
   readonly isDamage?: boolean
+  readonly damage?: string
   readonly description?: string
   readonly involvedPartyDescription?: string
   readonly involvedPartyBirthdate?: string
   readonly officialReportDescription?: string
-  readonly authorityDescription?: string
   readonly pvNumber?: string
   readonly witnessDescription?: string
   readonly leadershipDescription?: string
@@ -51,7 +51,6 @@ export const ClaimDeserializer = (input: any): Claim => {
     involvedPartyDescription: input.involved_party_description ? input.involved_party_description : undefined,
     involvedPartyBirthdate: input.involved_party_birthdate ? input.involved_party_birthdate : undefined,
     officialReportDescription: input.official_report_description ? input.official_report_description : undefined,
-    authorityDescription: input.authority_description ? input.authority_description : undefined,
     pvNumber: input.pv_number ? input.pv_number : undefined,
     witnessDescription: input.witness_description ? input.witness_description : undefined,
     leadershipDescription: input.leadership_description ? input.leadership_description : undefined,
@@ -65,27 +64,27 @@ export const ClaimDeserializer = (input: any): Claim => {
 
 export const ClaimSerializer = (input: any): any => {
   const single: any = {
-    id: input.id,
-    group: input.groep,
-
+    // id: input.id ? input.id : undefined,
+    group: input.group.id ? input.group.id : undefined,
     victim_member: input.victimMember ? input.victimMember : undefined,
-    victim_non_member: input.victimNonMember ? input.victimNonMember : undefined,
-    victim_member_group_admin_id: input.victimMemberGroupAdminId ? input.victimMemberGroupAdminId : undefined,
-    bank_account: input.bankAccount ? input.bankAccount : undefined,
-    date_of_accident: input.dateOfAccident ? input.dateOfAccident : undefined,
+    // victim_non_member: input.victimNonMember ? input.victimNonMember : undefined,
+    // victim_member_group_admin_id: input.victimMemberGroupAdminId ? input.victimMemberGroupAdminId : undefined,
+    bank_account: input.victim.bankAccount ? input.victim.bankAccount : undefined,
+    date_of_accident: input.dateOfAccident ? input.dateOfAccident + 'T09:00:00.000Z' : undefined,
     activity: input.activity ? input.activity : undefined,
     activity_type: input.activityTypes ? input.activityTypes : undefined,
-    used_transport: input.usedTransport ? input.usedTransport : undefined,
-    isDamage: input.isDamage ? input.isDamage : undefined,
+    used_transport: input.activityTypes.includes(ActivityTypes.IRREGULAR_LOCATION) && input.usedTransport ? input.usedTransport : undefined,
+    // isDamage: input.isDamage ? input.isDamage : undefined,
+    // damage: input.damage ? input.damage : undefined,
     description: input.description ? input.description : undefined,
-    involved_party_description: input.involvedPartyDescription ? input.involvedPartyDescription : undefined,
-    involved_party_birthdate: input.involvedPartyBirthdate ? input.involvedPartyBirthdate : undefined,
-    official_report_description: input.officialReportDescription ? input.officialReportDescription : undefined,
-    pv_number: input.pvNumber ? input.pvNumber : undefined,
-    witness_description: input.witnessDescription ? input.witnessDescription : undefined,
-    leadership_description: input.leadershipDescription ? input.leadershipDescription : undefined,
-    country: input.country ? input.country : undefined,
-    victim: input.victim ? input.victim : undefined,
+    involved_party_description: input.involvedPartiesChoices[0] && input.involvedPartyDescription ? input.involvedPartyDescription : undefined,
+    involved_party_birthdate: input.involvedPartiesChoices[0] && input.involvedPartyBirthdate ? input.involvedPartyBirthdate : undefined,
+    official_report_description: input.involvedPartiesChoices[1] && input.officialReportDescription ? input.officialReportDescription : undefined,
+    pv_number: input.involvedPartiesChoices[1] && input.pvNumber ? input.pvNumber : undefined,
+    witness_description: input.involvedPartiesChoices[2] && input.witnessDescription ? input.witnessDescription : undefined,
+    leadership_description: input.involvedPartiesChoices[3] && input.leadershipDescription ? input.leadershipDescription : undefined,
+    // country: input.country ? input.country : undefined,
+    // victim: input.victim ? input.victim : undefined,
   }
 
   return single

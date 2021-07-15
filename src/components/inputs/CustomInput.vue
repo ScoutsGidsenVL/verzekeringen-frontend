@@ -154,7 +154,7 @@ export default defineComponent({
     })
 
     const cardNumberSpace = () => {
-      if (props.name === 'victim.bankNumber') {
+      if (props.name === 'victim.bankAccount') {
         inputValue.value = inputValue.value
           .replace(/[^\dA-Z]/g, '')
           .replace(/(.{4})/g, '$1 ')

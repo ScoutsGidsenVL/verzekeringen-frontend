@@ -104,7 +104,7 @@ export const defineRules = (store: any) => {
     return true
   })
 
-  defineRule('BankNumberLength', (value: String) => {
+  defineRule('bankAccountLength', (value: String) => {
     if (value.length < 19 && value.length > 0) {
       return 'Geen geldige bankrekeningnummer'
     }
