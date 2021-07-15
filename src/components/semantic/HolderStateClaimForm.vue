@@ -15,10 +15,7 @@
   </div>
 
   <div v-if="claimHolderState === ClaimHolderStates.FIVE">
-    SUCCES
-    <div class="mt-4 container inline-block">
-      <navigation-arrow to="/home/schade-aangiftes" text="Terug naar overzicht" />
-    </div>
+    <success-screen />
   </div>
 </template>
 
@@ -30,7 +27,7 @@ import AccidentDetails from '@/components/requestClaim/AccidentDetails.vue'
 import { defineComponent, computed } from 'vue'
 import { useStore } from 'vuex'
 import ClaimDetail from '@/components/requestClaim/detail/claimDetail.vue'
-import NavigationArrow from '@/components/semantic/NavigationArrow.vue'
+import SuccessScreen from '@/components/requestClaim/SuccessScreen.vue'
 
 export default defineComponent({
   name: 'HolderStateForm',
@@ -39,7 +36,7 @@ export default defineComponent({
     'request-claim-identities': RequestClaimIdentities,
     'accident-details': AccidentDetails,
     'claim-detail': ClaimDetail,
-    'navigation-arrow': NavigationArrow,
+    'success-screen': SuccessScreen,
   },
   setup() {
     const store = useStore()

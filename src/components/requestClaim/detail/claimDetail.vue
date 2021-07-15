@@ -160,7 +160,10 @@
             <custom-input class="w-96" :type="InputTypes.DATE" rules="required" name="madeUpOnDate" />
           </div>
         </div>
-        <custom-input class="mt-4 w-96" :type="InputTypes.TEXT" name="identityDeclarant" rules="required" label="Identiteit van de aangever (Naam en voornaam)" />
+
+        <div class="mt-4">
+          <label-output label="Identiteit van de aangever (Achternaam en voornaam)" class="mt-1" :text="userData.lastName + ' ' + userData.firstName" />
+        </div>
       </div>
     </div>
 
@@ -194,6 +197,7 @@ import CustomInput from '@/components/inputs/CustomInput.vue'
 import moment from 'moment'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import { ClaimRepository } from '@/repositories/claims/claimRepository'
+import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 
 export default defineComponent({
   name: 'AccidentDetails',
@@ -215,6 +219,8 @@ export default defineComponent({
       },
     })
 
+    const userData = ref<ResponsibleMember>(store.getters.user)
+
     const claimState = computed((): Claim => {
       return store.state.claim.claimState
     })
@@ -225,7 +231,6 @@ export default defineComponent({
         const newClaimState = ref<Claim>({
           madeUpAtCountry: values.madeUpAtCountry ? values.madeUpAtCountry : undefined,
           madeUpOnDate: values.madeUpOnDate ? values.madeUpOnDate : undefined,
-          identityDeclarant: values.identityDeclarant ? values.identityDeclarant : undefined,
         })
 
         store.dispatch('setClaimState', { ...claimState.value, ...newClaimState.value }).then(async () => {
@@ -256,6 +261,7 @@ export default defineComponent({
       values,
       ActivityTypes,
       DamageTypes,
+      userData,
     }
   },
 })

@@ -83,7 +83,6 @@ export default defineComponent({
         const newClaimState = ref<Claim>({
           madeUpAtCountry: values.madeUpAtCountry,
           madeUpOnDate: values.madeUpOnDate,
-          identityDeclarant: values.identityDeclarant,
           involvedPartiesChoices: values.involvedPartiesChoices,
           involvedPartyDescription: values.involvedPartiesChoices[0] ? values.involvedPartyDescription : undefined,
           involvedPartyBirthdate: values.involvedPartiesChoices[0] ? values.involvedPartyBirthdate : undefined,

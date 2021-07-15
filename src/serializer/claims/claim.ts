@@ -30,7 +30,6 @@ export interface Claim {
   victim?: Victim
   readonly madeUpAtCountry?: Country
   readonly madeUpOnDate?: string
-  readonly identityDeclarant?: string
   involvedPartiesChoices?: Array<boolean>
 }
 
