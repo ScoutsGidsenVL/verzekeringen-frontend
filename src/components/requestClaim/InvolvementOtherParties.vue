@@ -26,7 +26,7 @@
 
           <display-content-checkbox text="Hield iemand van de leiding toezicht op het moment dat het ongeval plaatsvond?" @changeBoolean="changeBoolean($event, 3)">
             <div class="md:w-96 xs:w-72">
-              <custom-input :type="InputTypes.TEXT" name="leadershipDescription" label="Naam en voornaam" />
+              <custom-input :type="InputTypes.TEXT" name="leadershipDescription" label="Voornaam en achternaam" />
             </div>
           </display-content-checkbox>
         </div>

@@ -46,52 +46,23 @@
         <div class="mt-2">
           <strong>Tijdens welke soort ongeval de activiteit plaatsvond</strong>
         </div>
-        <div class="mt-2">
-          <form>
-            <div>
-              <input
-                :disabled="true"
-                :id="ActivityTypes.REGULAR"
-                v-model="claimState.activityTypes"
-                class="cursor-pointer"
-                type="checkbox"
-                :name="ActivityTypes.REGULAR"
-                :value="ActivityTypes.REGULAR"
-              />
-              <label :for="ActivityTypes.REGULAR" class="ml-1">Tijdens een activiteit van de hierdoor vermelde scoutsgroep</label>
-            </div>
-
-            <div>
-              <input
-                :disabled="true"
-                :id="ActivityTypes.IRREGULAR_LOCATION"
-                v-model="claimState.activityTypes"
-                class="cursor-pointer"
-                type="checkbox"
-                :name="ActivityTypes.IRREGULAR_LOCATION"
-                :value="ActivityTypes.IRREGULAR_LOCATION"
-              />
-              <label :for="ActivityTypes.IRREGULAR_LOCATION" class="ml-1">Tijdens een activiteit op verplaatsing</label>
-            </div>
-
-            <div>
-              <input
-                :disabled="true"
-                :id="ActivityTypes.TRANSPORT"
-                v-model="claimState.activityTypes"
-                class="cursor-pointer"
-                type="checkbox"
-                :name="ActivityTypes.TRANSPORT"
-                :value="ActivityTypes.TRANSPORT"
-              />
-              <label :for="ActivityTypes.TRANSPORT" class="ml-1">Verplaatsing van of naar activiteit</label>
-            </div>
-          </form>
+        <div class="mt-2" style="margin-left: 19px">
+          <ul class="list-disc">
+            <li v-show="claimState.activityTypes.includes(ActivityTypes.REGULAR)">Tijdens een activiteit van de hierdoor vermelde scoutsgroep</li>
+            <li v-show="claimState.activityTypes.includes(ActivityTypes.IRREGULAR_LOCATION)">
+              Tijdens een activiteit op verplaatsing
+              <p v-show="claimState.usedTransport">Gebruikt voertuig: {{ claimState.usedTransport }}</p>
+            </li>
+            <li v-show="claimState.activityTypes.includes(ActivityTypes.TRANSPORT)">Verplaatsing van of naar activiteit</li>
+          </ul>
         </div>
-        <strong>Schade aan medisch hulpmiddel</strong>
-        <div>
-          <input :disabled="true" :id="'damage'" v-model="claimState.isDamage" class="cursor-pointer" type="checkbox" :name="'damage'" :value="true" />
-          <label :for="'damage'" class="ml-1">Bril-/materiële schade</label>
+
+        <div v-show="claimState.isDamage">
+          <strong>Schade aan medisch hulpmiddel</strong>
+          <div>
+            <label>Bril-/materiële schade</label>
+            <label class="block" v-show="claimState.damage">{{ claimState.damage }}</label>
+          </div>
         </div>
       </div>
     </div>

@@ -63,8 +63,8 @@
 
       <div class="md:ml-20">
         <div class="sm:flex sm:gap-2 xs:w-72 sm:w-100">
-          <custom-input :type="InputTypes.TEXT" rules="required" name="victim.lastName" label="Naam" />
           <custom-input :type="InputTypes.TEXT" rules="required" name="victim.firstName" label="Voornaam" />
+          <custom-input :type="InputTypes.TEXT" rules="required" name="victim.lastName" label="Acternaam" />
         </div>
 
         <div class="sm:mt-3 sm:flex sm:gap-2 xs:w-72 sm:w-100">
