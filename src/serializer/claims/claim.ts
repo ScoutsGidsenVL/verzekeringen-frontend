@@ -2,7 +2,7 @@ import { ActivityTypes } from '@/enums/activityTypes'
 import { DamageTypes } from '@/enums/damageTypes'
 import { Country } from '@/serializer/Country'
 import { Group } from '@/serializer/Group'
-import { Victim } from '@/serializer/Victim'
+import { Victim, VictimDeserializer } from '@/serializer/Victim'
 import { ResponsibleMember } from '../ResponsibleMember'
 
 export interface Claim {
@@ -54,7 +54,7 @@ export const ClaimDeserializer = (input: any): Claim => {
     witnessDescription: input.witness_description ? input.witness_description : undefined,
     leadershipDescription: input.leadership_description ? input.leadership_description : undefined,
     country: input.country ? input.country : undefined,
-    victim: input.victim ? input.victim : undefined,
+    victim: input.victim_member ? VictimDeserializer(input.victim_member) : input.victim_non_member ? VictimDeserializer(input.victim_non_member) : undefined,
     involvedPartiesChoices: [false, false, false, false],
   }
 

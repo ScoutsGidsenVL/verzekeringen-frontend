@@ -21,9 +21,6 @@
       </div>
 
       <div class="md:ml-20 mt-5">
-        <strong>
-          <label>Groepleidster</label>
-        </strong>
         <insurance-applicant :applicant="userData" />
       </div>
 

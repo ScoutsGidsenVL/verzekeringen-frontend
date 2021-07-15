@@ -1,7 +1,7 @@
 <template>
   <div v-if="item" class="md:grid-cols-claims grid py-2 border-t-2 border-black">
     <div>
-      <p>{{ item.dateOfAccident ? formatCreatedOn(item.dateOfAccident) : '' }}</p>
+      <p>{{ item.dateOfAccident ? formatSingleDate(item.dateOfAccident) : '' }}</p>
     </div>
 
     <div>
@@ -9,9 +9,8 @@
     </div>
 
     <div>
-      <p>{{ item.victim && item.victim.firstName && item.victim.lastName ? item.victim.firstName + ' ' + item.victim.lastName : '' }}</p>
+      <p>{{ item.victim.firstName + ' ' + item.victim.lastName }}</p>
     </div>
-
     <div>DETAIL</div>
   </div>
 </template>

@@ -5,15 +5,20 @@
     <div>
       <p class="font-semibold">Accident date</p>
     </div>
-    <div>
-      <p class="font-semibold">Naam</p>
-    </div>
+
     <div>
       <p class="font-semibold">Groep</p>
     </div>
+
+    <div>
+      <p class="font-semibold">Slachtoffer naam</p>
+    </div>
+
     <div></div>
   </div>
-  <claim-list-item v-for="item in items" :key="item.id" :item="item" />
+  <div v-if="items">
+    <claim-list-item v-for="item in items" :key="item.id" :item="item" />
+  </div>
   <hr class="border-t-2 border-black" />
   <div v-if="items && items.length === 0" class="text-center my-3"><i>Geen resultaten</i></div>
 </template>

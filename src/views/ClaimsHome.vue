@@ -1,7 +1,7 @@
 <template>
   <call-to-action link="/aanvraag/schade-aangifte" text="Vraag nieuwe schade aangifte aan" />
   <div class="container">
-    <claim-list title="Claims" :items="data.results" />
+    <claim-list v-if="data && data.results" title="Claims" :items="data.results" />
   </div>
 </template>
 
@@ -23,11 +23,12 @@ export default defineComponent({
   setup() {
     const store = useStore()
     store.dispatch('resetStates')
-    const data = ref<ArrayResult>({ results: [], next: '', previous: '', count: '0' })
+    const data = ref<ArrayResult>()
     const getClaims = () => {
       RepositoryFactory.get(ClaimRepository)
         .getArray('/insurances_claims/?page=1&page_size=10')
         .then((res: ArrayResult) => {
+          console.log('RES', res)
           data.value = res
         })
     }
