@@ -45,11 +45,15 @@
       <div class="md:ml-20 my-3">
         <div>
           <strong class="cursor-pointer text-lightGreen hover:text-green" @click="openMemberSideBar()">+ Kies een lid</strong>
+          of
+          <strong class="cursor-pointer text-lightGreen" @click="displayFields()">vul manueel in</strong>
           <members-side-bar v-model:isDisplay="isMemberSideBarDisplay" :close-on-add="true" :existing-list="members" title="Lid" @addMemberToList="addMember($event)" />
         </div>
 
         <div v-show="false" class="mt-3">
-          <strong class="cursor-pointer text-lightGreen" @click="openNonMemberSideBar()"> Kies een niet-lid</strong>
+          <div>
+            <strong class="cursor-pointer text-lightGreen" @click="openNonMemberSideBar()"> Kies een niet-lid</strong>
+          </div>
           <non-member-side-bar
             isOverflowHidden="false"
             v-model:side-bar-state="nonMemberSideBarState"
@@ -61,117 +65,126 @@
         </div>
       </div>
 
-      <div class="md:ml-20">
-        <div class="sm:flex sm:gap-2 xs:w-72 sm:w-100">
-          <custom-input :type="InputTypes.TEXT" rules="required" name="victim.firstName" label="Voornaam" />
-          <custom-input :type="InputTypes.TEXT" rules="required" name="victim.lastName" label="Acternaam" />
-        </div>
-
-        <div class="sm:mt-3 sm:flex sm:gap-2 xs:w-72 sm:w-100">
-          <custom-input class="streetInput" :type="InputTypes.TEXT" rules="required" name="victim.street" label="Straat" />
-          <custom-input :type="InputTypes.TEXT" rules="required" name="victim.number" label="Nummer" />
-          <div>
-            <strong>Bus</strong>
-            <custom-input class="mt-3" :type="InputTypes.TEXT" name="victim.letterBox" />
+      <div v-show="isFieldsVisible">
+        <div class="md:ml-20">
+          <div class="sm:flex sm:gap-2 xs:w-72 sm:w-100">
+            <custom-input :type="InputTypes.TEXT" rules="required" name="victim.firstName" label="Voornaam" />
+            <custom-input :type="InputTypes.TEXT" rules="required" name="victim.lastName" label="Acternaam" />
           </div>
-        </div>
-      </div>
 
-      <div :class="'md:ml-20 sm:flex sm:gap-2'">
-        <div v-if="(values.victim && values.victim.country && values.victim.country.name === '') || (values.victim.country && values.victim.country.name === 'België')">
-          <div class="input">
-            <multi-select
-              id="victim.postCodeCity"
-              :object="true"
-              track-by="label"
-              value-prop="label"
-              :repository="BelgianCitySearchRepository"
-              :resolve-on-load="true"
-              :options="[]"
-              :searchable="true"
-              label="Gemeente"
-              rules="required"
-              placeholder="Zoek op naam/postcode"
-            />
-          </div>
-        </div>
-
-        <div>
-          <div class="input">
-            <multi-select
-              id="victim.country"
-              rules="required"
-              insurance-type-id="2"
-              :object="true"
-              track-by="name"
-              value-prop="name"
-              :repository="CountryRepository"
-              :resolve-on-load="true"
-              :options="values.country ? [values.country] : [{ id: '3232', name: 'België' }]"
-              :extra-option="{ id: '3232', name: 'België' }"
-              :searchable="true"
-              label="Land"
-              placeholder="Zoek op naam"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div class="mt-3 md:ml-20 sm:flex sm:gap-5">
-        <div>
-          <custom-input rules="required" class="input" :loading-submit="isSubmitting" :type="InputTypes.DATE" name="victim.birthDate" label="Geboortedatum" />
-        </div>
-
-        <div class="xs:mt-3">
-          <form action="">
-            <strong>Geslacht <required rules="required" /></strong>
-
-            <div class="mt-3 flex gap-4">
-              <custom-input v-show="false" :type="'victim.gender'" rules="required" name="victim.gender" />
-
-              <div>
-                <input :id="'M'" v-model="selected" class="cursor-pointer" type="radio" :name="'M'" :value="'M'" />
-                <label :for="'M'" class="ml-1">M</label>
-              </div>
-
-              <div>
-                <input :id="'V'" v-model="selected" class="cursor-pointer" type="radio" :name="'V'" :value="'V'" />
-                <label :for="'V'" class="ml-1">V</label>
-              </div>
-
-              <div v-if="false">
-                <input :id="'X'" v-model="selected" class="cursor-pointer" type="radio" :name="'X'" :value="'X'" />
-                <label :for="'X'" class="ml-1">X</label>
-              </div>
-
-              <div style="margin-top: 1px">
-                <question-disclaimer>
-                  Ethias beperkt technisch voorlopig de keuze tot 'M' of 'V'; Scouts en Gidsen Vlaanderen gaat hierover met hen in dialoog om een oplossing te vinden zodat we genderneutraal binnen
-                  scouting kunnen communiceren.
-                </question-disclaimer>
-              </div>
+          <div class="sm:mt-3 sm:flex sm:gap-2 xs:w-72 sm:w-100">
+            <custom-input class="streetInput" :type="InputTypes.TEXT" rules="required" name="victim.street" label="Straat" />
+            <custom-input :type="InputTypes.TEXT" rules="required" name="victim.number" label="Nummer" />
+            <div>
+              <strong>Bus</strong>
+              <custom-input class="mt-3" :type="InputTypes.TEXT" name="victim.letterBox" />
             </div>
-
-            <ErrorMessage name="victim.gender" class="text-red text-sm block my-2 w-36" />
-          </form>
+          </div>
         </div>
-      </div>
 
-      <div class="md:ml-20 mt-3">
-        <div>
-          <custom-input class="input" :type="InputTypes.TEXT" rules="required" name="victim.email" label="E-mail" />
-          <p class="input text-2xs mt-1">
-            <i> Als het slachtoffer minderjarig is, vul dan het mailadres van de opvoedingsverantwoordelijke (ouders, voogd) in. </i>
-          </p>
+        <div :class="'md:ml-20 sm:flex sm:gap-2'">
+          <div v-if="(values.victim && values.victim.country && values.victim.country.name === '') || (values.victim.country && values.victim.country.name === 'België')">
+            <div class="input">
+              <multi-select
+                id="victim.postCodeCity"
+                :object="true"
+                track-by="label"
+                value-prop="label"
+                :repository="BelgianCitySearchRepository"
+                :resolve-on-load="true"
+                :options="[]"
+                :searchable="true"
+                label="Gemeente"
+                rules="required"
+                placeholder="Zoek op naam/postcode"
+              />
+            </div>
+          </div>
+
+          <div>
+            <div class="input">
+              <multi-select
+                id="victim.country"
+                rules="required"
+                insurance-type-id="2"
+                :object="true"
+                track-by="name"
+                value-prop="name"
+                :repository="CountryRepository"
+                :resolve-on-load="true"
+                :options="values.country ? [values.country] : [{ id: '3232', name: 'België' }]"
+                :extra-option="{ id: '3232', name: 'België' }"
+                :searchable="true"
+                label="Land"
+                placeholder="Zoek op naam"
+              />
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div class="mt-3 md:ml-20 w-72">
-        <custom-input :placeholder="'BE01 2345 6789 4444'" :type="InputTypes.TEXT" rules="bankAccountLength:victim.bankAccount" name="victim.bankAccount" label="Bankrekeningnummer" :maxlength="19" />
-      </div>
+        <div class="mt-3 md:ml-20 sm:flex sm:gap-5">
+          <div>
+            <custom-input rules="required" class="input" :loading-submit="isSubmitting" :type="InputTypes.DATE" name="victim.birthDate" label="Geboortedatum" />
+          </div>
 
-      <div v-show="values.victim && values.victim.membershipNumber" class="mt-3 md:ml-20 w-72">
-        <custom-input :disabled="true" :type="InputTypes.TEXT" name="victim.membershipNumber" label="Lidnummer" />
+          <div class="xs:mt-3">
+            <form action="">
+              <strong>Geslacht <required rules="required" /></strong>
+
+              <div class="mt-3 flex gap-4">
+                <custom-input v-show="false" :type="'victim.gender'" rules="required" name="victim.gender" />
+
+                <div>
+                  <input :id="'M'" v-model="selected" class="cursor-pointer" type="radio" :name="'M'" :value="'M'" />
+                  <label :for="'M'" class="ml-1">M</label>
+                </div>
+
+                <div>
+                  <input :id="'V'" v-model="selected" class="cursor-pointer" type="radio" :name="'V'" :value="'V'" />
+                  <label :for="'V'" class="ml-1">V</label>
+                </div>
+
+                <div v-if="false">
+                  <input :id="'X'" v-model="selected" class="cursor-pointer" type="radio" :name="'X'" :value="'X'" />
+                  <label :for="'X'" class="ml-1">X</label>
+                </div>
+
+                <div style="margin-top: 1px">
+                  <question-disclaimer>
+                    Ethias beperkt technisch voorlopig de keuze tot 'M' of 'V'; Scouts en Gidsen Vlaanderen gaat hierover met hen in dialoog om een oplossing te vinden zodat we genderneutraal binnen
+                    scouting kunnen communiceren.
+                  </question-disclaimer>
+                </div>
+              </div>
+
+              <ErrorMessage name="victim.gender" class="text-red text-sm block my-2 w-36" />
+            </form>
+          </div>
+        </div>
+
+        <div class="md:ml-20 mt-3">
+          <div>
+            <custom-input class="input" :type="InputTypes.TEXT" rules="required" name="victim.email" label="E-mail" />
+            <p class="input text-2xs mt-1">
+              <i> Als het slachtoffer minderjarig is, vul dan het mailadres van de opvoedingsverantwoordelijke (ouders, voogd) in. </i>
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-3 md:ml-20 w-72">
+          <custom-input
+            :placeholder="'BE01 2345 6789 4444'"
+            :type="InputTypes.TEXT"
+            rules="bankAccountLength:victim.bankAccount"
+            name="victim.bankAccount"
+            label="Bankrekeningnummer"
+            :maxlength="19"
+          />
+        </div>
+
+        <div v-show="values.victim && values.victim.membershipNumber" class="mt-3 md:ml-20 w-72">
+          <custom-input :disabled="true" :type="InputTypes.TEXT" name="victim.membershipNumber" label="Lidnummer" />
+        </div>
       </div>
     </div>
 
@@ -235,6 +248,7 @@ export default defineComponent({
     const { scrollToTopOfPage } = useScrollToTop()
     const selected = ref<string>()
     const isEdit = !!route.params.id
+    const isFieldsVisible = ref<boolean>(false)
 
     const { handleSubmit, values, validate, isSubmitting } = useForm<Claim>({
       initialValues: {
@@ -299,7 +313,12 @@ export default defineComponent({
         values.victim.birthDate = member.birthDate
         values.victim.email = member.email
         values.victim.membershipNumber = member.membershipNumber
+        displayFields()
       }
+    }
+
+    const displayFields = () => {
+      isFieldsVisible.value = true
     }
 
     scrollToTopOfPage()
@@ -320,6 +339,8 @@ export default defineComponent({
       openNonMemberSideBar,
       openMemberSideBar,
       CountryRepository,
+      isFieldsVisible,
+      displayFields,
       refreshGroups,
       isRefreshing,
       isSubmitting,

@@ -152,23 +152,23 @@
 import ResponsibleMemberDetail from '@/components/semantic/detail/ResponsibleMemberDetail.vue'
 import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRepository'
 import { scrollToFirstError, useScrollToTop } from '@/veeValidate/helpers'
+import { ClaimRepository } from '@/repositories/claims/claimRepository'
+import { ResponsibleMember } from '@/serializer/ResponsibleMember'
+import RepositoryFactory from '@/repositories/repositoryFactory'
+import LabelOutput from '@/components/semantic/LabelOutput.vue'
 import { ClaimHolderStates } from '@/enums/ClaimholderStates'
+import MultiSelect from '@/components/inputs/MultiSelect.vue'
+import CustomInput from '@/components/inputs/CustomInput.vue'
 import CustomButton from '@/components/CustomButton.vue'
+import { ActivityTypes } from '@/enums/activityTypes'
 import { defineComponent, computed, ref } from 'vue'
 import { Claim } from '@/serializer/claims/claim'
+import { DamageTypes } from '@/enums/damageTypes'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-import LabelOutput from '@/components/semantic/LabelOutput.vue'
-import { ActivityTypes } from '@/enums/activityTypes'
-import { DamageTypes } from '@/enums/damageTypes'
-import MultiSelect from '@/components/inputs/MultiSelect.vue'
-import CustomInput from '@/components/inputs/CustomInput.vue'
 import moment from 'moment'
-import RepositoryFactory from '@/repositories/repositoryFactory'
-import { ClaimRepository } from '@/repositories/claims/claimRepository'
-import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 
 export default defineComponent({
   name: 'AccidentDetails',
@@ -222,15 +222,15 @@ export default defineComponent({
 
     return {
       BelgianCitySearchRepository,
+      ActivityTypes,
       isSubmitting,
+      DamageTypes,
       InputTypes,
       claimState,
       onSubmit,
+      userData,
       isEdit,
       values,
-      ActivityTypes,
-      DamageTypes,
-      userData,
     }
   },
 })
