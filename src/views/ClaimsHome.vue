@@ -28,7 +28,6 @@ export default defineComponent({
       RepositoryFactory.get(ClaimRepository)
         .getArray('/insurances_claims/?page=1&page_size=10')
         .then((res: ArrayResult) => {
-          console.log('RES', res)
           data.value = res
         })
     }

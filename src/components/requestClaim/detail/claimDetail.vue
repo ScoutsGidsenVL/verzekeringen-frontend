@@ -155,7 +155,7 @@ import { scrollToFirstError, useScrollToTop } from '@/veeValidate/helpers'
 import { ClaimHolderStates } from '@/enums/ClaimholderStates'
 import CustomButton from '@/components/CustomButton.vue'
 import { defineComponent, computed, ref } from 'vue'
-import { Claim, ClaimSerializer } from '@/serializer/claims/claim'
+import { Claim } from '@/serializer/claims/claim'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useRoute } from 'vue-router'
@@ -205,18 +205,16 @@ export default defineComponent({
         })
 
         store.dispatch('setClaimState', { ...claimState.value, ...newClaimState.value }).then(async () => {
-          console.log('POST CLAIM', ClaimSerializer(claimState.value))
           await postClaim()
         })
-        store.dispatch('setClaimHolderState', ClaimHolderStates.FIVE)
       })()
     }
 
     const postClaim = async () => {
       await RepositoryFactory.get(ClaimRepository)
         .create(claimState.value)
-        .then((completed: any) => {
-          console.log('COMPLETED: ', completed)
+        .then(() => {
+          store.dispatch('setClaimHolderState', ClaimHolderStates.FIVE)
         })
     }
 

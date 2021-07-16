@@ -110,6 +110,14 @@ export const defineRules = (store: any) => {
     }
     return true
   })
+
+  // @ts-ignore
+  defineRule('fillInCheck', (firstField: string, [secondField]) => {
+    if (firstField.length === 0 && secondField) {
+      return 'Gelieve dit veld ook in te vullen'
+    }
+    return true
+  })
 }
 
 export const scrollTo = () => {

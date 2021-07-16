@@ -6,14 +6,14 @@
         <div>
           <display-content-checkbox text="Is het ongeval te wijten aan een fout van een andere verzekerde/ of derde?">
             <div class="md:w-96 xs:w-72">
-              <custom-input :type="InputTypes.TEXT_AREA" name="involvedPartyDescription" label="Naam en adres" />
+              <custom-input :type="InputTypes.TEXT_AREA" name="involvedPartyDescription" label="Naam en adres" rules="fillInCheck:@involvedPartyBirthdate" />
               <custom-input class="mt-1" :type="InputTypes.DATE" name="involvedPartyBirthdate" label="Geboortedatum" />
             </div>
           </display-content-checkbox>
 
           <display-content-checkbox text="Werd er een vastelling gedaan door een verbaliserende autoriteit?">
             <div class="md:w-96 xs:w-72">
-              <custom-input :type="InputTypes.TEXT" name="officialReportDescription" label="Welke" />
+              <custom-input :type="InputTypes.TEXT" name="officialReportDescription" label="Welke" rules="fillInCheck:@pvNumber" />
               <custom-input class="mt-1" :type="InputTypes.TEXT" name="pvNumber" label="Eventueel nummer van proces-verbaal" />
             </div>
           </display-content-checkbox>
