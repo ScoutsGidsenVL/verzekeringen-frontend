@@ -3,9 +3,17 @@
     <p class="py-4" style="font-size: 30px">Overzicht <strong class="font-semibold">schade aangifte</strong></p>
 
     <div>
+      <p class="font-semibold">Administratie</p>
+      <div class="md:ml-20">
+        <custom-input class="xs:w-72 md:w-96" :type="InputTypes.TEXT" label="Dossiernummer" name="dossierNumber" />
+        <custom-input class="xs:w-72 md:w-96" :type="InputTypes.TEXT_AREA" label="Administratieve commentaar" name="administrationComment" />
+      </div>
+    </div>
+
+    <div class="mt-5">
       <p class="font-semibold">Identiteit van de verzekeringsnemer</p>
 
-      <div class="ml-5">
+      <div class="md:ml-20">
         <label-output label="Groep" :text="claimState.group && claimState.group.fullInfo" />
         <div class="mt-3">
           <responsible-member-detail title="Groepleidster" :responsible-member="claimState.groupLeader" />
@@ -15,7 +23,7 @@
 
     <div class="mt-5">
       <p class="font-semibold">Identiteit van het slachtoffer</p>
-      <div class="ml-5">
+      <div class="md:ml-20">
         <label-output :text="claimState.victim.firstName + ' ' + claimState.victim.lastName" />
         <label-output :text="claimState.victim.country.name" />
         <label-output
@@ -40,7 +48,7 @@
 
     <div class="mt-5">
       <p class="font-semibold">Gegevens van het ongeval</p>
-      <div class="ml-5">
+      <div class="md:ml-20">
         <label-output class="mt-1" label="Datum ongeval" :text="claimState.dateOfAccident" />
         <label-output class="mt-1" label="Tijdens welke activiteit het ongeval plaatsvond" :text="claimState.activity" />
         <div class="mt-2">
@@ -69,7 +77,7 @@
 
     <div class="mt-5">
       <p class="font-semibold">Beschrijving van het ongeval (oorzaken, omstandigheden en gevolgen, opgelopen verwondingen en/of schade</p>
-      <div class="ml-5">
+      <div class="md:ml-20">
         <p style="max-width: 725px !important; text-align: justify">{{ claimState.description }}</p>
       </div>
     </div>
@@ -77,7 +85,7 @@
     <div v-if="claimState.involvedPartyDescription || claimState.officialReportDescription || claimState.witnessDescription || claimState.leadershipDescription" class="mt-5">
       <p class="font-semibold">Betrokkenheid andere partijen</p>
 
-      <div class="ml-5 mb-5" v-if="claimState.involvedPartyDescription">
+      <div class="md:ml-20 mb-5" v-if="claimState.involvedPartyDescription">
         <strong>Is het ongeval te wijten aan een fout van een andere verzekerde/ of derde?</strong>
         <div>
           <label-output v-if="claimState.involvedPartyDescription" class="mt-1" :text="claimState.involvedPartyDescription" />
@@ -85,7 +93,7 @@
         </div>
       </div>
 
-      <div class="ml-5 mb-5" v-if="claimState.officialReportDescription">
+      <div class="md:ml-20 mb-5" v-if="claimState.officialReportDescription">
         <strong>Werd er een vastelling gedaan door een verbaliserende autoriteit?</strong>
         <div>
           <label-output v-if="claimState.officialReportDescription" class="mt-1" :text="claimState.officialReportDescription" />
@@ -93,14 +101,14 @@
         </div>
       </div>
 
-      <div class="ml-5 mb-5" v-if="claimState.witnessDescription">
+      <div class="md:ml-20 mb-5" v-if="claimState.witnessDescription">
         <strong>Waren er getuigen van het ongeval?</strong>
         <div>
           <label-output v-if="claimState.witnessDescription" class="mt-1" :text="claimState.witnessDescription" />
         </div>
       </div>
 
-      <div class="ml-5 mb-5" v-if="claimState.leadershipDescription">
+      <div class="md:ml-20 mb-5" v-if="claimState.leadershipDescription">
         <strong>Hield iemand van de leiding toezicht op het moment dat het ongeval plaatsvond?</strong>
         <div>
           <label-output v-if="claimState.leadershipDescription" class="mt-1" :text="claimState.leadershipDescription" />
@@ -111,7 +119,7 @@
     <div>
       <div>
         <div class="md:flex md:gap-5">
-          <div class="w-96">
+          <div class="xs:w-72 md:w-96">
             <multi-select
               id="madeUpAtCountry"
               :object="true"
@@ -128,7 +136,7 @@
           </div>
           <div class="mt-4">
             <strong>Op <span class="text-red ml-1">*</span></strong>
-            <custom-input class="w-96" :type="InputTypes.DATE" rules="required" name="madeUpOnDate" />
+            <custom-input class="xs:w-72 md:w-96" :type="InputTypes.DATE" rules="required" name="madeUpOnDate" />
           </div>
         </div>
 

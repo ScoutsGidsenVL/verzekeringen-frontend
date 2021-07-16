@@ -31,6 +31,8 @@ export interface Claim {
   readonly madeUpAtCountry?: Country
   readonly madeUpOnDate?: string
   involvedPartiesChoices?: Array<boolean>
+  administrationComment?: string
+  dossierNumber?: string
 }
 
 export const ClaimDeserializer = (input: any): Claim => {
@@ -56,6 +58,8 @@ export const ClaimDeserializer = (input: any): Claim => {
     country: input.country ? input.country : undefined,
     victim: input.victim_member ? VictimDeserializer(input.victim_member) : input.victim_non_member ? VictimDeserializer(input.victim_non_member) : undefined,
     involvedPartiesChoices: [false, false, false, false],
+    administrationComment: input.administrationComment ? input.administrationComment : undefined,
+    dossierNumber: input.dossierNumber ? input.dossierNumber : undefined,
   }
 
   return single
