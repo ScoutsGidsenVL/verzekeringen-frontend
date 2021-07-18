@@ -23,9 +23,9 @@
 
     <div class="mt-5">
       <p class="font-semibold">Identiteit van het slachtoffer</p>
-      <div class="md:ml-20">
+      <div v-if="claimState.victim" class="md:ml-20">
         <label-output :text="claimState.victim.firstName + ' ' + claimState.victim.lastName" />
-        <label-output :text="claimState.victim.country.name" />
+        <label-output v-if="claimState.victim.country" :text="claimState.victim.country.name" />
         <label-output
           :text="
             claimState.victim.street +
@@ -54,7 +54,8 @@
         <div class="mt-2">
           <strong>Tijdens welke soort ongeval de activiteit plaatsvond</strong>
         </div>
-        <div class="mt-2" style="margin-left: 19px">
+
+        <div v-if="claimState.activityTypes" class="mt-2" style="margin-left: 19px">
           <ul class="list-disc">
             <li v-show="claimState.activityTypes.includes(ActivityTypes.REGULAR)">Tijdens een activiteit van de hierdoor vermelde scoutsgroep</li>
             <li v-show="claimState.activityTypes.includes(ActivityTypes.IRREGULAR_LOCATION)">
@@ -150,9 +151,9 @@
       <custom-button text="Bevestig" />
     </div>
 
-    <!-- <pre>
+    <pre>
       {{ claimState }}
-    </pre> -->
+    </pre>
   </form>
 </template>
 
@@ -177,9 +178,10 @@ import { useForm } from 'vee-validate'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import moment from 'moment'
+import { ArrayResult } from '@/serializer/ArrayResult'
 
 export default defineComponent({
-  name: 'AccidentDetails',
+  name: 'ClaimDetail',
   components: {
     'custom-button': CustomButton,
     'label-output': LabelOutput,
@@ -192,8 +194,29 @@ export default defineComponent({
     const route = useRoute()
     const store = useStore()
     const isEdit = !!route.params.id
+    const details = ref<Claim>({})
+
+    if (isEdit) {
+      console.log('DETAIL PAGE CLAIM: ', route.params.id)
+      // RepositoryFactory.get(ClaimRepository)
+      //   .getById(route.params.id.toString())
+      //   .then((result: any) => {
+      //     console.log('RESULT BY ID: ', result)
+      //     details.value = ClaimDeserializer(result)
+      //   })
+
+      RepositoryFactory.get(ClaimRepository)
+        .getArray('/insurances_claims/?page=1&page_size=10')
+        .then((res: ArrayResult) => {
+          details.value = res.results[0]
+          console.log('DETAILS VALUE: ', details.value)
+          store.dispatch('setClaimState', details.value)
+        })
+    }
     const { handleSubmit, values, validate, isSubmitting } = useForm<Claim>({
       initialValues: {
+        victim: details.value.victim,
+        activityTypes: details.value.activityTypes,
         madeUpOnDate: moment().format('YYYY-MM-DD'),
       },
     })

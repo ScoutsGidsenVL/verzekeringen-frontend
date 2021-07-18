@@ -10,6 +10,7 @@ import InsurancesHome from '../views/InsurancesHome.vue'
 import RequestClaim from '../views/RequestClaim.vue'
 import ClaimsHome from '../views/ClaimsHome.vue'
 import StartView from '@/components/start.vue'
+import ClaimDetailPage from '@/components/requestClaim/detail/claimDetailPage.vue'
 
 const routes: any[] = [
   {
@@ -37,6 +38,17 @@ const routes: any[] = [
     meta: {
       requiresOpenIdAuth: true,
       title: 'Schade aangifte aanvragen',
+      homescreen: '/home/schade-aangiftes',
+    },
+  },
+  {
+    path: '/schade-aangifte-detail/:id?',
+    name: 'ClaimDetail',
+    component: ClaimDetailPage,
+    meta: {
+      requiresOpenIdAuth: true,
+      title: 'Overzicht schade aangifte',
+      detail: true,
       homescreen: '/home/schade-aangiftes',
     },
   },

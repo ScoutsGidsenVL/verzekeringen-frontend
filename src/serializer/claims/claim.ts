@@ -7,6 +7,8 @@ import { ResponsibleMember } from '../ResponsibleMember'
 
 export interface Claim {
   readonly id?: number
+  readonly date?: String
+  readonly person?: String
   readonly group?: Group
   readonly groupLeader?: ResponsibleMember
   victimMember?: string
@@ -36,8 +38,11 @@ export interface Claim {
 }
 
 export const ClaimDeserializer = (input: any): Claim => {
+  // console.log('input: ', input)
   const single: Claim = {
     id: input.id ? input.id : undefined,
+    date: input.date ? input.date : undefined,
+    person: input.person ? input.person : undefined,
     group: input.group ? input.group : undefined,
     victimMember: input.victim_member ? input.victim_member : undefined,
     victimNonMember: input.victim_non_member ? input.victim_non_member : undefined,
