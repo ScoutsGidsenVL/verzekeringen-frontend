@@ -21,12 +21,12 @@
       <p>{{ vehicle.chassisNumber }}</p>
     </div>
 
-    <div v-if="vehicle.type.label" class="mt-3">
+    <div v-if="vehicle.type && vehicle.type.label" class="mt-3">
       <strong>Type</strong>
       <p>{{ vehicle.type.label }}</p>
     </div>
 
-    <div v-if="vehicle.trailer.label" class="mt-3">
+    <div v-if="vehicle.trailer && vehicle.trailer.label" class="mt-3">
       <strong>Aanhangwagen</strong>
       <p>{{ vehicle.trailer.label }}</p>
     </div>

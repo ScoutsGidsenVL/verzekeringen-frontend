@@ -18,4 +18,18 @@ export class CountryRepository extends BaseRepository {
       return array
     })
   }
+
+  getArray(pagination: string): Promise<any> {
+    const paginationUrl = pagination.split(this.endpoint)[1]
+
+    return this.get(this.endpoint + paginationUrl, {}).then((response: ArrayResult) => {
+      const array: any[] = []
+      response.results.forEach((result: any) => {
+        const country = this.deserializer(result)
+        array.push(country)
+      })
+      response.results = array
+      return response
+    })
+  }
 }

@@ -7,6 +7,7 @@ import moment from 'moment'
 
 import { configure } from 'vee-validate'
 import { ActivityTypes } from '@/enums/activityTypes'
+import { Country } from '@/serializer/Country'
 
 export const defineRules = (store: any) => {
   defineRule('required', required)
@@ -115,6 +116,14 @@ export const defineRules = (store: any) => {
   defineRule('fillInCheck', (firstField: string, [secondField]) => {
     if (firstField.length === 0 && secondField) {
       return 'Gelieve dit veld ook in te vullen'
+    }
+    return true
+  })
+
+  // @ts-ignore
+  defineRule('checkForbiddenCountries', (country: Country, [forbiddenCountriesVehicle, vehicle]) => {
+    if (forbiddenCountriesVehicle && forbiddenCountriesVehicle.some((c: Country) => c.id === country.id) && vehicle) {
+      return 'verboden land voor met een voertuig'
     }
     return true
   })

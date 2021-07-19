@@ -4,10 +4,11 @@
       <div>
         <custom-headline-2 text="Bestemming" />
         <div class="ml-5 w-96">
+          <!-- {{ values }} -->
           <multi-select
             id="country"
-            rules="required"
-            insurance-type-id="3"
+            rules="required|checkForbiddenCountries:@forbiddenCountriesVehicle,@vehicle"
+            :insurance-type-id="values.vehicle ? '4' : '3'"
             :object="true"
             track-by="name"
             value-prop="name"
@@ -79,6 +80,8 @@ import { useForm } from 'vee-validate'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import router from '@/router'
+import { Country } from '@/serializer/Country'
+// import { ArrayResult } from '@/serializer/ArrayResult'
 
 export default defineComponent({
   name: 'TravelAssistance',
@@ -111,6 +114,25 @@ export default defineComponent({
     const generalInsuranceState = computed((): BaseInsurance => {
       return store.state.insurance.generalInsuranceState
     })
+
+    const allCountries = ref<Country[]>([])
+    const vehicleCountries = ref<Country[]>([])
+
+    RepositoryFactory.get(CountryRepository)
+      .getArray('/countries_by_type/3/?page_size=1000')
+      .then((res: any) => {
+        allCountries.value = res.results
+      })
+      .then(() => {
+        RepositoryFactory.get(CountryRepository)
+          .getArray('/countries_by_type/4/?page_size=1000')
+          .then((res: any) => {
+            vehicleCountries.value = res.results
+          })
+          .then(() => {
+            values.forbiddenCountriesVehicle = allCountries.value.filter((country1) => vehicleCountries.value.every((country2) => !(country2.name === country1.name)))
+          })
+      })
 
     watch(
       () => isSubmitting.value,

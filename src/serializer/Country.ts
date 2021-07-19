@@ -1,6 +1,6 @@
 export interface Country {
   readonly id?: number
-  readonly name?: string
+  readonly name: string
 }
 
 export const CountryDeserializer = (input: any): Country => {
@@ -8,7 +8,7 @@ export const CountryDeserializer = (input: any): Country => {
     id: input.id,
     name: input.name,
   }
-
+  length
   return single
 }
 

@@ -18,6 +18,7 @@ export interface TravelAssistanceInsurance {
   readonly responsibleMember?: ResponsibleMember
   totalCost?: string
   readonly vvksComment?: string
+  forbiddenCountriesVehicle?: Array<Country>
 }
 
 export const TravelAssistanceInsuranceDeserializer = (input: any): TravelAssistanceInsurance => {
