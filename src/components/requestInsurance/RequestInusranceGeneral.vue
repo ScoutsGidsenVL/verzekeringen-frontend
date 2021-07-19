@@ -88,13 +88,13 @@
             :type="InputTypes.TIME"
             name="startTime"
             label="Starttijd"
-            step="3600000"
+            step="3600"
           />
         </div>
         <div class="flex gap-4" :class="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING ? 'w-96' : 'w-80'">
           <custom-input
             onInvalid="this.setCustomValidity('De verzekering moet minstens 1 dag op voorhand aangevraagd worden.')"
-            :oading-submit="isSubmitting"
+            :loading-submit="isSubmitting"
             :min="minDate"
             :type="InputTypes.DATE"
             rules="required|startDateBeforeEndDate:startDate|maximumDateTerm:startDate"
@@ -104,11 +104,11 @@
           <custom-input
             v-if="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING"
             rules="required"
-            step="3600000"
+            step="3600"
             :type="InputTypes.TIME"
             name="endTime"
             label="Eindtijd"
-            :oading-submit="isSubmitting"
+            :loading-submit="isSubmitting"
           />
         </div>
       </div>
