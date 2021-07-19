@@ -96,5 +96,18 @@ export default abstract class BaseApiRepository {
       })
   }
 
+  protected getFile(endpoint: string, config: AxiosRequestConfig = {}): Promise<any> {
+    config = {
+      ...config,
+      responseType: 'blob',
+    }
+
+    const instance = !store.getters['openid/isLoggedIn'] ? this.publicAxiosInstance : this.axiosInstance
+    return instance.get(endpoint, config).then(function (result: AxiosResponse) {
+      // Only return the data of response
+      return result.data
+    })
+  }
+
   private processError(error: any): void {}
 }

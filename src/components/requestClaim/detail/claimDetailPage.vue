@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <claim-detail />
+    <claim-detail :isDetailPage="true" />
   </div>
 </template>
 

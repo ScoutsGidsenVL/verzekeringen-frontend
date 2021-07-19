@@ -39,6 +39,13 @@
       </div>
     </div>
 
+    <div>
+      <custom-headline-2 text="Bijlage" />
+      <div class="ml-5">
+        <file-upload />
+      </div>
+    </div>
+
     <div class="mb-5">
       <custom-headline-2 text="Identiteit van het slachtoffer" />
 
@@ -222,6 +229,7 @@ import { useForm, ErrorMessage } from 'vee-validate'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import Required from '@/components/semantic/Required.vue'
+import FileUpload from '@/components/semantic/FileUpload.vue'
 
 export default defineComponent({
   name: 'RequestClaimIdentities',
@@ -234,6 +242,7 @@ export default defineComponent({
     'custom-button': CustomButton,
     'multi-select': MultiSelect,
     'custom-input': CustomInput,
+    'file-upload': FileUpload,
     'info-alert': InfoAlert,
     ErrorMessage,
     Required,

@@ -41,8 +41,8 @@
         <label-output :text="claimState.victim.email" />
         <label-output class="mt-1" label="Geboortedatum" :text="claimState.victim.birthDate" />
         <label-output class="mt-1" label="Geslacht" :text="claimState.victim.gender" />
-        <label-output label="Lidnummer" :text="claimState.victim.membershipNumber" />
-        <label-output label="Bankrekeningnummer" :text="claimState.victim.bankAccount" />
+        <label-output v-if="claimState.victim.membershipNumber" label="Lidnummer" :text="claimState.victim.membershipNumber" />
+        <label-output v-if="claimState.victim.bankAccount" label="Bankrekeningnummer" :text="claimState.victim.bankAccount" />
       </div>
     </div>
 
@@ -117,7 +117,7 @@
       </div>
     </div>
 
-    <div>
+    <div v-if="!isDetailPage">
       <div>
         <div class="md:flex md:gap-5">
           <div class="xs:w-72 md:w-96">
@@ -188,6 +188,13 @@ export default defineComponent({
     'responsible-member-detail': ResponsibleMemberDetail,
     'multi-select': MultiSelect,
     'custom-input': CustomInput,
+  },
+  props: {
+    isDetailPage: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   setup() {
     const { scrollToTopOfPage } = useScrollToTop()

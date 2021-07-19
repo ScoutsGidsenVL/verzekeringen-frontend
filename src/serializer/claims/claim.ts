@@ -1,5 +1,4 @@
 import { ActivityTypes } from '@/enums/activityTypes'
-import { DamageTypes } from '@/enums/damageTypes'
 import { Country } from '@/serializer/Country'
 import { Group } from '@/serializer/Group'
 import { Victim, VictimDeserializer } from '@/serializer/Victim'
@@ -32,13 +31,11 @@ export interface Claim {
   victim?: Victim
   readonly madeUpAtCountry?: Country
   readonly madeUpOnDate?: string
-  involvedPartiesChoices?: Array<boolean>
   administrationComment?: string
   dossierNumber?: string
 }
 
 export const ClaimDeserializer = (input: any): Claim => {
-  // console.log('input: ', input)
   const single: Claim = {
     id: input.id ? input.id : undefined,
     date: input.date ? input.date : undefined,
@@ -62,7 +59,6 @@ export const ClaimDeserializer = (input: any): Claim => {
     leadershipDescription: input.leadership_description ? input.leadership_description : undefined,
     country: input.country ? input.country : undefined,
     victim: input.victim_member ? VictimDeserializer(input.victim_member) : input.victim_non_member ? VictimDeserializer(input.victim_non_member) : undefined,
-    involvedPartiesChoices: [false, false, false, false],
     administrationComment: input.administrationComment ? input.administrationComment : undefined,
     dossierNumber: input.dossierNumber ? input.dossierNumber : undefined,
   }
@@ -85,12 +81,12 @@ export const ClaimSerializer = (input: any): any => {
     // isDamage: input.isDamage ? input.isDamage : undefined,
     // damage: input.damage ? input.damage : undefined,
     description: input.description ? input.description : undefined,
-    involved_party_description: input.involvedPartiesChoices[0] && input.involvedPartyDescription ? input.involvedPartyDescription : undefined,
-    involved_party_birthdate: input.involvedPartiesChoices[0] && input.involvedPartyBirthdate ? input.involvedPartyBirthdate : undefined,
-    official_report_description: input.involvedPartiesChoices[1] && input.officialReportDescription ? input.officialReportDescription : undefined,
-    pv_number: input.involvedPartiesChoices[1] && input.pvNumber ? input.pvNumber : undefined,
-    witness_description: input.involvedPartiesChoices[2] && input.witnessDescription ? input.witnessDescription : undefined,
-    leadership_description: input.involvedPartiesChoices[3] && input.leadershipDescription ? input.leadershipDescription : undefined,
+    involved_party_description: input.involvedPartyDescription ? input.involvedPartyDescription : undefined,
+    involved_party_birthdate: input.involvedPartyBirthdate ? input.involvedPartyBirthdate : undefined,
+    official_report_description: input.officialReportDescription ? input.officialReportDescription : undefined,
+    pv_number: input.pvNumber ? input.pvNumber : undefined,
+    witness_description: input.witnessDescription ? input.witnessDescription : undefined,
+    leadership_description: input.leadershipDescription ? input.leadershipDescription : undefined,
     // country: input.country ? input.country : undefined,
     // victim: input.victim ? input.victim : undefined,
   }

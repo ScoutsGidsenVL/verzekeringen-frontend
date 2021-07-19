@@ -68,9 +68,7 @@ export default defineComponent({
     const store = useStore()
     const isEdit = !!route.params.id
     const { handleSubmit, values, validate, isSubmitting } = useForm<Claim>({
-      initialValues: {
-        involvedPartiesChoices: [false, false, false, false],
-      },
+      initialValues: {},
     })
 
     const claimState = computed((): Claim => {
@@ -83,7 +81,6 @@ export default defineComponent({
         const newClaimState = ref<Claim>({
           madeUpAtCountry: values.madeUpAtCountry,
           madeUpOnDate: values.madeUpOnDate,
-          involvedPartiesChoices: values.involvedPartiesChoices,
           involvedPartyDescription: values.involvedPartyDescription ? values.involvedPartyDescription : undefined,
           involvedPartyBirthdate: values.involvedPartyBirthdate ? values.involvedPartyBirthdate : undefined,
           officialReportDescription: values.officialReportDescription ? values.officialReportDescription : undefined,
@@ -99,15 +96,8 @@ export default defineComponent({
 
     scrollToTopOfPage()
 
-    const changeBoolean = (bool: boolean, pos: number) => {
-      if (values.involvedPartiesChoices) {
-        values.involvedPartiesChoices[pos] = bool
-      }
-    }
-
     return {
       BelgianCitySearchRepository,
-      changeBoolean,
       isSubmitting,
       InputTypes,
       claimState,
