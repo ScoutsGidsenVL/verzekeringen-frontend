@@ -223,6 +223,7 @@ export default defineComponent({
     const onSubmit = async () => {
       await validate().then((validation: any) => scrollToFirstError(validation, 'RequestInsuranceGeneral'))
       handleSubmit(async (values: any) => {
+        console.log('DETAILS: ', details.value)
         const newClaimState = ref<Claim>({
           madeUpAtCountry: values.madeUpAtCountry ? values.madeUpAtCountry : undefined,
           madeUpOnDate: values.madeUpOnDate ? values.madeUpOnDate : undefined,

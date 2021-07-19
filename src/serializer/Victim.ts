@@ -37,6 +37,7 @@ export const VictimDeserializer = (input: any): Victim => {
     comment: input.comment,
     isChecked: false,
     membershipNumber: input.membership_number ? input.membership_number : undefined,
+    bankAccount: input.bank_account ? input.bank_account : undefined,
   }
 
   return single

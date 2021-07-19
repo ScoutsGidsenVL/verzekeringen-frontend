@@ -3,6 +3,7 @@ import { Country } from '@/serializer/Country'
 import { Group } from '@/serializer/Group'
 import { Victim, VictimDeserializer } from '@/serializer/Victim'
 import { ResponsibleMember } from '../ResponsibleMember'
+import moment from 'moment'
 
 export interface Claim {
   readonly id?: number
@@ -36,6 +37,9 @@ export interface Claim {
 }
 
 export const ClaimDeserializer = (input: any): Claim => {
+  const victim = input.victim_member ? { ...input.victim_member, ...{ bank_account: input.bank_account } } : { ...input.victim_non_member, ...{ bank_account: input.bank_account } }
+  console.log('VICTIM: ', victim)
+
   const single: Claim = {
     id: input.id ? input.id : undefined,
     date: input.date ? input.date : undefined,
@@ -45,7 +49,7 @@ export const ClaimDeserializer = (input: any): Claim => {
     victimNonMember: input.victim_non_member ? input.victim_non_member : undefined,
     victimMemberGroupAdminId: input.victim_member_group_admin_id ? input.victim_member_group_admin_id : undefined,
     bankAccount: input.bank_account ? input.bank_account : undefined,
-    dateOfAccident: input.date_of_accident ? input.date_of_accident : undefined,
+    dateOfAccident: input.date_of_accident ? moment(input.date_of_accident).format('DD MMM YYYY') : undefined,
     activity: input.activity ? input.activity : undefined,
     activityTypes: input.activity_type ? input.activity_type : undefined,
     usedTransport: input.used_transport ? input.used_transport : undefined,
@@ -58,7 +62,7 @@ export const ClaimDeserializer = (input: any): Claim => {
     witnessDescription: input.witness_description ? input.witness_description : undefined,
     leadershipDescription: input.leadership_description ? input.leadership_description : undefined,
     country: input.country ? input.country : undefined,
-    victim: input.victim_member ? VictimDeserializer(input.victim_member) : input.victim_non_member ? VictimDeserializer(input.victim_non_member) : undefined,
+    victim: input.victim_member ? VictimDeserializer(victim) : undefined,
     administrationComment: input.administrationComment ? input.administrationComment : undefined,
     dossierNumber: input.dossierNumber ? input.dossierNumber : undefined,
   }
