@@ -150,10 +150,6 @@
     <div class="flex gap-3 mt-5 items-center">
       <custom-button text="Bevestig" />
     </div>
-
-    <pre>
-      {{ claimState }}
-    </pre>
   </form>
 </template>
 
@@ -178,7 +174,6 @@ import { useForm } from 'vee-validate'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import moment from 'moment'
-import { ArrayResult } from '@/serializer/ArrayResult'
 
 export default defineComponent({
   name: 'ClaimDetail',
@@ -204,19 +199,10 @@ export default defineComponent({
     const details = ref<Claim>({})
 
     if (isEdit) {
-      console.log('DETAIL PAGE CLAIM: ', route.params.id)
-      // RepositoryFactory.get(ClaimRepository)
-      //   .getById(route.params.id.toString())
-      //   .then((result: any) => {
-      //     console.log('RESULT BY ID: ', result)
-      //     details.value = ClaimDeserializer(result)
-      //   })
-
       RepositoryFactory.get(ClaimRepository)
-        .getArray('/insurances_claims/?page=1&page_size=10')
-        .then((res: ArrayResult) => {
-          details.value = res.results[0]
-          console.log('DETAILS VALUE: ', details.value)
+        .getById(route.params.id.toString())
+        .then((result: any) => {
+          details.value = result
           store.dispatch('setClaimState', details.value)
         })
     }
