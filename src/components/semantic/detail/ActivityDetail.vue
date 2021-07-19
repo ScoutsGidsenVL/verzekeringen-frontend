@@ -1,6 +1,6 @@
 <template>
   <p class="font-semibold">Activiteit</p>
-  <div class="ml-5">
+  <div class="md:ml-20">
     <label-output v-if="nature" label="Aard van activiteit" :text="nature" />
     <label-output v-if="country" label="Land" :text="country" />
     <label-output v-if="location && location.postalCode" label="Locatie" :text="location.postalCode + ' ' + location.city" />

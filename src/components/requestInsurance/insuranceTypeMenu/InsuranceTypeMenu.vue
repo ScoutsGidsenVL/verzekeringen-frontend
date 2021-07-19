@@ -1,5 +1,5 @@
 <template>
-  <div class="ml-5">
+  <div class="md:ml-20">
     <form action="">
       <div v-for="(insuranceType, index) in insuranceTypes" :key="insuranceType.id" class="py-1">
         <input
@@ -17,6 +17,7 @@
     </form>
   </div>
 </template>
+
 <script lang="ts">
 import { InsuranceTypes } from '@/enums/insuranceTypes'
 import { defineComponent, ref } from 'vue'

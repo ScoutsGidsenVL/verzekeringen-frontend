@@ -55,22 +55,22 @@
         </div>
       </div>
 
-      <div v-show="insuranceTypeState === InsuranceTypes.TIJDELIJKE_VERZEKERING_NIET_LEDEN" class="ml-5">
+      <div v-show="insuranceTypeState === InsuranceTypes.TIJDELIJKE_VERZEKERING_NIET_LEDEN" class="md:ml-20">
         <tip-general-non-member />
       </div>
 
-      <div v-show="insuranceTypeState === InsuranceTypes.REIS_BIJSTAND" class="ml-5">
+      <div v-show="insuranceTypeState === InsuranceTypes.REIS_BIJSTAND" class="md:ml-20">
         <tip-general-travel-assistance />
       </div>
 
-      <div v-show="insuranceTypeState === InsuranceTypes.MATERIAAL_VERZEKERING" class="ml-5">
+      <div v-show="insuranceTypeState === InsuranceTypes.MATERIAAL_VERZEKERING" class="md:ml-20">
         <tip-general-material-insurance />
       </div>
     </div>
 
     <div class="mb-5">
       <custom-headline-2 text="Wanneer" />
-      <div class="ml-5 flex gap-4">
+      <div class="md:ml-20 md:flex md:gap-4">
         <div class="flex gap-4" :class="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING ? 'w-96' : 'w-70'">
           <custom-input
             onInvalid="this.setCustomValidity('De verzekering moet minstens 1 dag op voorhand aangevraagd worden.')"
@@ -91,7 +91,7 @@
             step="3600"
           />
         </div>
-        <div class="flex gap-4" :class="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING ? 'w-96' : 'w-80'">
+        <div class="flex xs:mt-5 md:mt-0 gap-4" :class="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING ? 'w-96' : 'w-80'">
           <custom-input
             onInvalid="this.setCustomValidity('De verzekering moet minstens 1 dag op voorhand aangevraagd worden.')"
             :loading-submit="isSubmitting"
@@ -112,15 +112,15 @@
           />
         </div>
       </div>
-      <div class="ml-5 pt-2"><date-disclaimer /></div>
+      <div class="md:ml-20 pt-2"><date-disclaimer /></div>
     </div>
 
     <div class="mb-5">
       <custom-headline-2 text="Groep" />
-      <div class="ml-5">
+      <div class="md:ml-20">
         <p>De factuur wordt naar de financieel verantwoordelijke van je groep gestuurd.</p>
-        <div class="flex">
-          <div style="width: 40%">
+        <div>
+          <div class="group-selector">
             <multi-select
               id="group"
               :object="true"
@@ -140,7 +140,7 @@
 
     <div class="mb-5">
       <custom-headline-2 text="Aanvrager" />
-      <div class="ml-5">
+      <div class="md:ml-20">
         <insurance-applicant :applicant="values.responsibleMember" />
       </div>
     </div>
@@ -154,7 +154,7 @@
       </info-alert>
     </div>
 
-    <div class="flex gap-3 ml-5 mt-5 items-center">
+    <div class="flex gap-3 md:ml-20 mt-5 items-center">
       <custom-button text="Volgende" />
       <a v-if="!isEdit" class="link-inline cursor-pointer" @click="saveAsDraft()">Opslaan</a>
       <loader :is-loading="isSavingDraft" />
@@ -351,5 +351,15 @@ export default defineComponent({
 <style lang="scss" scoped>
 .custom-label {
   margin-top: -5px;
+}
+
+.group-selector {
+  width: 350px;
+}
+
+@media only screen and (min-width: 600px) {
+  .group-selector {
+    width: 420px;
+  }
 }
 </style>

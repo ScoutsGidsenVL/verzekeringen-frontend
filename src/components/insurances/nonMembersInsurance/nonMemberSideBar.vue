@@ -20,15 +20,15 @@
       >
         <success-toast v-model:showOrHide="formSendWithSuccess" label="Persoon succesvol toegevoegd" />
         <div class="mt-4">
-          <div class="w-96">
+          <div class="md:w-96 xs:w-72">
             <custom-input :loading-submit="isSubmitting" :type="InputTypes.TEXT" rules="required" name="firstName" label="Voornaam" />
           </div>
 
-          <div class="w-96 mt-4">
+          <div class="md:w-96 xs:w-72 mt-4">
             <custom-input :loading-submit="isSubmitting" :type="InputTypes.TEXT" rules="required" name="lastName" label="Achternaam" />
           </div>
 
-          <div class="w-96">
+          <div class="md:w-96 xs:w-72">
             <multi-select
               id="postCodeCity"
               :loading-submit="isSubmitting"
@@ -45,23 +45,23 @@
             />
           </div>
 
-          <div class="w-96 mt-4">
+          <div class="md:w-96 xs:w-72 mt-4">
             <custom-input :loading-submit="isSubmitting" :type="InputTypes.TEXT" rules="required" name="street" label="Straat" />
           </div>
 
-          <div class="w-96 mt-4">
+          <div class="md:w-96 xs:w-72 mt-4">
             <custom-input :loading-submit="isSubmitting" :type="InputTypes.TEXT" maxlength="5" rules="required" name="number" label="Nr" />
           </div>
 
-          <div class="w-96 mt-4">
+          <div class="md:w-96 xs:w-72 mt-4">
             <custom-input :loading-submit="isSubmitting" :type="InputTypes.TEXT" name="letterBox" label="Bus" />
           </div>
 
-          <div class="w-96 mt-4">
+          <div class="md:w-96 xs:w-72 mt-4">
             <custom-input :loading-submit="isSubmitting" :type="InputTypes.DATE" name="birthDate" label="Geboortedatum" />
           </div>
 
-          <div class="w-96 mt-4">
+          <div class="md:w-96 xs:w-72 mt-4">
             <custom-input :loading-submit="isSubmitting" :type="InputTypes.TEXT_AREA" name="comment" label="Opmerking">
               <p v-if="isExtraInformationComment">
                 Indien je niet-leden wil verzekeren die in het buitenland wonen moet je in dit tekstvak de buitenlands gemeente, postcode en land opgeven. En bij adres, het belgisch adres van de
@@ -82,8 +82,8 @@
         </div>
 
         <div class="h-full overflow-y-scroll mt-4 pb-36">
-          <hr v-if="selectedNonMembers.length > 0" class="mt-4 border-t-2 w-96 border-black" />
-          <div v-for="nonMember in selectedNonMembers" :key="nonMember.id" class="w-96">
+          <hr v-if="selectedNonMembers.length > 0" class="mt-4 border-t-2 md:w-96 xs:w-72 border-black" />
+          <div v-for="nonMember in selectedNonMembers" :key="nonMember.id" class="md:w-96 xs:w-72">
             <non-member-item :non-member="nonMember">
               <div>
                 <div class="pt-3 pb-4 text-right"><custom-button type="button" :text="existingList.includes(nonMember) ? 'Toegevoegd' : 'Voeg toe'" @click="addNonMember(nonMember)" /></div>

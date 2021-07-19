@@ -3,8 +3,8 @@
     <div class="mb-5">
       <custom-headline-2 text="Identiteit van de verzekeringsnemer" />
 
-      <div class="flex md:ml-20" style="margin-top: -2em">
-        <div style="width: 430px">
+      <div class="md:ml-20" style="margin-top: -2em">
+        <div style="width: 420px">
           <multi-select
             id="group"
             :object="true"
