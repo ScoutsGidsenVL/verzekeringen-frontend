@@ -36,13 +36,13 @@
               </div>
             </div>
 
-            <div v-if="!isBicycle && !values.ownerMember" class="w-96 mt-4">
+            <div v-if="!isBicycle && !values.ownerMember" class="w-100 mt-4">
               <div>
                 <custom-input extra-info="bv: Tent, Geluidsinstallatie" :type="InputTypes.TEXT" name="nature" label="Soort" />
               </div>
             </div>
 
-            <div class="w-96 mt-4">
+            <div class="w-100 mt-4">
               <custom-input
                 :extra-info="isBicycle ? 'Merk, model en type. bv: Gazelle, Paris Plus, stadsfiets' : 'Merk, model. bv: Senior, JB Systems ME2 mixer'"
                 :type="InputTypes.TEXT_AREA"
@@ -53,11 +53,11 @@
             </div>
           </div>
 
-          <div class="w-96 mt-4">
+          <div class="w-100 mt-4">
             <custom-input :extra-info="setTotalValueInfo()" :type="InputTypes.TEXT" rules="required" name="totalValue" label="Nieuwwaarde" />
           </div>
 
-          <div class="w-96 mt-3">
+          <div class="w-100 mt-3">
             <strong>Eigenaar</strong><strong v-if="owner">{{ lidType }}</strong
             ><required rules="required" />
 
@@ -108,8 +108,8 @@
         </div>
 
         <div class="h-full overflow-y-scroll mt-4 pb-24">
-          <hr v-if="searchedEquipmentList.length > 0" class="mt-4 border-t-2 w-96 border-black" />
-          <div v-for="equipment in searchedEquipmentList" :key="equipment.id" class="w-96">
+          <hr v-if="searchedEquipmentList.length > 0" class="mt-4 border-t-2 w-100 border-black" />
+          <div v-for="equipment in searchedEquipmentList" :key="equipment.id" class="w-100">
             <equipment-item :equipment="equipment">
               <div>
                 <div class="mt-2 pb-4 text-right">
@@ -145,7 +145,6 @@ import { NonMember } from '@/serializer/NonMember'
 import { Equipment } from '@/serializer/Equipment'
 import { InputTypes } from '@/enums/inputTypes'
 import { Member } from '@/serializer/Member'
-import { Owner } from '@/serializer/Owner'
 import { useStore } from 'vuex'
 
 export default defineComponent({
@@ -190,7 +189,7 @@ export default defineComponent({
     const searchedEquipmentList = ref<Array<Equipment>>([])
     const isBicycle = ref<boolean>(false)
     const userData = ref<ResponsibleMember>(store.getters.user)
-    const owner = ref<Owner | null>()
+    const owner = ref<any>()
     const lidType = ref<String>()
     const { resetForm, handleSubmit, validate, meta, values, isSubmitting } = useForm<Equipment>()
     const { formSendWithSuccess } = useFormSendWithSuccess<Equipment>(meta)
@@ -270,9 +269,10 @@ export default defineComponent({
         .create(data)
         .then((completed: Equipment) => {
           context.emit('addEquipmentToList', completed)
-          formSendWithSuccess.value = true
           resetForm()
+          owner.value = undefined
           scrollToTop()
+          formSendWithSuccess.value = true
         })
     }
 
@@ -346,6 +346,7 @@ export default defineComponent({
     watch(sideBarState, (value: sideBarState<Equipment>) => {
       if (value.state === 'edit') {
         formSendWithSuccess.value = false
+
         resetForm({
           values: {
             id: value.entity.id,

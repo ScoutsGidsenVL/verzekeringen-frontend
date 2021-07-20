@@ -68,7 +68,7 @@ export default defineComponent({
               context.emit('fetchedOptions', options.value)
             })
         }
-      }, 300)
+      }, 400)
     }
     return {
       options,

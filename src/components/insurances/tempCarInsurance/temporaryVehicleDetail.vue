@@ -5,7 +5,7 @@
         <div v-if="!(holderState === HolderStates.DETAIL)">
           <div v-if="details.comment">
             <p class="font-semibold">Opmerkingen</p>
-            <div class="ml-5">
+            <div class="md:ml-20">
               <label-output :text="details.comment" />
             </div>
           </div>
@@ -17,14 +17,14 @@
 
         <div>
           <p class="font-semibold">Datum</p>
-          <div class="ml-5">
+          <div class="md:ml-20">
             <label-output label="Periode" :text="formatDate(details.startDate, details.endDate)" />
           </div>
         </div>
 
         <div>
           <p class="font-semibold">Gekozen verzekering</p>
-          <div class="ml-5 py-3">
+          <div class="md:ml-20 py-3">
             <div v-if="details.insuranceOptions.includes(1)" class="mb-3">
               <p>Optie 1: Omniumverzekering (voor stoffelijke schade, brand en diefstal van je eigen voertuig).</p>
             </div>
@@ -42,21 +42,21 @@
 
         <div class="mb-3">
           <p class="font-semibold">Bestuurders</p>
-          <div class="ml-5 mt-3">
+          <div class="md:ml-20 mt-3">
             <member-list :members-list="details.drivers" />
           </div>
         </div>
 
         <div class="mb-3">
           <p class="font-semibold">Eigenaar</p>
-          <div class="ml-5">
+          <div class="md:ml-20">
             <owner :owner="details.owner" />
           </div>
         </div>
 
         <div v-if="details.vehicle && details.vehicle.licensePlate" class="mb-3">
           <p class="font-semibold">Voertuig</p>
-          <div class="ml-5 mt-3">
+          <div class="md:ml-20 mt-3">
             <vehicle-item :vehicle="details.vehicle" :no-line="true" />
           </div>
         </div>

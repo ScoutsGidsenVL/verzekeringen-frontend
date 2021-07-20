@@ -15,19 +15,19 @@
           <custom-headline-2 text="Voertuig" />
           <required rules="required" class="mt-3" />
         </div>
-        <div class="ml-5">
+        <div class="md:ml-20">
           <select-vehicle id="vehicle" rules="required|RequiredVehicle:vehicle" />
         </div>
       </div>
 
       <div>
         <custom-headline-2 text="Opmerkingen" />
-        <div class="ml-5">
+        <div class="md:ml-20">
           <custom-input :type="InputTypes.TEXT_AREA" name="comment" label="" />
         </div>
       </div>
 
-      <div class="flex gap-3 ml-5 mt-5 items-center">
+      <div class="flex gap-3 md:ml-20 mt-5 items-center">
         <back-button :backToState="HolderStates.GENERAL" />
         <custom-button text="Volgende" />
         <a v-if="!isEdit" class="link-inline cursor-pointer" @click="saveAsDraft()">Opslaan</a>

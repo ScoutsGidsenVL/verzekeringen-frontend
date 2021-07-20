@@ -8,30 +8,30 @@
     <tip-temp-vehicle />
   </div>
   <div class="mt-5">
-    <div v-show="!isSubmitting">
-      <input id="isOwnerInput" v-model="selectDriverField.isDriverOwner" class="mr-2 cursor-pointer" type="radio" name="isOwnerInput" :value="IS_NO_DRIVER" />
+    <div v-show="!isSubmitting" class="flex">
+      <input id="isOwnerInput" v-model="selectDriverField.isDriverOwner" class="mr-2 cursor-pointer mt-1.5" type="radio" name="isOwnerInput" :value="IS_NO_DRIVER" />
       <label class="cursor-pointer" for="isOwnerInput">Eigenaar is geen bestuurder of het is een huurwagen</label>
     </div>
-    <div v-show="selectDriverField.isDriverOwner === IS_NO_DRIVER" class="ml-5">
-      <div v-if="!input.firstName && !input.lastName" class="w-96 mt-3">
+    <div v-show="selectDriverField.isDriverOwner === IS_NO_DRIVER" class="md:ml-5">
+      <div v-if="!input.firstName && !input.lastName" class="xs:w-72 md:w-96 mt-3">
         <custom-input :type="InputTypes.TEXT" name="input.companyName" label="Firma naam" :rules="'customRequired'" />
       </div>
 
       <div v-if="!input.companyName">
-        <div class="w-96 mt-3">
+        <div class="xs:w-72 md:w-96 mt-3">
           <custom-input :type="InputTypes.TEXT" name="input.firstName" label="Naam" :rules="'customRequired'" />
         </div>
 
-        <div class="w-96 mt-3">
+        <div class="xs:w-72 md:w-96 mt-3">
           <custom-input :type="InputTypes.TEXT" name="input.lastName" label="Achternaam" :rules="'customRequired'" />
         </div>
       </div>
 
-      <div class="w-96 mt-3">
+      <div class="xs:w-72 md:w-96 mt-3">
         <custom-input :type="InputTypes.TEXT" name="input.phoneNumber" label="Gsm" :rules="'customRequired'" />
       </div>
 
-      <div class="w-96">
+      <div class="xs:w-72 md:w-96">
         <multi-select
           id="input.postCodeCity"
           :object="true"
@@ -47,15 +47,15 @@
         />
       </div>
 
-      <div class="w-96 mt-3">
+      <div class="xs:w-72 md:w-96 mt-3">
         <custom-input :type="InputTypes.TEXT" name="input.street" label="Straat" :rules="'customRequired'" />
       </div>
 
-      <div class="w-96 mt-3">
+      <div class="xs:w-72 md:w-96 mt-3">
         <custom-input :type="InputTypes.TEXT" name="input.number" label="Nr" :rules="'customRequired'" />
       </div>
 
-      <div class="w-96 mt-3">
+      <div class="xs:w-72 md:w-96 mt-3">
         <custom-input :type="InputTypes.TEXT" name="input.letterBox" label="Bus" />
       </div>
     </div>

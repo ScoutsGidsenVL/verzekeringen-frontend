@@ -8,15 +8,15 @@
         <custom-headline-2 text="Je hebt drie opties voor een tijdelijke autoverzekering" />
         <div><strong>Gebruik bij twijfel deze keuzehulp</strong></div>
 
-        <div class="ml-5">
+        <div class="md:ml-20">
           <tip-choice-help />
         </div>
 
         <div class="mt-4"><strong>Vink hier je optie(s) aan</strong></div>
 
-        <div class="mt-2 ml-5">
-          <div>
-            <input id="choice-1" v-model="values.insuranceOptions" class="mr-2" type="checkbox" :value="1" />
+        <div class="mt-2 md:ml-20">
+          <div class="flex">
+            <input id="choice-1" v-model="values.insuranceOptions" class="mr-2 mt-1.5" type="checkbox" :value="1" />
             <label for="choice-1">Optie 1: Omniumverzekering (voor stoffelijke schade, brand en diefstal van je eigen voertuig).</label>
           </div>
 
@@ -26,7 +26,7 @@
               <label class="custom-label" for="choice-2">Optie 2: Heb je al een omniumverzekering? Koop je vrijstelling af: de verzekering dekt de vrijstelling (franchise) van je eigen omnium.</label>
             </div>
 
-            <div v-if="values.insuranceOptions.includes(2)" class="ml-5">
+            <div v-if="values.insuranceOptions.includes(2)" class="md:ml-20">
               <div style="margin-top: -2em" class="w-80">
                 <multi-select
                   id="maxCoverage"

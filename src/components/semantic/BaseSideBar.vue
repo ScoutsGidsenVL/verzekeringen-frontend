@@ -1,6 +1,6 @@
 <template>
   <div v-if="isDisplay" class="h-full w-full fixed top-0 left-0 overflow-x-hidden z-10 bg-black bg-opacity-20" @click="hideSideBar()"></div>
-  <div :class="{ 'd-flex': isDisplay, 'd-none': !isDisplay }" class="bg-white fixed flex-col top-0 right-0 h-full z-20 w-2/">
+  <div :class="{ 'd-flex': isDisplay, 'd-none': !isDisplay }" class="bg-white fixed flex-col top-0 right-0 h-full z-20 xs:w-11/12 sm:w-11/12 md:w-100 max-w-md">
     <header class="px-4 pb-2 pt-3">
       <div class="mb-4 cursor-pointer" @click="hideSideBar()">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
@@ -19,8 +19,16 @@
             <label :for="options[0].value + name" class="ml-2">{{ options[0].text }}</label>
           </div>
 
-          <div>
-            <input :id="options[1].value + name" v-model="selected" class="cursor-pointer" type="radio" :name="options[1].value + name" :value="options[1].value + name" @change="emitOption()" />
+          <div class="flex">
+            <input
+              :id="options[1].value + name"
+              v-model="selected"
+              class="cursor-pointer mt-1.5"
+              type="radio"
+              :name="options[1].value + name"
+              :value="options[1].value + name"
+              @change="emitOption()"
+            />
             <label :for="options[1].value + name" class="ml-2">{{ options[1].text }}</label>
           </div>
         </div>
