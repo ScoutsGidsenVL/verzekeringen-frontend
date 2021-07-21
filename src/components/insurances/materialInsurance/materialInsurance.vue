@@ -4,7 +4,7 @@
     <div v-if="values" class="md:ml-20">
       <custom-input :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" />
 
-      <div class="w-96">
+      <div class="xs:w-72 md:w-96">
         <multi-select
           id="country"
           rules="required"
@@ -21,7 +21,7 @@
           placeholder="Zoek op naam"
         />
       </div>
-      <div v-if="values.country.name === '' || values.country.name === 'België'" class="w-96">
+      <div v-if="values.country.name === '' || values.country.name === 'België'" class="xs:w-72 md:w-96">
         <multi-select
           id="postCodeCity"
           :object="true"

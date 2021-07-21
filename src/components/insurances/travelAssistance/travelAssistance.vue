@@ -3,8 +3,7 @@
     <div v-if="values">
       <div>
         <custom-headline-2 text="Bestemming" />
-        <div class="ml-5 w-96">
-          <!-- {{ values }} -->
+        <div class="md:ml-20 xs:w-72 md:w-96">
           <multi-select
             id="country"
             rules="required|checkForbiddenCountries:@forbiddenCountriesVehicle,@vehicle"
@@ -27,26 +26,26 @@
           <custom-headline-2 text="Deelnemers" />
           <required rules="required" class="mt-3" />
         </div>
-        <div class="ml-5">
+        <div class="md:ml-20">
           <select-participants id="participants" rules="required" />
         </div>
       </div>
 
       <div class="mt-3">
         <custom-headline-2 text="Voertuig" />
-        <div class="ml-5">
+        <div class="md:ml-20">
           <select-vehicle id="vehicle" />
         </div>
       </div>
 
       <div>
         <custom-headline-2 text="Opmerkingen" />
-        <div class="ml-5">
+        <div class="md:ml-20">
           <custom-input :type="InputTypes.TEXT_AREA" name="comment" label="" />
         </div>
       </div>
 
-      <div class="flex gap-3 ml-5 mt-5 items-center">
+      <div class="flex gap-3 md:ml-20 mt-5 items-center">
         <back-button :backToState="HolderStates.GENERAL" />
 
         <custom-button text="Volgende" />
@@ -81,7 +80,6 @@ import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import router from '@/router'
 import { Country } from '@/serializer/Country'
-// import { ArrayResult } from '@/serializer/ArrayResult'
 
 export default defineComponent({
   name: 'TravelAssistance',

@@ -5,7 +5,7 @@
         <div v-if="!(holderState === HolderStates.DETAIL)">
           <div v-if="details.comment">
             <p class="font-semibold">Opmerkingen</p>
-            <div class="ml-5">
+            <div class="md:ml-20">
               <label-output :text="details.comment" />
             </div>
           </div>
@@ -17,7 +17,7 @@
 
         <div>
           <p class="font-semibold">Datum</p>
-          <div class="ml-5">
+          <div class="md:ml-20">
             <label-output label="Periode" :text="formatEventDate(details.startDate, details.startTime, details.endDate, details.endTime)" />
           </div>
         </div>

@@ -1,7 +1,7 @@
 <template>
   <form id="EventInsurance" @submit.prevent="onSubmit">
     <custom-headline-2 text="Activiteit" />
-    <div class="ml-5">
+    <div class="md:ml-20">
       <custom-input :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" />
       <div class="mt-4">
         <strong>Land</strong>
@@ -9,7 +9,7 @@
           <p class="mt-2 w-96">Belgie</p>
         </div>
       </div>
-      <div class="w-96">
+      <div class="xs:w-72 md:w-96">
         <multi-select
           id="location"
           :object="true"
@@ -24,7 +24,7 @@
           placeholder="Zoek op naam/postcode"
         />
       </div>
-      <div class="mt-2 w-96">
+      <div class="mt-2 xs:w-72 md:w-96">
         <multi-select
           id="eventSize"
           :repository="EventSizeRepository"
@@ -41,11 +41,11 @@
 
     <div>
       <custom-headline-2 text="Opmerkingen" />
-      <div class="ml-5">
+      <div class="md:ml-20">
         <custom-input :type="InputTypes.TEXT_AREA" name="comment" label="" />
       </div>
     </div>
-    <div class="flex gap-3 ml-5 mt-5 items-center">
+    <div class="flex gap-3 md:ml-20 mt-5 items-center">
       <back-button :backToState="HolderStates.GENERAL" />
 
       <custom-button text="Volgende" />

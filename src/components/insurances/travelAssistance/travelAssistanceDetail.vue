@@ -5,7 +5,7 @@
         <div v-if="!(holderState === HolderStates.DETAIL)">
           <div v-if="details.comment">
             <p class="font-semibold">Opmerkingen</p>
-            <div class="ml-5">
+            <div class="md:ml-20">
               <label-output :text="details.comment" />
             </div>
           </div>
@@ -17,7 +17,7 @@
 
         <div>
           <p class="font-semibold">Datum</p>
-          <div class="ml-5">
+          <div class="md:ml-20">
             <label-output label="Periode" :text="formatDate(details.startDate, details.endDate)" />
           </div>
         </div>
@@ -26,14 +26,14 @@
 
         <div class="mb-3">
           <p class="font-semibold">Deelnemers</p>
-          <div class="ml-5 mt-3">
+          <div class="md:ml-20 mt-3">
             <member-list :members-list="details.participants" />
           </div>
         </div>
 
         <div v-if="details.vehicle && details.vehicle.licensePlate" class="mb-3">
           <p class="font-semibold">Voertuig</p>
-          <div class="ml-5 mt-3">
+          <div class="md:ml-20 mt-3">
             <vehicle-item :vehicle="details.vehicle" :no-line="true" />
           </div>
         </div>
