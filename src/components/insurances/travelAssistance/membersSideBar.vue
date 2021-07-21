@@ -7,11 +7,23 @@
 
       <div class="h-full overflow-y-scroll mt-4 pb-24">
         <hr v-if="selectedMembers.length > 0" class="mt-4 border-t-2 w-100 border-black" />
+
         <div v-for="member in selectedMembers" :key="member.id" class="w-100">
           <member-item :member="member">
             <div>
               <div class="pt-3 pb-4 text-right">
-                <custom-button type="button" :text="existingList.includes(member) ? 'Toegevoegd' : 'Voeg toe'" @click="addMember(member)" />
+                <custom-button
+                  type="button"
+                  :text="
+                    existingList.some((m) => m.firstName === member.firstName && m.lastName === member.lastName && m.street === member.street && m.number === member.number) ? 'Toegevoegd' : 'Voeg toe'
+                  "
+                  :disabled="
+                    existingList && existingList.some((m) => m.firstName === member.firstName && m.lastName === member.lastName && m.street === member.street && m.number === member.number)
+                      ? true
+                      : false
+                  "
+                  @click="addMember(member)"
+                />
               </div>
             </div>
           </member-item>
