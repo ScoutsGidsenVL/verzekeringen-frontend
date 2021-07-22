@@ -17,7 +17,7 @@
         class="flex-col relative overflow-y-scroll h-full px-4 pt-3"
         @submit.prevent="onSubmit"
       >
-        <success-toast v-model:showOrHide="formSendWithSuccess" label="Materiaal succesvol toegevoegd" />
+        <success-toast v-show="formSendWithSuccess" label="Materiaal succesvol toegevoegd" />
 
         <div>
           <div>
@@ -78,12 +78,12 @@
           </div>
 
           <div v-show="isGroupEquipement === false && !owner">
-            <div>
+            <div class="z-30">
               <strong class="cursor-pointer text-lightGreen" @click="openMemberSideBar()"> Een lid (persoonlijk materiaal) </strong>
               <members-side-bar isOverflowHidden="false" v-model:isDisplay="isMemberSideBarDisplay" :close-on-add="true" :existing-list="members" title="Lid" @addMemberToList="addMember($event)" />
             </div>
 
-            <div class="mt-3">
+            <div class="mt-3 z-30">
               <strong class="cursor-pointer text-lightGreen" @click="openNonMemberSideBar()"> Een niet-lid (derde) </strong>
               <non-member-side-bar
                 isOverflowHidden="false"

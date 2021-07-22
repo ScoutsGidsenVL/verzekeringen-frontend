@@ -1,5 +1,5 @@
 <template>
-  <div v-if="showOrHide" role="alert" aria-label="Statusbericht" class="alert alert-dismissible alert-status-msg fadeIn show container alert-success">
+  <div role="alert" aria-label="Statusbericht" class="alert alert-dismissible alert-status-msg fadeIn show container alert-success">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close" @click="hideToast">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 587.9 587.9">
         <path
@@ -33,10 +33,6 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'SuccessToast',
   props: {
-    showOrHide: {
-      type: Boolean,
-      required: true,
-    },
     label: {
       type: String,
       required: false,

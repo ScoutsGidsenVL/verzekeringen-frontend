@@ -18,7 +18,7 @@
         class="flex-col relative overflow-y-scroll h-full px-4 pt-3"
         @submit.prevent="onSubmit"
       >
-        <success-toast v-model:showOrHide="formSendWithSuccess" label="Persoon succesvol toegevoegd" />
+        <success-toast v-show="formSendWithSuccess" label="Persoon succesvol toegevoegd" />
         <div class="mt-4">
           <div class="w-100">
             <custom-input :loading-submit="isSubmitting" :type="InputTypes.TEXT" rules="required" name="firstName" label="Voornaam" />
