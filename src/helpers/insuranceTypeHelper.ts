@@ -4,7 +4,7 @@ import { InsuranceTypes } from '@/enums/insuranceTypes'
 export const displayCorrectTypeLabel = (type: string): string => {
   switch (type) {
     case InsuranceTypes.EENMALIGE_ACTIVITEIT:
-      return 'Eenmalige activiteit'
+      return 'Verzekering eenmalige activiteit'
     case InsuranceTypes.TIJDELIJKE_VERZEKERING_NIET_LEDEN:
       return 'Tijdelijke verzekering niet-leden'
     case InsuranceTypes.REIS_BIJSTAND:
@@ -12,9 +12,9 @@ export const displayCorrectTypeLabel = (type: string): string => {
     case InsuranceTypes.TIJDELIJKE_AUTO_VERZEKERING:
       return 'Tijdelijke autoverzekering'
     case InsuranceTypes.EVENEMENTEN_VERZEKERING:
-      return 'Evenementen verzekering'
+      return 'Evenementenverzekering'
     case InsuranceTypes.MATERIAAL_VERZEKERING:
-      return 'Materiaal verzekering'
+      return 'Materiaalverzekering'
     default:
       return 'No correct type selected'
   }

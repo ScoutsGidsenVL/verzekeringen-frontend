@@ -1,5 +1,5 @@
 <template>
-  <base-detail :single-page="singlePage" :data="eventInsuranceState" :repository="EventRepository" title="Evenementen verzekering">
+  <base-detail :single-page="singlePage" :data="eventInsuranceState" :repository="EventRepository" title="evenementenverzekering">
     <template #default="{ details }">
       <div v-if="details" class="mt-1">
         <div v-if="!(holderState === HolderStates.DETAIL)">

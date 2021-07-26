@@ -96,14 +96,17 @@ export default defineComponent({
 
     if (holderState.value === HolderStates.COMPLETED) {
       titelText.value = '<p style="font-size: 30px">Je <strong class="font-semibold">' + props.title + '</strong> verzekering is aangevraagd </p>'
-      if (props.title === 'Evenementen verzekering') {
+      if (props.title === 'evenementenverzekering') {
         titelText.value = '<p style="font-size: 30px">Je <strong class="font-semibold">' + props.title + '</strong> is aangevraagd</p>'
       }
       if (props.title === 'Materiaal') {
-        titelText.value = '<p style="font-size: 30px">Je <strong class="font-semibold">' + 'Materiaal verzekering' + '</strong> is aangevraagd</p>'
+        titelText.value = '<p style="font-size: 30px">Je <strong class="font-semibold">' + 'materiaalverzekering' + '</strong> is aangevraagd</p>'
       }
       if (props.title === 'Tijdelijke') {
         titelText.value = '<p style="font-size: 30px">Je <strong class="font-semibold">' + 'Tijdelijke autoverzekering' + '</strong> is aangevraagd</p>'
+      }
+      if (props.title === 'verzekering eenmalige activiteit') {
+        titelText.value = '<p style="font-size: 30px">Je <strong class="font-semibold">' + props.title + '</strong> is aangevraagd</p>'
       }
     }
 
@@ -118,7 +121,14 @@ export default defineComponent({
         titelText.value = '<p style="font-size: 30px">Overzicht <strong class="font-semibold">' + 'tijdelijke autoverzekering' + '</strong></p>'
       }
       if (props.title === 'Materiaal') {
-        titelText.value = '<p style="font-size: 30px">Overzicht <strong class="font-semibold">' + 'materiaal verzekering' + '</strong></p>'
+        titelText.value = '<p style="font-size: 30px">Overzicht <strong class="font-semibold">' + 'materiaalverzekering' + '</strong></p>'
+      }
+      if (props.title === 'verzekering eenmalige activiteit') {
+        titelText.value = '<p style="font-size: 30px">Overzicht <strong class="font-semibold">' + props.title + '</strong></p>'
+      }
+
+      if (props.title === 'evenementenverzekering') {
+        titelText.value = '<p style="font-size: 30px">Overzicht <strong class="font-semibold">' + props.title + '</strong></p>'
       }
     }
 

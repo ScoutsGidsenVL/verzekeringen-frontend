@@ -37,9 +37,9 @@ export default defineComponent({
     const insuranceTypes = ref<Object[]>([
       { name: 'Tijdelijke verzekering niet-leden', value: InsuranceTypes.TIJDELIJKE_VERZEKERING_NIET_LEDEN },
       { name: 'Tijdelijke autoverzekering', value: InsuranceTypes.TIJDELIJKE_AUTO_VERZEKERING },
-      { name: 'Materiaal verzekering', value: InsuranceTypes.MATERIAAL_VERZEKERING },
-      { name: 'Evenementen verzekering', value: InsuranceTypes.EVENEMENTEN_VERZEKERING },
-      { name: 'Eenmalige activiteit', value: InsuranceTypes.EENMALIGE_ACTIVITEIT },
+      { name: 'Materiaalverzekering', value: InsuranceTypes.MATERIAAL_VERZEKERING },
+      { name: 'Evenementenverzekering', value: InsuranceTypes.EVENEMENTEN_VERZEKERING },
+      { name: 'Verzekering eenmalige activiteit', value: InsuranceTypes.EENMALIGE_ACTIVITEIT },
       { name: 'Reisbijstand', value: InsuranceTypes.REIS_BIJSTAND },
     ])
     const setInsuranceTypeState = (value: string) => {
