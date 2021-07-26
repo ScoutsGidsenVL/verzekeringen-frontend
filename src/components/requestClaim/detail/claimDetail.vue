@@ -148,7 +148,7 @@
     </div>
 
     <div class="flex gap-3 mt-5 items-center">
-      <custom-button text="Bevestig" />
+      <custom-button text="Verstuur je aanvraag" />
     </div>
   </form>
 </template>

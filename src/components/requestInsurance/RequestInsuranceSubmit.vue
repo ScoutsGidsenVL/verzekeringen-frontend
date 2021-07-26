@@ -3,6 +3,7 @@
     <div v-if="error">
       <p class="text-red">Er is iets mis gegaan.</p>
     </div>
+
     <request-insurance-detail>
       <div>
         <p class="font-semibold">Opmerkingen</p>
@@ -12,12 +13,9 @@
       </div>
     </request-insurance-detail>
 
-    <call-to-action v-if="data" class="mt-4" :text="'&euro; ' + data.totalCost">
+    <call-to-action v-if="data" class="mt-4">
       <template v-slot:info>
-        <span class="inline-block mb-3 ml-1 mt-0.5 text-xs w-100">*prijs is indicatie</span>
-
-        <div class="pb-5">verzekering aan te vragen met de volgende gegevens. <strong>Kijk ze nog eens grondig na</strong> en ga terug indien er iets niet correct is.</div>
-        <custom-button text="Bevestig" />
+        <custom-button text="Verstuur je aanvraag" />
       </template>
     </call-to-action>
 

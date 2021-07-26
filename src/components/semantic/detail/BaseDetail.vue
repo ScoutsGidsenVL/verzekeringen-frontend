@@ -12,20 +12,16 @@
       <important-message :message="details.vvksComment" />
     </div>
 
-    <custom-headline-sticker v-if="details" :text="'Totaalprijs: ' + '&euro; ' + details.totalCost">
-      <question-disclaimer>Deze prijs is slechts een indicatie.</question-disclaimer>
-    </custom-headline-sticker>
+    <custom-headline-sticker v-if="details" :text="'Totaalprijs: ' + '&euro; ' + details.totalCost"> </custom-headline-sticker>
+    <div style="margin-top: -4em" class="text-xs mb-5">
+      <i> Dit is een richtprijs. Na nazicht van je aanvraag ontvang je een factuur. Je bent pas verzekerd als die factuur betaald is. </i>
+      <i class="block"> Je vraagt een verzekering aan met onderstaande gegevens. Kijk ze nog eens grondig na en pas aan indien nodig. Bevestig dan je aanvraag onderaan deze pagina. </i>
+    </div>
 
     <slot :details="details" :isDetail="isDetail" />
   </div>
 
   <div v-if="holderState === HolderStates.COMPLETED">
-    <call-to-action v-if="details" class="mt-4" :text="'&euro; ' + details.totalCost">
-      <template v-slot:info>
-        <span class="inline-block mb-3 ml-1 mt-0.5 text-xs w-100">*Prijs is indicatie</span>
-      </template>
-    </call-to-action>
-
     <div class="mt-4 container inline-block">
       <navigation-arrow to="/home/verzekeringen" text="Terug naar overzicht" />
     </div>
@@ -34,7 +30,6 @@
 
 <script lang="ts">
 import CustomHeadlineSticker from '@/components/customHeadlines/CustomHeadlineSticker.vue'
-import CallToAction from '@/components/customHeadlines/CallToAction.vue'
 import NavigationArrow from '@/components/semantic/NavigationArrow.vue'
 import { computed, defineComponent, PropType, ref, watch } from 'vue'
 import RepositoryFactory from '@/repositories/repositoryFactory'
@@ -42,7 +37,6 @@ import { BaseRepository } from '@/repositories/baseRepository'
 import { HolderStates } from '@/enums/holderStates'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-import QuestionDisclaimer from '@/components/disclaimers/questionDisclaimer.vue'
 import ImportantMessage from '@/components/semantic/ImportantMessage.vue'
 
 export default defineComponent({
@@ -50,8 +44,6 @@ export default defineComponent({
   components: {
     'custom-headline-sticker': CustomHeadlineSticker,
     'navigation-arrow': NavigationArrow,
-    'question-disclaimer': QuestionDisclaimer,
-    'call-to-action': CallToAction,
     'important-message': ImportantMessage,
   },
   props: {
