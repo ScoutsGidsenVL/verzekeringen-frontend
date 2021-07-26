@@ -1,7 +1,8 @@
 <template>
-  <div v-if="isDisplay" class="h-full w-full fixed top-0 left-0 overflow-x-hidden z-10 bg-black bg-opacity-20" @click="hideSideBar()"></div>
+  <div v-if="isDisplay" class="h-full w-full fixed top-0 left-0 overflow-x-hidden bg-black bg-opacity-20" @click="hideSideBar()"></div>
+
   <div :class="{ 'd-flex': isDisplay, 'd-none': !isDisplay }" class="bg-white fixed flex-col top-0 right-0 h-full z-20 xs:w-11/12 sm:w-11/12 md:w-100 max-w-md">
-    <header class="px-4 pb-2 pt-3">
+    <div class="px-4 pb-2 pt-3 custom-background">
       <div class="mb-4 cursor-pointer" @click="hideSideBar()">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
           <path
@@ -33,7 +34,7 @@
           </div>
         </div>
       </form>
-    </header>
+    </div>
     <slot />
   </div>
 </template>
@@ -141,5 +142,9 @@ header {
 
 .group-search__title span {
   animation: fadeIn 0s 0s both;
+}
+
+.custom-background {
+  background: #f9f9f9 url(/bg-texture-small.jpg);
 }
 </style>
