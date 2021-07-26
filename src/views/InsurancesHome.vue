@@ -12,7 +12,7 @@
 
     <div v-if="data">
       <custom-list :items="data.results" title="Recent aangevraagd">
-        <div class="w-96 pb-3" style="margin-top: -2em">
+        <div class="pb-3" style="margin-top: -2em; width: 600px">
           <multi-select
             id="group"
             :object="true"

@@ -357,7 +357,7 @@ export default defineComponent({
 
 @media only screen and (min-width: 600px) {
   .group-selector {
-    width: 420px;
+    width: 600px;
   }
 }
 </style>
