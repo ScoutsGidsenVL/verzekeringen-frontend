@@ -15,6 +15,7 @@ export interface Member {
   readonly comment?: string
   isChecked?: boolean
   readonly membershipNumber?: string
+  readonly isMember?: boolean
 }
 
 export const MemberDeserializer = (input: any): Member => {
@@ -33,6 +34,7 @@ export const MemberDeserializer = (input: any): Member => {
     comment: input.comment,
     isChecked: false,
     membershipNumber: input.membership_number ? input.membership_number : undefined,
+    isMember: input.is_member ? input.is_member : false,
   }
 
   return single

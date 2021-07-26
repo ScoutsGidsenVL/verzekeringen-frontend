@@ -2,7 +2,7 @@
   <base-side-bar :isOverflowHidden="isOverflowHidden" v-model:isDisplay="display" name="Member" :title="title">
     <div class="d-flex flex-col h-full px-4 pt-4">
       <div>
-        <search-input v-model:loading="loading" name="member" placeholder="Zoek op naam" :repository="MemberRepository" @fetchedOptions="fetchedOptions($event)" />
+        <search-input v-model:loading="loading" name="member" placeholder="Zoek op naam" :repository="PersonRepository" @fetchedOptions="fetchedOptions($event)" />
       </div>
 
       <div class="h-full overflow-y-scroll mt-4 pb-24">
@@ -37,6 +37,7 @@
 import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRepository'
 import MemberItem from '@/components/insurances/travelAssistance/memberItem.vue'
 import { MemberRepository } from '@/repositories/memberRepository'
+import { PersonRepository } from '@/repositories/personRepository'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import BaseSideBar from '@/components/semantic/BaseSideBar.vue'
@@ -46,6 +47,7 @@ import { defineComponent, ref, watch } from 'vue'
 import { InputTypes } from '@/enums/inputTypes'
 import { Member } from '@/serializer/Member'
 import { useStore } from 'vuex'
+import { NonMemberRepository } from '@/repositories/nonMemberRepository'
 
 export default defineComponent({
   name: 'MemberSideBar',
@@ -100,8 +102,18 @@ export default defineComponent({
     const fetchedOptions = (options: any) => {
       selectedMembers.value = []
       options.forEach((member: Member) => {
-        if (member.id) {
-          RepositoryFactory.get(MemberRepository)
+        if (member.groupAdminId) {
+          if (member.isMember) {
+            RepositoryFactory.get(MemberRepository)
+              .getById(member.groupAdminId)
+              .then((result: Member) => {
+                result.birthDate = member.birthDate
+                selectedMembers.value.push(result)
+              })
+          }
+        }
+        if (member.id && !member.isMember) {
+          RepositoryFactory.get(NonMemberRepository)
             .getById(member.id)
             .then((result: Member) => {
               result.birthDate = member.birthDate
@@ -129,6 +141,7 @@ export default defineComponent({
     return {
       BelgianCitySearchRepository,
       MemberRepository,
+      PersonRepository,
       selectedMembers,
       fetchedOptions,
       InputTypes,
