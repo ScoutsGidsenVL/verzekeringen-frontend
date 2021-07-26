@@ -13,7 +13,6 @@
         </div>
       </div>
 
-      <!-- <custom-button class="mt-1" v-on:click="uploadFile(file)" text="Upload" /> -->
     </div>
 
     <div class="mt-4 mb-5">
@@ -33,13 +32,11 @@ import FileRepository from '@/repositories/fileRepository'
 import { defineComponent, ref, watch } from 'vue'
 import FileItemComponent from '@/components/semantic/FileItemComponent.vue'
 import { FileItem } from '@/serializer/FileItem'
-// import CustomButton from '@/components/CustomButton.vue'
 
 export default defineComponent({
   name: 'file-upload',
   components: {
     'file-item-component': FileItemComponent,
-    // 'custom-button': CustomButton,
   },
   props: {},
   setup(props, context) {
@@ -63,6 +60,8 @@ export default defineComponent({
     }
     const selectFile = (data: any) => {
       selectedFile.value = data.target.files[0]
+      console.log('SELECTED FILE: ', selectedFile.value)
+      // UPLOAD FILE WITH ENDPOINT
     }
 
     watch(

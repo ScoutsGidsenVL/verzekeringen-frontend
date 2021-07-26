@@ -35,7 +35,7 @@ import { FileItem } from '@/serializer/FileItem'
 import FileRepository from '@/repositories/fileRepository'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import { defineComponent, PropType } from 'vue'
-// import { saveAs } from 'file-saver'
+import { saveAs } from 'file-saver'
 
 export default defineComponent({
   name: 'file-item-component',
@@ -57,7 +57,8 @@ export default defineComponent({
           .downloadFile(props.file.id)
           .then((file: Blob) => {
             console.log(file)
-            // saveAs(file, props.file.name)
+            const savedAsFile = saveAs(file, props.file.name)
+            console.log('SAVED AS FILE: ', savedAsFile)
           })
       }
     }
