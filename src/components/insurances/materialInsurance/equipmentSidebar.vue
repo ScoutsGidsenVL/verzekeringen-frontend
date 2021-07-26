@@ -48,7 +48,7 @@
                 :type="InputTypes.TEXT_AREA"
                 rules="required"
                 name="description"
-                label="Omschrijving"
+                label="Beschrijving"
               />
             </div>
           </div>
