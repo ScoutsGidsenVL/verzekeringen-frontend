@@ -17,13 +17,13 @@
         <div class="mt-2 md:ml-20">
           <div class="flex">
             <input id="choice-1" v-model="values.insuranceOptions" class="mr-2 mt-1.5" type="checkbox" :value="1" />
-            <label for="choice-1">Optie 1: Omniumverzekering (voor stoffelijke schade, brand en diefstal van je eigen voertuig).</label>
+            <label for="choice-1">Optie 1: Omniumverzekering.</label>
           </div>
 
           <div class="mt-4">
             <div class="flex">
               <input id="choice-2" v-model="values.insuranceOptions" class="mr-2" type="checkbox" :value="2" />
-              <label class="custom-label" for="choice-2">Optie 2: Heb je al een omniumverzekering? Koop je vrijstelling af: de verzekering dekt de vrijstelling (franchise) van je eigen omnium.</label>
+              <label class="custom-label" for="choice-2">Optie 2: Vrijstelling van eigen omnium dekken tot XXX EUR.</label>
             </div>
 
             <div v-if="values.insuranceOptions.includes(2)" class="md:ml-20">
@@ -44,9 +44,7 @@
 
           <div class="flex mt-4">
             <input id="choice-3" v-model="values.insuranceOptions" class="mr-2" type="checkbox" :value="3" />
-            <label class="custom-label" for="choice-3"
-              >Optie 3: Huur je een voertuig? Koop dan de vrijstelling af van de wettelijk verplichte verzekering burgerlijke aansprakelijkheid tot maximum 500 euro.</label
-            >
+            <label class="custom-label" for="choice-3">Optie 3: Huurvoertuig: vrijstelling verzekering burgerlijke aansprakelijkheid dekken tot 500 euro. </label>
           </div>
         </div>
 

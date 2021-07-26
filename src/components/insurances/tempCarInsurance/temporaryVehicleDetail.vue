@@ -26,16 +26,16 @@
           <p class="font-semibold">Gekozen verzekering</p>
           <div class="md:ml-20 py-3">
             <div v-if="details.insuranceOptions.includes(1)" class="mb-3">
-              <p>Optie 1: Omniumverzekering (voor stoffelijke schade, brand en diefstal van je eigen voertuig).</p>
+              <p>Optie 1: Omniumverzekering.</p>
             </div>
 
             <div v-if="details.insuranceOptions.includes(2)" class="mb-3">
-              <p>Optie 2: Heb je al een omniumverzekering? Koop je vrijstelling af: de verzekering dekt de vrijstelling (franchise) van je eigen omnium.</p>
+              <p>Optie 2: Vrijstelling van eigen omnium dekken tot XXX EUR.</p>
               <p>{{ details.maxCoverage.label }}</p>
             </div>
 
             <div v-if="details.insuranceOptions.includes(3)">
-              <p>Optie 3: Huur je een voertuig? Koop dan de vrijstelling af van de wettelijk verplichte verzekering burgerlijke aansprakelijkheid tot maximum 500 euro.</p>
+              <p>Optie 3: Huurvoertuig: vrijstelling verzekering burgerlijke aansprakelijkheid dekken tot 500 euro.</p>
             </div>
           </div>
         </div>
