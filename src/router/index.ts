@@ -78,7 +78,7 @@ const routes: any[] = [
     component: RequestInsurance,
     meta: {
       requiresOpenIdAuth: true,
-      title: 'Verzekering Bewerken',
+      title: 'Verzekering Aanvragen',
       homescreen: '/home/verzekeringen',
     },
   },
@@ -172,7 +172,7 @@ const routes: any[] = [
     component: RequestInsurance,
     meta: {
       requiresOpenIdAuth: true,
-      title: 'Verzekering Bewerken',
+      title: 'Verzekering Aanvragen',
       isDraft: true,
       homescreen: '/home/verzekeringen',
     },
