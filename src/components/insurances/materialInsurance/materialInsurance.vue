@@ -110,6 +110,7 @@ export default defineComponent({
         postCodeCity: data.postCodeCity ? (data.postCodeCity.city === undefined ? {} : data.postCodeCity) : undefined,
         equipment: data.equipment ? data.equipment : [],
         vvksComment: data.vvksComment ? data.vvksComment : '',
+        comment: data.comment ? data.comment : undefined,
       },
     })
     const isEdit = !!route.params.id
