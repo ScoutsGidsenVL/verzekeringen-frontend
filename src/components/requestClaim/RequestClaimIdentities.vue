@@ -31,7 +31,7 @@
               :loadingSubmit="isRefreshing"
               type="button"
               class="ml-20 mt-2"
-              text="Herlaad"
+              text="Refresh"
               @click="refreshGroups()"
             />
           </p>

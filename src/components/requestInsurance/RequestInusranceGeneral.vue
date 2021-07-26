@@ -149,7 +149,7 @@
       <info-alert>
         <p>
           Om het e-mailadres of gsm-nummer van de aanvrager te wijzigen <strong><a target="_blank" href="https://groepsadmin.scoutsengidsenvlaanderen.be/">klik hier</a></strong> en vervolgens op
-          Herlaad. <custom-button :loadingSubmit="isRefreshing" type="button" class="ml-5 mt-2" text="Herlaad" @click="refreshGroups()" />
+          Refresh. <custom-button :loadingSubmit="isRefreshing" type="button" class="ml-5 mt-2" text="Refresh" @click="refreshGroups()" />
         </p>
       </info-alert>
     </div>
