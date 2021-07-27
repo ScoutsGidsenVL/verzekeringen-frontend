@@ -30,7 +30,7 @@ export default defineComponent({
       if (localStorage.getItem('homescreen')) {
         router.push(String(localStorage.getItem('homescreen')))
       } else {
-        router.push('/home/verzekeringen')
+        router.push('/home')
       }
     }
     return {}

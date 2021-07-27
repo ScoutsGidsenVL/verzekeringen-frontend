@@ -1,0 +1,34 @@
+<template>
+  <div class="container">
+    <h1 class="ml-0 w-full h1">Welkom {{ user.firstName }}</h1>
+    <div class="flex gap-5">
+      <router-link :to="'/home/verzekeringen'">
+        <custom-button text="Verzekeringen" />
+      </router-link>
+
+      <router-link :to="'/home/schade-aangiftes'">
+        <custom-button text="Schade aangiftes" />
+      </router-link>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import store from '@/store/store'
+import { defineComponent, ref } from 'vue'
+import CustomButton from '@/components/CustomButton.vue'
+
+export default defineComponent({
+  name: 'Home',
+  components: {
+    'custom-button': CustomButton,
+  },
+  setup() {
+    const user = ref<any>(store.getters.user)
+
+    return {
+      user,
+    }
+  },
+})
+</script>
