@@ -24,7 +24,6 @@
       </div>
 
       <div class="mt-3">{{ file.name }}</div>
-
       <div class="mt-3">{{ (file.size / (1024 * 1024)).toFixed(2) }} MB</div>
     </div>
   </div>

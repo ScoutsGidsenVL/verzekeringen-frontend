@@ -20,6 +20,9 @@
       </div>
       <div class="w-72" v-else>
         <file-item-component v-on:deleteFile="deleteFile($event)" :file="selectedFile" :isDetailView="isDetailView" />
+        <span :name="id">
+          <ErrorMessage :name="'file'" class="text-red text-sm block w-80" />
+        </span>
       </div>
     </div>
   </div>
@@ -29,19 +32,19 @@
 import { defineComponent, ref, watch } from 'vue'
 import FileItemComponent from '@/components/semantic/FileItemComponent.vue'
 import { FileItem } from '@/serializer/FileItem'
-import { useField } from 'vee-validate'
+import { ErrorMessage, useField } from 'vee-validate'
 
 export default defineComponent({
   name: 'file-upload',
   components: {
     'file-item-component': FileItemComponent,
+    ErrorMessage,
   },
   props: {},
   setup(props, context) {
     const files = ref<FileItem[]>([])
-    // const selectedFile = ref<any>()
 
-    const { value: selectedFile } = useField<any>('file', '', {})
+    const { value: selectedFile } = useField<any>('file', 'fileSize', {})
 
     const deleteFile = () => {
       selectedFile.value = undefined
