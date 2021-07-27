@@ -4,6 +4,7 @@ import { Group } from '@/serializer/Group'
 import { Victim, VictimDeserializer } from '@/serializer/Victim'
 import { ResponsibleMember } from '../ResponsibleMember'
 import moment from 'moment'
+import { Attachment, AttachmentDeserializer } from './Attachment'
 
 export interface Claim {
   readonly id?: number
@@ -34,6 +35,8 @@ export interface Claim {
   readonly madeUpOnDate?: string
   administrationComment?: string
   dossierNumber?: string
+  readonly attachment?: Attachment
+  file?: any
 }
 
 export const ClaimDeserializer = (input: any): Claim => {
@@ -65,6 +68,7 @@ export const ClaimDeserializer = (input: any): Claim => {
     victim: input.victim_member ? VictimDeserializer(victim) : undefined,
     administrationComment: input.administrationComment ? input.administrationComment : undefined,
     dossierNumber: input.dossierNumber ? input.dossierNumber : undefined,
+    attachment: input.attachment ? AttachmentDeserializer(input.attachment) : undefined,
   }
 
   return single

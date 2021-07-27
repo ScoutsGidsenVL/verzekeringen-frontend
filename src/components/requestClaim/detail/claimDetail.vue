@@ -21,6 +21,17 @@
       </div>
     </div>
 
+    <div v-if="claimState.file" class="mt-5">
+      <p class="font-semibold">Bijlage</p>
+
+      <div class="md:ml-20">
+        <div @click="saveFile(claimState.file)" class="hover:text-lightGreen cursor-pointer">
+          <p>{{ claimState.file.name }}</p>
+          <p>{{ (claimState.file.size / (1024 * 1024)).toFixed(2) }} MB {{ claimState.file.type ? claimState.file.type : '' }}</p>
+        </div>
+      </div>
+    </div>
+
     <div class="mt-5">
       <p class="font-semibold">Identiteit van het slachtoffer</p>
       <div v-if="claimState.victim" class="md:ml-20">
@@ -174,6 +185,8 @@ import { useForm } from 'vee-validate'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import moment from 'moment'
+import { saveAs } from 'file-saver'
+import FileRepository from '@/repositories/fileRepository'
 
 export default defineComponent({
   name: 'ClaimDetail',
@@ -198,12 +211,23 @@ export default defineComponent({
     const isEdit = !!route.params.id
     const details = ref<Claim>({})
 
+    const saveFile = (file: any) => {
+      saveAs(file, file.name)
+    }
+
     if (isEdit) {
       RepositoryFactory.get(ClaimRepository)
         .getById(route.params.id.toString())
         .then((result: any) => {
           details.value = result
           store.dispatch('setClaimState', details.value)
+          if (details.value.attachment) {
+            RepositoryFactory.get(FileRepository)
+              .downloadFile(details.value.attachment.id)
+              .then((res) => {
+                details.value.file = res
+              })
+          }
         })
     }
     const { handleSubmit, values, validate, isSubmitting } = useForm<Claim>({
@@ -238,8 +262,16 @@ export default defineComponent({
     const postClaim = async () => {
       await RepositoryFactory.get(ClaimRepository)
         .create(claimState.value)
-        .then(() => {
-          store.dispatch('setClaimHolderState', ClaimHolderStates.FIVE)
+        .then((res) => {
+          if (claimState.value.file) {
+            RepositoryFactory.get(FileRepository)
+              .uploadFile(claimState.value.file, res.id)
+              .then(() => {
+                store.dispatch('setClaimHolderState', ClaimHolderStates.FIVE)
+              })
+          } else {
+            store.dispatch('setClaimHolderState', ClaimHolderStates.FIVE)
+          }
         })
     }
 
@@ -256,6 +288,7 @@ export default defineComponent({
       userData,
       isEdit,
       values,
+      saveFile,
     }
   },
 })

@@ -13,24 +13,18 @@ export default class FileRepository extends BaseRepository {
   serializer = null
 
   // UPLOAD FILE
-  public uploadFile(file: any): Promise<FileItem> {
+  public uploadFile(file: any, claimId: string): Promise<FileItem> {
     const fd = new FormData()
-    fd.append('upload', file)
+    fd.append('insurance_claim', claimId)
+    fd.append('file', file)
 
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
       },
     }
-    return this.post(this.endpoint + 'upload/', fd, config).then((response: FileItem) => {
+    return this.post(this.endpoint, fd, config).then((response: FileItem) => {
       return response
-    })
-  }
-
-  // DOWNLOAD FILE
-  public downloadFile(id: string): Promise<Blob> {
-    return this.getFile(this.endpoint + 'download/' + id).then((res) => {
-      return res
     })
   }
 }

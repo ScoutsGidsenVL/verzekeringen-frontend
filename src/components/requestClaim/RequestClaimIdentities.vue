@@ -281,6 +281,7 @@ export default defineComponent({
           groupLeader: userData.value,
           victim: values.victim,
           victimMember: values.victimMember,
+          file: values.file,
         })
 
         store.dispatch('setClaimState', newClaimState)
