@@ -26,8 +26,7 @@
 
       <div class="md:ml-20">
         <div @click="saveFile(claimState.file)" class="hover:text-lightGreen cursor-pointer">
-          <p>{{ claimState.file.name }}</p>
-          <p>{{ (claimState.file.size / (1024 * 1024)).toFixed(2) }} MB {{ claimState.file.type ? claimState.file.type : '' }}</p>
+          <p class="underline">{{ claimState.file.name }} {{ (claimState.file.size / (1024 * 1024)).toFixed(2) }} MB {{ claimState.file.type ? claimState.file.type : '' }}</p>
         </div>
       </div>
     </div>
