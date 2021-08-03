@@ -57,6 +57,7 @@ export abstract class BaseRepository extends BaseApiRepository {
   }
 
   create(data: any) {
+    console.log('CREATE: ', this.serializer(data))
     return this.post(this.endpoint, this.serializer(data)).then((response: any) => {
       return this.deserializer(response)
     })

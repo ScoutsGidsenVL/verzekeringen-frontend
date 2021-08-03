@@ -104,18 +104,18 @@
         </div>
       </div>
 
-      <div class="md:ml-20 mb-5" v-if="claimState.officialReportDescription">
+      <div class="md:ml-20 mb-5" v-if="claimState.legalRepresentative">
         <strong>Werd er een vastelling gedaan door een verbaliserende autoriteit?</strong>
         <div>
-          <label-output v-if="claimState.officialReportDescription" class="mt-1" :text="claimState.officialReportDescription" />
+          <label-output v-if="claimState.legalRepresentative" class="mt-1" :text="claimState.legalRepresentative" />
           <label-output v-if="claimState.pvNumber" class="mt-1" label="Eventueel nummer van proces-verbaal" :text="claimState.pvNumber" />
         </div>
       </div>
 
-      <div class="md:ml-20 mb-5" v-if="claimState.witnessDescription">
+      <div class="md:ml-20 mb-5" v-if="claimState.witnessName">
         <strong>Waren er getuigen van het ongeval?</strong>
         <div>
-          <label-output v-if="claimState.witnessDescription" class="mt-1" :text="claimState.witnessDescription" />
+          <label-output v-if="claimState.witnessName" class="mt-1" :text="claimState.witnessName" />
         </div>
       </div>
 
@@ -130,24 +130,13 @@
     <div v-if="!isDetailPage">
       <div>
         <div class="md:flex md:gap-5">
-          <div class="xs:w-72 md:w-96">
-            <multi-select
-              id="madeUpAtCountry"
-              :object="true"
-              track-by="label"
-              value-prop="label"
-              :repository="BelgianCitySearchRepository"
-              :resolve-on-load="true"
-              :options="[]"
-              :searchable="true"
-              label="Opgemaakt te"
-              rules="required"
-              placeholder="Zoek op naam/postcode"
-            />
+          <div class="mt-4">
+            <strong>Opgemaakt te <span class="text-red ml-1">*</span></strong>
+            <custom-input class="xs:w-72 md:w-96" :type="InputTypes.TEXT" rules="required" name="declarantCity" />
           </div>
           <div class="mt-4">
             <strong>Op <span class="text-red ml-1">*</span></strong>
-            <custom-input class="xs:w-72 md:w-96" :type="InputTypes.DATE" rules="required" name="madeUpOnDate" />
+            <custom-input class="xs:w-72 md:w-96" :type="InputTypes.DATE" rules="required" name="DECLARANT_DATE" />
           </div>
         </div>
 
@@ -156,6 +145,10 @@
         </div>
       </div>
     </div>
+
+    <pre>
+      {{ claimState }}
+    </pre>
 
     <div class="flex gap-3 mt-5 items-center">
       <custom-button text="Verstuur je aanvraag" />
@@ -172,7 +165,6 @@ import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import LabelOutput from '@/components/semantic/LabelOutput.vue'
 import { ClaimHolderStates } from '@/enums/ClaimholderStates'
-import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
 import CustomButton from '@/components/CustomButton.vue'
 import { ActivityTypes } from '@/enums/activityTypes'
@@ -193,7 +185,6 @@ export default defineComponent({
     'custom-button': CustomButton,
     'label-output': LabelOutput,
     'responsible-member-detail': ResponsibleMemberDetail,
-    'multi-select': MultiSelect,
     'custom-input': CustomInput,
   },
   props: {
@@ -233,7 +224,7 @@ export default defineComponent({
       initialValues: {
         victim: details.value.victim,
         activityTypes: details.value.activityTypes,
-        madeUpOnDate: moment().format('YYYY-MM-DD'),
+        DECLARANT_DATE: moment().format('YYYY-MM-DD'),
       },
     })
 
@@ -246,10 +237,9 @@ export default defineComponent({
     const onSubmit = async () => {
       await validate().then((validation: any) => scrollToFirstError(validation, 'RequestInsuranceGeneral'))
       handleSubmit(async (values: any) => {
-        console.log('DETAILS: ', details.value)
         const newClaimState = ref<Claim>({
-          madeUpAtCountry: values.madeUpAtCountry ? values.madeUpAtCountry : undefined,
-          madeUpOnDate: values.madeUpOnDate ? values.madeUpOnDate : undefined,
+          declarantCity: values.declarantCity ? values.declarantCity : undefined,
+          DECLARANT_DATE: values.DECLARANT_DATE ? values.DECLARANT_DATE : undefined,
         })
 
         store.dispatch('setClaimState', { ...claimState.value, ...newClaimState.value }).then(async () => {
@@ -259,6 +249,7 @@ export default defineComponent({
     }
 
     const postClaim = async () => {
+      console.log('HELLOW: ', claimState.value)
       await RepositoryFactory.get(ClaimRepository)
         .create(claimState.value)
         .then((res) => {

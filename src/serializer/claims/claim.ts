@@ -29,24 +29,24 @@ export interface Claim {
   readonly pvNumber?: string
   readonly witnessDescription?: string
   readonly leadershipDescription?: string
-  readonly country?: Country
   victim?: Victim
-  readonly madeUpAtCountry?: Country
-  readonly madeUpOnDate?: string
+  readonly DECLARANT_DATE?: string
   administrationComment?: string
   dossierNumber?: string
   readonly attachment?: Attachment
   file?: any
+  readonly declarantCity?: String
+  readonly legalRepresentative?: string
+  readonly witnessName?: String
 }
 
 export const ClaimDeserializer = (input: any): Claim => {
   const victim = input.victim_member ? { ...input.victim_member, ...{ bank_account: input.bank_account } } : { ...input.victim_non_member, ...{ bank_account: input.bank_account } }
-  console.log('VICTIM: ', victim)
 
   const single: Claim = {
     id: input.id ? input.id : undefined,
     date: input.date ? input.date : undefined,
-    person: input.person ? input.person : undefined,
+    person: input.declarant ? input.declarant : undefined,
     group: input.group ? input.group : undefined,
     victimMember: input.victim_member ? input.victim_member : undefined,
     victimNonMember: input.victim_non_member ? input.victim_non_member : undefined,
@@ -62,19 +62,21 @@ export const ClaimDeserializer = (input: any): Claim => {
     involvedPartyBirthdate: input.involved_party_birthdate ? input.involved_party_birthdate : undefined,
     officialReportDescription: input.official_report_description ? input.official_report_description : undefined,
     pvNumber: input.pv_number ? input.pv_number : undefined,
-    witnessDescription: input.witness_description ? input.witness_description : undefined,
     leadershipDescription: input.leadership_description ? input.leadership_description : undefined,
-    country: input.country ? input.country : undefined,
     victim: input.victim_member ? VictimDeserializer(victim) : undefined,
     administrationComment: input.administrationComment ? input.administrationComment : undefined,
     dossierNumber: input.dossierNumber ? input.dossierNumber : undefined,
     attachment: input.attachment ? AttachmentDeserializer(input.attachment) : undefined,
+    declarantCity: input.declarant_city ? input.declarant_city : undefined,
+    legalRepresentative: input.legal_representative ? input.legal_representative : undefined,
+    witnessName: input.witness_name ? input.witness_name : undefined,
   }
 
   return single
 }
 
 export const ClaimSerializer = (input: any): any => {
+  console.log('CLAIM: ', input)
   const single: any = {
     // id: input.id ? input.id : undefined,
     group: input.group.id ? input.group.id : undefined,
@@ -93,10 +95,11 @@ export const ClaimSerializer = (input: any): any => {
     involved_party_birthdate: input.involvedPartyBirthdate ? input.involvedPartyBirthdate : undefined,
     official_report_description: input.officialReportDescription ? input.officialReportDescription : undefined,
     pv_number: input.pvNumber ? input.pvNumber : undefined,
-    witness_description: input.witnessDescription ? input.witnessDescription : undefined,
     leadership_description: input.leadershipDescription ? input.leadershipDescription : undefined,
-    // country: input.country ? input.country : undefined,
     // victim: input.victim ? input.victim : undefined,
+    declarant_city: input.declarantCity ? input.declarantCity : undefined,
+    legal_representative: input.legalRepresentative ? input.legalRepresentative : undefined,
+    witness_name: input.witnessName ? input.witnessName : undefined,
   }
 
   return single

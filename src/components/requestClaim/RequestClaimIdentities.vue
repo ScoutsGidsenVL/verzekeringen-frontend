@@ -108,24 +108,8 @@
             </div>
           </div>
 
-          <div>
-            <div class="input">
-              <multi-select
-                id="victim.country"
-                rules="required"
-                insurance-type-id="2"
-                :object="true"
-                track-by="name"
-                value-prop="name"
-                :repository="CountryRepository"
-                :resolve-on-load="true"
-                :options="values.country ? [values.country] : [{ id: '3232', name: 'België' }]"
-                :extra-option="{ id: '3232', name: 'België' }"
-                :searchable="true"
-                label="Land"
-                placeholder="Zoek op naam"
-              />
-            </div>
+          <div class="mt-4 ml-3">
+            <label-output label="Land" :text="'België'" />
           </div>
         </div>
 
@@ -230,6 +214,7 @@ import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import Required from '@/components/semantic/Required.vue'
 import FileUpload from '@/components/semantic/FileUpload.vue'
+import LabelOutput from '@/components/semantic/LabelOutput.vue'
 
 export default defineComponent({
   name: 'RequestClaimIdentities',
@@ -244,6 +229,7 @@ export default defineComponent({
     'custom-input': CustomInput,
     'file-upload': FileUpload,
     'info-alert': InfoAlert,
+    'label-output': LabelOutput,
     ErrorMessage,
     Required,
   },

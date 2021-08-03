@@ -13,14 +13,14 @@
 
           <display-content-checkbox text="Werd er een vastelling gedaan door een verbaliserende autoriteit?">
             <div class="md:w-96 xs:w-72">
-              <custom-input :type="InputTypes.TEXT" name="officialReportDescription" label="Welke" rules="fillInCheck:@pvNumber" />
+              <custom-input :type="InputTypes.TEXT" name="legalRepresentative" label="Welke" rules="fillInCheck:@pvNumber" />
               <custom-input class="mt-1" :type="InputTypes.TEXT" name="pvNumber" label="Eventueel nummer van proces-verbaal" />
             </div>
           </display-content-checkbox>
 
           <display-content-checkbox text="Waren er getuigen van het ongeval?">
             <div class="md:w-96 xs:w-72">
-              <custom-input :type="InputTypes.TEXT_AREA" name="witnessDescription" label="Naam en adres van getuigen" />
+              <custom-input :type="InputTypes.TEXT_AREA" name="witnessName" label="Naam en adres van getuigen" />
             </div>
           </display-content-checkbox>
 
@@ -79,13 +79,11 @@ export default defineComponent({
       await validate().then((validation: any) => scrollToFirstError(validation, 'RequestInsuranceGeneral'))
       handleSubmit(async (values: any) => {
         const newClaimState = ref<Claim>({
-          madeUpAtCountry: values.madeUpAtCountry,
-          madeUpOnDate: values.madeUpOnDate,
           involvedPartyDescription: values.involvedPartyDescription ? values.involvedPartyDescription : undefined,
           involvedPartyBirthdate: values.involvedPartyBirthdate ? values.involvedPartyBirthdate : undefined,
-          officialReportDescription: values.officialReportDescription ? values.officialReportDescription : undefined,
+          legalRepresentative: values.legalRepresentative ? values.legalRepresentative : undefined,
           pvNumber: values.pvNumber ? values.pvNumber : undefined,
-          witnessDescription: values.witnessDescription ? values.witnessDescription : undefined,
+          witnessName: values.witnessName ? values.witnessName : undefined,
           leadershipDescription: values.leadershipDescription ? values.leadershipDescription : undefined,
         })
 
