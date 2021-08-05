@@ -6,13 +6,12 @@
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
-    "experimentalDecorators": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "types": ["webpack-env", "node", "@types/jest", "@types/yup"],
     "baseUrl": ".",
+    "types": ["webpack-env", "jest"],
     "paths": {
       "@/*": ["src/*"]
     },
