@@ -10,6 +10,8 @@
         <custom-button text="Schade aangiftes" />
       </router-link>
     </div>
+
+    <HelloWorld />
   </div>
 </template>
 
@@ -17,11 +19,13 @@
 import store from '@/store/store'
 import { defineComponent, ref } from 'vue'
 import CustomButton from '@/components/CustomButton.vue'
+import { HelloWorld } from 'vue-3-component-library'
 
 export default defineComponent({
   name: 'Home',
   components: {
     'custom-button': CustomButton,
+    HelloWorld,
   },
   setup() {
     const user = ref<any>(store.getters.user)

@@ -1,7 +1,17 @@
 ### Development stage
 FROM node:lts-alpine as development-stage
-RUN yarn global add @vue/cli@3.9.1 
-WORKDIR /app
 RUN apk add --no-cache git
-CMD npm install && npm run docker-dev
+
+WORKDIR /app
+ENTRYPOINT ["/entrypoint.sh"]
+
+COPY docker/entrypoint*.sh /
+COPY vue-3-component-library-0.1.0.tgz ./
+COPY docker/entrypoint*.sh /
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
 EXPOSE 8080

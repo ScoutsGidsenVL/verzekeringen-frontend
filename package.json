@@ -18,6 +18,7 @@
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "inuits-vuejs-oidc": "git+https://github.com/inuits/inuits-vuejs-oidc.git#next",
+    "vue-3-component-library": "vue-3-component-library-0.1.0.tgz",
     "postcss": "^7",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
