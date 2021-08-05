@@ -176,7 +176,6 @@ import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import TipChoiceHelp from '@/components/tips/tipChoiceHelp.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
-import { HelloWorld } from 'vue-3-component-library'
 
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import { defineComponent, computed, ref, watch } from 'vue'
@@ -209,7 +208,6 @@ export default defineComponent({
     'custom-input': CustomInput,
     'multi-select': MultiSelect,
     'info-alert': InfoAlert,
-    HelloWorld,
     Loader,
   },
   setup() {
