@@ -2,7 +2,7 @@
   <div class="mb-1" v-if="(phoneNumber && phoneNumber === '') || phoneNumber === '/'">
     <p>(Gsm kan toegevoegd worden op de groepsadmin.)</p>
   </div>
-  <div class="mb-1" v-else-if="(phoneNumber && phoneNumber !== '') || phoneNumber !== '/'">
+  <div v-else-if="(phoneNumber && phoneNumber !== '') || phoneNumber !== '/'">
     <p>{{ phoneNumber }}</p>
   </div>
   <div class="mb-1" v-if="!phoneNumber">

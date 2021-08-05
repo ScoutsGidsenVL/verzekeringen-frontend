@@ -55,7 +55,7 @@
         <custom-input :type="InputTypes.TEXT_AREA" name="comment" label="" />
       </div>
     </div>
-    <div class="flex gap-3 md:ml-20 mt-5 items-center">
+    <div class="flex gap-3 mt-5 items-center">
       <back-button :backToState="HolderStates.GENERAL" />
       <custom-button text="Volgende" />
       <a v-if="!isEdit" class="link-inline cursor-pointer" @click="saveAsDraft()">Opslaan</a>

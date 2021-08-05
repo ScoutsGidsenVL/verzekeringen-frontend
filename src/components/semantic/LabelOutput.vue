@@ -2,7 +2,8 @@
   <div>
     <strong>{{ label }}</strong>
     <div :class="textWidth">
-      <p class="mt-2">{{ text }}</p>
+      <p v-if="!bold" class="mt-2">{{ text }}</p>
+      <strong v-if="bold" class="mt-2">{{ text }}</strong>
     </div>
   </div>
 </template>
@@ -24,6 +25,11 @@ export default defineComponent({
       type: String,
       default: 'w-96',
       required: false,
+    },
+    bold: {
+      required: false,
+      type: Boolean,
+      default: false,
     },
   },
 })

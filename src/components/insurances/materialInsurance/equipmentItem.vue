@@ -1,10 +1,17 @@
 <template>
   <div v-if="equipment" class="w-full shadow-md border-b-2 border-black bg-white p-2 h-full inline-block text-left d-flex flex-col justify-content-between">
-    <slot name="top"></slot>
+    <div class="flex justify-between">
+      <div>
+        <slot name="top"></slot>
+      </div>
+      <div>
+        <slot />
+      </div>
+    </div>
     <div class="py-3 flex-grow">
-      <div v-if="person" class="mb-5">
+      <div v-if="person">
         <div class="mb-1" v-if="person.firstName">
-          <p>{{ person.firstName + ' ' + person.lastName }}</p>
+          <strong>{{ person.firstName + ' ' + person.lastName }}</strong>
         </div>
 
         <div class="mb-1" v-if="person.email">
@@ -20,7 +27,6 @@
         </div>
 
         <div v-if="person.birthDate">
-          <strong>Geboortedatum</strong>
           <p>{{ person.birthDate }}</p>
         </div>
       </div>
@@ -41,10 +47,6 @@
           {{ equipment.totalValue }}
         </div>
       </div>
-    </div>
-
-    <div>
-      <slot />
     </div>
   </div>
 </template>
