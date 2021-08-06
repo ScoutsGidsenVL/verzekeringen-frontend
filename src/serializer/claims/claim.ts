@@ -38,6 +38,7 @@ export interface Claim {
   readonly declarantCity?: String
   readonly legalRepresentative?: string
   readonly witnessName?: String
+  readonly sex?: String
 }
 
 export const ClaimDeserializer = (input: any): Claim => {
@@ -70,6 +71,7 @@ export const ClaimDeserializer = (input: any): Claim => {
     declarantCity: input.declarant_city ? input.declarant_city : undefined,
     legalRepresentative: input.legal_representative ? input.legal_representative : undefined,
     witnessName: input.witness_name ? input.witness_name : undefined,
+    sex: input.sex ? input.sex : undefined,
   }
 
   return single
@@ -100,6 +102,7 @@ export const ClaimSerializer = (input: any): any => {
     declarant_city: input.declarantCity ? input.declarantCity : undefined,
     legal_representative: input.legalRepresentative ? input.legalRepresentative : undefined,
     witness_name: input.witnessName ? input.witnessName : undefined,
+    sex: input.sex ? input.sex : undefined,
   }
 
   return single

@@ -126,17 +126,17 @@
                 <custom-input v-show="false" :type="'victim.gender'" rules="required" name="victim.gender" />
 
                 <div>
-                  <input :id="'M'" v-model="selected" class="cursor-pointer" type="radio" :name="'M'" :value="'M'" />
+                  <input :id="'M'" v-model="selectedGender" class="cursor-pointer" type="radio" :name="'M'" :value="'M'" />
                   <label :for="'M'" class="ml-1">M</label>
                 </div>
 
                 <div>
-                  <input :id="'V'" v-model="selected" class="cursor-pointer" type="radio" :name="'V'" :value="'V'" />
+                  <input :id="'V'" v-model="selectedGender" class="cursor-pointer" type="radio" :name="'F'" :value="'V'" />
                   <label :for="'V'" class="ml-1">V</label>
                 </div>
 
                 <div v-if="false">
-                  <input :id="'X'" v-model="selected" class="cursor-pointer" type="radio" :name="'X'" :value="'X'" />
+                  <input :id="'X'" v-model="selectedGender" class="cursor-pointer" type="radio" :name="'O'" :value="'X'" />
                   <label :for="'X'" class="ml-1">X</label>
                 </div>
 
@@ -241,7 +241,7 @@ export default defineComponent({
     const userData = ref<ResponsibleMember>(store.getters.user)
     const isMemberSideBarDisplay = ref<boolean>(false)
     const { scrollToTopOfPage } = useScrollToTop()
-    const selected = ref<string>()
+    const selectedGender = ref<string>()
     const isEdit = !!route.params.id
     const isFieldsVisible = ref<boolean>(false)
 
@@ -268,7 +268,10 @@ export default defineComponent({
           victim: values.victim,
           victimMember: values.victimMember,
           file: values.file,
+          sex: values.victim.gender,
         })
+
+        console.log('CHECKING: ', newClaimState.value)
 
         store.dispatch('setClaimState', newClaimState)
         store.dispatch('setClaimHolderState', ClaimHolderStates.TWO)
@@ -320,10 +323,10 @@ export default defineComponent({
     scrollToTopOfPage()
 
     watch(
-      () => selected.value,
+      () => selectedGender.value,
       () => {
         if (values.victim) {
-          values.victim.gender = selected.value
+          values.victim.gender = selectedGender.value
         }
       }
     )
@@ -345,7 +348,7 @@ export default defineComponent({
       addMember,
       userData,
       onSubmit,
-      selected,
+      selectedGender,
       isEdit,
       values,
     }
