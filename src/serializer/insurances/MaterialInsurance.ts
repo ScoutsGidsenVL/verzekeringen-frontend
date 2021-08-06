@@ -25,7 +25,6 @@ export interface MaterialInsurance {
 }
 
 export const MaterialInsuranceDeserializer = (input: any): MaterialInsurance => {
-  console.log('MATERIAL INSC: ', input)
   const single: MaterialInsurance = {
     id: input.id ? input.id : undefined,
     startDate: input.start_date ? moment(input.start_date).format('YYYY-MM-DD') : undefined,

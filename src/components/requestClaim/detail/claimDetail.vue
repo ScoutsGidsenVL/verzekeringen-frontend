@@ -249,7 +249,6 @@ export default defineComponent({
     }
 
     const postClaim = async () => {
-      console.log('HELLOW: ', claimState.value)
       await RepositoryFactory.get(ClaimRepository)
         .create(claimState.value)
         .then((res) => {

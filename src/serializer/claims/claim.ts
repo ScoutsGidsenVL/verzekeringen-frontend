@@ -39,6 +39,7 @@ export interface Claim {
   readonly legalRepresentative?: string
   readonly witnessName?: String
   readonly sex?: String
+  readonly victimBirthDate?: String
 }
 
 export const ClaimDeserializer = (input: any): Claim => {
@@ -72,20 +73,20 @@ export const ClaimDeserializer = (input: any): Claim => {
     legalRepresentative: input.legal_representative ? input.legal_representative : undefined,
     witnessName: input.witness_name ? input.witness_name : undefined,
     sex: input.sex ? input.sex : undefined,
+    victimBirthDate: input.victim_birth_date ? input.victim_birth_date : undefined,
   }
 
   return single
 }
 
 export const ClaimSerializer = (input: any): any => {
-  console.log('CLAIM: ', input)
   const single: any = {
     // id: input.id ? input.id : undefined,
     group: input.group.id ? input.group.id : undefined,
     victim_member: input.victimMember ? input.victimMember : undefined,
     // victim_non_member: input.victimNonMember ? input.victimNonMember : undefined,
     // victim_member_group_admin_id: input.victimMemberGroupAdminId ? input.victimMemberGroupAdminId : undefined,
-    bank_account: input.victim.bankAccount ? input.victim.bankAccount : undefined,
+    bank_account: input.victim.bankAccount ? input.victim.bankAccount.replace(/ /g, '') : undefined,
     date_of_accident: input.dateOfAccident ? input.dateOfAccident + 'T09:00:00.000Z' : undefined,
     activity: input.activity ? input.activity : undefined,
     activity_type: input.activityTypes ? input.activityTypes : undefined,
@@ -103,6 +104,7 @@ export const ClaimSerializer = (input: any): any => {
     legal_representative: input.legalRepresentative ? input.legalRepresentative : undefined,
     witness_name: input.witnessName ? input.witnessName : undefined,
     sex: input.sex ? input.sex : undefined,
+    victim_birth_date: input.victimBirthDate ? input.victimBirthDate : undefined,
   }
 
   return single

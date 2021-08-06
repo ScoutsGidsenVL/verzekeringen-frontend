@@ -106,7 +106,6 @@ export default abstract class BaseApiRepository {
       .get(endpoint, config)
       .then(function (result: AxiosResponse) {
         // Only return the data of response
-        console.log(result)
         return result.data
       })
       .catch((error: any) => {

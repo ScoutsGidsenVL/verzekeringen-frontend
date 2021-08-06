@@ -75,13 +75,13 @@
       <div v-show="isFieldsVisible">
         <div class="md:ml-20">
           <div class="sm:flex sm:gap-2 xs:w-72 sm:w-100">
-            <custom-input :type="InputTypes.TEXT" rules="required" name="victim.firstName" label="Voornaam" />
-            <custom-input :type="InputTypes.TEXT" rules="required" name="victim.lastName" label="Acternaam" />
+            <custom-input :disabled="isSelectedVictim" :type="InputTypes.TEXT" rules="required" name="victim.firstName" label="Voornaam" />
+            <custom-input :disabled="isSelectedVictim" :type="InputTypes.TEXT" rules="required" name="victim.lastName" label="Acternaam" />
           </div>
 
           <div class="sm:mt-3 sm:flex sm:gap-2 xs:w-72 sm:w-100">
-            <custom-input class="streetInput" :type="InputTypes.TEXT" rules="required" name="victim.street" label="Straat" />
-            <custom-input :type="InputTypes.TEXT" rules="required" name="victim.number" label="Nummer" />
+            <custom-input :disabled="isSelectedVictim" class="streetInput" :type="InputTypes.TEXT" rules="required" name="victim.street" label="Straat" />
+            <custom-input :disabled="isSelectedVictim" :type="InputTypes.TEXT" rules="required" name="victim.number" label="Nummer" />
             <div>
               <strong>Bus</strong>
               <custom-input class="mt-3" :type="InputTypes.TEXT" name="victim.letterBox" />
@@ -93,6 +93,7 @@
           <div v-if="(values.victim && values.victim.country && values.victim.country.name === '') || (values.victim.country && values.victim.country.name === 'België')">
             <div class="input">
               <multi-select
+                :disabled="isSelectedVictim"
                 id="victim.postCodeCity"
                 :object="true"
                 track-by="label"
@@ -155,7 +156,7 @@
 
         <div class="md:ml-20 mt-3">
           <div>
-            <custom-input class="input" :type="InputTypes.TEXT" rules="required" name="victim.email" label="E-mail" />
+            <custom-input :disabled="isSelectedVictim" class="input" :type="InputTypes.TEXT" rules="required" name="victim.email" label="E-mail" />
             <p class="input text-2xs mt-1">
               <i> Als het slachtoffer minderjarig is, vul dan het mailadres van de opvoedingsverantwoordelijke (ouders, voogd) in. </i>
             </p>
@@ -244,6 +245,7 @@ export default defineComponent({
     const selectedGender = ref<string>()
     const isEdit = !!route.params.id
     const isFieldsVisible = ref<boolean>(false)
+    const isSelectedVictim = ref<boolean>(false)
 
     const { handleSubmit, values, validate, isSubmitting } = useForm<Claim>({
       initialValues: {
@@ -269,9 +271,8 @@ export default defineComponent({
           victimMember: values.victimMember,
           file: values.file,
           sex: values.victim.gender,
+          victimBirthDate: values.victim.birthDate,
         })
-
-        console.log('CHECKING: ', newClaimState.value)
 
         store.dispatch('setClaimState', newClaimState)
         store.dispatch('setClaimHolderState', ClaimHolderStates.TWO)
@@ -300,6 +301,7 @@ export default defineComponent({
     }
 
     const addMember = (member: Member) => {
+      isSelectedVictim.value = true
       if (values.victim) {
         values.victimMember = member.id
         values.victim.id = member.id
@@ -351,6 +353,7 @@ export default defineComponent({
       selectedGender,
       isEdit,
       values,
+      isSelectedVictim,
     }
   },
 })

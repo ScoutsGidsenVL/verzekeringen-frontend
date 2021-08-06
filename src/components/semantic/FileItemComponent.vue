@@ -55,9 +55,7 @@ export default defineComponent({
         RepositoryFactory.get(FileRepository)
           .downloadFile(props.file.id)
           .then((file: Blob) => {
-            console.log(file)
             const savedAsFile = saveAs(file, props.file.name)
-            console.log('SAVED AS FILE: ', savedAsFile)
           })
       }
     }

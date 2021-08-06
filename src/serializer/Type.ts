@@ -10,8 +10,6 @@ export const TypeDeserializer = (input: any): Type => {
   input.description = input.description === 'Evenementen verzekering' ? 'Evenementenverzekering' : input.description
   input.description = input.description === 'Eenmalige activiteit' ? 'Verzekering eenmalige activiteit' : input.description
 
-  console.log(input)
-
   const single: Type = {
     id: input.id,
     description: input.description,

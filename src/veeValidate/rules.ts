@@ -129,7 +129,6 @@ export const defineRules = (store: any) => {
   })
 
   defineRule('fileSize', (file: any) => {
-    console.log('RULES: ', file)
     if (file && file.size && Number((file.size / (1024 * 1024)).toFixed(2)) > 5) {
       return 'Bijlage is te groot, niet meer dan 5MB'
     }
