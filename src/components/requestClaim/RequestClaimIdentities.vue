@@ -132,12 +132,12 @@
                 </div>
 
                 <div>
-                  <input :id="'V'" v-model="selectedGender" class="cursor-pointer" type="radio" :name="'F'" :value="'V'" />
+                  <input :id="'V'" v-model="selectedGender" class="cursor-pointer" type="radio" :name="'F'" :value="'F'" />
                   <label :for="'V'" class="ml-1">V</label>
                 </div>
 
                 <div v-if="false">
-                  <input :id="'X'" v-model="selectedGender" class="cursor-pointer" type="radio" :name="'O'" :value="'X'" />
+                  <input :id="'X'" v-model="selectedGender" class="cursor-pointer" type="radio" :name="'O'" :value="'O'" />
                   <label :for="'X'" class="ml-1">X</label>
                 </div>
 
