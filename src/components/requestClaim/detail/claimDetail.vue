@@ -99,15 +99,16 @@
       <div class="md:ml-20 mb-5" v-if="claimState.involvedPartyDescription">
         <strong>Is het ongeval te wijten aan een fout van een andere verzekerde/ of derde?</strong>
         <div>
+          <label-output v-if="claimState.involvedPartyName" class="mt-1" :text="claimState.involvedPartyName" />
           <label-output v-if="claimState.involvedPartyDescription" class="mt-1" :text="claimState.involvedPartyDescription" />
           <label-output v-if="claimState.involvedPartyBirthdate" class="mt-1" label="Geboortedatum" :text="claimState.involvedPartyBirthdate" />
         </div>
       </div>
 
-      <div class="md:ml-20 mb-5" v-if="claimState.legalRepresentative">
+      <div class="md:ml-20 mb-5" v-if="claimState.officialReportDescription">
         <strong>Werd er een vastelling gedaan door een verbaliserende autoriteit?</strong>
         <div>
-          <label-output v-if="claimState.legalRepresentative" class="mt-1" :text="claimState.legalRepresentative" />
+          <label-output v-if="claimState.officialReportDescription" class="mt-1" :text="claimState.officialReportDescription" />
           <label-output v-if="claimState.pvNumber" class="mt-1" label="Eventueel nummer van proces-verbaal" :text="claimState.pvNumber" />
         </div>
       </div>
@@ -116,6 +117,9 @@
         <strong>Waren er getuigen van het ongeval?</strong>
         <div>
           <label-output v-if="claimState.witnessName" class="mt-1" :text="claimState.witnessName" />
+        </div>
+        <div>
+          <label-output v-if="claimState.witnessDescription" class="mt-1" :text="claimState.witnessDescription" />
         </div>
       </div>
 
@@ -145,10 +149,6 @@
         </div>
       </div>
     </div>
-
-    <pre>
-      {{ claimState }}
-    </pre>
 
     <div class="flex gap-3 mt-5 items-center">
       <custom-button text="Verstuur je aanvraag" />

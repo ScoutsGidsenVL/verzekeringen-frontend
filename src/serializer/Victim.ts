@@ -19,6 +19,7 @@ export interface Victim {
   country?: Country
   bankAccount?: string
   gender?: string
+  isMember?: boolean
 }
 
 export const VictimDeserializer = (input: any): Victim => {

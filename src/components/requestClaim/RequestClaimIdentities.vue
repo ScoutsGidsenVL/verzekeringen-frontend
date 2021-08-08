@@ -80,8 +80,8 @@
           </div>
 
           <div class="sm:mt-3 sm:flex sm:gap-2 xs:w-72 sm:w-100">
-            <custom-input :disabled="isSelectedVictim" class="streetInput" :type="InputTypes.TEXT" rules="required" name="victim.street" label="Straat" />
-            <custom-input :disabled="isSelectedVictim" :type="InputTypes.TEXT" rules="required" name="victim.number" label="Nummer" />
+            <custom-input class="streetInput" :type="InputTypes.TEXT" rules="required" name="victim.street" label="Straat" />
+            <custom-input :type="InputTypes.TEXT" rules="required" name="victim.number" label="Nummer" />
             <div>
               <strong>Bus</strong>
               <custom-input class="mt-3" :type="InputTypes.TEXT" name="victim.letterBox" />
@@ -93,7 +93,6 @@
           <div v-if="(values.victim && values.victim.country && values.victim.country.name === '') || (values.victim.country && values.victim.country.name === 'België')">
             <div class="input">
               <multi-select
-                :disabled="isSelectedVictim"
                 id="victim.postCodeCity"
                 :object="true"
                 track-by="label"
@@ -156,7 +155,7 @@
 
         <div class="md:ml-20 mt-3">
           <div>
-            <custom-input :disabled="isSelectedVictim" class="input" :type="InputTypes.TEXT" rules="required" name="victim.email" label="E-mail" />
+            <custom-input class="input" :type="InputTypes.TEXT" rules="required" name="victim.email" label="E-mail" />
             <p class="input text-2xs mt-1">
               <i> Als het slachtoffer minderjarig is, vul dan het mailadres van de opvoedingsverantwoordelijke (ouders, voogd) in. </i>
             </p>
@@ -268,10 +267,12 @@ export default defineComponent({
           group: values.group,
           groupLeader: userData.value,
           victim: values.victim,
-          victimMember: values.victimMember,
+          victimMember: values.victim.isMember ? values.victimMember : undefined,
+          victimNonMember: !values.victim.isMember ? values.victimMember : undefined,
           file: values.file,
           sex: values.victim.gender,
           victimBirthDate: values.victim.birthDate,
+          victimEmail: values.victim.email,
         })
 
         store.dispatch('setClaimState', newClaimState)
@@ -301,8 +302,8 @@ export default defineComponent({
     }
 
     const addMember = (member: Member) => {
-      isSelectedVictim.value = true
       if (values.victim) {
+        displayFields()
         values.victimMember = member.id
         values.victim.id = member.id
         values.victim.firstName = member.firstName
@@ -314,11 +315,30 @@ export default defineComponent({
         values.victim.birthDate = member.birthDate
         values.victim.email = member.email
         values.victim.membershipNumber = member.membershipNumber
-        displayFields()
+        values.victim.isMember = member.isMember
       }
+      isSelectedVictim.value = true
     }
 
     const displayFields = () => {
+      if (isSelectedVictim.value && values.victim) {
+        values.victimMember = ''
+        values.victim.id = ''
+        values.victim.firstName = ''
+        values.victim.lastName = ''
+        values.victim.street = ''
+        values.victim.number = ''
+        values.victim.letterBox = ''
+        values.victim.postCodeCity = undefined
+        values.victim.birthDate = ''
+        values.victim.email = ''
+        values.victim.membershipNumber = ''
+        values.victim.isMember = false
+        values.victim.gender = ''
+        values.victim.bankAccount = ''
+      }
+
+      isSelectedVictim.value = false
       isFieldsVisible.value = true
     }
 

@@ -15,7 +15,7 @@ export interface Member {
   readonly comment?: string
   isChecked?: boolean
   readonly membershipNumber?: string
-  readonly isMember?: boolean
+  isMember?: boolean
 }
 
 export const MemberDeserializer = (input: any): Member => {

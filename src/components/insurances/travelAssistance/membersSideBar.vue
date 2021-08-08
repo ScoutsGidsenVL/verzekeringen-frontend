@@ -108,6 +108,7 @@ export default defineComponent({
               .getById(member.groupAdminId)
               .then((result: Member) => {
                 result.birthDate = member.birthDate
+                result.isMember = true
                 selectedMembers.value.push(result)
               })
           }
@@ -117,6 +118,7 @@ export default defineComponent({
             .getById(member.id)
             .then((result: Member) => {
               result.birthDate = member.birthDate
+              result.isMember = false
               selectedMembers.value.push(result)
             })
         }

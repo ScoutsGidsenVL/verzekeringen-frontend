@@ -6,21 +6,25 @@
         <div>
           <display-content-checkbox text="Is het ongeval te wijten aan een fout van een andere verzekerde/ of derde?">
             <div class="md:w-96 xs:w-72">
-              <custom-input :type="InputTypes.TEXT_AREA" name="involvedPartyDescription" label="Naam en adres" rules="fillInCheck:@involvedPartyBirthdate" />
+              <custom-input :type="InputTypes.TEXT" name="involvedPartyName" label="Naam" rules="fillInCheck:@involvedPartyDescription" />
+              <custom-input :type="InputTypes.TEXT" name="involvedPartyDescription" label="Adres" rules="fillInCheck:@involvedPartyBirthdate" />
               <custom-input class="mt-1" :type="InputTypes.DATE" name="involvedPartyBirthdate" label="Geboortedatum" />
             </div>
           </display-content-checkbox>
 
           <display-content-checkbox text="Werd er een vastelling gedaan door een verbaliserende autoriteit?">
             <div class="md:w-96 xs:w-72">
-              <custom-input :type="InputTypes.TEXT" name="legalRepresentative" label="Welke" rules="fillInCheck:@pvNumber" />
+              <custom-input :type="InputTypes.TEXT" name="officialReportDescription" label="Welke" rules="fillInCheck:@pvNumber" />
               <custom-input class="mt-1" :type="InputTypes.TEXT" name="pvNumber" label="Eventueel nummer van proces-verbaal" />
             </div>
           </display-content-checkbox>
 
           <display-content-checkbox text="Waren er getuigen van het ongeval?">
             <div class="md:w-96 xs:w-72">
-              <custom-input :type="InputTypes.TEXT_AREA" name="witnessName" label="Naam en adres van getuigen" />
+              <custom-input :type="InputTypes.TEXT" name="witnessName" label="Naam" />
+            </div>
+            <div class="md:w-96 xs:w-72">
+              <custom-input :type="InputTypes.TEXT" name="witnessDescription" label="Adres" />
             </div>
           </display-content-checkbox>
 
@@ -81,9 +85,10 @@ export default defineComponent({
         const newClaimState = ref<Claim>({
           involvedPartyDescription: values.involvedPartyDescription ? values.involvedPartyDescription : undefined,
           involvedPartyBirthdate: values.involvedPartyBirthdate ? values.involvedPartyBirthdate : undefined,
-          legalRepresentative: values.legalRepresentative ? values.legalRepresentative : undefined,
+          officialReportDescription: values.officialReportDescription ? values.officialReportDescription : undefined,
           pvNumber: values.pvNumber ? values.pvNumber : undefined,
           witnessName: values.witnessName ? values.witnessName : undefined,
+          witnessDescription: values.witnessDescription ? values.witnessDescription : undefined,
           leadershipDescription: values.leadershipDescription ? values.leadershipDescription : undefined,
         })
 

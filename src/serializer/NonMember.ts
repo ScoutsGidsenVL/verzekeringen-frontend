@@ -13,6 +13,7 @@ export interface NonMember {
   readonly postCodeCity: Location
   readonly group?: string
   isChecked?: boolean
+  isMember?: boolean
 }
 
 export const NonMemberDeserializer = (input: any): NonMember => {

@@ -23,6 +23,7 @@ export interface Claim {
   readonly isDamage?: boolean
   readonly damage?: string
   readonly description?: string
+  readonly involvedPartyName?: string
   readonly involvedPartyDescription?: string
   readonly involvedPartyBirthdate?: string
   readonly officialReportDescription?: string
@@ -36,10 +37,10 @@ export interface Claim {
   readonly attachment?: Attachment
   file?: any
   readonly declarantCity?: String
-  readonly legalRepresentative?: string
   readonly witnessName?: String
   readonly sex?: String
   readonly victimBirthDate?: String
+  readonly victimEmail?: String
 }
 
 export const ClaimDeserializer = (input: any): Claim => {
@@ -60,20 +61,22 @@ export const ClaimDeserializer = (input: any): Claim => {
     usedTransport: input.used_transport ? input.used_transport : undefined,
     isDamage: input.isDamage ? input.isDamage : undefined,
     description: input.description ? input.description : undefined,
+    involvedPartyName: input.involved_party_name ? input.involved_party_name : undefined,
     involvedPartyDescription: input.involved_party_description ? input.involved_party_description : undefined,
     involvedPartyBirthdate: input.involved_party_birthdate ? input.involved_party_birthdate : undefined,
     officialReportDescription: input.official_report_description ? input.official_report_description : undefined,
     pvNumber: input.pv_number ? input.pv_number : undefined,
     leadershipDescription: input.leadership_description ? input.leadership_description : undefined,
-    victim: input.victim_member ? VictimDeserializer(victim) : undefined,
+    victim: input.victim_member || input.victim_non_member ? VictimDeserializer(victim) : undefined,
     administrationComment: input.administrationComment ? input.administrationComment : undefined,
     dossierNumber: input.dossierNumber ? input.dossierNumber : undefined,
     attachment: input.attachment ? AttachmentDeserializer(input.attachment) : undefined,
     declarantCity: input.declarant_city ? input.declarant_city : undefined,
-    legalRepresentative: input.legal_representative ? input.legal_representative : undefined,
     witnessName: input.witness_name ? input.witness_name : undefined,
+    witnessDescription: input.witness_description ? input.witness_description : undefined,
     sex: input.sex ? input.sex : undefined,
     victimBirthDate: input.victim_birth_date ? input.victim_birth_date : undefined,
+    victimEmail: input.victim_email ? input.victim_email : undefined,
   }
 
   return single
@@ -81,30 +84,29 @@ export const ClaimDeserializer = (input: any): Claim => {
 
 export const ClaimSerializer = (input: any): any => {
   const single: any = {
-    // id: input.id ? input.id : undefined,
     group: input.group.id ? input.group.id : undefined,
     victim_member: input.victimMember ? input.victimMember : undefined,
-    // victim_non_member: input.victimNonMember ? input.victimNonMember : undefined,
-    // victim_member_group_admin_id: input.victimMemberGroupAdminId ? input.victimMemberGroupAdminId : undefined,
+    victim_non_member: input.victimNonMember ? input.victimNonMember : undefined,
     bank_account: input.victim.bankAccount ? input.victim.bankAccount.replace(/ /g, '') : undefined,
     date_of_accident: input.dateOfAccident ? input.dateOfAccident + 'T09:00:00.000Z' : undefined,
     activity: input.activity ? input.activity : undefined,
     activity_type: input.activityTypes ? input.activityTypes : undefined,
     used_transport: input.activityTypes.includes(ActivityTypes.IRREGULAR_LOCATION) && input.usedTransport ? input.usedTransport : undefined,
-    // isDamage: input.isDamage ? input.isDamage : undefined,
-    // damage: input.damage ? input.damage : undefined,
     description: input.description ? input.description : undefined,
+    involved_party_name: input.involvedPartyName ? input.involvedPartyName : undefined,
     involved_party_description: input.involvedPartyDescription ? input.involvedPartyDescription : undefined,
     involved_party_birthdate: input.involvedPartyBirthdate ? input.involvedPartyBirthdate : undefined,
     official_report_description: input.officialReportDescription ? input.officialReportDescription : undefined,
     pv_number: input.pvNumber ? input.pvNumber : undefined,
     leadership_description: input.leadershipDescription ? input.leadershipDescription : undefined,
-    // victim: input.victim ? input.victim : undefined,
     declarant_city: input.declarantCity ? input.declarantCity : undefined,
-    legal_representative: input.legalRepresentative ? input.legalRepresentative : undefined,
     witness_name: input.witnessName ? input.witnessName : undefined,
+    witness_description: input.witnessDescription ? input.witnessDescription : undefined,
     sex: input.sex ? input.sex : undefined,
     victim_birth_date: input.victimBirthDate ? input.victimBirthDate : undefined,
+    victim_email: input.victimEmail ? input.victimEmail : undefined,
+    // isDamage: input.isDamage ? input.isDamage : undefined,
+    // damage: input.damage ? input.damage : undefined,
   }
 
   return single
