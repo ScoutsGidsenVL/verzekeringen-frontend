@@ -21,7 +21,7 @@ import EquipmentList from '@/components/insurances/materialInsurance/equipmentLi
 import { Equipment } from '@/serializer/Equipment'
 import { defineComponent, ref } from 'vue'
 import { useField, ErrorMessage } from 'vee-validate'
-import { sideBarState } from '@/components/semantic/BaseSideBar.vue'
+import { sideBarState } from 'vue-3-component-library'
 
 export default defineComponent({
   name: 'SelectMaterial',

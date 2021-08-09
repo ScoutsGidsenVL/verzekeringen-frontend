@@ -21,7 +21,7 @@ import NonMemberList from '@/components/insurances/nonMembersInsurance/nonMember
 import { ErrorMessage, useField } from 'vee-validate'
 import { NonMember } from '@/serializer/NonMember'
 import { defineComponent, ref } from 'vue'
-import { sideBarState } from '@/components/semantic/BaseSideBar.vue'
+import { sideBarState } from 'vue-3-component-library'
 
 export default defineComponent({
   name: 'SelectNonMembers',

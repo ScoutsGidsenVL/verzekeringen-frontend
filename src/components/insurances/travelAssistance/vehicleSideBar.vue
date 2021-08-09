@@ -83,7 +83,6 @@
 </template>
 
 <script lang="ts">
-import BaseSideBar, { option, sideBarState } from '@/components/semantic/BaseSideBar.vue'
 import VehicleItem from '@/components/insurances/travelAssistance/vehicleItem.vue'
 import { scrollToFirstError, useFormSendWithSuccess } from '@/veeValidate/helpers'
 import { computed, defineComponent, PropType, ref, toRefs, watch } from 'vue'
@@ -101,6 +100,7 @@ import { InputTypes } from '@/enums/inputTypes'
 import { Vehicle } from '@/serializer/Vehicle'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
+import { BaseSideBar, sideBarState, option } from 'vue-3-component-library'
 
 export interface vehicleSideBar {
   vehicle: Vehicle

@@ -33,7 +33,8 @@
 <script lang="ts">
 import VehicleSiderbar from '@/components/insurances/travelAssistance/vehicleSideBar.vue'
 import VehicleItem from '@/components/insurances/travelAssistance/vehicleItem.vue'
-import { sideBarState } from '@/components/semantic/BaseSideBar.vue'
+import { sideBarState } from 'vue-3-component-library'
+
 import { ErrorMessage, useField } from 'vee-validate'
 import { computed, defineComponent, ref } from 'vue'
 import { Vehicle } from '@/serializer/Vehicle'

@@ -127,7 +127,7 @@
 <script lang="ts">
 import { scrollToFirstError, useFormSendWithSuccess, useScrollToTop } from '@/veeValidate/helpers'
 import NonMemberSideBar from '@/components/insurances/nonMembersInsurance/nonMemberSideBar.vue'
-import BaseSideBar, { option, sideBarState } from '@/components/semantic/BaseSideBar.vue'
+import { BaseSideBar, sideBarState, option } from 'vue-3-component-library'
 import MemberSiderbar from '@/components/insurances/travelAssistance/membersSideBar.vue'
 import EquipmentItem from '@/components/insurances/materialInsurance/equipmentItem.vue'
 import MemberItem from '@/components/insurances/travelAssistance/memberItem.vue'

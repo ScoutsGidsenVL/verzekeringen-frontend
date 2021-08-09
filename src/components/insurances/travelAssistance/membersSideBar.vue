@@ -40,7 +40,6 @@ import { MemberRepository } from '@/repositories/memberRepository'
 import { PersonRepository } from '@/repositories/personRepository'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 import RepositoryFactory from '@/repositories/repositoryFactory'
-import BaseSideBar from '@/components/semantic/BaseSideBar.vue'
 import SearchInput from '@/components/inputs/SearchInput.vue'
 import CustomButton from '@/components/CustomButton.vue'
 import { defineComponent, ref, watch } from 'vue'
@@ -48,6 +47,7 @@ import { InputTypes } from '@/enums/inputTypes'
 import { Member } from '@/serializer/Member'
 import { useStore } from 'vuex'
 import { NonMemberRepository } from '@/repositories/nonMemberRepository'
+import { BaseSideBar } from 'vue-3-component-library'
 
 export default defineComponent({
   name: 'MemberSideBar',

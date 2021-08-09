@@ -99,7 +99,6 @@
 <script lang="ts">
 import { scrollToFirstError, useScrollToTop, useFormSendWithSuccess } from '@/veeValidate/helpers'
 import NonMemberItem from '@/components/insurances/nonMembersInsurance/nonMemberItem.vue'
-import BaseSideBar, { option, sideBarState } from '@/components/semantic/BaseSideBar.vue'
 import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRepository'
 import { computed, defineComponent, PropType, ref, toRefs, watch } from 'vue'
 import { NonMemberRepository } from '@/repositories/nonMemberRepository'
@@ -114,6 +113,7 @@ import { NonMember } from '@/serializer/NonMember'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
+import { BaseSideBar, sideBarState, option } from 'vue-3-component-library'
 
 export default defineComponent({
   name: 'NonMemberSideBar',
