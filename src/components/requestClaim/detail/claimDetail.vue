@@ -2,7 +2,7 @@
   <form id="ClaimDetail" @submit.prevent="onSubmit">
     <p class="py-4" style="font-size: 30px">Overzicht <strong class="font-semibold">schade aangifte</strong></p>
 
-    <div>
+    <div v-if="false">
       <p class="font-semibold">Administratie</p>
       <div class="md:ml-20">
         <custom-input class="xs:w-72 md:w-96" :type="InputTypes.TEXT" label="Dossiernummer" name="dossierNumber" />

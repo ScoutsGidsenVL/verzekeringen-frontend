@@ -173,8 +173,13 @@
           />
         </div>
 
-        <div v-show="values.victim && values.victim.membershipNumber" class="mt-3 md:ml-20 w-72">
+        <div v-if="values.victim && values.victim.membershipNumber" class="mt-3 md:ml-20 w-72">
           <custom-input :disabled="true" :type="InputTypes.TEXT" name="victim.membershipNumber" label="Lidnummer" />
+        </div>
+        <div class="mt-3 md:ml-20" v-else>
+          <info-alert>
+            <p>Dit lid heeft geen lid-nummer en zal als kapoen worden aanschouwen.</p>
+          </info-alert>
         </div>
       </div>
     </div>

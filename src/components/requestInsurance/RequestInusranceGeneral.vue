@@ -176,7 +176,6 @@ import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import TipChoiceHelp from '@/components/tips/tipChoiceHelp.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
-
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import { defineComponent, computed, ref, watch } from 'vue'
 import { InsuranceTypeRepos } from '@/enums/insuranceTypes'
