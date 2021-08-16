@@ -306,11 +306,19 @@ export default defineComponent({
       nonMemberSideBarState.value = { state: 'new' }
     }
 
-    const addMember = (member: Member) => {
-      values.ownerNonMember = undefined
-      values.ownerMember = member
-      owner.value = member
-      lidType.value = ' (Lid)'
+    const addMember = (member: any) => {
+      if (member.isMember) {
+        values.ownerNonMember = undefined
+        values.ownerMember = member
+        owner.value = member
+        lidType.value = ' (Lid)'
+      } else {
+        // SHOULD HAVE A CALCULATED LID-NUMMER BUT IS NOT YET THE CASE
+        values.ownerMember = undefined
+        values.ownerNonMember = member
+        owner.value = member
+        lidType.value = ' (Niet lid met tijdelijk lid-nummer)'
+      }
     }
 
     const addCreatedNonMember = (nonMember: NonMember) => {
