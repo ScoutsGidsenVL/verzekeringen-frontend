@@ -322,7 +322,10 @@ export default defineComponent({
         values.victim.email = member.email
         values.victim.membershipNumber = member.membershipNumber
         values.victim.isMember = member.isMember
+        values.victim.groupAdminId = member.isMember ? member.groupAdminId : undefined
+        values.victim.nonMember = !member.isMember ? member.id : undefined
       }
+      console.log('ADDED MEMBER: ', values.victim)
       isSelectedVictim.value = true
     }
 

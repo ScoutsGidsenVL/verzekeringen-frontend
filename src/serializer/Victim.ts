@@ -20,6 +20,10 @@ export interface Victim {
   bankAccount?: string
   gender?: string
   isMember?: boolean
+  postcode?: string
+  city?: string
+  sex?: string
+  nonMember?: string
 }
 
 export const VictimDeserializer = (input: any): Victim => {
@@ -39,7 +43,13 @@ export const VictimDeserializer = (input: any): Victim => {
     isChecked: false,
     membershipNumber: input.membership_number ? input.membership_number : undefined,
     bankAccount: input.bank_account ? input.bank_account : undefined,
+    postcode: input.postcode ? input.postcode : undefined,
+    city: input.city ? input.city : undefined,
+    sex: input.sex ? input.sex : undefined,
+    nonMember: input.non_member ? input.non_member : undefined,
   }
+
+  console.log('SINGLE: ', single)
 
   return single
 }
@@ -59,6 +69,11 @@ export const VictimSerializer = (input: any): any => {
     comment: input.comment ? input.comment : undefined,
     postcode_city: input.postCodeCity ? LocationSerializer(input.postCodeCity) : undefined,
     membership_number: input.membershipNumber ? input.membershipNumber : undefined,
+    postcode: input.postcode ? input.postcode : input.postCodeCity.postalCode,
+    city: input.city ? input.city : input.postCodeCity.city,
+    sex: input.sex ? input.sex : undefined,
+    non_member: input.nonMember ? input.nonMember : undefined,
+    letter_box: input.letterBox ? input.letterBox : undefined,
   }
 
   return single

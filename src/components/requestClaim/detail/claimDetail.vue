@@ -14,8 +14,10 @@
       <p class="font-semibold">Identiteit van de verzekeringsnemer</p>
 
       <div class="md:ml-20">
-        <label-output label="Groep" :text="claimState.group && claimState.group.fullInfo" />
-        <div class="mt-3">
+        <!-- <label-output label="Groep" :text="claimState.group && claimState.group.fullInfo" /> -->
+        <label-output label="Groep" :text="claimState.groupNumber" />
+
+        <div v-if="claimState.groupLeader" class="mt-3">
           <responsible-member-detail title="Groepleidster" :responsible-member="claimState.groupLeader" />
         </div>
       </div>
@@ -43,16 +45,16 @@
             claimState.victim.number +
             (claimState.victim.letterBox ? ' Bus ' + claimState.victim.letterBox : '') +
             ', ' +
-            claimState.victim.postCodeCity.postalCode +
+            claimState.victim.postcode +
             ' ' +
-            claimState.victim.postCodeCity.city
+            claimState.victim.city
           "
         />
         <label-output :text="claimState.victim.email" />
         <label-output class="mt-1" label="Geboortedatum" :text="claimState.victim.birthDate" />
-        <label-output class="mt-1" label="Geslacht" :text="claimState.victim.gender" />
-        <label-output v-if="claimState.victim.membershipNumber" label="Lidnummer" :text="claimState.victim.membershipNumber" />
-        <label-output v-if="claimState.victim.bankAccount" label="Bankrekeningnummer" :text="claimState.victim.bankAccount" />
+        <label-output class="mt-1" label="Geslacht" :text="claimState.victim.sex" />
+        <label-output v-if="claimState.victim.groupAdminId" label="Lidnummer" :text="claimState.victim.groupAdminId" />
+        <label-output v-if="claimState.bankAccount" label="Bankrekeningnummer" :text="claimState.bankAccount" />
       </div>
     </div>
 
@@ -211,6 +213,7 @@ export default defineComponent({
         .then((result: any) => {
           details.value = result
           store.dispatch('setClaimState', details.value)
+          console.log('DATA', details.value)
           if (details.value.attachment) {
             RepositoryFactory.get(FileRepository)
               .downloadFile(details.value.attachment.id)

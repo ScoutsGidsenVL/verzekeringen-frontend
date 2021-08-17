@@ -1,7 +1,7 @@
 import { ActivityTypes } from '@/enums/activityTypes'
 import { Country } from '@/serializer/Country'
 import { Group } from '@/serializer/Group'
-import { Victim, VictimDeserializer } from '@/serializer/Victim'
+import { Victim, VictimDeserializer, VictimSerializer } from '@/serializer/Victim'
 import { ResponsibleMember } from '../ResponsibleMember'
 import moment from 'moment'
 import { Attachment, AttachmentDeserializer } from './Attachment'
@@ -41,11 +41,10 @@ export interface Claim {
   readonly sex?: String
   readonly victimBirthDate?: String
   readonly victimEmail?: String
+  readonly groupNumber?: String
 }
 
 export const ClaimDeserializer = (input: any): Claim => {
-  const victim = input.victim_member ? { ...input.victim_member, ...{ bank_account: input.bank_account } } : { ...input.victim_non_member, ...{ bank_account: input.bank_account } }
-
   const single: Claim = {
     id: input.id ? input.id : undefined,
     date: input.date ? input.date : undefined,
@@ -67,7 +66,7 @@ export const ClaimDeserializer = (input: any): Claim => {
     officialReportDescription: input.official_report_description ? input.official_report_description : undefined,
     pvNumber: input.pv_number ? input.pv_number : undefined,
     leadershipDescription: input.leadership_description ? input.leadership_description : undefined,
-    victim: input.victim_member || input.victim_non_member ? VictimDeserializer(victim) : undefined,
+    victim: input.victim ? VictimDeserializer(input.victim) : undefined,
     administrationComment: input.administrationComment ? input.administrationComment : undefined,
     dossierNumber: input.dossierNumber ? input.dossierNumber : undefined,
     attachment: input.attachment ? AttachmentDeserializer(input.attachment) : undefined,
@@ -77,12 +76,15 @@ export const ClaimDeserializer = (input: any): Claim => {
     sex: input.sex ? input.sex : undefined,
     victimBirthDate: input.victim_birth_date ? input.victim_birth_date : undefined,
     victimEmail: input.victim_email ? input.victim_email : undefined,
+    groupNumber: input.group_number ? input.group_number : undefined,
   }
 
   return single
 }
 
 export const ClaimSerializer = (input: any): any => {
+  input.victim.sex = input.sex
+
   const single: any = {
     group: input.group.id ? input.group.id : undefined,
     victim_member: input.victimMember ? input.victimMember : undefined,
@@ -107,6 +109,7 @@ export const ClaimSerializer = (input: any): any => {
     victim_email: input.victimEmail ? input.victimEmail : undefined,
     // isDamage: input.isDamage ? input.isDamage : undefined,
     // damage: input.damage ? input.damage : undefined,
+    victim: input.victim ? VictimSerializer(input.victim) : undefined,
   }
 
   return single

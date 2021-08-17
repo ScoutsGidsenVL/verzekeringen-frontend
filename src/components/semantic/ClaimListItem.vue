@@ -9,7 +9,8 @@
     </div>
 
     <div>
-      <p>{{ item.victim.firstName + ' ' + item.victim.lastName }}</p>
+      <!-- {{ item.victim }} -->
+      <!-- <p>{{ item.victim.firstName + ' ' + item.victim.lastName }}</p> -->
     </div>
 
     <div>
