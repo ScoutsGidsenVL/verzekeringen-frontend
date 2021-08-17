@@ -83,6 +83,7 @@ export default defineComponent({
       await validate().then((validation: any) => scrollToFirstError(validation, 'RequestInsuranceGeneral'))
       handleSubmit(async (values: any) => {
         const newClaimState = ref<Claim>({
+          involvedPartyName: values.involvedPartyName ? values.involvedPartyName : undefined,
           involvedPartyDescription: values.involvedPartyDescription ? values.involvedPartyDescription : undefined,
           involvedPartyBirthdate: values.involvedPartyBirthdate ? values.involvedPartyBirthdate : undefined,
           officialReportDescription: values.officialReportDescription ? values.officialReportDescription : undefined,
