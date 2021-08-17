@@ -5,12 +5,11 @@
     </div>
 
     <div>
-      <p>{{ item.group && item.group.name ? item.group.name : '' }} {{ item.group && item.group.id ? item.group.id : '' }}</p>
+      <p>{{ item.group && item.group.name ? item.group.name : '' }} - {{ item.group && item.group.id ? item.group.id : '' }}</p>
     </div>
 
-    <div>
-      <!-- {{ item.victim }} -->
-      <!-- <p>{{ item.victim.firstName + ' ' + item.victim.lastName }}</p> -->
+    <div v-if="item.victim">
+      <p>{{ item.victim.firstName + ' ' + item.victim.lastName }}</p>
     </div>
 
     <div>

@@ -11,7 +11,7 @@ export interface Claim {
   readonly date?: String
   readonly person?: String
   readonly group?: Group
-  readonly groupLeader?: ResponsibleMember
+  groupLeader?: ResponsibleMember
   victimMember?: string
   victimNonMember?: string
   readonly victimMemberGroupAdminId?: string
@@ -42,6 +42,7 @@ export interface Claim {
   readonly victimBirthDate?: String
   readonly victimEmail?: String
   readonly groupNumber?: String
+  readonly declarantId?: String
 }
 
 export const ClaimDeserializer = (input: any): Claim => {
@@ -77,6 +78,7 @@ export const ClaimDeserializer = (input: any): Claim => {
     victimBirthDate: input.victim_birth_date ? input.victim_birth_date : undefined,
     victimEmail: input.victim_email ? input.victim_email : undefined,
     groupNumber: input.group_number ? input.group_number : undefined,
+    declarantId: input.declarant ? input.declarant : undefined,
   }
 
   return single
