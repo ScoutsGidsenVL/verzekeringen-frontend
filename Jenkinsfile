@@ -9,6 +9,7 @@ pipeline {
     stage('build') {
       steps {
         sh "npm prune --ignore-scripts"
+        sh "rm -rf node_modules/inuits-vuejs-oidc node_modules/vue-3-component-library"
         sh "npm install --ignore-scripts"
         sh "rm -rf dist verzekeringen.zip"
         sh "npm run build"
