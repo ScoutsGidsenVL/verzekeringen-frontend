@@ -4,7 +4,7 @@
     <p>{{ responsibleMember.firstName + ' ' + (responsibleMember.lastName ? responsibleMember.lastName : '') }}</p>
     <p>{{ responsibleMember.email }}</p>
     <phone-number :phoneNumber="responsibleMember.phoneNumber" />
-    <label-output label="Lidnummer" :text="responsibleMember.membershipNumber" />
+    <label-output v-if="responsibleMember.membershipNumber" label="Lidnummer" :text="responsibleMember.membershipNumber" />
   </div>
 </template>
 

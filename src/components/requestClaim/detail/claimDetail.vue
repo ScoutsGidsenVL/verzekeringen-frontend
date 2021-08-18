@@ -16,8 +16,8 @@
       <div class="md:ml-20">
         <label-output v-if="claimState.group" label="Groep" :text="claimState.group.name + ' - ' + claimState.group.id" />
 
-        <div v-if="claimState.groupLeader" class="mt-3">
-          <responsible-member-detail title="Groepleidster" :responsible-member="claimState.groupLeader" />
+        <div v-if="claimState.declarant" class="mt-3">
+          <responsible-member-detail title="Groepleidster" :responsible-member="claimState.declarant" />
         </div>
       </div>
     </div>
@@ -179,8 +179,6 @@ import { useStore } from 'vuex'
 import moment from 'moment'
 import { saveAs } from 'file-saver'
 import FileRepository from '@/repositories/fileRepository'
-import { MemberRepository } from '@/repositories/memberRepository'
-import { Member } from '@/serializer/Member'
 
 export default defineComponent({
   name: 'ClaimDetail',
@@ -213,13 +211,6 @@ export default defineComponent({
         .getById(route.params.id.toString())
         .then((result: any) => {
           details.value = result
-          if (details.value.declarantId) {
-            RepositoryFactory.get(MemberRepository)
-              .getById(details.value.declarantId.toString())
-              .then((m: any) => {
-                details.value.groupLeader = m
-              })
-          }
           store.dispatch('setClaimState', details.value)
           if (details.value.attachment) {
             RepositoryFactory.get(FileRepository)

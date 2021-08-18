@@ -5,6 +5,7 @@ import { Victim, VictimDeserializer, VictimSerializer } from '@/serializer/Victi
 import { ResponsibleMember } from '../ResponsibleMember'
 import moment from 'moment'
 import { Attachment, AttachmentDeserializer } from './Attachment'
+import { Member, MemberDeserializer } from '../Member'
 
 export interface Claim {
   readonly id?: number
@@ -42,7 +43,7 @@ export interface Claim {
   readonly victimBirthDate?: String
   readonly victimEmail?: String
   readonly groupNumber?: String
-  readonly declarantId?: String
+  readonly declarant?: Member
 }
 
 export const ClaimDeserializer = (input: any): Claim => {
@@ -78,7 +79,7 @@ export const ClaimDeserializer = (input: any): Claim => {
     victimBirthDate: input.victim_birth_date ? input.victim_birth_date : undefined,
     victimEmail: input.victim_email ? input.victim_email : undefined,
     groupNumber: input.group_number ? input.group_number : undefined,
-    declarantId: input.declarant ? input.declarant : undefined,
+    declarant: input.declarant ? MemberDeserializer(input.declarant) : undefined,
   }
 
   return single
