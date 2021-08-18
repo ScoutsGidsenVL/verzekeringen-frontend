@@ -2,6 +2,10 @@
   <form id="ClaimDetail" @submit.prevent="onSubmit">
     <p class="py-4" style="font-size: 30px">Overzicht <strong class="font-semibold">schade aangifte</strong></p>
 
+    <div v-show="isEdit" class="mt-4">
+      <navigation-arrow to="/home/schade-aangiftes" text="Terug naar overzicht" />
+    </div>
+
     <div v-if="false">
       <p class="font-semibold">Administratie</p>
       <div class="md:ml-20">
@@ -151,7 +155,7 @@
       </div>
     </div>
 
-    <div class="flex gap-3 mt-5 items-center">
+    <div v-show="!isEdit" class="flex gap-3 mt-5 items-center">
       <custom-button text="Verstuur je aanvraag" />
     </div>
   </form>
@@ -179,6 +183,7 @@ import { useStore } from 'vuex'
 import moment from 'moment'
 import { saveAs } from 'file-saver'
 import FileRepository from '@/repositories/fileRepository'
+import NavigationArrow from '@/components/semantic/NavigationArrow.vue'
 
 export default defineComponent({
   name: 'ClaimDetail',
@@ -187,6 +192,7 @@ export default defineComponent({
     'label-output': LabelOutput,
     'responsible-member-detail': ResponsibleMemberDetail,
     'custom-input': CustomInput,
+    'navigation-arrow': NavigationArrow
   },
   props: {
     isDetailPage: {
