@@ -325,7 +325,6 @@ export default defineComponent({
         values.victim.groupAdminId = member.isMember ? member.groupAdminId : undefined
         values.victim.nonMember = !member.isMember ? member.id : undefined
       }
-      console.log('ADDED MEMBER: ', values.victim)
       isSelectedVictim.value = true
     }
 

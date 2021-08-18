@@ -48,9 +48,6 @@ export const VictimDeserializer = (input: any): Victim => {
     sex: input.sex ? input.sex : undefined,
     nonMember: input.non_member ? input.non_member : undefined,
   }
-
-  console.log('SINGLE: ', single)
-
   return single
 }
 
