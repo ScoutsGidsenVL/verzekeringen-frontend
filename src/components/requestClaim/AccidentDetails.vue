@@ -24,33 +24,33 @@
             </label>
           </strong>
 
-          <custom-input v-show="false" :type="'activityTypes'" rules="RequiredActivityTypes" name="activityTypes" />
+          <custom-input v-show="false" :type="'activityTypes'" rules="required" name="activityTypes" />
 
           <!-- OPTION 1 -->
           <div>
-            <input :id="ActivityTypes.REGULAR" v-model="selectedActivityTypes" class="cursor-pointer" type="checkbox" :name="ActivityTypes.REGULAR" :value="ActivityTypes.REGULAR" />
+            <input :id="ActivityTypes.REGULAR" v-model="selectedActivityType" class="cursor-pointer" type="radio" :name="ActivityTypes.REGULAR" :value="ActivityTypes.REGULAR" />
             <label :for="ActivityTypes.REGULAR" class="inline ml-2">Tijdens een activiteit van de hiervoor vermelde scoutsgroep</label>
           </div>
           <!-- OPTION 2 -->
           <div>
-            <input :id="ActivityTypes.TRANSPORT" v-model="selectedActivityTypes" class="cursor-pointer" type="checkbox" :name="ActivityTypes.TRANSPORT" :value="ActivityTypes.TRANSPORT" />
-            <label :for="ActivityTypes.TRANSPORT" class="ml-2">Verplaatsing van of naar activiteit</label>
+            <input
+              :id="ActivityTypes.IRREGULAR_LOCATION"
+              v-model="selectedActivityType"
+              class="cursor-pointer"
+              type="radio"
+              :name="ActivityTypes.IRREGULAR_LOCATION"
+              :value="ActivityTypes.IRREGULAR_LOCATION"
+            />
+            <label :for="ActivityTypes.IRREGULAR_LOCATION" class="ml-2">Verplaatsing van of naar activiteit</label>
           </div>
           <!-- OPTION 3 -->
           <div>
             <div>
-              <input
-                :id="ActivityTypes.IRREGULAR_LOCATION"
-                v-model="selectedActivityTypes"
-                class="cursor-pointer"
-                type="checkbox"
-                :name="ActivityTypes.IRREGULAR_LOCATION"
-                :value="ActivityTypes.IRREGULAR_LOCATION"
-              />
-              <label :for="ActivityTypes.IRREGULAR_LOCATION" class="ml-2">Tijdens een activiteit op verplaatsing</label>
+              <input :id="ActivityTypes.TRANSPORT" v-model="selectedActivityType" class="cursor-pointer" type="radio" :name="ActivityTypes.TRANSPORT" :value="ActivityTypes.TRANSPORT" />
+              <label :for="ActivityTypes.TRANSPORT" class="ml-2">Tijdens een activiteit op verplaatsing</label>
               <label class="invisible">
                 <!-- somehow without this code it wont work? -->
-                {{ selectedActivityTypes }}
+                {{ selectedActivityType }}
               </label>
             </div>
 
@@ -140,12 +140,10 @@ export default defineComponent({
     const route = useRoute()
     const store = useStore()
     const isEdit = !!route.params.id
-    const selectedActivityTypes = ref<Array<ActivityTypes>>([])
+    const selectedActivityType = ref<any>()
     const isDamage = ref<Array<boolean>>([])
 
-    const { handleSubmit, values, validate, isSubmitting } = useForm<Claim>({
-      initialValues: {},
-    })
+    const { handleSubmit, values, validate, isSubmitting } = useForm<Claim>()
 
     const claimState = computed((): Claim => {
       return store.state.claim.claimState
@@ -157,7 +155,7 @@ export default defineComponent({
         const newClaimState = ref<Claim>({
           dateOfAccident: values.dateOfAccident,
           activity: values.activity,
-          activityTypes: selectedActivityTypes.value,
+          activityTypes: [selectedActivityType.value],
           isDamage: isDamage.value.length === 1 ? true : false,
           description: values.description,
           usedTransport: values.usedTransport,
@@ -175,20 +173,15 @@ export default defineComponent({
       () => values.usedTransport,
       () => {
         if (values.usedTransport && values.usedTransport.length > 0) {
-          if (selectedActivityTypes.value.includes(ActivityTypes.IRREGULAR_LOCATION) === false) {
-            selectedActivityTypes.value.push(ActivityTypes.IRREGULAR_LOCATION)
-            values.activityTypes = selectedActivityTypes.value
-          }
-        } else if (selectedActivityTypes.value.includes(ActivityTypes.IRREGULAR_LOCATION)) {
-          selectedActivityTypes.value = selectedActivityTypes.value.filter((e) => e !== ActivityTypes.IRREGULAR_LOCATION)
+          selectedActivityType.value = ActivityTypes.TRANSPORT
         }
       }
     )
 
     watch(
-      () => selectedActivityTypes.value,
+      () => selectedActivityType.value,
       () => {
-        values.activityTypes = selectedActivityTypes.value
+        values.activityTypes = [selectedActivityType.value]
       }
     )
 
@@ -212,7 +205,7 @@ export default defineComponent({
       isEdit,
       values,
       ActivityTypes,
-      selectedActivityTypes,
+      selectedActivityType,
       isDamage,
       DamageTypes,
     }

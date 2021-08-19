@@ -75,11 +75,11 @@
 
         <div v-if="claimState.activityTypes" class="mt-2">
           <p v-show="claimState.activityTypes.includes(ActivityTypes.REGULAR)">Tijdens een activiteit van de hiervoor vermelde scoutsgroep</p>
-          <div v-show="claimState.activityTypes.includes(ActivityTypes.IRREGULAR_LOCATION)">
+          <div v-show="claimState.activityTypes.includes(ActivityTypes.TRANSPORT)">
             Tijdens een activiteit op verplaatsing
             <p v-show="claimState.usedTransport">Gebruikt voertuig: {{ claimState.usedTransport }}</p>
           </div>
-          <p v-show="claimState.activityTypes.includes(ActivityTypes.TRANSPORT)">Verplaatsing van of naar activiteit</p>
+          <p v-show="claimState.activityTypes.includes(ActivityTypes.IRREGULAR_LOCATION)">Verplaatsing van of naar activiteit</p>
         </div>
 
         <div v-show="claimState.isDamage">

@@ -98,13 +98,6 @@ export const defineRules = (store: any) => {
     return true
   })
 
-  defineRule('RequiredActivityTypes', (value: Array<ActivityTypes>) => {
-    if (value.length === 0) {
-      return 'Deze info is verplicht'
-    }
-    return true
-  })
-
   defineRule('bankAccountLength', (value: String) => {
     if (value.length < 19 && value.length > 0) {
       return 'Geen geldige bankrekeningnummer'

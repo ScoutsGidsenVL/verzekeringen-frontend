@@ -96,7 +96,7 @@ export const ClaimSerializer = (input: any): any => {
     date_of_accident: input.dateOfAccident ? input.dateOfAccident + 'T09:00:00.000Z' : undefined,
     activity: input.activity ? input.activity : undefined,
     activity_type: input.activityTypes ? input.activityTypes : undefined,
-    used_transport: input.activityTypes.includes(ActivityTypes.IRREGULAR_LOCATION) && input.usedTransport ? input.usedTransport : undefined,
+    used_transport: input.activityTypes.includes(ActivityTypes.TRANSPORT) && input.usedTransport ? input.usedTransport : undefined,
     description: input.description ? input.description : undefined,
     involved_party_name: input.involvedPartyName ? input.involvedPartyName : undefined,
     involved_party_description: input.involvedPartyDescription ? input.involvedPartyDescription : undefined,
