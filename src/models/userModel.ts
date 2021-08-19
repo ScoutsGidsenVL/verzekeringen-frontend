@@ -11,7 +11,9 @@ export default class UserModel implements ResponsibleMember {
     public membershipNumber: number,
     public birthDate: string,
     public phoneNumber: string,
-    public scoutsGroups: Group[]
+    public scoutsGroups: Group[],
+    public city: string,
+    public groupAdminId: string
   ) {
     return this
   }
@@ -32,7 +34,9 @@ export default class UserModel implements ResponsibleMember {
       input.membership_number,
       input.birth_date,
       input.phone_number ? input.phone_number.replace(/ /g, '') : undefined,
-      orderGroups(groups.map((group: any) => GroupDeserializer(group)))
+      orderGroups(groups.map((group: any) => GroupDeserializer(group))),
+      input.postcode_city && input.postcode_city.city ? input.postcode_city.city : undefined,
+      input.group_admin_id ? input.group_admin_id : undefined
     )
   }
 }

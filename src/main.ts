@@ -8,6 +8,7 @@ import { OpenIdConnectPlugin } from 'inuits-vuejs-oidc'
 import RepositoryFactory from './repositories/repositoryFactory'
 import AuthRepository from './repositories/authRepository'
 import StaticFileRepository from './repositories/staticFileRepository'
+import { MemberRepository } from './repositories/memberRepository'
 
 new StaticFileRepository().getFile('config.json').then((result: any) => {
   const app = createApp(App)
@@ -43,9 +44,23 @@ new StaticFileRepository().getFile('config.json').then((result: any) => {
           ? RepositoryFactory.get(AuthRepository)
               .me()
               .then((user: any) => {
-                store.dispatch('setUser', user).then(() => {
-                  next()
-                })
+                if (user.groupAdminId) {
+                  // GET USER BY ID FOR MORE DETAILS
+                  RepositoryFactory.get(MemberRepository)
+                    .getById(user.groupAdminId)
+                    .then((userById) => {
+                      console.log('CHECK: ', userById)
+
+                      user.city = userById.postCodeCity.city
+                      store.dispatch('setUser', user).then(() => {
+                        next()
+                      })
+                    })
+                } else {
+                  store.dispatch('setUser', user).then(() => {
+                    next()
+                  })
+                }
               })
           : next()
       } else {

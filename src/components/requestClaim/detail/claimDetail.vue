@@ -1,6 +1,6 @@
 <template>
   <form id="ClaimDetail" @submit.prevent="onSubmit">
-    <p class="py-4" style="font-size: 30px">Overzicht <strong class="font-semibold">schade aangifte</strong></p>
+    <p class="py-4" style="font-size: 30px">Overzicht</p>
 
     <div v-show="isEdit" class="mt-4">
       <navigation-arrow to="/home/schade-aangiftes" text="Terug naar overzicht" />
@@ -38,6 +38,9 @@
 
     <div class="mt-5">
       <p class="font-semibold">Slachtoffer</p>
+      <!-- <pre>
+      {{ claimState.victim }}
+      </pre> -->
       <div v-if="claimState.victim" class="md:ml-20">
         <label-output :text="claimState.victim.firstName + ' ' + claimState.victim.lastName" />
         <label-output v-if="claimState.victim.country" :text="claimState.victim.country.name" />
@@ -48,9 +51,9 @@
             claimState.victim.number +
             (claimState.victim.letterBox ? ' Bus ' + claimState.victim.letterBox : '') +
             ', ' +
-            claimState.victim.postcode +
+            (claimState.victim.postcode ? claimState.victim.postcode : claimState.victim.postCodeCity.postalCode) +
             ' ' +
-            claimState.victim.city
+            (claimState.victim.city ? claimState.victim.city : claimState.victim.postCodeCity.city)
           "
         />
         <label-output :text="claimState.victim.email" />
@@ -70,21 +73,18 @@
           <strong>Tijdens welke soort ongeval de activiteit plaatsvond</strong>
         </div>
 
-        <div v-if="claimState.activityTypes" class="mt-2" style="margin-left: 19px">
-          <ul class="list-disc">
-            <li v-show="claimState.activityTypes.includes(ActivityTypes.REGULAR)">Tijdens een activiteit van de hiervoor vermelde scoutsgroep</li>
-            <li v-show="claimState.activityTypes.includes(ActivityTypes.IRREGULAR_LOCATION)">
-              Tijdens een activiteit op verplaatsing
-              <p v-show="claimState.usedTransport">Gebruikt voertuig: {{ claimState.usedTransport }}</p>
-            </li>
-            <li v-show="claimState.activityTypes.includes(ActivityTypes.TRANSPORT)">Verplaatsing van of naar activiteit</li>
-          </ul>
+        <div v-if="claimState.activityTypes" class="mt-2">
+          <p v-show="claimState.activityTypes.includes(ActivityTypes.REGULAR)">Tijdens een activiteit van de hiervoor vermelde scoutsgroep</p>
+          <div v-show="claimState.activityTypes.includes(ActivityTypes.IRREGULAR_LOCATION)">
+            Tijdens een activiteit op verplaatsing
+            <p v-show="claimState.usedTransport">Gebruikt voertuig: {{ claimState.usedTransport }}</p>
+          </div>
+          <p v-show="claimState.activityTypes.includes(ActivityTypes.TRANSPORT)">Verplaatsing van of naar activiteit</p>
         </div>
 
         <div v-show="claimState.isDamage">
           <strong>Schade aan medisch hulpmiddel</strong>
           <div>
-            <label>Bril-/materiële schade</label>
             <label class="block" v-show="claimState.damage">{{ claimState.damage }}</label>
           </div>
         </div>
@@ -207,6 +207,7 @@ export default defineComponent({
     const store = useStore()
     const isEdit = !!route.params.id
     const details = ref<Claim>({})
+    const userData = ref<ResponsibleMember>(store.getters.user)
 
     const saveFile = (file: any) => {
       saveAs(file, file.name)
@@ -227,15 +228,15 @@ export default defineComponent({
           }
         })
     }
+
     const { handleSubmit, values, validate, isSubmitting } = useForm<Claim>({
       initialValues: {
         victim: details.value.victim,
         activityTypes: details.value.activityTypes,
         DECLARANT_DATE: moment().format('YYYY-MM-DD'),
+        declarantCity: userData.value.city,
       },
     })
-
-    const userData = ref<ResponsibleMember>(store.getters.user)
 
     const claimState = computed((): Claim => {
       return store.state.claim.claimState

@@ -99,7 +99,7 @@
           rules="required"
           name="description"
           label="Beschrijving van het ongeval (oorzaken, omstandigheden en gevolgen, opgelopen verwondingen en/of schade)"
-          :textAreaWidth="'xs:w-72 md:w-100 md:min-w-full'"
+          :textAreaWidth="'xs:w-72 md:w-100 md:min-w-full h-36'"
         />
       </div>
     </div>
