@@ -15,7 +15,7 @@
     </div>
 
     <div class="mt-5">
-      <p class="font-semibold">Identiteit van de verzekeringsnemer</p>
+      <p class="font-semibold">Aangever</p>
 
       <div class="md:ml-20">
         <label-output v-if="claimState.group" label="Groep" :text="claimState.group.name + ' - ' + claimState.group.id" />
@@ -37,7 +37,7 @@
     </div>
 
     <div class="mt-5">
-      <p class="font-semibold">Identiteit van het slachtoffer</p>
+      <p class="font-semibold">Slachtoffer</p>
       <div v-if="claimState.victim" class="md:ml-20">
         <label-output :text="claimState.victim.firstName + ' ' + claimState.victim.lastName" />
         <label-output v-if="claimState.victim.country" :text="claimState.victim.country.name" />
@@ -72,7 +72,7 @@
 
         <div v-if="claimState.activityTypes" class="mt-2" style="margin-left: 19px">
           <ul class="list-disc">
-            <li v-show="claimState.activityTypes.includes(ActivityTypes.REGULAR)">Tijdens een activiteit van de hierdoor vermelde scoutsgroep</li>
+            <li v-show="claimState.activityTypes.includes(ActivityTypes.REGULAR)">Tijdens een activiteit van de hiervoor vermelde scoutsgroep</li>
             <li v-show="claimState.activityTypes.includes(ActivityTypes.IRREGULAR_LOCATION)">
               Tijdens een activiteit op verplaatsing
               <p v-show="claimState.usedTransport">Gebruikt voertuig: {{ claimState.usedTransport }}</p>
@@ -102,7 +102,7 @@
       <p class="font-semibold">Betrokkenheid andere partijen</p>
 
       <div class="md:ml-20 mb-5" v-if="claimState.involvedPartyDescription">
-        <strong>Is het ongeval te wijten aan een fout van een andere verzekerde/ of derde?</strong>
+        <strong>Is het ongeval te wijten aan een fout van een andere verzekerde of derde?</strong>
         <div>
           <label-output v-if="claimState.involvedPartyName" class="mt-1" :text="claimState.involvedPartyName" />
           <label-output v-if="claimState.involvedPartyDescription" class="mt-1" :text="claimState.involvedPartyDescription" />
@@ -114,7 +114,7 @@
         <strong>Werd er een vastelling gedaan door een verbaliserende autoriteit?</strong>
         <div>
           <label-output v-if="claimState.officialReportDescription" class="mt-1" :text="claimState.officialReportDescription" />
-          <label-output v-if="claimState.pvNumber" class="mt-1" label="Eventueel nummer van proces-verbaal" :text="claimState.pvNumber" />
+          <label-output v-if="claimState.pvNumber" class="mt-1" label="Nummer van proces-verbaal" :text="claimState.pvNumber" />
         </div>
       </div>
 
@@ -192,7 +192,7 @@ export default defineComponent({
     'label-output': LabelOutput,
     'responsible-member-detail': ResponsibleMemberDetail,
     'custom-input': CustomInput,
-    'navigation-arrow': NavigationArrow
+    'navigation-arrow': NavigationArrow,
   },
   props: {
     isDetailPage: {
@@ -260,6 +260,7 @@ export default defineComponent({
         .create(claimState.value)
         .then((res) => {
           if (claimState.value.file) {
+            console.log('CHECK')
             RepositoryFactory.get(FileRepository)
               .uploadFile(claimState.value.file, res.id)
               .then(() => {

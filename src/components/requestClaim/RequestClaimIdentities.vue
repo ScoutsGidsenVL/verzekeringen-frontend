@@ -1,7 +1,7 @@
 <template>
   <form id="RequestClaimIdentities" @submit.prevent="onSubmit">
     <div class="mb-5">
-      <custom-headline-2 text="Identiteit van de verzekeringsnemer" />
+      <custom-headline-2 text="Aangever" />
 
       <div class="md:ml-20" style="margin-top: -2em">
         <div style="width: 600px">
@@ -14,7 +14,7 @@
             track-by="fullInfo"
             value-prop="id"
             :options="userData.scoutsGroups"
-            label="Selecteer de verzekerde scoutsgroep"
+            label="Selecteer je groep"
             :loading-submit="isSubmitting"
           />
         </div>
@@ -27,7 +27,7 @@
       <div class="md:ml-20 mt-5">
         <info-alert>
           <p>
-            Is er iets niet juist? pas het dan aan in de <strong><a target="_blank" href="https://groepsadmin.scoutsengidsenvlaanderen.be/">groepsadmin</a></strong> en duw op herladen.<custom-button
+            Is er iets niet juist? pas het dan aan in de <strong><a target="_blank" href="https://groepsadmin.scoutsengidsenvlaanderen.be/">groepsadmin</a></strong> en klik op refresh.<custom-button
               :loadingSubmit="isRefreshing"
               type="button"
               class="ml-20 mt-2"
@@ -47,7 +47,7 @@
     </div>
 
     <div class="mb-5">
-      <custom-headline-2 text="Identiteit van het slachtoffer" />
+      <custom-headline-2 text="Slachtoffer" />
 
       <div class="md:ml-20 my-3">
         <div>
@@ -76,7 +76,7 @@
         <div class="md:ml-20">
           <div class="sm:flex sm:gap-2 xs:w-72 sm:w-100">
             <custom-input :disabled="isSelectedVictim" :type="InputTypes.TEXT" rules="required" name="victim.firstName" label="Voornaam" />
-            <custom-input :disabled="isSelectedVictim" :type="InputTypes.TEXT" rules="required" name="victim.lastName" label="Acternaam" />
+            <custom-input :disabled="isSelectedVictim" :type="InputTypes.TEXT" rules="required" name="victim.lastName" label="Achternaam" />
           </div>
 
           <div class="sm:mt-3 sm:flex sm:gap-2 xs:w-72 sm:w-100">
@@ -163,14 +163,7 @@
         </div>
 
         <div class="mt-3 md:ml-20 w-72">
-          <custom-input
-            :placeholder="'BE01 2345 6789 4444'"
-            :type="InputTypes.TEXT"
-            rules="bankAccountLength:victim.bankAccount"
-            name="victim.bankAccount"
-            label="Bankrekeningnummer"
-            :maxlength="19"
-          />
+          <custom-input :type="InputTypes.TEXT" rules="bankAccountLength:victim.bankAccount" name="victim.bankAccount" label="Bankrekeningnummer" :maxlength="19" />
         </div>
 
         <div v-if="values.victim && values.victim.membershipNumber" class="mt-3 md:ml-20 w-72">

@@ -2,9 +2,11 @@
   <form id="RequestInsuranceGeneral" @submit.prevent="onSubmit">
     <div class="mb-5">
       <custom-headline-2 text="Betrokkenheid andere partijen" />
+      <custom-headline-3 style="margin-top: -3.5em" text="Vul deze gegevens enkel in indien van toepassing. Je mag dit ook leeg laten." />
+
       <div>
         <div>
-          <display-content-checkbox text="Is het ongeval te wijten aan een fout van een andere verzekerde/ of derde?">
+          <display-content-checkbox text="Is het ongeval te wijten aan een fout van een andere verzekerde of derde?">
             <div class="md:w-96 xs:w-72">
               <custom-input :type="InputTypes.TEXT" name="involvedPartyName" label="Naam" rules="fillInCheck:@involvedPartyDescription" />
               <custom-input :type="InputTypes.TEXT" name="involvedPartyDescription" label="Adres" rules="fillInCheck:@involvedPartyBirthdate" />
@@ -15,7 +17,7 @@
           <display-content-checkbox text="Werd er een vastelling gedaan door een verbaliserende autoriteit?">
             <div class="md:w-96 xs:w-72">
               <custom-input :type="InputTypes.TEXT" name="officialReportDescription" label="Welke" rules="fillInCheck:@pvNumber" />
-              <custom-input class="mt-1" :type="InputTypes.TEXT" name="pvNumber" label="Eventueel nummer van proces-verbaal" />
+              <custom-input class="mt-1" :type="InputTypes.TEXT" name="pvNumber" label="Nummer van proces-verbaal" />
             </div>
           </display-content-checkbox>
 
@@ -46,6 +48,8 @@
 <script lang="ts">
 import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRepository'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
+import CustomHeadline3 from '@/components/customHeadlines/CustomHeadline3.vue'
+
 import { scrollToFirstError, useScrollToTop } from '@/veeValidate/helpers'
 import { ClaimHolderStates } from '@/enums/ClaimholderStates'
 import CustomButton from '@/components/CustomButton.vue'
@@ -62,6 +66,7 @@ export default defineComponent({
   name: 'AccidentDetails',
   components: {
     'custom-headline-2': CustomHeadline2,
+    'custom-headline-3': CustomHeadline3,
     'custom-button': CustomButton,
     'display-content-checkbox': DisplayContentCheckBox,
     'custom-input': CustomInput,

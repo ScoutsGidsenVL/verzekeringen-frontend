@@ -1,7 +1,7 @@
 <template>
-  <call-to-action link="/aanvraag/schade-aangifte" text="Vraag nieuwe schade aangifte aan" />
+  <call-to-action link="/aanvraag/schade-aangifte" text="Start een nieuwe aangifte" />
   <div class="container">
-    <claim-list v-if="data && data.results" title="Claims" :items="data.results" />
+    <claim-list v-if="data && data.results" title="Aangiftes" :items="data.results" />
     <div class="flex gap-5 pt-1 pb-5 float-right">
       <a v-if="data.previous && !isLoading" class="link-inline cursor-pointer" @click="getPreviousClaims(data.previous)">Vorige pagina</a>
       <a v-if="data.next && !isLoading" class="link-inline cursor-pointer" @click="getNextClaims(data.next)">Volgende pagina</a>

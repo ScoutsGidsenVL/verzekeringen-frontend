@@ -47,7 +47,7 @@
     <textarea
       v-if="type === InputTypes.TEXT_AREA && !hideInput && type !== InputTypes.TIME"
       v-model="inputValue"
-      class="bg-lightGray p-2 h-32"
+      class="bg-lightGray p-2"
       :class="'md:' + textAreaWidth + ' ' + 'xs:w-full'"
       :type="'text'"
       :name="name"
@@ -131,7 +131,7 @@ export default defineComponent({
     textAreaWidth: {
       type: String,
       required: false,
-      default: 'w-96',
+      default: 'w-96 h-32',
     },
     placeholder: {
       type: String,

@@ -3,7 +3,7 @@
   <slot />
   <div class="grid-cols-claims py-2 border-t-2 border-black grid opacity-0 md:opacity-100">
     <div>
-      <p class="font-semibold">Ongeval datum</p>
+      <p class="font-semibold">Datum ongeval</p>
     </div>
 
     <div>
@@ -11,7 +11,7 @@
     </div>
 
     <div>
-      <p class="font-semibold">Slachtoffer naam</p>
+      <p class="font-semibold">Slachtoffer</p>
     </div>
 
     <div></div>

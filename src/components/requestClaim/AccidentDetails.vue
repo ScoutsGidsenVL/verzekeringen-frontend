@@ -6,7 +6,7 @@
       <div style="width: 470px">
         <custom-input class="xs:w-72 md:w-100" :type="InputTypes.DATE" rules="required" name="dateOfAccident" label="Datum ongeval" />
         <custom-input
-          :textAreaWidth="'xs:w-72 md:w-100 md:min-w-full'"
+          :textAreaWidth="'xs:w-72 md:w-100 md:min-w-full h-11'"
           class="mt-3"
           :type="InputTypes.TEXT_AREA"
           rules="required"
@@ -26,12 +26,18 @@
 
           <custom-input v-show="false" :type="'activityTypes'" rules="RequiredActivityTypes" name="activityTypes" />
 
+          <!-- OPTION 1 -->
           <div>
             <input :id="ActivityTypes.REGULAR" v-model="selectedActivityTypes" class="cursor-pointer" type="checkbox" :name="ActivityTypes.REGULAR" :value="ActivityTypes.REGULAR" />
-            <label :for="ActivityTypes.REGULAR" class="inline ml-2">Tijdens een activiteit van de hierdoor vermelde scoutsgroep</label>
+            <label :for="ActivityTypes.REGULAR" class="inline ml-2">Tijdens een activiteit van de hiervoor vermelde scoutsgroep</label>
           </div>
-
-          <div class="py-5">
+          <!-- OPTION 2 -->
+          <div>
+            <input :id="ActivityTypes.TRANSPORT" v-model="selectedActivityTypes" class="cursor-pointer" type="checkbox" :name="ActivityTypes.TRANSPORT" :value="ActivityTypes.TRANSPORT" />
+            <label :for="ActivityTypes.TRANSPORT" class="ml-2">Verplaatsing van of naar activiteit</label>
+          </div>
+          <!-- OPTION 3 -->
+          <div>
             <div>
               <input
                 :id="ActivityTypes.IRREGULAR_LOCATION"
@@ -49,13 +55,8 @@
             </div>
 
             <div>
-              <custom-input class="xs:w-72 md:w-72" :type="InputTypes.TEXT" placeholder="Gebruikt voertuig" name="usedTransport" />
+              <custom-input class="xs:w-72 md:w-72" :type="InputTypes.TEXT" placeholder="Gebruikte vervoermiddel" name="usedTransport" />
             </div>
-          </div>
-
-          <div>
-            <input :id="ActivityTypes.TRANSPORT" v-model="selectedActivityTypes" class="cursor-pointer" type="checkbox" :name="ActivityTypes.TRANSPORT" :value="ActivityTypes.TRANSPORT" />
-            <label :for="ActivityTypes.TRANSPORT" class="ml-2">Verplaatsing van of naar activiteit</label>
           </div>
 
           <ErrorMessage name="activityTypes" class="text-red text-sm block my-2 w-80" />
@@ -70,15 +71,15 @@
 
           <div>
             <div class="flex gap-5">
-              <div>
+              <!-- <div>
                 <input :id="'isDamage'" v-model="isDamage" class="cursor-pointer" type="checkbox" :name="'isDamage'" :value="true" />
                 <label :for="'isDamage'" class="ml-1">Bril-/materiële schade</label>
-              </div>
+              </div> -->
 
               <!-- <custom-input class="mt-3 w-96" :type="InputTypes.TEXT" name="something" /> -->
             </div>
             <div>
-              <custom-input placeholder="Medisch hulpmiddel" class="xs:w-72 md:w-72" :type="InputTypes.TEXT" name="damage" />
+              <custom-input placeholder="Welk hulpmiddel?" class="xs:w-72 md:w-72" :type="InputTypes.TEXT" name="damage" />
               <label class="invisible">
                 <!-- somehow without this code it wont work? -->
                 {{ isDamage }}

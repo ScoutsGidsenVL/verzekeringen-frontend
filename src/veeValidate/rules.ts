@@ -100,7 +100,7 @@ export const defineRules = (store: any) => {
 
   defineRule('RequiredActivityTypes', (value: Array<ActivityTypes>) => {
     if (value.length === 0) {
-      return 'Vereist een keuze te selecteren.'
+      return 'Deze info is verplicht'
     }
     return true
   })

@@ -37,7 +37,7 @@ const routes: any[] = [
     component: ClaimsHome,
     meta: {
       requiresOpenIdAuth: true,
-      title: 'Schade aangiftes',
+      title: 'Schade-aangiftes',
       homescreen: '/home',
     },
   },
@@ -47,7 +47,7 @@ const routes: any[] = [
     component: RequestClaim,
     meta: {
       requiresOpenIdAuth: true,
-      title: 'Schade aangifte aanvragen',
+      title: 'Aangifte lichamelijke schade',
       homescreen: '/home/schade-aangiftes',
     },
   },
