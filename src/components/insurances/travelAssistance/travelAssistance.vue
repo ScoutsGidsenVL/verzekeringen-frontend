@@ -6,7 +6,7 @@
         <div class="md:ml-20 xs:w-72 md:w-96">
           <multi-select
             id="country"
-            rules="required|checkForbiddenCountries:@forbiddenCountriesVehicle,@vehicle"
+            rules="required|checkForbiddenCountriesTravelInscuranceWithCar:@forbiddenCountriesVehicle,@vehicle"
             :insurance-type-id="values.vehicle ? '4' : '3'"
             :object="true"
             track-by="name"

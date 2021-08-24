@@ -114,9 +114,18 @@ export const defineRules = (store: any) => {
   })
 
   // @ts-ignore
-  defineRule('checkForbiddenCountries', (country: Country, [forbiddenCountriesVehicle, vehicle]) => {
+  defineRule('checkForbiddenCountriesTemporaryCar', (country: Country, [forbiddenCountriesVehicle, vehicle]) => {
+    console.log('CHECK FORBIDDEN')
     if (forbiddenCountriesVehicle && forbiddenCountriesVehicle.some((c: Country) => c.id === country.id) && vehicle) {
-      return 'verboden land voor met een voertuig'
+      return 'Voor dit land kan je geen tijdelijke autoverzekering afsluiten'
+    }
+    return true
+  })
+
+  // @ts-ignore
+  defineRule('checkForbiddenCountriesTravelInscuranceWithCar', (country: Country, [forbiddenCountriesVehicle, vehicle]) => {
+    if (forbiddenCountriesVehicle && forbiddenCountriesVehicle.some((c: Country) => c.id === country.id) && vehicle) {
+      return 'Voor dit land kan je geen verzekering reisbijstand met voertuig afsluiten'
     }
     return true
   })
