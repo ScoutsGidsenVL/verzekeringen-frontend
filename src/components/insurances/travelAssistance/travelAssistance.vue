@@ -3,7 +3,7 @@
     <div v-if="values">
       <div>
         <custom-headline-2 text="Bestemming" />
-        <div class="md:ml-20 xs:w-72 md:w-96">
+        <div class="md:ml-20 xs:ml-5 sm:ml-5 xs:w-72 md:w-96">
           <multi-select
             id="country"
             rules="required|checkForbiddenCountriesTravelInscuranceWithCar:@forbiddenCountriesVehicle,@vehicle"
@@ -26,26 +26,26 @@
           <custom-headline-2 text="Deelnemers" />
           <required rules="required" class="mt-3" />
         </div>
-        <div class="md:ml-20">
+        <div class="md:ml-20 xs:ml-5 sm:ml-5">
           <select-participants id="participants" rules="required" />
         </div>
       </div>
 
       <div class="mt-3">
         <custom-headline-2 text="Voertuig" />
-        <div class="md:ml-20">
+        <div class="md:ml-20 xs:ml-5 sm:ml-5">
           <select-vehicle id="vehicle" />
         </div>
       </div>
 
       <div>
         <custom-headline-2 text="Opmerkingen" />
-        <div class="md:ml-20">
+        <div class="md:ml-20 xs:ml-5 sm:ml-5">
           <custom-input :type="InputTypes.TEXT_AREA" name="comment" label="" />
         </div>
       </div>
 
-      <div class="flex gap-3 md:ml-20 mt-5 items-center">
+      <div class="flex gap-3 md:ml-20 xs:ml-5 sm:ml-5 mt-5 items-center">
         <back-button stateName="setHolderState" :backToState="HolderStates.GENERAL" />
 
         <custom-button text="Volgende" />

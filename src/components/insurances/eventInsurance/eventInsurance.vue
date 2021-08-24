@@ -1,7 +1,7 @@
 <template>
   <form id="EventInsurance" @submit.prevent="onSubmit">
     <custom-headline-2 text="Activiteit" />
-    <div class="md:ml-20">
+    <div class="md:ml-20 xs:ml-5 sm:ml-5">
       <custom-input :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" />
       <div class="mt-4">
         <strong>Land</strong>
@@ -41,11 +41,11 @@
 
     <div>
       <custom-headline-2 text="Opmerkingen" />
-      <div class="md:ml-20">
+      <div class="md:ml-20 xs:ml-5 sm:ml-5">
         <custom-input :type="InputTypes.TEXT_AREA" name="comment" label="" />
       </div>
     </div>
-    <div class="flex gap-3 md:ml-20 mt-5 items-center">
+    <div class="flex gap-3 md:ml-20 xs:ml-5 sm:ml-5 mt-5 items-center">
       <back-button stateName="setHolderState" :backToState="HolderStates.GENERAL" />
 
       <custom-button text="Volgende" />

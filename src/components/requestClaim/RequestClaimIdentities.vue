@@ -3,7 +3,7 @@
     <div class="mb-5">
       <custom-headline-2 text="Aangever" />
 
-      <div class="md:ml-20" style="margin-top: -2em">
+      <div class="md:ml-20 xs:ml-5 sm:ml-5" style="margin-top: -2em">
         <div style="width: 600px">
           <multi-select
             id="group"
@@ -20,11 +20,11 @@
         </div>
       </div>
 
-      <div class="md:ml-20 mt-5">
+      <div class="md:ml-20 xs:ml-5 sm:ml-5 mt-5">
         <insurance-applicant :applicant="userData" />
       </div>
 
-      <div class="md:ml-20 mt-5">
+      <div class="md:ml-20 xs:ml-5 sm:ml-5 mt-5">
         <info-alert>
           <p>
             Is er iets niet juist? pas het dan aan in de <strong><a target="_blank" href="https://groepsadmin.scoutsengidsenvlaanderen.be/">groepsadmin</a></strong> en klik op refresh.<custom-button
@@ -49,7 +49,7 @@
     <div class="mb-5">
       <custom-headline-2 text="Slachtoffer" />
 
-      <div class="md:ml-20 my-3">
+      <div class="md:ml-20 xs:ml-5 sm:ml-5 my-3">
         <div>
           <strong class="cursor-pointer text-lightGreen hover:text-green" @click="openMemberSideBar()">+ Kies een lid</strong>
           of
@@ -73,7 +73,7 @@
       </div>
 
       <div v-show="isFieldsVisible">
-        <div class="md:ml-20">
+        <div class="md:ml-20 xs:ml-5 sm:ml-5">
           <div class="sm:flex sm:gap-2 xs:w-72 sm:w-100">
             <custom-input :disabled="isSelectedVictim" :type="InputTypes.TEXT" rules="required" name="victim.firstName" label="Voornaam" />
             <custom-input :disabled="isSelectedVictim" :type="InputTypes.TEXT" rules="required" name="victim.lastName" label="Achternaam" />
@@ -89,7 +89,7 @@
           </div>
         </div>
 
-        <div :class="'md:ml-20 sm:flex sm:gap-2'">
+        <div :class="'md:ml-20 xs:ml-5 sm:ml-5 sm:flex sm:gap-2'">
           <div v-if="(values.victim && values.victim.country && values.victim.country.name === '') || (values.victim.country && values.victim.country.name === 'België')">
             <div class="input">
               <multi-select
@@ -113,7 +113,7 @@
           </div>
         </div>
 
-        <div class="mt-3 md:ml-20 sm:flex sm:gap-5">
+        <div class="mt-3 md:ml-20 xs:ml-5 sm:ml-5 sm:flex sm:gap-5">
           <div>
             <custom-input rules="required" class="input" :loading-submit="isSubmitting" :type="InputTypes.DATE" name="victim.birthDate" label="Geboortedatum" />
           </div>
@@ -153,7 +153,7 @@
           </div>
         </div>
 
-        <div class="md:ml-20 mt-3">
+        <div class="md:ml-20 xs:ml-5 sm:ml-5 mt-3">
           <div>
             <custom-input class="input" :type="InputTypes.TEXT" rules="required" name="victim.email" label="E-mail" />
             <p class="input text-2xs mt-1">
@@ -162,14 +162,14 @@
           </div>
         </div>
 
-        <div class="mt-3 md:ml-20 w-72">
+        <div class="mt-3 md:ml-20 xs:ml-5 sm:ml-5 w-72">
           <custom-input :type="InputTypes.TEXT" rules="bankAccountLength:victim.bankAccount" name="victim.bankAccount" label="Bankrekeningnummer" :maxlength="19" />
         </div>
 
-        <div v-if="values.victim && values.victim.membershipNumber" class="mt-3 md:ml-20 w-72">
+        <div v-if="values.victim && values.victim.membershipNumber" class="mt-3 md:ml-20 xs:ml-5 sm:ml-5 w-72">
           <custom-input :disabled="true" :type="InputTypes.TEXT" name="victim.membershipNumber" label="Lidnummer" />
         </div>
-        <div class="mt-3 md:ml-20" v-else>
+        <div class="mt-3 md:ml-20 xs:ml-5 sm:ml-5" v-else>
           <info-alert>
             <p>Dit lid heeft geen lid-nummer en zal als kapoen worden aanschouwen.</p>
           </info-alert>

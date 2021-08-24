@@ -1,7 +1,7 @@
 <template>
   <form id="NonMember" @submit.prevent="onSubmit">
     <custom-headline-2 text="Activiteit" />
-    <div v-if="values" class="md:ml-20">
+    <div v-if="values" class="md:ml-20 xs:ml-5 sm:ml-5">
       <custom-input :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" />
 
       <div class="md:w-96 xs:w-72">
@@ -51,7 +51,7 @@
 
     <div>
       <custom-headline-2 text="Opmerkingen" />
-      <div class="md:ml-20">
+      <div class="md:ml-20 xs:ml-5 sm:ml-5">
         <custom-input :type="InputTypes.TEXT_AREA" name="comment" label="" />
       </div>
     </div>

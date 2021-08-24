@@ -17,7 +17,7 @@
 
         <div>
           <p class="font-semibold">Datum</p>
-          <div class="md:ml-20">
+          <div class="md:ml-20 xs:ml-5 sm:ml-5">
             <label-output label="Periode" :text="formatDate(details.startDate, details.endDate)" />
           </div>
         </div>

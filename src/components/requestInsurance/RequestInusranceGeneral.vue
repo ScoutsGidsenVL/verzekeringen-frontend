@@ -8,13 +8,13 @@
         <custom-headline-2 text="Je hebt drie opties voor een tijdelijke autoverzekering" />
         <div><strong>Gebruik bij twijfel deze keuzehulp</strong></div>
 
-        <div class="md:ml-20">
+        <div class="md:ml-20 xs:ml-5 sm:ml-5">
           <tip-choice-help />
         </div>
 
         <div class="mt-4"><strong>Vink hier je optie(s) aan</strong></div>
 
-        <div class="mt-2 md:ml-20">
+        <div class="mt-2 md:ml-20 xs:ml-5 sm:ml-5">
           <div class="flex">
             <input id="choice-1" v-model="values.insuranceOptions" class="mr-2 mt-1.5" type="checkbox" :value="1" />
             <label for="choice-1">Optie 1: Omniumverzekering.</label>
@@ -26,7 +26,7 @@
               <label class="custom-label" for="choice-2">Optie 2: Vrijstelling van eigen omnium dekken tot XXX EUR.</label>
             </div>
 
-            <div v-if="values.insuranceOptions.includes(2)" class="md:ml-20">
+            <div v-if="values.insuranceOptions.includes(2)" class="md:ml-20 xs:ml-5 sm:ml-5">
               <div style="margin-top: -2em" class="w-80">
                 <multi-select
                   id="maxCoverage"
@@ -53,22 +53,22 @@
         </div>
       </div>
 
-      <div v-show="insuranceTypeState === InsuranceTypes.TIJDELIJKE_VERZEKERING_NIET_LEDEN" class="md:ml-20">
+      <div v-show="insuranceTypeState === InsuranceTypes.TIJDELIJKE_VERZEKERING_NIET_LEDEN" class="md:ml-20 xs:ml-5 sm:ml-5">
         <tip-general-non-member />
       </div>
 
-      <div v-show="insuranceTypeState === InsuranceTypes.REIS_BIJSTAND" class="md:ml-20">
+      <div v-show="insuranceTypeState === InsuranceTypes.REIS_BIJSTAND" class="md:ml-20 xs:ml-5 sm:ml-5">
         <tip-general-travel-assistance />
       </div>
 
-      <div v-show="insuranceTypeState === InsuranceTypes.MATERIAAL_VERZEKERING" class="md:ml-20">
+      <div v-show="insuranceTypeState === InsuranceTypes.MATERIAAL_VERZEKERING" class="md:ml-20 xs:ml-5 sm:ml-5">
         <tip-general-material-insurance />
       </div>
     </div>
 
     <div class="mb-5">
       <custom-headline-2 text="Wanneer" />
-      <div class="md:ml-20 md:flex md:gap-4">
+      <div class="md:ml-20 xs:ml-5 sm:ml-5 md:flex md:gap-4">
         <div class="flex gap-4" :class="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING ? 'w-96' : 'w-70'">
           <custom-input
             onInvalid="this.setCustomValidity('De verzekering moet minstens 1 dag op voorhand aangevraagd worden.')"
@@ -110,12 +110,12 @@
           />
         </div>
       </div>
-      <div class="md:ml-20 pt-2"><date-disclaimer /></div>
+      <div class="md:ml-20 xs:ml-5 sm:ml-5 pt-2"><date-disclaimer /></div>
     </div>
 
     <div class="mb-5">
       <custom-headline-2 text="Groep" />
-      <div class="md:ml-20">
+      <div class="md:ml-20 xs:ml-5 sm:ml-5">
         <p>De factuur wordt naar de financieel verantwoordelijke van je groep gestuurd.</p>
         <div>
           <div class="group-selector">
@@ -138,7 +138,7 @@
 
     <div class="mb-5">
       <custom-headline-2 text="Aanvrager" />
-      <div class="md:ml-20">
+      <div class="md:ml-20 xs:ml-5 sm:ml-5">
         <insurance-applicant :applicant="values.responsibleMember" />
       </div>
     </div>
@@ -152,7 +152,7 @@
       </info-alert>
     </div>
 
-    <div class="flex gap-3 md:ml-20 mt-5 items-center">
+    <div class="flex gap-3 md:ml-20 xs:ml-5 sm:ml-5 mt-5 items-center">
       <custom-button text="Volgende" />
       <a v-if="!isEdit" class="link-inline cursor-pointer" @click="saveAsDraft()">Opslaan</a>
       <loader :is-loading="isSavingDraft" />

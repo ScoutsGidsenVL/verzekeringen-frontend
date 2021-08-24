@@ -8,7 +8,7 @@
 
     <div v-if="false">
       <p class="font-semibold">Administratie</p>
-      <div class="md:ml-20">
+      <div class="md:ml-20 xs:ml-5 sm:ml-5">
         <custom-input class="xs:w-72 md:w-96" :type="InputTypes.TEXT" label="Dossiernummer" name="dossierNumber" />
         <custom-input class="xs:w-72 md:w-96" :type="InputTypes.TEXT_AREA" label="Administratieve commentaar" name="administrationComment" />
       </div>
@@ -17,7 +17,7 @@
     <div class="mt-5">
       <p class="font-semibold">Aangever</p>
 
-      <div class="md:ml-20">
+      <div class="md:ml-20 xs:ml-5 sm:ml-5">
         <label-output v-if="claimState.group" label="Groep" :text="claimState.group.name + ' - ' + claimState.group.id" />
 
         <div v-if="claimState.declarant" class="mt-3">
@@ -29,7 +29,7 @@
     <div v-if="claimState.file" class="mt-5">
       <p class="font-semibold">Bijlage</p>
 
-      <div class="md:ml-20">
+      <div class="md:ml-20 xs:ml-5 sm:ml-5">
         <div @click="saveFile(claimState.file)" class="hover:text-lightGreen cursor-pointer">
           <p class="underline">{{ claimState.file.name }} {{ (claimState.file.size / (1024 * 1024)).toFixed(2) }} MB {{ claimState.file.type ? claimState.file.type : '' }}</p>
         </div>
@@ -41,7 +41,7 @@
       <!-- <pre>
       {{ claimState.victim }}
       </pre> -->
-      <div v-if="claimState.victim" class="md:ml-20">
+      <div v-if="claimState.victim" class="md:ml-20 xs:ml-5 sm:ml-5">
         <label-output :text="claimState.victim.firstName + ' ' + claimState.victim.lastName" />
         <label-output v-if="claimState.victim.country" :text="claimState.victim.country.name" />
         <label-output
@@ -66,7 +66,7 @@
 
     <div class="mt-5">
       <p class="font-semibold">Gegevens van het ongeval</p>
-      <div class="md:ml-20">
+      <div class="md:ml-20 xs:ml-5 sm:ml-5">
         <label-output class="mt-1" label="Datum ongeval" :text="claimState.dateOfAccident" />
         <label-output class="mt-1" label="Tijdens welke activiteit het ongeval plaatsvond" :text="claimState.activity" />
         <div class="mt-2">
@@ -94,7 +94,7 @@
 
     <div class="mt-5">
       <p class="font-semibold">Beschrijving van het ongeval (oorzaken, omstandigheden en gevolgen, opgelopen verwondingen en/of schade</p>
-      <div class="md:ml-20">
+      <div class="md:ml-20 xs:ml-5 sm:ml-5">
         <p style="max-width: 725px !important; text-align: justify">{{ claimState.description }}</p>
       </div>
     </div>
@@ -102,7 +102,7 @@
     <div v-if="claimState.involvedPartyDescription || claimState.officialReportDescription || claimState.witnessDescription || claimState.leadershipDescription" class="mt-5">
       <p class="font-semibold">Betrokkenheid andere partijen</p>
 
-      <div class="md:ml-20 mb-5" v-if="claimState.involvedPartyDescription">
+      <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-5" v-if="claimState.involvedPartyDescription">
         <strong>Is het ongeval te wijten aan een fout van een andere verzekerde of derde?</strong>
         <div>
           <label-output v-if="claimState.involvedPartyName" class="mt-1" :text="claimState.involvedPartyName" />
@@ -111,7 +111,7 @@
         </div>
       </div>
 
-      <div class="md:ml-20 mb-5" v-if="claimState.officialReportDescription">
+      <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-5" v-if="claimState.officialReportDescription">
         <strong>Werd er een vastelling gedaan door een verbaliserende autoriteit?</strong>
         <div>
           <label-output v-if="claimState.officialReportDescription" class="mt-1" :text="claimState.officialReportDescription" />
@@ -119,7 +119,7 @@
         </div>
       </div>
 
-      <div class="md:ml-20 mb-5" v-if="claimState.witnessName">
+      <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-5" v-if="claimState.witnessName">
         <strong>Waren er getuigen van het ongeval?</strong>
         <div>
           <label-output v-if="claimState.witnessName" class="mt-1" :text="claimState.witnessName" />
@@ -129,7 +129,7 @@
         </div>
       </div>
 
-      <div class="md:ml-20 mb-5" v-if="claimState.leadershipDescription">
+      <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-5" v-if="claimState.leadershipDescription">
         <strong>Hield iemand van de leiding toezicht op het moment dat het ongeval plaatsvond?</strong>
         <div>
           <label-output v-if="claimState.leadershipDescription" class="mt-1" :text="claimState.leadershipDescription" />

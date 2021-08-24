@@ -1,7 +1,7 @@
 <template>
   <form id="MaterialInsurance" @submit.prevent="onSubmit">
     <custom-headline-2 text="Activiteit" />
-    <div v-if="values" class="md:ml-20">
+    <div v-if="values" class="md:ml-20 xs:ml-5 sm:ml-5">
       <custom-input :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" />
 
       <div class="xs:w-72 md:w-96">
@@ -42,18 +42,18 @@
       <custom-headline-2 class="mt-2" text="Materiaal" />
       <required rules="required" class="mt-3" />
     </div>
-    <div class="md:ml-20 mt-3">
+    <div class="md:ml-20 xs:ml-5 sm:ml-5 mt-3">
       <select-equipment id="equipment" rules="required" />
     </div>
 
     <div>
       <custom-headline-2 text="Opmerkingen" />
-      <div class="md:ml-20">
+      <div class="md:ml-20 xs:ml-5 sm:ml-5">
         <custom-input :type="InputTypes.TEXT_AREA" name="comment" label="" />
       </div>
     </div>
 
-    <div class="flex gap-3 md:ml-20 mt-5 items-center">
+    <div class="flex gap-3 md:ml-20 xs:ml-5 sm:ml-5 mt-5 items-center">
       <back-button stateName="setHolderState" :backToState="HolderStates.GENERAL" />
       <custom-button text="Volgende" />
       <a v-if="!isEdit" class="link-inline cursor-pointer" @click="saveAsDraft()">Opslaan</a>
