@@ -1,5 +1,7 @@
 <template>
-  <p class="font-semibold">{{ title }}</p>
+  <div>
+    <p class="font-semibold">{{ title }}</p>
+  </div>
   <div :class="title === 'Aanvrager' ? 'md:ml-20 xs:ml-5 sm:ml-5' : ''">
     <div>
       <p>{{ responsibleMember.firstName + ' ' + (responsibleMember.lastName ? responsibleMember.lastName : '') }}</p>

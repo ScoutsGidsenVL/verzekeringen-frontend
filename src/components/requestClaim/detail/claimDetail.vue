@@ -38,27 +38,41 @@
 
     <div class="mt-5">
       <p class="font-semibold">Slachtoffer</p>
-      <!-- <pre>
-      {{ claimState.victim }}
-      </pre> -->
       <div v-if="claimState.victim" class="md:ml-20 xs:ml-5 sm:ml-5">
-        <label-output :text="claimState.victim.firstName + ' ' + claimState.victim.lastName" />
-        <label-output v-if="claimState.victim.country" :text="claimState.victim.country.name" />
-        <label-output
-          :text="
-            claimState.victim.street +
-            ' ' +
-            claimState.victim.number +
-            (claimState.victim.letterBox ? ' Bus ' + claimState.victim.letterBox : '') +
-            ', ' +
-            (claimState.victim.postcode ? claimState.victim.postcode : claimState.victim.postCodeCity.postalCode) +
-            ' ' +
-            (claimState.victim.city ? claimState.victim.city : claimState.victim.postCodeCity.city)
-          "
-        />
-        <label-output :text="claimState.victim.email" />
-        <label-output class="mt-1" label="Geboortedatum" :text="claimState.victim.birthDate" />
-        <label-output class="mt-1" label="Geslacht" :text="claimState.victim.sex" />
+        <div>
+          <p>
+            {{ claimState.victim.firstName + ' ' + claimState.victim.lastName }}
+          </p>
+        </div>
+
+        <div v-if="claimState.victim.country">
+          <p>
+            {{ claimState.victim.country.name }}
+          </p>
+        </div>
+
+        <div>
+          <p>
+            {{
+              claimState.victim.street +
+              ' ' +
+              claimState.victim.number +
+              (claimState.victim.letterBox ? ' Bus ' + claimState.victim.letterBox : '') +
+              ', ' +
+              (claimState.victim.postcode ? claimState.victim.postcode : claimState.victim.postCodeCity.postalCode) +
+              ' ' +
+              (claimState.victim.city ? claimState.victim.city : claimState.victim.postCodeCity.city)
+            }}
+          </p>
+        </div>
+
+        <div>
+          <p>
+            {{ claimState.victim.email }}
+          </p>
+        </div>
+        <label-output label="Geboortedatum" :text="claimState.victim.birthDate" />
+        <label-output label="Geslacht" :text="claimState.victim.sex" />
         <label-output v-if="claimState.victim.membershipNumber" label="Lidnummer" :text="claimState.victim.membershipNumber" />
         <label-output v-if="claimState.bankAccount" label="Bankrekeningnummer" :text="claimState.bankAccount" />
       </div>
@@ -67,13 +81,13 @@
     <div class="mt-5">
       <p class="font-semibold">Gegevens van het ongeval</p>
       <div class="md:ml-20 xs:ml-5 sm:ml-5">
-        <label-output class="mt-1" label="Datum ongeval" :text="claimState.dateOfAccident" />
-        <label-output class="mt-1" label="Tijdens welke activiteit het ongeval plaatsvond" :text="claimState.activity" />
+        <label-output label="Datum ongeval" :text="claimState.dateOfAccident" />
+        <label-output label="Tijdens welke activiteit het ongeval plaatsvond" :text="claimState.activity" />
         <div class="mt-2">
           <strong>Tijdens welke soort ongeval de activiteit plaatsvond</strong>
         </div>
 
-        <div v-if="claimState.activityTypes" class="mt-2">
+        <div v-if="claimState.activityTypes">
           <p v-show="claimState.activityTypes.includes(ActivityTypes.REGULAR)">Tijdens een activiteit van de hiervoor vermelde scoutsgroep</p>
           <div v-show="claimState.activityTypes.includes(ActivityTypes.TRANSPORT)">
             Verplaatsing van of naar activiteit
@@ -83,7 +97,7 @@
           <p v-show="claimState.activityTypes.includes(ActivityTypes.IRREGULAR_LOCATION)">Tijdens een activiteit op verplaatsing</p>
         </div>
 
-        <div v-show="claimState.isDamage">
+        <div class="mt-3" v-show="claimState.isDamage">
           <strong>Schade aan medisch hulpmiddel</strong>
           <div>
             <label class="block" v-show="claimState.damage">{{ claimState.damage }}</label>
@@ -105,34 +119,54 @@
       <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-5" v-if="claimState.involvedPartyDescription">
         <strong>Is het ongeval te wijten aan een fout van een andere verzekerde of derde?</strong>
         <div>
-          <label-output v-if="claimState.involvedPartyName" class="mt-1" :text="claimState.involvedPartyName" />
-          <label-output v-if="claimState.involvedPartyDescription" class="mt-1" :text="claimState.involvedPartyDescription" />
-          <label-output v-if="claimState.involvedPartyBirthdate" class="mt-1" label="Geboortedatum" :text="claimState.involvedPartyBirthdate" />
+          <div v-if="claimState.involvedPartyName">
+            <p>
+              {{ claimState.involvedPartyName }}
+            </p>
+          </div>
+          <div v-if="claimState.involvedPartyDescription">
+            <p>
+              {{ claimState.involvedPartyDescription }}
+            </p>
+          </div>
+          <label-output v-if="claimState.involvedPartyBirthdate" label="Geboortedatum" :text="claimState.involvedPartyBirthdate" />
         </div>
       </div>
 
       <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-5" v-if="claimState.officialReportDescription">
         <strong>Werd er een vastelling gedaan door een verbaliserende autoriteit?</strong>
-        <div>
-          <label-output v-if="claimState.officialReportDescription" class="mt-1" :text="claimState.officialReportDescription" />
-          <label-output v-if="claimState.pvNumber" class="mt-1" label="Nummer van proces-verbaal" :text="claimState.pvNumber" />
+        <div v-if="claimState.officialReportDescription">
+          <p>
+            {{ claimState.officialReportDescription }}
+          </p>
+        </div>
+        <div v-if="claimState.pvNumber">
+          <p>
+            {{ claimState.pvNumber }}
+          </p>
         </div>
       </div>
 
       <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-5" v-if="claimState.witnessName">
         <strong>Waren er getuigen van het ongeval?</strong>
-        <div>
-          <label-output v-if="claimState.witnessName" class="mt-1" :text="claimState.witnessName" />
+        <div v-if="claimState.witnessName">
+          <p>
+            {{ claimState.witnessName }}
+          </p>
         </div>
-        <div>
-          <label-output v-if="claimState.witnessDescription" class="mt-1" :text="claimState.witnessDescription" />
+        <div v-if="claimState.witnessDescription">
+          <p>
+            {{ claimState.witnessDescription }}
+          </p>
         </div>
       </div>
 
       <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-5" v-if="claimState.leadershipDescription">
         <strong>Hield iemand van de leiding toezicht op het moment dat het ongeval plaatsvond?</strong>
-        <div>
-          <label-output v-if="claimState.leadershipDescription" class="mt-1" :text="claimState.leadershipDescription" />
+        <div v-if="claimState.leadershipDescription">
+          <p>
+            {{ claimState.leadershipDescription }}
+          </p>
         </div>
       </div>
     </div>
