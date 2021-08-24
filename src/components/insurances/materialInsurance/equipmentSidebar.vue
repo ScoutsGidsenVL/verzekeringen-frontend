@@ -84,7 +84,7 @@
             </div>
 
             <div class="mt-3 z-30">
-              <strong class="cursor-pointer text-lightGreen" @click="openNonMemberSideBar()"> Een niet-lid (derde) </strong>
+              <strong class="cursor-pointer text-lightGreen" @click="openNonMemberSideBar()"> Een niet-lid (gehuurd of geleend materiaal) </strong>
               <non-member-side-bar
                 isOverflowHidden="false"
                 v-model:side-bar-state="nonMemberSideBarState"

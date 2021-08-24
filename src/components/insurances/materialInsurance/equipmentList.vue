@@ -4,8 +4,8 @@
       <equipment-item :equipment="material">
         <template #top>
           <div>
-            <div v-if="material.ownerMember"><i>(Equipment van lid)</i></div>
-            <div v-if="material.ownerNonMember"><i>(Equipment van niet-lid)</i></div>
+            <div v-if="material.ownerMember"><i>(Persoonlijk materiaal)</i></div>
+            <div v-if="material.ownerNonMember"><i>(Gehuurd of geleend materiaal)</i></div>
             <div v-if="!material.ownerNonMember && !material.ownerMember"><i>(Groepsmateriaal)</i></div>
           </div>
         </template>
