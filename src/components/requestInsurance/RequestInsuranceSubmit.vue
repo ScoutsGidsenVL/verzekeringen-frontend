@@ -20,7 +20,7 @@
     </call-to-action>
 
     <div class="flex gap-3 md:ml-20 mt-5">
-      <back-button :backToState="HolderStates.TYPE" />
+      <back-button stateName="setHolderState" :backToState="HolderStates.TYPE" />
     </div>
   </form>
 </template>

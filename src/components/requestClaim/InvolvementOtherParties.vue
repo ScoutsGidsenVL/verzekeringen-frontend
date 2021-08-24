@@ -40,6 +40,7 @@
     </div>
 
     <div class="flex gap-3 mt-5 items-center">
+      <back-button stateName="setClaimHolderState" :backToState="ClaimHolderStates.TWO" />
       <custom-button text="Volgende" />
     </div>
   </form>
@@ -47,11 +48,13 @@
 
 <script lang="ts">
 import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRepository'
+import DisplayContentCheckBox from '@/components/semantic/displayContentCheckbox.vue'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
 import CustomHeadline3 from '@/components/customHeadlines/CustomHeadline3.vue'
-
 import { scrollToFirstError, useScrollToTop } from '@/veeValidate/helpers'
+import BackButton from '@/components/semantic/BackButton.vue'
 import { ClaimHolderStates } from '@/enums/ClaimholderStates'
+import CustomInput from '@/components/inputs/CustomInput.vue'
 import CustomButton from '@/components/CustomButton.vue'
 import { defineComponent, computed, ref } from 'vue'
 import { Claim } from '@/serializer/claims/claim'
@@ -59,17 +62,16 @@ import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-import DisplayContentCheckBox from '@/components/semantic/displayContentCheckbox.vue'
-import CustomInput from '@/components/inputs/CustomInput.vue'
 
 export default defineComponent({
   name: 'AccidentDetails',
   components: {
+    'display-content-checkbox': DisplayContentCheckBox,
     'custom-headline-2': CustomHeadline2,
     'custom-headline-3': CustomHeadline3,
     'custom-button': CustomButton,
-    'display-content-checkbox': DisplayContentCheckBox,
     'custom-input': CustomInput,
+    'back-button': BackButton,
   },
   setup() {
     const { scrollToTopOfPage } = useScrollToTop()
@@ -107,6 +109,7 @@ export default defineComponent({
 
     return {
       BelgianCitySearchRepository,
+      ClaimHolderStates,
       isSubmitting,
       InputTypes,
       claimState,

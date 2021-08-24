@@ -28,7 +28,7 @@
       </div>
 
       <div class="flex gap-3 md:ml-20 mt-5 items-center">
-        <back-button :backToState="HolderStates.GENERAL" />
+        <back-button stateName="setHolderState" :backToState="HolderStates.GENERAL" />
         <custom-button text="Volgende" />
         <a v-if="!isEdit" class="link-inline cursor-pointer" @click="saveAsDraft()">Opslaan</a>
         <loader :is-loading="isSavingDraft" />

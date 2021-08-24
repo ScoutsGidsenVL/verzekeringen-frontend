@@ -59,7 +59,7 @@
         <label-output :text="claimState.victim.email" />
         <label-output class="mt-1" label="Geboortedatum" :text="claimState.victim.birthDate" />
         <label-output class="mt-1" label="Geslacht" :text="claimState.victim.sex" />
-        <label-output v-if="claimState.victim.groupAdminId" label="Lidnummer" :text="claimState.victim.groupAdminId" />
+        <label-output v-if="claimState.victim.membershipNumber" label="Lidnummer" :text="claimState.victim.membershipNumber" />
         <label-output v-if="claimState.bankAccount" label="Bankrekeningnummer" :text="claimState.bankAccount" />
       </div>
     </div>
@@ -157,6 +157,7 @@
     </div>
 
     <div v-show="!isEdit" class="flex gap-3 mt-5 items-center">
+      <back-button stateName="setClaimHolderState" :backToState="ClaimHolderStates.THREE" />
       <custom-button text="Verstuur je aanvraag" />
     </div>
   </form>
@@ -167,11 +168,14 @@ import ResponsibleMemberDetail from '@/components/semantic/detail/ResponsibleMem
 import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRepository'
 import { scrollToFirstError, useScrollToTop } from '@/veeValidate/helpers'
 import { ClaimRepository } from '@/repositories/claims/claimRepository'
+import NavigationArrow from '@/components/semantic/NavigationArrow.vue'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import LabelOutput from '@/components/semantic/LabelOutput.vue'
 import { ClaimHolderStates } from '@/enums/ClaimholderStates'
 import CustomInput from '@/components/inputs/CustomInput.vue'
+import BackButton from '@/components/semantic/BackButton.vue'
+import FileRepository from '@/repositories/fileRepository'
 import CustomButton from '@/components/CustomButton.vue'
 import { ActivityTypes } from '@/enums/activityTypes'
 import { defineComponent, computed, ref } from 'vue'
@@ -180,20 +184,19 @@ import { DamageTypes } from '@/enums/damageTypes'
 import { InputTypes } from '@/enums/inputTypes'
 import { useForm } from 'vee-validate'
 import { useRoute } from 'vue-router'
+import { saveAs } from 'file-saver'
 import { useStore } from 'vuex'
 import moment from 'moment'
-import { saveAs } from 'file-saver'
-import FileRepository from '@/repositories/fileRepository'
-import NavigationArrow from '@/components/semantic/NavigationArrow.vue'
 
 export default defineComponent({
   name: 'ClaimDetail',
   components: {
+    'responsible-member-detail': ResponsibleMemberDetail,
+    'navigation-arrow': NavigationArrow,
     'custom-button': CustomButton,
     'label-output': LabelOutput,
-    'responsible-member-detail': ResponsibleMemberDetail,
     'custom-input': CustomInput,
-    'navigation-arrow': NavigationArrow,
+    'back-button': BackButton,
   },
   props: {
     isDetailPage: {
@@ -278,6 +281,7 @@ export default defineComponent({
 
     return {
       BelgianCitySearchRepository,
+      ClaimHolderStates,
       ActivityTypes,
       isSubmitting,
       DamageTypes,
@@ -285,9 +289,9 @@ export default defineComponent({
       claimState,
       onSubmit,
       userData,
+      saveFile,
       isEdit,
       values,
-      saveFile,
     }
   },
 })

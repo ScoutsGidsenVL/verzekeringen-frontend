@@ -105,6 +105,7 @@
     </div>
 
     <div class="flex gap-3 mt-5 items-center">
+      <back-button stateName="setClaimHolderState" :backToState="ClaimHolderStates.ONE" />
       <custom-button text="Volgende" />
     </div>
   </form>
@@ -114,17 +115,18 @@
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
 import { scrollToFirstError, useScrollToTop } from '@/veeValidate/helpers'
 import { ClaimHolderStates } from '@/enums/ClaimholderStates'
-import CustomButton from '@/components/CustomButton.vue'
+import CustomInput from '@/components/inputs/CustomInput.vue'
+import BackButton from '@/components/semantic/BackButton.vue'
 import { defineComponent, computed, ref, watch } from 'vue'
-import { Claim } from '@/serializer/claims/claim'
-import { InputTypes } from '@/enums/inputTypes'
+import Required from '@/components/semantic/Required.vue'
+import CustomButton from '@/components/CustomButton.vue'
+import { ActivityTypes } from '@/enums/activityTypes'
 import { useForm, ErrorMessage } from 'vee-validate'
+import { Claim } from '@/serializer/claims/claim'
+import { DamageTypes } from '@/enums/damageTypes'
+import { InputTypes } from '@/enums/inputTypes'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-import CustomInput from '@/components/inputs/CustomInput.vue'
-import { ActivityTypes } from '@/enums/activityTypes'
-import { DamageTypes } from '@/enums/damageTypes'
-import Required from '@/components/semantic/Required.vue'
 
 export default defineComponent({
   name: 'AccidentDetails',
@@ -132,6 +134,7 @@ export default defineComponent({
     'custom-headline-2': CustomHeadline2,
     'custom-button': CustomButton,
     'custom-input': CustomInput,
+    'back-button': BackButton,
     ErrorMessage,
     Required,
   },
@@ -198,16 +201,17 @@ export default defineComponent({
       }
     )
     return {
+      selectedActivityType,
+      ClaimHolderStates,
+      ActivityTypes,
       isSubmitting,
+      DamageTypes,
       InputTypes,
       claimState,
       onSubmit,
+      isDamage,
       isEdit,
       values,
-      ActivityTypes,
-      selectedActivityType,
-      isDamage,
-      DamageTypes,
     }
   },
 })
