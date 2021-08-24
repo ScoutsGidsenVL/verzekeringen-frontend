@@ -44,7 +44,7 @@
 
         <div v-if="equipment.totalValue">
           <strong>Nieuwwaarde</strong>
-          {{ equipment.totalValue }}
+          €{{ equipment.totalValue }}
         </div>
       </div>
     </div>
