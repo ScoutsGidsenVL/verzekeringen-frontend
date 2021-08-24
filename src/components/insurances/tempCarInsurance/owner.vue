@@ -2,10 +2,14 @@
   <div>
     <label-output :bold="true" v-if="owner.companyName" label="Firma naam" :text="owner.companyName" />
     <strong v-if="owner.firstName">{{ owner.firstName + ' ' + owner.lastName }}</strong>
-    <p>{{ owner.street + ' ' + owner.number + (owner.letterBox ? ' Bus ' + owner.letterBox : '') + ', ' + owner.postCodeCity.postalCode + ' ' + owner.postCodeCity.city }}</p>
+    <div>
+      <p>{{ owner.street + ' ' + owner.number + (owner.letterBox ? ' Bus ' + owner.letterBox : '') + ', ' + owner.postCodeCity.postalCode + ' ' + owner.postCodeCity.city }}</p>
+    </div>
     <phone-number :phoneNumber="owner.phoneNumber" />
 
-    <label-output v-if="!owner.companyName" :text="owner.birthDate" />
+    <div>
+      <p v-if="!owner.companyName">{{ owner.birthDate }}</p>
+    </div>
   </div>
 </template>
 

@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="mt-3">
     <strong>{{ label }}</strong>
     <div :class="textWidth">
-      <p v-if="!bold" class="mt-2">{{ text }}</p>
-      <strong v-if="bold" class="mt-2">{{ text }}</strong>
+      <p v-if="!bold">{{ text }}</p>
+      <strong v-if="bold">{{ text }}</strong>
     </div>
   </div>
 </template>

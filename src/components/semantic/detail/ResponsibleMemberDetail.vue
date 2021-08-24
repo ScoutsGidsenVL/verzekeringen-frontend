@@ -1,10 +1,17 @@
 <template>
   <p class="font-semibold">{{ title }}</p>
   <div :class="title === 'Aanvrager' ? 'md:ml-20 xs:ml-5 sm:ml-5' : ''">
-    <p>{{ responsibleMember.firstName + ' ' + (responsibleMember.lastName ? responsibleMember.lastName : '') }}</p>
-    <p>{{ responsibleMember.email }}</p>
+    <div>
+      <p>{{ responsibleMember.firstName + ' ' + (responsibleMember.lastName ? responsibleMember.lastName : '') }}</p>
+    </div>
+
+    <div>
+      <p>{{ responsibleMember.email }}</p>
+    </div>
+
     <phone-number :phoneNumber="responsibleMember.phoneNumber" />
-    <label-output v-if="responsibleMember.membershipNumber" label="Lidnummer" :text="responsibleMember.membershipNumber" />
+
+    <label-output class="mt-3" v-if="responsibleMember.membershipNumber" label="Lidnummer" :text="responsibleMember.membershipNumber" />
   </div>
 </template>
 

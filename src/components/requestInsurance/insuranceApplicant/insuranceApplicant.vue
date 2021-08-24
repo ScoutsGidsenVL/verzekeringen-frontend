@@ -1,8 +1,13 @@
 <template>
-  <p>{{ user.firstName + ' ' + (user.lastName ? user.lastName : '') }}</p>
-  <p>{{ user.email }}</p>
-  <phone-number :phoneNumber="user.phoneNumber" />
+  <div>
+    <p>{{ user.firstName + ' ' + (user.lastName ? user.lastName : '') }}</p>
+  </div>
 
+  <div>
+    <p>{{ user.email }}</p>
+  </div>
+
+  <phone-number :phoneNumber="user.phoneNumber" />
   <label-output label="Lidnummer" :text="user.membershipNumber" />
 </template>
 

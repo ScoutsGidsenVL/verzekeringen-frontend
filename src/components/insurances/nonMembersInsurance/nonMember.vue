@@ -47,7 +47,9 @@
       </div>
     </div>
 
-    <select-non-member id="nonMembers" :is-extra-information-comment="true" rules="required" />
+    <div class="md:ml-20 xs:ml-5 sm:ml-5">
+      <select-non-member id="nonMembers" :is-extra-information-comment="true" rules="required" />
+    </div>
 
     <div>
       <custom-headline-2 text="Opmerkingen" />
