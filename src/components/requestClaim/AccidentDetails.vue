@@ -41,13 +41,13 @@
               :name="ActivityTypes.IRREGULAR_LOCATION"
               :value="ActivityTypes.IRREGULAR_LOCATION"
             />
-            <label :for="ActivityTypes.IRREGULAR_LOCATION" class="ml-2">Verplaatsing van of naar activiteit</label>
+            <label :for="ActivityTypes.IRREGULAR_LOCATION" class="ml-2">Tijdens een activiteit op verplaatsing</label>
           </div>
           <!-- OPTION 3 -->
           <div>
             <div>
               <input :id="ActivityTypes.TRANSPORT" v-model="selectedActivityType" class="cursor-pointer" type="radio" :name="ActivityTypes.TRANSPORT" :value="ActivityTypes.TRANSPORT" />
-              <label :for="ActivityTypes.TRANSPORT" class="ml-2">Tijdens een activiteit op verplaatsing</label>
+              <label :for="ActivityTypes.TRANSPORT" class="ml-2">Verplaatsing van of naar activiteit</label>
               <label class="invisible">
                 <!-- somehow without this code it wont work? -->
                 {{ selectedActivityType }}
