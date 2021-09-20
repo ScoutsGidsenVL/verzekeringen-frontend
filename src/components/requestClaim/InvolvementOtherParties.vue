@@ -23,10 +23,10 @@
 
           <display-content-checkbox text="Waren er getuigen van het ongeval?">
             <div class="md:w-96 xs:w-72">
-              <custom-input :type="InputTypes.TEXT" name="witnessName" label="Naam" />
+              <custom-input :type="InputTypes.TEXT" name="witnessName" label="Naam (Namen)" />
             </div>
             <div class="md:w-96 xs:w-72">
-              <custom-input :type="InputTypes.TEXT" name="witnessDescription" label="Adres" />
+              <custom-input :type="InputTypes.TEXT" name="witnessDescription" label="Adres (Adressen)" />
             </div>
           </display-content-checkbox>
 
