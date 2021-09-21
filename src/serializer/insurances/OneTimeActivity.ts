@@ -36,7 +36,7 @@ export const oneTimeActivityDeserializer = (input: any): OneTimeActivity => {
     nature: input.nature ? input.nature : undefined,
     responsibleMember: input.responsible_member ? ResponsibleMemberDeserializer(input.responsible_member) : undefined,
     status: input.status ? StatusDeserializer(input.status) : undefined,
-    totalCost: input.total_cost ? input.total_cost : undefined,
+    totalCost: input.total_cost ? input.total_cost.replace(".", ",") : undefined,
     type: input.type ? TypeDeserializer(input.type) : undefined,
     vvksComment: input.vvks_comment && input.vvks_comment.length > 0 ? input.vvks_comment : '',
   }

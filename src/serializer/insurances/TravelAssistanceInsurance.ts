@@ -33,7 +33,7 @@ export const TravelAssistanceInsuranceDeserializer = (input: any): TravelAssista
     vehicle: input.vehicle && input.vehicle.license_plate ? VehicleDeserializer(input.vehicle) : undefined,
     participants: input.participants ? input.participants.map((member: any) => MemberDeserializer(member)) : undefined,
     responsibleMember: input.responsible_member ? ResponsibleMemberDeserializer(input.responsible_member) : undefined,
-    totalCost: input.total_cost ? input.total_cost : undefined,
+    totalCost: input.total_cost ? input.total_cost.replace(".", ",") : undefined,
     vvksComment: input.vvks_comment && input.vvks_comment.length > 0 ? input.vvks_comment : '',
   }
 

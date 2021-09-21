@@ -39,7 +39,7 @@ export const TemporaryVehicleDeserializer = (input: any): TemporaryVehicleInsura
     vehicle: input.vehicle && input.vehicle.license_plate ? VehicleDeserializer(input.vehicle) : undefined,
     drivers: input.drivers ? input.drivers.map((member: any) => DriverDeserializer(member)) : undefined,
     owner: input.owner ? OwnerDeserializer(input.owner) : undefined,
-    totalCost: input.total_cost ? input.total_cost : undefined,
+    totalCost: input.total_cost ? input.total_cost.replace(".", ",") : undefined,
     maxCoverage: input.max_coverage ? roundLabel(input.max_coverage) : undefined,
     insuranceOptions: input.insurance_options ? (typeof input.insurance_options[0] === 'object' ? returnArrayWithValues(input.insurance_options) : input.insurance_options) : undefined,
     responsibleMember: input.responsible_member ? ResponsibleMemberDeserializer(input.responsible_member) : undefined,

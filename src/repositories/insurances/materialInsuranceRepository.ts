@@ -21,7 +21,7 @@ export class MaterialInsuranceRepository extends BaseRepository {
 
   getCalculatedCost = (data: MaterialInsurance) => {
     return this.post(this.endpoint + 'equipment/cost/', this.serializer(data)).then((response: any) => {
-      return response.total_cost
+      return response.total_cost.replace(".", ",")
     })
   }
 }

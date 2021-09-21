@@ -90,6 +90,7 @@ export default defineComponent({
         .getById(route.params.id.toString())
         .then((result: any) => {
           details.value = result
+          details.value.totalCost = details.value.totalCost.replace(".", ",") 
         })
       titelText.value = '<p style="font-size: 30px">Overzicht aangevraagde verzekering <strong class="font-semibold">' + props.title + '</strong></p>'
     }
