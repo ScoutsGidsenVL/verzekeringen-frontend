@@ -1,5 +1,5 @@
 export interface Group {
-  readonly id?: number
+  id?: string
   readonly location?: string
   readonly name?: string
   readonly fullInfo?: string

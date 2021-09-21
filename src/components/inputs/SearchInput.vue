@@ -14,7 +14,7 @@
       class="appearance-none border rounded xs:w-72 md:w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
       @input="search()"
     />
-    <div v-if="loading" style="margin-left: -2em" class="mt-2">
+    <div v-if="loading && query != ''" style="margin-left: -2em" class="mt-2">
       <svg class="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
         <path class="opacity-20" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
       </svg>
@@ -25,7 +25,7 @@
 <script lang="ts">
 import { BaseRepository } from '@/repositories/baseRepository'
 import RepositoryFactory from '@/repositories/repositoryFactory'
-import { defineComponent, PropType, ref } from 'vue'
+import { defineComponent, PropType, ref, watch } from 'vue'
 
 export default defineComponent({
   name: 'SearchInput',
@@ -68,8 +68,9 @@ export default defineComponent({
               context.emit('fetchedOptions', options.value)
             })
         }
-      }, 400)
+      }, 1000)
     }
+
     return {
       options,
       search,

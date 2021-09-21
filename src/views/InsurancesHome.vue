@@ -1,5 +1,6 @@
 <template>
-  <call-to-action link="/aanvraag/verzekering" text="Vraag nieuwe verzekering aan" />
+ <div>
+    <call-to-action link="/aanvraag/verzekering" text="Vraag nieuwe verzekering aan" />
   <div class="container">
     <div v-if="drafts">
       <custom-list :is-draft="true" :items="drafts.results" title="Nog te voltooien" @removeDraft="removeDraft($event)"> </custom-list>
@@ -32,6 +33,7 @@
       </div>
     </div>
   </div>
+ </div>
 </template>
 
 <script lang="ts">
