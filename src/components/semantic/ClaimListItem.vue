@@ -14,7 +14,7 @@
 
     <div>
       <div class="float-right">
-        <router-link :to="'/schade-aangifte-detail/' + item.id">
+        <router-link :to="'/schadeaangifte-detail/' + item.id">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-lightGreen cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" />
           </svg>

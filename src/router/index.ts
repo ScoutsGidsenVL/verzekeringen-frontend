@@ -32,34 +32,34 @@ const routes: any[] = [
     },
   },
   {
-    path: '/home/schade-aangiftes',
+    path: '/home/schadeaangiftes',
     name: 'ClaimsHome',
     component: ClaimsHome,
     meta: {
       requiresOpenIdAuth: true,
-      title: 'Schade-aangiftes',
+      title: 'schadeaangiftes',
       homescreen: '/home',
     },
   },
   {
-    path: '/aanvraag/schade-aangifte',
+    path: '/aanvraag/schadeaangifte',
     name: 'AanvraagSchadeAangifte',
     component: RequestClaim,
     meta: {
       requiresOpenIdAuth: true,
       title: 'Aangifte lichamelijke schade',
-      homescreen: '/home/schade-aangiftes',
+      homescreen: '/home/schadeaangiftes',
     },
   },
   {
-    path: '/schade-aangifte-detail/:id?',
+    path: '/schadeaangifte-detail/:id?',
     name: 'ClaimDetail',
     component: ClaimDetailPage,
     meta: {
       requiresOpenIdAuth: true,
-      title: 'Overzicht schade aangifte',
+      title: 'Overzicht schadeaangifte',
       detail: true,
-      homescreen: '/home/schade-aangiftes',
+      homescreen: '/home/schadeaangiftes',
     },
   },
   {

@@ -3,7 +3,7 @@
     <p class="py-4" style="font-size: 30px">Overzicht</p>
 
     <div v-show="isEdit" class="mt-4">
-      <navigation-arrow to="/home/schade-aangiftes" text="Terug naar overzicht" />
+      <navigation-arrow to="/home/schadeaangiftes" text="Terug naar overzicht" />
     </div>
 
     <div v-if="false">

@@ -6,8 +6,8 @@
         <custom-button text="Verzekeringen" />
       </router-link>
 
-      <router-link :to="'/home/schade-aangiftes'">
-        <custom-button text="Schade aangiftes" />
+      <router-link :to="'/home/schadeaangiftes'">
+        <custom-button text="Schadeaangiftes" />
       </router-link>
     </div>
 

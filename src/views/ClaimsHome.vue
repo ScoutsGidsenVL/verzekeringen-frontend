@@ -1,5 +1,5 @@
 <template>
-  <call-to-action link="/aanvraag/schade-aangifte" text="Start een nieuwe aangifte" />
+  <call-to-action link="/aanvraag/schadeaangifte" text="Start een nieuwe aangifte" />
   <div class="container">
     <claim-list v-if="data && data.results" title="Aangiftes" :items="data.results" />
     <div class="flex gap-5 pt-1 pb-5 float-right">

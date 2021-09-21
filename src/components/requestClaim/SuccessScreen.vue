@@ -1,7 +1,7 @@
 <template>
-  <p class="py-4" style="font-size: 30px"><strong class="font-semibold">schade aangifte</strong> is succesvol aangevraagd!</p>
+  <p class="py-4" style="font-size: 30px"><strong class="font-semibold">schadeaangifte</strong> is succesvol aangevraagd!</p>
   <div class="mt-4 inline-block">
-    <navigation-arrow to="/home/schade-aangiftes" text="Terug naar overzicht" />
+    <navigation-arrow to="/home/schadeaangiftes" text="Terug naar overzicht" />
   </div>
 </template>
 
