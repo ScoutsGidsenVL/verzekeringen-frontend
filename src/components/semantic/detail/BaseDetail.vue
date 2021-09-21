@@ -13,9 +13,9 @@
     </div>
 
     <custom-headline-sticker v-if="details" :text="'Totaalprijs: ' + '&euro; ' + details.totalCost"> </custom-headline-sticker>
-    <div style="margin-top: -4em" class="text-xs mb-5">
-      <i> Dit is een richtprijs. Na nazicht van je aanvraag ontvang je een factuur. Je bent pas verzekerd als die factuur betaald is. </i>
-      <i class="block"> Je vraagt een verzekering aan met onderstaande gegevens. Kijk ze nog eens grondig na en pas aan indien nodig. Bevestig dan je aanvraag onderaan deze pagina. </i>
+    <div style="margin-top: -3em" class="mb-5">
+      Je staat op het punt een verzekering aan te vragen met de volgende gegevens.
+Kijk ze nog eens grondig na en bevestig onderaan.
     </div>
 
     <slot :details="details" :isDetail="isDetail" />
