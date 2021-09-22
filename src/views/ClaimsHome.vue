@@ -4,7 +4,7 @@
     <div class="container">
       <claim-list v-if="data && data.results" title="Aangiftes" :items="data.results">
         <div class="mb-3">
-          <search-input v-model:loading="loading" name="claim" placeholder="Zoek op group, naam" :repository="ClaimRepository" @fetchedOptions="fetchedOptions($event)" />
+          <search-input v-model:loading="loading" name="claim" placeholder="Zoek op group, naam, jaar ongeval" :repository="ClaimRepository" @fetchedOptions="fetchedOptions($event)" />
         </div>
       </claim-list>
       <div class="flex gap-5 pt-1 pb-5 float-right">
