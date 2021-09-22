@@ -22,8 +22,8 @@ export class ClaimRepository extends BaseRepository {
     })
   }
 
-  search(query: string): Promise<any> {
-    return this.get(this.endpoint + '?search=' + query + '&page=1&page_size=10', {}).then((response: ArrayResult) => {
+  search(query: string, year: string): Promise<any> {
+    return this.get(this.endpoint + '?search=' + query + '&year=' + year  + '&page=1&page_size=10', {}).then((response: ArrayResult) => {
       const array: any[] = []
       response.results.forEach((result: any) => {
         array.push(this.deserializer(result))

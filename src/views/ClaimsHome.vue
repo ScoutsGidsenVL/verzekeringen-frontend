@@ -3,9 +3,9 @@
     <call-to-action link="/aanvraag/schadeaangifte" text="Start een nieuwe aangifte" />
     <div class="container">
       <claim-list v-if="data && data.results" title="Aangiftes" :items="data.results">
-        <div class="mb-3">
-          <search-input v-model:loading="loading" name="claim" placeholder="Zoek op group, naam, jaar ongeval" :repository="ClaimRepository" @fetchedOptions="fetchedOptions($event)" />
-        </div>
+          <div class="mb-3">
+            <search-input-claims v-model:loading="loading" name="claim" placeholder="Zoek op naam" :repository="ClaimRepository" @fetchedOptions="fetchedOptions($event)" />
+          </div>
       </claim-list>
       <div class="flex gap-5 pt-1 pb-5 float-right">
         <a v-if="data.previous && !isLoading" class="link-inline cursor-pointer" @click="getPreviousClaims(data.previous)">Vorige pagina</a>
@@ -28,7 +28,7 @@ import { useStore } from 'vuex'
 import { Group } from '@/serializer/Group'
 // import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
-import SearchInput from '@/components/inputs/SearchInput.vue'
+import SearchInputClaims from '@/components/inputs/SearchInputClaims.vue'
 
 export default defineComponent({
   name: 'ClaimsHome',
@@ -37,7 +37,7 @@ export default defineComponent({
     'claim-list': ClaimList,
     loader: Loader,
     // 'multi-select': MultiSelect,
-    'search-input': SearchInput,
+    'search-input-claims': SearchInputClaims,
   },
   setup() {
     const loading = ref<boolean>(false)
