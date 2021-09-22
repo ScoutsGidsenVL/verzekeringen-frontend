@@ -4,7 +4,7 @@
       <custom-headline-2 text="Gegevens van het ongeval" />
 
       <div style="width: 470px">
-        <custom-input class="xs:w-72 md:w-100" :type="InputTypes.DATE" rules="required" name="dateOfAccident" label="Datum ongeval" />
+        <custom-input :max="maxDate" class="xs:w-72 md:w-100" :type="InputTypes.DATE" rules="required" name="dateOfAccident" label="Datum ongeval" />
         <custom-input
           :textAreaWidth="'xs:w-72 md:w-100 md:min-w-full h-11'"
           class="mt-3"
@@ -71,12 +71,6 @@
 
           <div>
             <div class="flex gap-5">
-              <!-- <div>
-                <input :id="'isDamage'" v-model="isDamage" class="cursor-pointer" type="checkbox" :name="'isDamage'" :value="true" />
-                <label :for="'isDamage'" class="ml-1">Bril-/materiële schade</label>
-              </div> -->
-
-              <!-- <custom-input class="mt-3 w-96" :type="InputTypes.TEXT" name="something" /> -->
             </div>
             <div>
               <custom-input placeholder="Welk hulpmiddel?" class="xs:w-72 md:w-72" :type="InputTypes.TEXT" name="damage" />
@@ -127,6 +121,7 @@ import { DamageTypes } from '@/enums/damageTypes'
 import { InputTypes } from '@/enums/inputTypes'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
+import moment from 'moment'
 
 export default defineComponent({
   name: 'AccidentDetails',
@@ -139,6 +134,7 @@ export default defineComponent({
     Required,
   },
   setup() {
+    const maxDate = moment().format('YYYY-MM-DD')
     const { scrollToTopOfPage } = useScrollToTop()
     const route = useRoute()
     const store = useStore()
@@ -212,6 +208,7 @@ export default defineComponent({
       isDamage,
       isEdit,
       values,
+      maxDate
     }
   },
 })

@@ -22,6 +22,7 @@
         v-model="inputValue"
         class="bg-lightGray p-2 min-w-0 w-100"
         :min="min"
+        :max="max"
         :type="type"
         step="1"
         :maxlength="maxlength"
@@ -100,6 +101,11 @@ export default defineComponent({
       default: false,
     },
     min: {
+      type: String,
+      required: false,
+      default: '',
+    },
+    max: {
       type: String,
       required: false,
       default: '',
