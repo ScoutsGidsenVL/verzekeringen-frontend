@@ -13,9 +13,8 @@
     </div>
 
     <custom-headline-sticker v-if="details" :text="'Totaalprijs: ' + '&euro; ' + details.totalCost"> </custom-headline-sticker>
-    <div style="margin-top: -3em" class="mb-5">
-      Je staat op het punt een verzekering aan te vragen met de volgende gegevens.
-Kijk ze nog eens grondig na en bevestig onderaan.
+    <div v-if="holderState === HolderStates.DETAIL" style="margin-top: -3em" class="mb-5">
+      Je staat op het punt een verzekering aan te vragen met de volgende gegevens. Kijk ze nog eens grondig na en bevestig onderaan.
     </div>
 
     <slot :details="details" :isDetail="isDetail" />
@@ -93,6 +92,9 @@ export default defineComponent({
           details.value.totalCost = details.value.totalCost.replace(".", ",") 
         })
       titelText.value = '<p style="font-size: 30px">Overzicht aangevraagde verzekering <strong class="font-semibold">' + props.title + '</strong></p>'
+      if (props.title === 'Tijdelijke') {
+        titelText.value = '<p style="font-size: 30px">Overzicht aangevraagde verzekering <strong class="font-semibold">' + props.title + ' autoverzekering </strong></p>'
+      }
     }
 
     if (holderState.value === HolderStates.COMPLETED) {
