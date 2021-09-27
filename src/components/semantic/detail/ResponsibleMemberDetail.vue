@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="font-semibold">{{ title }}</p>
+    <p class="font-semibold mb-0">{{ title }}</p>
   </div>
   <div :class="title === 'Aanvrager' ? 'md:ml-20 xs:ml-5 sm:ml-5' : ''">
     <div>
@@ -13,7 +13,7 @@
 
     <phone-number :phoneNumber="responsibleMember.phoneNumber" />
 
-    <label-output class="mt-3" v-if="responsibleMember.membershipNumber" label="Lidnummer" :text="responsibleMember.membershipNumber" />
+    <label-output v-if="responsibleMember.membershipNumber" label="Lidnummer" :text="responsibleMember.membershipNumber" />
   </div>
 </template>
 

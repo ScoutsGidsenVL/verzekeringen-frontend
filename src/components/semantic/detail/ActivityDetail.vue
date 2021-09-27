@@ -1,5 +1,5 @@
 <template>
-  <p class="font-semibold">Activiteit</p>
+  <p class="font-semibold mb-0">Activiteit</p>
   <div class="md:ml-20 xs:ml-5 sm:ml-5">
     <label-output v-if="nature" label="Aard van activiteit" :text="nature" />
     <label-output v-if="country" label="Land" :text="country" />

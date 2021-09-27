@@ -4,7 +4,7 @@
       <div v-if="details" class="mt-1">
         <div v-if="!(holderState === HolderStates.DETAIL)">
           <div v-if="details.comment">
-            <p class="font-semibold">Opmerkingen</p>
+            <p class="font-semibold mb-0">Opmerkingen</p>
             <div class="md:ml-20 xs:ml-5 sm:ml-5">
               <label-output :text="details.comment" />
             </div>
@@ -16,7 +16,7 @@
         <responsible-member-detail :responsible-member="details.responsibleMember" />
 
         <div>
-          <p class="font-semibold">Datum</p>
+          <p class="font-semibold mb-0">Datum</p>
           <div class="md:ml-20 xs:ml-5 sm:ml-5">
             <label-output label="Periode" :text="formatDate(details.startDate, details.endDate)" />
           </div>
@@ -25,8 +25,8 @@
         <activity-detail :nature="details.nature" :location="details.postCodeCity" :country="details.country ? details.country.name : undefined" />
 
         <div class="mb-3">
-          <p class="font-semibold">Deelnemers</p>
-          <div class="md:ml-20 xs:ml-5 sm:ml-5 mt-3">
+          <p class="font-semibold mb-0">Deelnemers</p>
+          <div class="md:ml-20 xs:ml-5 sm:ml-5">
             <non-members-list :non-members-list="details.nonMembers" />
           </div>
         </div>

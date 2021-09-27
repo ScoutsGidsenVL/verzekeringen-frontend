@@ -3,7 +3,7 @@
     <template #default="{ details }">
       <div v-if="details" class="mt-1">
         <div v-if="!(holderState === HolderStates.DETAIL) && details.comment">
-          <p class="font-semibold">Opmerkingen</p>
+          <p class="font-semibold mb-0">Opmerkingen</p>
           <div class="md:ml-20 xs:ml-5 sm:ml-5">
             <label-output :text="details.comment" />
           </div>
@@ -14,7 +14,7 @@
         <responsible-member-detail :responsible-member="details.responsibleMember" />
 
         <div>
-          <p class="font-semibold">Datum</p>
+          <p class="font-semibold mb-0">Datum</p>
           <div class="md:ml-20 xs:ml-5 sm:ml-5">
             <label-output label="Periode" :text="formatDate(details.startDate, details.endDate)" />
           </div>
@@ -26,8 +26,8 @@
           :country="details.postCodeCity && details.postCodeCity.city ? 'België' : details.country ? details.country.name : undefined"
         />
 
-        <p class="font-semibold">Materiaal</p>
-        <div class="md:ml-20 xs:ml-5 sm:ml-5 py-4">
+        <p class="font-semibold mb-0">Materiaal</p>
+        <div class="md:ml-20 xs:ml-5 sm:ml-5">
           <equipment-list :equipment-list="details.equipment" />
         </div>
       </div>

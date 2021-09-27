@@ -4,7 +4,7 @@
       <div v-if="details" class="mt-1">
         <div v-if="!(holderState === HolderStates.DETAIL)">
           <div v-if="details.comment">
-            <p class="font-semibold">Opmerkingen</p>
+            <p class="font-semibold mb-0">Opmerkingen</p>
             <div class="md:ml-20 xs:ml-5 sm:ml-5">
               <label-output :text="details.comment" />
             </div>
@@ -16,20 +16,20 @@
         <responsible-member-detail :responsible-member="details.responsibleMember" />
 
         <div>
-          <p class="font-semibold">Datum</p>
+          <p class="font-semibold mb-0">Datum</p>
           <div class="md:ml-20 xs:ml-5 sm:ml-5">
             <label-output label="Periode" :text="formatDate(details.startDate, details.endDate)" />
           </div>
         </div>
 
         <div>
-          <p class="font-semibold">Gekozen verzekering</p>
-          <div class="md:ml-20 xs:ml-5 sm:ml-5 py-3">
-            <div v-if="details.insuranceOptions.includes(1)" class="mb-3">
+          <p class="font-semibold mb-0">Gekozen verzekering</p>
+          <div class="md:ml-20 xs:ml-5 sm:ml-5">
+            <div v-if="details.insuranceOptions.includes(1)">
               <p>Optie 1: Omniumverzekering.</p>
             </div>
 
-            <div v-if="details.insuranceOptions.includes(2)" class="mb-3">
+            <div v-if="details.insuranceOptions.includes(2)">
               <p>Optie 2: Vrijstelling van eigen omnium dekken tot XXX EUR.</p>
               <p>{{ details.maxCoverage.label }}</p>
             </div>
@@ -40,23 +40,23 @@
           </div>
         </div>
 
-        <div class="mb-3">
-          <p class="font-semibold">Bestuurders</p>
-          <div class="md:ml-20 xs:ml-5 sm:ml-5 mt-3">
+        <div>
+          <p class="font-semibold mb-0">Bestuurders</p>
+          <div class="md:ml-20 xs:ml-5 sm:ml-5">
             <member-list :members-list="details.drivers" />
           </div>
         </div>
 
         <div class="mb-3">
-          <p class="font-semibold">Eigenaar</p>
+          <p class="font-semibold mb-0">Eigenaar</p>
           <div class="md:ml-20 xs:ml-5 sm:ml-5">
             <owner :owner="details.owner" />
           </div>
         </div>
 
         <div v-if="details.vehicle && details.vehicle.licensePlate" class="mb-3">
-          <p class="font-semibold">Voertuig</p>
-          <div class="md:ml-20 xs:ml-5 sm:ml-5 mt-3">
+          <p class="font-semibold mb-0">Voertuig</p>
+          <div class="md:ml-20 xs:ml-5 sm:ml-5">
             <vehicle-item :vehicle="details.vehicle" :no-line="true" />
           </div>
         </div>
