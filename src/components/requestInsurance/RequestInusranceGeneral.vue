@@ -146,8 +146,8 @@
     <div>
       <info-alert>
         <p>
-          Om het e-mailadres of gsm-nummer van de aanvrager te wijzigen <strong><a target="_blank" href="https://groepsadmin.scoutsengidsenvlaanderen.be/">klik hier</a></strong> en vervolgens op
-          Refresh. <custom-button :loadingSubmit="isRefreshing" type="button" class="ml-5 mt-2" text="Refresh" @click="refreshGroups()" />
+          Staat er een fout in je gegevens? Pas ze dan aan <strong><a target="_blank" href="https://groepsadmin.scoutsengidsenvlaanderen.be/">in de Groepsadministratie</a></strong> en klik vervolgens op Herlaad. 
+          <custom-button :loadingSubmit="isRefreshing" type="button" class="ml-2 mt-2" text="Herlaad" @click="refreshGroups()" />
         </p>
       </info-alert>
     </div>
