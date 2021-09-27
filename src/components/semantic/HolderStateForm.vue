@@ -1,26 +1,26 @@
 <template>
   <div v-show="holderState === HolderStates.GENERAL">
-    <request-inusrance-general />
+    <request-insurance-general />
   </div>
 
   <div v-show="holderState === HolderStates.TYPE">
-    <request-inusrance-type />
+    <request-insurance-type />
   </div>
 
   <div v-if="holderState === HolderStates.DETAIL">
-    <request-inusrance-submit />
+    <request-insurance-submit />
   </div>
 
   <div v-if="holderState === HolderStates.COMPLETED">
-    <request-inusrance-detail />
+    <request-insurance-detail />
   </div>
 </template>
 
 <script lang="ts">
-import RequestInusranceGeneral from '@/components/requestInsurance/RequestInusranceGeneral.vue'
-import RequestInusranceDetail from '@/components/requestInsurance/RequestInsuranceDetail.vue'
-import RequestInusranceType from '@/components/requestInsurance/RequestInsuranceType.vue'
-import RequestInusranceSubmit from '@/components/requestInsurance/RequestInsuranceSubmit.vue'
+import RequestInsuranceGeneral from '@/components/requestInsurance/RequestInsuranceGeneral.vue'
+import RequestInsuranceDetail from '@/components/requestInsurance/RequestInsuranceDetail.vue'
+import RequestInsuranceType from '@/components/requestInsurance/RequestInsuranceType.vue'
+import RequestInsuranceSubmit from '@/components/requestInsurance/RequestInsuranceSubmit.vue'
 import { HolderStates } from '@/enums/holderStates'
 import { defineComponent, computed } from 'vue'
 import { useStore } from 'vuex'
@@ -28,10 +28,10 @@ import { useStore } from 'vuex'
 export default defineComponent({
   name: 'HolderStateForm',
   components: {
-    'request-inusrance-general': RequestInusranceGeneral,
-    'request-inusrance-detail': RequestInusranceDetail,
-    'request-inusrance-submit': RequestInusranceSubmit,
-    'request-inusrance-type': RequestInusranceType,
+    'request-insurance-general': RequestInsuranceGeneral,
+    'request-insurance-detail': RequestInsuranceDetail,
+    'request-insurance-submit': RequestInsuranceSubmit,
+    'request-insurance-type': RequestInsuranceType,
   },
   setup() {
     const store = useStore()
