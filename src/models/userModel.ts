@@ -26,7 +26,9 @@ export default class UserModel implements ResponsibleMember {
     // input.scouts_groups.push({ id: 'X1027G', name: 'Personeel Secretariaat', location: ' Borgerhout (Antwerpen)' })
     // input.scouts_groups.push({ id: 'X1123G', name: 'We-Residenten De Winner', location: ' Borgerhout (Antwerpen)' })
     console.log("userModel.deserialize(): SCOUTS_GROUPS -----------------------")
-    console.log(input.scouts_groups)
+    if (input) {
+      console.log(input.scouts_groups)
+    }
     const groups = removeDuplicates(input.scouts_groups)
     return new UserModel(
       input.id,
