@@ -87,7 +87,6 @@ export abstract class BaseRepository extends BaseApiRepository {
   getDraftById(id: string): Promise<any> {
     return this.get('/insurance_drafts/' + id, {}).then((response: any) => {
       const userData = ref<ResponsibleMember>(store.getters.user)
-
       if (userData.value.scoutsGroups) {
         response.data.group = userData.value.scoutsGroups.find((x) => x.id === response.data.group)
         return this.deserializer(response.data)
