@@ -36,7 +36,7 @@ export const MemberDeserializer = (input: any): Member => {
     isChecked: false,
     membershipNumber: input.membership_number ? input.membership_number : undefined,
     isMember: input.is_member ? input.is_member : false,
-    sex: input.gender ? input.gender : undefined, 
+    sex: input.gender === 'M' || input.gender === 'F' ? input.gender : '', 
   }
 
   return single

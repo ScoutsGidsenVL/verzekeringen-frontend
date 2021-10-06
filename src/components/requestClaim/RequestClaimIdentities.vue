@@ -124,7 +124,6 @@
 
               <div class="mt-3 flex gap-4">
                 <custom-input v-show="false" :type="'victim.gender'" rules="required" name="victim.gender" />
-
                 <div>
                   <input :id="'M'" v-model="selectedGender" class="cursor-pointer" type="radio" :name="'M'" :value="'M'" />
                   <label :for="'M'" class="ml-1">M</label>
@@ -269,7 +268,7 @@ export default defineComponent({
           victimMember: values.victim.isMember ? values.victimMember : undefined,
           victimNonMember: !values.victim.isMember ? values.victimMember : undefined,
           file: values.file,
-          sex: values.victim.gender,
+          sex: values.victim.sex,
           victimBirthDate: values.victim.birthDate,
           victimEmail: values.victim.email,
         })
@@ -312,11 +311,13 @@ export default defineComponent({
         values.victim.letterBox = member.letterBox
         values.victim.postCodeCity = member.postCodeCity
         values.victim.birthDate = member.birthDate
+        values.victim.gender = member.sex
         values.victim.email = member.email
         values.victim.membershipNumber = member.membershipNumber
         values.victim.isMember = member.isMember
         values.victim.groupAdminId = member.isMember ? member.groupAdminId : undefined
         values.victim.nonMember = !member.isMember ? member.id : undefined
+        selectedGender.value = member.sex
       }
       isSelectedVictim.value = true
     }
