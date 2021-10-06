@@ -15,8 +15,6 @@ export default class UserModel implements ResponsibleMember {
     public city: string,
     public groupAdminId: string
   ) {
-    console.log("usermodel: SCOUTS_GROUPS -------------------")
-    console.log(scoutsGroups)
     return this
   }
 
@@ -25,11 +23,14 @@ export default class UserModel implements ResponsibleMember {
     // input.scouts_groups.push({ id: 'X1121G', name: 'We-Residenten De Kluis', location: ' Borgerhout (Antwerpen)' })
     // input.scouts_groups.push({ id: 'X1027G', name: 'Personeel Secretariaat', location: ' Borgerhout (Antwerpen)' })
     // input.scouts_groups.push({ id: 'X1123G', name: 'We-Residenten De Winner', location: ' Borgerhout (Antwerpen)' })
-    console.log("userModel.deserialize(): SCOUTS_GROUPS -----------------------")
-    if (input) {
-      console.log(input.scouts_groups)
-    }
-    const groups = removeDuplicates(input.scouts_groups)
+    console.log("SCOUTS GROUPS -----------------------")
+    console.log(input.scouts_groups)
+
+    const mappedGroups = input.scouts_groups.map((group: any) => GroupDeserializer(group))
+
+    console.log("MAPPED SCOUTS GROUPS -----------------------")
+    console.log(mappedGroups)
+
     return new UserModel(
       input.id,
       input.first_name,
@@ -39,7 +40,7 @@ export default class UserModel implements ResponsibleMember {
       input.membership_number,
       input.birth_date,
       input.phone_number ? input.phone_number.replace(/ /g, '') : undefined,
-      orderGroups(groups.map((group: any) => GroupDeserializer(group))),
+      mappedGroups,
       input.postcode_city && input.postcode_city.city ? input.postcode_city.city : undefined,
       input.group_admin_id ? input.group_admin_id : undefined
     )

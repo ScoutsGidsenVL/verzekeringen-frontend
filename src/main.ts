@@ -36,6 +36,8 @@ new StaticFileRepository().getFile('config.json').then((result: any) => {
     })
   }
 
+
+
   store.dispatch('setConfig', configFile)
   router.beforeEach((to: any, from: any, next: any) => {
     if (to.matched.some((record: any) => record.meta.requiresOpenIdAuth)) {
@@ -44,13 +46,12 @@ new StaticFileRepository().getFile('config.json').then((result: any) => {
           ? RepositoryFactory.get(AuthRepository)
               .me()
               .then((user: any) => {
+                console.log('fetched user: ', user)
                 if (user.groupAdminId) {
                   // GET USER BY ID FOR MORE DETAILS
                   RepositoryFactory.get(MemberRepository)
                     .getById(user.groupAdminId)
                     .then((userById) => {
-                      console.log('CHECK: ', userById)
-
                       user.city = userById.postCodeCity.city
                       store.dispatch('setUser', user).then(() => {
                         next()
