@@ -23,7 +23,7 @@
           <div class="mt-4">
             <div class="flex">
               <input id="choice-2" v-model="values.insuranceOptions" class="mr-2" type="checkbox" :value="2" />
-              <label class="custom-label" for="choice-2">Optie 2: Vrijstelling van eigen omnium dekken tot XXX EUR.</label>
+              <label class="custom-label" for="choice-2">Optie 2: Vrijstelling van eigen omnium dekken.</label>
             </div>
 
             <div v-if="values.insuranceOptions.includes(2)" class="md:ml-20 xs:ml-5 sm:ml-5">
