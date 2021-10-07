@@ -281,14 +281,14 @@ export default defineComponent({
     }
 
     const setTotalValueInfo = () => {
-      let text = 'Maximum te verzekeren bedrag per tent 2500 EUR. Vrijstelling 250 EUR'
+      let text = 'Maximum te verzekeren bedrag per persoon 2000 EUR. Vrijstelling 250 EUR'
 
       if (values.ownerMember) {
-        text = 'Maximum te verzekeren bedrag per tent 2500 EUR. Vrijstelling 250 EUR'
+        text = 'Maximum te verzekeren bedrag per persoon 2000 EUR. Vrijstelling 250 EUR'
       }
 
       if (values.ownerNonMember) {
-        text = 'Maximum te verzekeren bedrag per tent 2500 EUR. Vrijstelling 250 EUR'
+        text = 'Maximum te verzekeren bedrag per persoon 2000 EUR. Vrijstelling 250 EUR'
       }
 
       if (isBicycle.value) {
