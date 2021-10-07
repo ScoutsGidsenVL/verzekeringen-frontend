@@ -113,7 +113,10 @@ export const ClaimSerializer = (input: any): any => {
     // isDamage: input.isDamage ? input.isDamage : undefined,
     // damage: input.damage ? input.damage : undefined,
     victim: input.victim ? VictimSerializer(input.victim) : undefined,
+    file: input.file ? input.file : undefined,
   }
+
+  console.log('SINGLE: ', single)
 
   return single
 }
