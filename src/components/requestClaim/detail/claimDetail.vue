@@ -297,18 +297,18 @@ export default defineComponent({
     const postClaim = async () => {
       await RepositoryFactory.get(ClaimRepository)
         .create(claimState.value)
-        .then((res) => {
-          if (claimState.value.file) {
-            console.log('CHECK')
-            RepositoryFactory.get(FileRepository)
-              .uploadFile(claimState.value.file, res.id)
-              .then(() => {
-                store.dispatch('setClaimHolderState', ClaimHolderStates.FIVE)
-              })
-          } else {
-            store.dispatch('setClaimHolderState', ClaimHolderStates.FIVE)
-          }
-        })
+        // .then((res) => {
+        //   if (claimState.value.file) {
+        //     console.log('CHECK')
+        //     RepositoryFactory.get(FileRepository)
+        //       .uploadFile(claimState.value.file, res.id)
+        //       .then(() => {
+        //         store.dispatch('setClaimHolderState', ClaimHolderStates.FIVE)
+        //       })
+        //   } else {
+        //     store.dispatch('setClaimHolderState', ClaimHolderStates.FIVE)
+        //   }
+        // })
     }
 
     scrollToTopOfPage()
