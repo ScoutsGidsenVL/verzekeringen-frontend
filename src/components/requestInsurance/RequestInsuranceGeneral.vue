@@ -64,6 +64,14 @@
       <div v-show="insuranceTypeState === InsuranceTypes.MATERIAAL_VERZEKERING" class="md:ml-20 xs:ml-5 sm:ml-5">
         <tip-general-material-insurance />
       </div>
+
+      <div v-show="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING" class="md:ml-20 xs:ml-5 sm:ml-5">
+        <tip-general-event-insurance />
+      </div>
+
+      <div v-show="insuranceTypeState === InsuranceTypes.EENMALIGE_ACTIVITEIT" class="md:ml-20 xs:ml-5 sm:ml-5">
+        <tip-general-one-time-insurance />
+      </div>
     </div>
 
     <div class="mb-5">
@@ -163,6 +171,8 @@
 <script lang="ts">
 import InsuranceTypeMenu from '@/components/requestInsurance/insuranceTypeMenu/InsuranceTypeMenu.vue'
 import TipGeneralMaterialInsurance from '@/components/tips/tipGeneralMaterialInsurance.vue'
+import TipGeneralEventInsurance from '@/components/tips/tipGeneralEventInsurance.vue'
+import TipGeneralOneTimeInsurance from '@/components/tips/tipGeneralOneTimeInsurance.vue'
 import tipGeneralTravelAssistance from '@/components/tips/tipGeneralTravelAssistance.vue'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
 import InsuranceApplicant from './insuranceApplicant/insuranceApplicant.vue'
@@ -197,6 +207,8 @@ export default defineComponent({
   components: {
     'tip-general-material-insurance': TipGeneralMaterialInsurance,
     'tip-general-travel-assistance': tipGeneralTravelAssistance,
+    'tip-general-event-insurance': TipGeneralEventInsurance,
+    'tip-general-one-time-insurance': TipGeneralOneTimeInsurance,
     'tip-general-non-member': TipGeneralNonMember,
     'insurance-applicant': InsuranceApplicant,
     'insurance-type-menu': InsuranceTypeMenu,

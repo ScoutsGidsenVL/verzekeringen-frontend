@@ -2,11 +2,15 @@
   <div>
     <info-alert>
       <strong>OPGELET! Via deze verzekering kan je geen nieuwe leden verzekeren.</strong>
-      <p>Gelieve dit via de groepsadministratie te doen.</p>
+      <p>
+        Je VGA moet dit via de
+        <a target="_blank" href="https://groepsadmin.scoutsengidsenvlaanderen.be/">groepsadministratie</a>
+        doen.
+      </p>
       <div class="mt-3">
-        <strong>
-          <a target="_blank" href="https://www.scoutsengidsenvlaanderen.be/leiding/ondersteuning/groepsleiding/verzekeringen/tijdelijke-verzekering-niet-leden">Meer info --></a>
-        </strong>
+        <p>
+          Meer info over de <a target="_blank" href="https://www.scoutsengidsenvlaanderen.be/leiding/ondersteuning/groepsleiding/verzekeringen/tijdelijke-verzekering-niet-leden">tijdelijke verzekering niet-leden.</a>
+        </p>
       </div>
     </info-alert>
   </div>
