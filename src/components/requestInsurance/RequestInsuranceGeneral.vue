@@ -235,7 +235,7 @@ export default defineComponent({
         startTime: data.startTime ? data.startTime : '',
         endDate: data.endDate ? data.endDate : '',
         endTime: data.endTime ? data.endTime : '',
-        group: data.group ? data.group : userData.value.scoutsGroups ? userData.value.scoutsGroups[0] : undefined,
+        group: isEdit ? data.group : userData.value.scoutsGroups ? userData.value.scoutsGroups[0] : undefined,
         responsibleMember: data.responsibleMember ? data.responsibleMember : userData.value,
         insuranceOptions: data.insuranceOptions ? data.insuranceOptions : [],
         maxCoverage: data.maxCoverage ? data.maxCoverage : [],
