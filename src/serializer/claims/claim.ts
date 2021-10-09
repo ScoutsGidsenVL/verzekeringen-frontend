@@ -35,6 +35,7 @@ export interface Claim {
   readonly DECLARANT_DATE?: string
   administrationComment?: string
   dossierNumber?: string
+  note?: string,
   readonly attachment?: Attachment
   file?: any
   readonly declarantCity?: String
@@ -70,7 +71,8 @@ export const ClaimDeserializer = (input: any): Claim => {
     leadershipDescription: input.leadership_description ? input.leadership_description : undefined,
     victim: input.victim ? VictimDeserializer(input.victim) : undefined,
     administrationComment: input.administrationComment ? input.administrationComment : undefined,
-    dossierNumber: input.dossierNumber ? input.dossierNumber : undefined,
+    dossierNumber: input.dossierNumber ? input.dossierNumber : 'TEST DOSSIER NUMBER',
+    note: input.note ? input.note : 'TEST NOTE',
     attachment: input.attachment ? AttachmentDeserializer(input.attachment) : undefined,
     declarantCity: input.declarant_city ? input.declarant_city : undefined,
     witnessName: input.witness_name ? input.witness_name : undefined,

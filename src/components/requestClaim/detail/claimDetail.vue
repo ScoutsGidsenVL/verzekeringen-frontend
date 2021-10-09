@@ -6,17 +6,14 @@
       <navigation-arrow to="/home/schadeaangiftes" text="Terug naar overzicht" />
     </div>
 
-    <div>
-      <slot />
-    </div>
-
-    <!-- <div v-if="true">
+    <div v-if="isEdit">
       <p class="font-semibold">Administratie</p>
-      <div class="md:ml-20 xs:ml-5 sm:ml-5">
-        <custom-input class="xs:w-72 md:w-96" :type="InputTypes.TEXT" label="Dossiernummer" name="dossierNumber" />
-        <custom-input class="xs:w-72 md:w-96" :type="InputTypes.TEXT_AREA" label="Administratieve commentaar" name="administrationComment" />
+      <div v-if="claimState.dossierNumber && claimState.note" class="md:ml-20 xs:ml-5 sm:ml-5">
+        <custom-input :value="claimState.dossierNumber" class="xs:w-72 md:w-96" :type="InputTypes.TEXT" label="Dossiernummer" name="dossierNumber" />
+        <custom-input :value="claimState.note" class="xs:w-72 md:w-96" :type="InputTypes.TEXT_AREA" label="Administratieve commentaar" name="note" />
+        <custom-button text="Opslaan" />
       </div>
-    </div> -->
+    </div>
 
     <div class="mt-2">
       <p class="font-semibold">Aangever</p>
@@ -287,14 +284,19 @@ export default defineComponent({
     const onSubmit = async () => {
       await validate().then((validation: any) => scrollToFirstError(validation, 'RequestInsuranceGeneral'))
       handleSubmit(async (values: any) => {
-        const newClaimState = ref<Claim>({
-          declarantCity: values.declarantCity ? values.declarantCity : undefined,
-          DECLARANT_DATE: values.DECLARANT_DATE ? values.DECLARANT_DATE : undefined,
-        })
+        if (!isEdit) {
+          const newClaimState = ref<Claim>({
+            declarantCity: values.declarantCity ? values.declarantCity : undefined,
+            DECLARANT_DATE: values.DECLARANT_DATE ? values.DECLARANT_DATE : undefined,
+          })
 
-        store.dispatch('setClaimState', { ...claimState.value, ...newClaimState.value }).then(async () => {
-          await postClaim()
-        })
+          store.dispatch('setClaimState', { ...claimState.value, ...newClaimState.value }).then(async () => {
+            await postClaim()
+          })
+        } else {
+          console.log('PATCHHHHH')
+          console.log('values: ', values)
+        }
       })()
     }
 
