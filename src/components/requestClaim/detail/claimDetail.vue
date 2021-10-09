@@ -6,27 +6,31 @@
       <navigation-arrow to="/home/schadeaangiftes" text="Terug naar overzicht" />
     </div>
 
-    <div v-if="false">
+    <div>
+      <slot />
+    </div>
+
+    <!-- <div v-if="true">
       <p class="font-semibold">Administratie</p>
       <div class="md:ml-20 xs:ml-5 sm:ml-5">
         <custom-input class="xs:w-72 md:w-96" :type="InputTypes.TEXT" label="Dossiernummer" name="dossierNumber" />
         <custom-input class="xs:w-72 md:w-96" :type="InputTypes.TEXT_AREA" label="Administratieve commentaar" name="administrationComment" />
       </div>
-    </div>
+    </div> -->
 
-    <div class="mt-5">
+    <div class="mt-2">
       <p class="font-semibold">Aangever</p>
 
       <div class="md:ml-20 xs:ml-5 sm:ml-5">
-        <label-output v-if="claimState.group" label="Groep" :text="claimState.group.name + ' - ' + claimState.group.id" />
+        <label-output v-if="claimState.group" label="" :text="claimState.group.name + ' - ' + claimState.group.id" />
 
-        <div v-if="claimState.declarant" class="mt-3">
-          <responsible-member-detail title="Groepleidster" :responsible-member="claimState.declarant" />
+        <div v-if="claimState.declarant" >
+          <responsible-member-detail title="" :responsible-member="claimState.declarant" />
         </div>
       </div>
     </div>
 
-    <div v-if="claimState.file" class="mt-5">
+    <div v-if="claimState.file" class="mt-2">
       <p class="font-semibold">Bijlage</p>
 
       <div class="md:ml-20 xs:ml-5 sm:ml-5">
@@ -36,7 +40,7 @@
       </div>
     </div>
 
-    <div class="mt-5">
+    <div class="mt-2">
       <p class="font-semibold">Slachtoffer</p>
       <div v-if="claimState.victim" class="md:ml-20 xs:ml-5 sm:ml-5">
         <div>
@@ -78,7 +82,7 @@
       </div>
     </div>
 
-    <div class="mt-5">
+    <div class="mt-2">
       <p class="font-semibold">Gegevens van het ongeval</p>
       <div class="md:ml-20 xs:ml-5 sm:ml-5">
         <label-output label="Datum ongeval" :text="claimState.dateOfAccident" />
@@ -106,14 +110,14 @@
       </div>
     </div>
 
-    <div class="mt-5">
+    <div class="mt-2">
       <p class="font-semibold">Beschrijving van het ongeval (oorzaken, omstandigheden en gevolgen, opgelopen verwondingen en/of schade</p>
       <div class="md:ml-20 xs:ml-5 sm:ml-5">
         <p style="max-width: 725px !important; text-align: justify">{{ claimState.description }}</p>
       </div>
     </div>
 
-    <div v-if="claimState.involvedPartyDescription || claimState.officialReportDescription || claimState.witnessDescription || claimState.leadershipDescription" class="mt-5">
+    <div v-if="claimState.involvedPartyDescription || claimState.officialReportDescription || claimState.witnessDescription || claimState.leadershipDescription" class="mt-2">
       <p class="font-semibold">Betrokkenheid andere partijen</p>
 
       <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-5" v-if="claimState.involvedPartyDescription">
@@ -190,7 +194,7 @@
       </div>
     </div>
 
-    <div v-show="!isEdit" class="flex gap-3 mt-5 items-center">
+    <div v-show="!isEdit" class="flex gap-3 mt-2 items-center">
       <back-button stateName="setClaimHolderState" :backToState="ClaimHolderStates.THREE" />
       <custom-button text="Verstuur je aanvraag" />
     </div>
