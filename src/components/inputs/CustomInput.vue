@@ -30,7 +30,8 @@
         :class="{ 'opacity-0': loadingSubmit || isSubmitting }"
         :disabled="disabled || loadingSubmit || isSubmitting"
         :placeholder="placeholder"
-        :oninput="onInvalid"
+        :oninvalid="onInvalid"
+        oninput="this.setCustomValidity('')"
       />
 
       <input
