@@ -1,8 +1,4 @@
 <template>
-  <div class="mt-2">
-    <tip-general-vehicle-insurance />
-  </div>
-
   <div class="py-2">
     <choice-help-item id="0" text="Heb je de auto gehuurd?" v-model:choice="choices[0]" />
   </div>
@@ -45,8 +41,6 @@
 <script lang="ts">
 import InfoAlert from '@/components/requestInsurance/InfoAlert.vue'
 import ChoiceHelpItem from '@/components/semantic/ChoiceHelpItem.vue'
-import TipGeneralVehicleInsurance from '@/components/tips/tipGeneralVehicleInsurance.vue'
-
 import { defineComponent, ref, watch } from 'vue'
 
 export default defineComponent({
@@ -54,7 +48,6 @@ export default defineComponent({
   components: {
     'info-alert': InfoAlert,
     'choice-help-item': ChoiceHelpItem,
-    TipGeneralVehicleInsurance,
   },
   setup() {
     const choices = ref<Array<boolean | string>>(['', '', '', '', '', ''])

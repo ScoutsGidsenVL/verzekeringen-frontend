@@ -5,6 +5,11 @@
 
       <insurance-type-menu :disabled="isEdit" />
       <div v-if="insuranceTypeState === InsuranceTypes.TIJDELIJKE_AUTO_VERZEKERING" class="mt-3">
+
+        <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-5">
+          <tip-general-vehicle-insurance />
+        </div>
+
         <custom-headline-2 text="Je hebt drie opties voor een tijdelijke autoverzekering" />
         <div><strong>Gebruik bij twijfel deze keuzehulp</strong></div>
 
@@ -172,6 +177,7 @@
 import InsuranceTypeMenu from '@/components/requestInsurance/insuranceTypeMenu/InsuranceTypeMenu.vue'
 import TipGeneralMaterialInsurance from '@/components/tips/tipGeneralMaterialInsurance.vue'
 import TipGeneralEventInsurance from '@/components/tips/tipGeneralEventInsurance.vue'
+import TipGeneralVehicleInsurance from '@/components/tips/tipGeneralVehicleInsurance.vue'
 import TipGeneralOneTimeInsurance from '@/components/tips/tipGeneralOneTimeInsurance.vue'
 import tipGeneralTravelAssistance from '@/components/tips/tipGeneralTravelAssistance.vue'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
@@ -208,6 +214,7 @@ export default defineComponent({
     'tip-general-material-insurance': TipGeneralMaterialInsurance,
     'tip-general-travel-assistance': tipGeneralTravelAssistance,
     'tip-general-event-insurance': TipGeneralEventInsurance,
+    'tip-general-vehicle-insurance': TipGeneralVehicleInsurance,
     'tip-general-one-time-insurance': TipGeneralOneTimeInsurance,
     'tip-general-non-member': TipGeneralNonMember,
     'insurance-applicant': InsuranceApplicant,
