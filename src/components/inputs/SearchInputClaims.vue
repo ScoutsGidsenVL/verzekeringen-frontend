@@ -102,7 +102,6 @@ export default defineComponent({
       loading_2.value = true
       clearTimeout(debounce)
       debounce = setTimeout(() => {
-        if (query.value) {
           RepositoryFactory.get(props.repository)
             .search(query.value, year.value)
             .then((results: any) => {
@@ -110,7 +109,6 @@ export default defineComponent({
               context.emit('fetchedOptions', options.value)
               loading_2.value = false
             })
-        }
       }, 1000)
     }
 
