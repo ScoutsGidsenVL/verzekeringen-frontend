@@ -68,7 +68,7 @@ export const VictimSerializer = (input: any): any => {
     membership_number: input.membershipNumber ? input.membershipNumber : undefined,
     postcode: input.postcode ? input.postcode : input.postCodeCity.postalCode,
     city: input.city ? input.city : input.postCodeCity.city,
-    sex: input.sex ? input.sex : undefined,
+    sex: input.sex ? input.sex : input.gender ? input.gender : undefined,
     non_member: input.nonMember ? input.nonMember : undefined,
     letter_box: input.letterBox ? input.letterBox : undefined,
   }
