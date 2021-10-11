@@ -80,7 +80,7 @@
           <div v-show="isGroupEquipement === false && !owner">
             <div class="z-30">
               <strong class="cursor-pointer text-lightGreen" @click="openMemberSideBar()"> Een lid (persoonlijk materiaal) </strong>
-              <members-side-bar isOverflowHidden="false" v-model:isDisplay="isMemberSideBarDisplay" :close-on-add="true" :existing-list="members" title="Lid" @addMemberToList="addMember($event)" />
+              <members-only-side-bar isOverflowHidden="false" v-model:isDisplay="isMemberSideBarDisplay" :close-on-add="true" :existing-list="members" title="Lid" @addMemberToList="addMember($event)" />
             </div>
 
             <div class="mt-3 z-30">
@@ -128,7 +128,7 @@
 import { scrollToFirstError, useFormSendWithSuccess, useScrollToTop } from '@/veeValidate/helpers'
 import NonMemberSideBar from '@/components/insurances/nonMembersInsurance/nonMemberSideBar.vue'
 import { sideBarState, option, SuccessToast, BaseSideBar } from 'vue-3-component-library'
-import MemberSiderbar from '@/components/insurances/travelAssistance/membersSideBar.vue'
+import MembersOnlySiderbar from '@/components/insurances/travelAssistance/membersOnlySideBar.vue'
 import EquipmentItem from '@/components/insurances/materialInsurance/equipmentItem.vue'
 import MemberItem from '@/components/insurances/travelAssistance/memberItem.vue'
 import { computed, defineComponent, PropType, ref, toRefs, watch } from 'vue'
@@ -150,7 +150,7 @@ export default defineComponent({
   name: 'EquipmentSideBar',
   components: {
     'non-member-side-bar': NonMemberSideBar,
-    'members-side-bar': MemberSiderbar,
+    'members-only-side-bar': MembersOnlySiderbar,
     'equipment-item': EquipmentItem,
     'success-toast': SuccessToast,
     'custom-button': CustomButton,

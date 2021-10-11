@@ -7,8 +7,8 @@ export class MemberRepository extends BaseRepository {
   deserializer = MemberDeserializer
   serializer = MemberSerializer
 
-  search(query: string): Promise<any> {
-    return this.get('/members_search/' + '?term=' + query, {}).then((response: Array<any>) => {
+  search(query: string, group?: string): Promise<any> {
+    return this.get('/members_search/' + '?term=' + query + '&group=' + group, {}).then((response: Array<any>) => {
       const array: any[] = []
       response.forEach((result: Member) => {
         result = MemberDeserializer(result)
