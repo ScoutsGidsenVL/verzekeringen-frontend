@@ -30,7 +30,7 @@
             </div>
 
             <div v-if="details.insuranceOptions.includes(2)">
-              <p>Optie 2: Vrijstelling van eigen omnium dekken tot XXX EUR.</p>
+              <p class="mb-0">Optie 2: Vrijstelling van eigen omnium dekken.</p>
               <p>{{ details.maxCoverage.label }}</p>
             </div>
 
