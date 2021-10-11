@@ -8,7 +8,7 @@
         <multi-select
           id="country"
           rules="required"
-          insurance-type-id="2"
+          insurance-type-id="6"
           :object="true"
           track-by="name"
           value-prop="name"
