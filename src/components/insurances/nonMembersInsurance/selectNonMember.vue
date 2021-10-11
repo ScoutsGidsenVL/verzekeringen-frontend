@@ -56,8 +56,7 @@ export default defineComponent({
       sideBarState.value = { state: 'new' }
     }
     const addCreatedNonMemberToList = (nonMember: NonMember) => {
-      console.log('CREATED MEMBER: ', nonMember)
-
+      nonMember.inuitsNonMemberId = nonMember.id
       if (nonMember) {
         nonMembers.value.push(nonMember)
       }
@@ -75,11 +74,10 @@ export default defineComponent({
     }
 
     const updateMemberInList = (nonMember: NonMember) => {
-      console.log('UPDATED MEMBER: ', nonMember)
       const tempArr: Array<NonMember> = []
 
       nonMembers.value.forEach((listedNonMember) => {
-        if (listedNonMember.id === nonMember.id) {
+        if (listedNonMember.inuitsNonMemberId === nonMember.inuitsNonMemberId) {
           tempArr.push(nonMember)
         } else {
           tempArr.push(listedNonMember)

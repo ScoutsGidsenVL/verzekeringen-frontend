@@ -184,6 +184,7 @@ export default defineComponent({
           const generalInsuranceState = ref<any>(store.getters.generalInsuranceState)
           const nonMember = ref<NonMember>({
             id: values.id,
+            inuitsNonMemberId: values.inuitsNonMemberId ? values.inuitsNonMemberId : undefined, 
             lastName: values.lastName,
             firstName: values.firstName,
             phoneNumber: values.phoneNumber ? values.phoneNumber : '/',
@@ -216,11 +217,13 @@ export default defineComponent({
     }
 
     const editNonMember = async (data: NonMember) => {
+      console.log('HIT', data)
       formSendWithSuccess.value = false
-      if (data.id) {
+      if (data.inuitsNonMemberId) {
         await RepositoryFactory.get(NonMemberRepository)
-          .update(data.id, data)
+          .update(data.inuitsNonMemberId, data)
           .then((completed: NonMember) => {
+            completed.inuitsNonMemberId = data.inuitsNonMemberId
             context.emit('updateMemberInList', completed)
             closeSideBar()
           })
@@ -270,6 +273,7 @@ export default defineComponent({
         resetForm({
           values: {
             id: value.entity.id,
+            inuitsNonMemberId: value.entity.inuitsNonMemberId,
             lastName: value.entity.lastName,
             firstName: value.entity.firstName,
             phoneNumber: value.entity.phoneNumber,

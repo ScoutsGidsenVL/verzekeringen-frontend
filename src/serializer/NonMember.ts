@@ -2,7 +2,7 @@ import { Location, LocationDeserializer, LocationSerializer } from '@/serializer
 
 export interface NonMember {
   readonly id?: string
-  readonly inuitsNonMemberId?: string
+  inuitsNonMemberId?: string
   readonly lastName: string
   readonly firstName: string
   readonly phoneNumber: string
@@ -20,7 +20,7 @@ export interface NonMember {
 export const NonMemberDeserializer = (input: any): NonMember => {
   const single: NonMember = {
     id: input.id ? input.id : undefined,
-    inuitsNonMemberId: input.inuits_non_member_id,
+    inuitsNonMemberId: input.inuits_non_member_id ? input.inuits_non_member_id : undefined,
     lastName: input.last_name,
     firstName: input.first_name,
     phoneNumber: input.phone_number ? input.phone_number.replace(/ /g, '') : undefined,
