@@ -170,7 +170,6 @@ export default defineComponent({
             await postVehicle(vehicle.value)
           }
         }
-        console.log('CLOSE SIDEBAR')
         closeSideBar()
       })()
     }
@@ -193,9 +192,7 @@ export default defineComponent({
     }
 
     const updateVehicle = async (data: Vehicle) => {
-      console.log('UPDATE VEHICLE 1')
       if (data.id) {
-      console.log('UPDATE VEHICLE 2')
         await RepositoryFactory.get(VehicleRepository)
           .update(data.id, data)
           .then((completed: Vehicle) => {

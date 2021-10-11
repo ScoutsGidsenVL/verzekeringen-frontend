@@ -6,7 +6,6 @@ export default class AuthRepository extends BaseApiRepository {
 
   me(): Promise<UserModel> {
     return this.get('/auth/me/').then((input: any) => {
-      console.log('raw fetched user: ', input)
       return UserModel.deserialize(input)
     })
   }

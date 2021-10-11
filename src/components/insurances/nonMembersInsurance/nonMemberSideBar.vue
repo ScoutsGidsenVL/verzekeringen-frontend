@@ -217,7 +217,6 @@ export default defineComponent({
     }
 
     const editNonMember = async (data: NonMember) => {
-      console.log('HIT', data)
       formSendWithSuccess.value = false
       if (data.inuitsNonMemberId) {
         await RepositoryFactory.get(NonMemberRepository)

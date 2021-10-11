@@ -8,7 +8,7 @@
 
     <div v-if="isEdit">
       <p class="font-semibold">Administratie</p>
-      <div v-if="claimState.dossierNumber && claimState.note" class="md:ml-20 xs:ml-5 sm:ml-5">
+      <div class="md:ml-20 xs:ml-5 sm:ml-5">
         <custom-input :value="claimState.dossierNumber" class="xs:w-72 md:w-96" :type="InputTypes.TEXT" label="Dossiernummer" name="dossierNumber" />
         <custom-input :value="claimState.note" class="xs:w-72 md:w-96" :type="InputTypes.TEXT_AREA" label="Administratieve commentaar" name="note" />
         <custom-button text="Opslaan" />
@@ -294,27 +294,22 @@ export default defineComponent({
             await postClaim()
           })
         } else {
-          console.log('PATCHHHHH')
-          console.log('values: ', values)
+          console.log('PATCHHHHH', values)
+          if (claimState.value.id) {
+            await patchClaim(claimState.value.id.toString(), { note: values.note, case_number: values.dossierNumber })
+          }
         }
       })()
     }
 
+    const patchClaim = async (id: string, data: any) => {
+      await RepositoryFactory.get(ClaimRepository).updateInfo(id, data).then((res) => {
+        console.log('patched reuslt: ', res)
+      })
+    }
+
     const postClaim = async () => {
-      await RepositoryFactory.get(ClaimRepository)
-        .create(claimState.value)
-        // .then((res) => {
-        //   if (claimState.value.file) {
-        //     console.log('CHECK')
-        //     RepositoryFactory.get(FileRepository)
-        //       .uploadFile(claimState.value.file, res.id)
-        //       .then(() => {
-        //         store.dispatch('setClaimHolderState', ClaimHolderStates.FIVE)
-        //       })
-        //   } else {
-        //     store.dispatch('setClaimHolderState', ClaimHolderStates.FIVE)
-        //   }
-        // })
+      await RepositoryFactory.get(ClaimRepository).create(claimState.value)
     }
 
     scrollToTopOfPage()

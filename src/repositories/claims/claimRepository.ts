@@ -34,35 +34,109 @@ export class ClaimRepository extends BaseRepository {
     })
   }
 
+  updateInfo(id: string, data: any) {
+    return this.patch(this.endpoint + id + '/', data).then((response: any) => {
+      return this.deserializer(response)
+    })
+  }
+
   create(data: any, file?: any) {
-    const claim: Claim = this.serializer(data)
+    const claim: Claim = data
     const fd = new FormData()
 
-    console.log('CHECK: ', this.serializer(data))
+    console.log('CHECK: ', claim)
 
-    // if (claim.activityTypes) {
-    //   fd.append('activity_type', claim.activityTypes.toString())
-    // }
+    //GROUP
+    if (claim.group && claim.group.id) {
+      fd.append('group', claim.group.id)
+    }
 
-    // if (claim.group && claim.group.name) {
-    //   console.log('GROUP FD: ', claim.group.name)
-    //   fd.append('group', claim.group.name)
-    // }
+    //ACTIVITY TYPE
+    if (claim.activityTypes) {
+      fd.append('activity_type', JSON.stringify(claim.activityTypes))
+    }
 
-    // if (claim.dateOfAccident) {
-    //   fd.append('date_of_accident', claim.dateOfAccident.toString())
-    // }
+    //USED TRANSPORT
+    if (claim.usedTransport) {
 
-    // if (claim.activity) {
-    //   fd.append('activity', claim.activity.toString())
-    // }
+      fd.append('used_transport', claim.usedTransport.toString())
+    }
 
-    // if (claim.description) {
-    //   fd.append('description', claim.description.toString())
-    // }
+    //BANK ACCOUNT
+    if (this.serializer(data).bank_account) {
+      fd.append('bank_account', this.serializer(data).bank_account)
+    }
 
-    fd.append('detail', this.serializer(data))
+    //VICTIM
+    if (this.serializer(data).victim) {
+      fd.append(
+        'victim', 
+        JSON.stringify(this.serializer(data).victim)
+      )
+    }
 
+    //ACTIVITY
+    if (claim.activity) {
+      fd.append('activity', claim.activity.toString())
+    }
+
+    //DATE OF ACCIDENT
+    if (this.serializer(data).date_of_accident) {
+      fd.append('date_of_accident', this.serializer(data).date_of_accident)
+    }
+
+    //DESCRIPTION
+    if (claim.description) {
+      fd.append('description', claim.description.toString())
+    }
+
+    //DECLARENT CITY
+    if (claim.declarantCity) {
+
+      fd.append('declarant_city', claim.declarantCity.toString())
+    }
+
+    //INVOLVED PARTY NAME
+    if (claim.involvedPartyName) {
+      fd.append('involved_party_name', claim.involvedPartyName.toString())
+    }
+
+    //INVOLVED PARTY DESCRIPTION
+    if (claim.involvedPartyDescription) {
+      fd.append('involved_party_description', claim.involvedPartyDescription.toString())
+    }
+
+    //INVOLVED PARTY BIRTHDATE
+    if (claim.involvedPartyBirthdate) {
+      fd.append('involved_party_birthdate', claim.involvedPartyBirthdate.toString())
+    }
+
+    //OFFICIAL REPORT DESCRIPTION
+    if (claim.officialReportDescription) {
+      fd.append('official_report_description', claim.officialReportDescription.toString())
+    }
+
+    //PV NUMBER
+    if (claim.pvNumber) {
+      fd.append('pv_number', claim.pvNumber.toString())
+    }
+
+    //WITNESS NAME
+    if (claim.witnessName) {
+      fd.append('witness_name', claim.witnessName.toString())
+    }
+
+    //WITNESS DESCRIPTION
+    if (claim.witnessDescription) {
+      fd.append('witness_description', claim.witnessDescription.toString())
+    }
+
+    //LEADERSHIP DESCRIPTION
+    if (claim.leadershipDescription) {
+      fd.append('leadership_description', claim.leadershipDescription.toString())
+    }
+
+    //FILE
     if (file) {
       fd.append('file', file)
     }
@@ -72,9 +146,14 @@ export class ClaimRepository extends BaseRepository {
         'content-type': 'multipart/form-data',
       },
     }
+    console.log('----------FD----------')
+    for (const pair of fd.entries()) {
+      console.log(pair[0]+ ', ' + pair[1]); 
+    }
 
     return this.post(this.endpoint, fd, config).then((response: any) => {
-      return this.deserializer(response)
+      const res = response //WAAROM WERKT DESERIALIZER HIER NIET?
+      return res
     })
   }
 }

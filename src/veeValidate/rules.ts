@@ -115,7 +115,6 @@ export const defineRules = (store: any) => {
 
   // @ts-ignore
   defineRule('checkForbiddenCountriesTemporaryCar', (country: Country, [forbiddenCountriesVehicle, vehicle]) => {
-    console.log('CHECK FORBIDDEN')
     if (forbiddenCountriesVehicle && forbiddenCountriesVehicle.some((c: Country) => c.id === country.id) && vehicle) {
       return 'Voor dit land kan je geen tijdelijke autoverzekering afsluiten'
     }

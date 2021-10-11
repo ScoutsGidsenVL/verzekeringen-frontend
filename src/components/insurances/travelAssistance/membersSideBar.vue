@@ -101,7 +101,6 @@ export default defineComponent({
 
     const fetchedOptions = (options: any) => {
       selectedMembers.value = []
-      console.log('OPTIONS: ', options)
       options.forEach((member: Member) => {
         if (member.groupAdminId) {
           if (member.isMember) {
@@ -111,7 +110,6 @@ export default defineComponent({
                 result.birthDate = member.birthDate
                 result.sex = member.sex
                 result.isMember = true
-                console.log('SELECTED: ', member)
                 selectedMembers.value.push(result)
               })
           }

@@ -71,8 +71,8 @@ export const ClaimDeserializer = (input: any): Claim => {
     leadershipDescription: input.leadership_description ? input.leadership_description : undefined,
     victim: input.victim ? VictimDeserializer(input.victim) : undefined,
     administrationComment: input.administrationComment ? input.administrationComment : undefined,
-    dossierNumber: input.dossierNumber ? input.dossierNumber : 'TEST DOSSIER NUMBER',
-    note: input.note ? input.note : 'TEST NOTE',
+    dossierNumber: input.case_number ? input.case_number : undefined,
+    note: input.note ? input.note : undefined,
     attachment: input.attachment ? AttachmentDeserializer(input.attachment) : undefined,
     declarantCity: input.declarant_city ? input.declarant_city : undefined,
     witnessName: input.witness_name ? input.witness_name : undefined,
@@ -117,8 +117,6 @@ export const ClaimSerializer = (input: any): any => {
     victim: input.victim ? VictimSerializer(input.victim) : undefined,
     file: input.file ? input.file : undefined,
   }
-
-  console.log('SINGLE: ', single)
 
   return single
 }
