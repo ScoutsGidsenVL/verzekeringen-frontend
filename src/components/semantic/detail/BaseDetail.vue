@@ -8,20 +8,20 @@
       <div v-html="titelText"></div>
     </div>
 
+    <div v-if="holderState === HolderStates.COMPLETED">
+      <inscurance-succes />
+    </div>
+
     <div v-if="detail && details.vvksComment && holderState !== HolderStates.COMPLETED">
       <important-message :message="details.vvksComment" />
     </div>
 
-    <custom-headline-sticker v-if="details" :text="'Totaalprijs: ' + '&euro; ' + details.totalCost"> </custom-headline-sticker>
-    <div v-if="holderState === HolderStates.DETAIL" style="margin-top: -3em" class="mb-5">
-      Je staat op het punt een verzekering aan te vragen met de volgende gegevens. Kijk ze nog eens grondig na en bevestig onderaan.
-    </div>
-
-    <slot :details="details" :isDetail="isDetail" />
+    <custom-headline-sticker v-if="details && holderState !== HolderStates.COMPLETED" :text="'Totaalprijs: ' + '&euro; ' + details.totalCost"> </custom-headline-sticker>
+    <slot v-if="holderState !== HolderStates.COMPLETED" :details="details" :isDetail="isDetail" />
   </div>
 
   <div v-if="holderState === HolderStates.COMPLETED">
-    <div class="mt-4 container inline-block">
+    <div class="mt-4 inline-block">
       <navigation-arrow to="/home/verzekeringen" text="Terug naar overzicht" />
     </div>
   </div>
@@ -37,6 +37,7 @@ import { HolderStates } from '@/enums/holderStates'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import ImportantMessage from '@/components/semantic/ImportantMessage.vue'
+import InscuranceSucces from '@/components/insurances/messages/InscuranceSucces.vue'
 
 export default defineComponent({
   name: 'BaseDetail',
@@ -44,6 +45,7 @@ export default defineComponent({
     'custom-headline-sticker': CustomHeadlineSticker,
     'navigation-arrow': NavigationArrow,
     'important-message': ImportantMessage,
+    InscuranceSucces,
   },
   props: {
     title: {
@@ -98,19 +100,7 @@ export default defineComponent({
     }
 
     if (holderState.value === HolderStates.COMPLETED) {
-      titelText.value = '<p style="font-size: 30px">Je <strong class="font-semibold">' + props.title + '</strong> verzekering is aangevraagd </p>'
-      if (props.title === 'evenementenverzekering') {
-        titelText.value = '<p style="font-size: 30px">Je <strong class="font-semibold">' + props.title + '</strong> is aangevraagd</p>'
-      }
-      if (props.title === 'Materiaal') {
-        titelText.value = '<p style="font-size: 30px">Je <strong class="font-semibold">' + 'materiaalverzekering' + '</strong> is aangevraagd</p>'
-      }
-      if (props.title === 'Tijdelijke') {
-        titelText.value = '<p style="font-size: 30px">Je <strong class="font-semibold">' + 'Tijdelijke autoverzekering' + '</strong> is aangevraagd</p>'
-      }
-      if (props.title === 'verzekering eenmalige activiteit') {
-        titelText.value = '<p style="font-size: 30px">Je <strong class="font-semibold">' + props.title + '</strong> is aangevraagd</p>'
-      }
+      titelText.value = '<p style="font-size: 30px">Je aanvraag is verstuurd.</p>'
     }
 
     if (holderState.value === HolderStates.DETAIL) {
