@@ -293,6 +293,7 @@ export default defineComponent({
             await postClaim()
           }).then(() => {
             // store.dispatch('setClaimHolderState', ClaimHolderStates.FIVE)
+            console.log('go to step 5...')
           })
         } else {
           if (claimState.value.id) {
