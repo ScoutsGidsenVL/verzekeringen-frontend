@@ -310,7 +310,7 @@ export default defineComponent({
     }
 
     const postClaim = async () => {
-      await RepositoryFactory.get(ClaimRepository).create(claimState.value)
+      await RepositoryFactory.get(ClaimRepository).create(claimState.value, claimState.value.file ? claimState.value.file : undefined)
     }
 
     scrollToTopOfPage()

@@ -44,8 +44,6 @@ export class ClaimRepository extends BaseRepository {
     const claim: Claim = data
     const fd = new FormData()
 
-    console.log('CHECK: ', claim)
-
     //GROUP
     if (claim.group && claim.group.id) {
       fd.append('group', claim.group.id)
@@ -137,7 +135,9 @@ export class ClaimRepository extends BaseRepository {
     }
 
     //FILE
+    console.log('FILE1: ', file)
     if (file) {
+      console.log('FILE2: ', file)
       fd.append('file', file)
     }
 
@@ -146,13 +146,13 @@ export class ClaimRepository extends BaseRepository {
         'content-type': 'multipart/form-data',
       },
     }
-    console.log('----------FD----------')
-    for (const pair of fd.entries()) {
-      console.log(pair[0]+ ', ' + pair[1]); 
-    }
+    // console.log('----------FD----------')
+    // for (const pair of fd.entries()) {
+    //   console.log(pair[0]+ ', ' + pair[1]); 
+    // }
 
     return this.post(this.endpoint, fd, config).then((response: any) => {
-      const res = response //WAAROM WERKT DESERIALIZER HIER NIET?
+      const res = response
       return res
     })
   }
