@@ -327,7 +327,7 @@ export default defineComponent({
       userData,
       saveFile,
       isEdit,
-      values,
+      values
     }
   },
 })
