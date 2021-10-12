@@ -292,7 +292,7 @@ export default defineComponent({
           store.dispatch('setClaimState', { ...claimState.value, ...newClaimState.value }).then(async () => {
             await postClaim()
           }).then(() => {
-            store.dispatch('setClaimHolderState', ClaimHolderStates.FIVE)
+            // store.dispatch('setClaimHolderState', ClaimHolderStates.FIVE)
           })
         } else {
           if (claimState.value.id) {
