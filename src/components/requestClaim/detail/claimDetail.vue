@@ -1,8 +1,7 @@
 <template>
   <form id="ClaimDetail" @submit.prevent="onSubmit">
-    <p class="py-4" style="font-size: 30px">Overzicht</p>
 
-    <div v-show="isEdit" class="mt-4">
+    <div v-show="isEdit" class="mt-4 mb-4">
       <navigation-arrow to="/home/schadeaangiftes" text="Terug naar overzicht" />
     </div>
 
@@ -292,9 +291,10 @@ export default defineComponent({
 
           store.dispatch('setClaimState', { ...claimState.value, ...newClaimState.value }).then(async () => {
             await postClaim()
+          }).then(() => {
+            store.dispatch('setClaimHolderState', ClaimHolderStates.FIVE)
           })
         } else {
-          console.log('PATCHHHHH', values)
           if (claimState.value.id) {
             await patchClaim(claimState.value.id.toString(), { note: values.note, case_number: values.dossierNumber })
           }
