@@ -4,14 +4,14 @@
       <p>{{ item.dateOfAccident ? formatSingleDate(item.dateOfAccident) : '' }}</p>
     </div>
 
-    <div>
-      <p>{{ item.group && item.group.name ? item.group.name : '' }} - {{ item.group && item.group.id ? item.group.id : '' }}</p>
-    </div>
-
     <div v-if="item.victim">
       <p>{{ item.victim.firstName + ' ' + item.victim.lastName }}</p>
     </div>
 
+    <div>
+      <p>{{ item.group && item.group.name ? item.group.name : '' }} - {{ item.group && item.group.id ? item.group.id : '' }}</p>
+    </div>
+    
     <div>
       <div class="float-right">
         <router-link :to="'/schadeaangifte-detail/' + item.id">

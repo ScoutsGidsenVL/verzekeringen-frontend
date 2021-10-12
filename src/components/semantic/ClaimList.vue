@@ -7,11 +7,11 @@
     </div>
 
     <div>
-      <p class="font-semibold">Groep</p>
+      <p class="font-semibold">Slachtoffer</p>
     </div>
 
     <div>
-      <p class="font-semibold">Slachtoffer</p>
+      <p class="font-semibold">Groep</p>
     </div>
 
     <div></div>
