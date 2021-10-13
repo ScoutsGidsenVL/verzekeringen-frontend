@@ -71,10 +71,10 @@
             {{ claimState.victim.email }}
           </p>
         </div>
-        <label-output label="Geboortedatum" :text="claimState.victim.birthDate" />
-        <label-output label="Geslacht" :text="claimState.victim.sex" />
+        <p class="mb-0"><strong>Geboortedatum</strong> {{moment(claimState.victim.birthDate).format('DD-MM-YYYY')}}</p>
+        <p class="mb-0"><strong>Geslacht</strong> {{claimState.victim.sex ? claimState.victim.sex : claimState.victim.gender}}</p>
         <label-output v-if="claimState.victim.membershipNumber" label="Lidnummer" :text="claimState.victim.membershipNumber" />
-        <label-output v-if="claimState.bankAccount" label="Bankrekeningnummer" :text="claimState.bankAccount" />
+        <label-output v-if="claimState.bankAccount || claimState.victim.bankAccount" label="Bankrekeningnummer" :text="claimState.victim.bankAccount ? claimState.victim.bankAccount : claimState.bankAccount" />
       </div>
     </div>
 
@@ -327,7 +327,8 @@ export default defineComponent({
       userData,
       saveFile,
       isEdit,
-      values
+      values,
+      moment
     }
   },
 })
