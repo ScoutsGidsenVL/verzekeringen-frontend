@@ -26,15 +26,20 @@
       </div>
     </div>
 
-    <div v-if="claimState.file" class="mt-2">
+    <div class="mt-2">
       <p class="font-semibold">Bijlage</p>
 
       <div class="md:ml-20 xs:ml-5 sm:ml-5">
-        <div @click="saveFile(claimState.file)" class="hover:text-lightGreen cursor-pointer">
-          <p class="underline">{{ claimState.file.name }} {{ (claimState.file.size / (1024 * 1024)).toFixed(2) }} MB {{ claimState.file.type ? claimState.file.type : '' }}</p>
+        <div>
+          <custom-headline-2 text="Bijlage" />
+          <div>
+            <file-upload />
+          </div>
         </div>
       </div>
     </div>
+
+    
 
     <div class="mt-2">
       <p class="font-semibold">Slachtoffer</p>
@@ -221,6 +226,8 @@ import { useRoute } from 'vue-router'
 import { saveAs } from 'file-saver'
 import { useStore } from 'vuex'
 import moment from 'moment'
+import FileUpload from '@/components/semantic/FileUpload.vue'
+
 
 export default defineComponent({
   name: 'ClaimDetail',
@@ -231,6 +238,7 @@ export default defineComponent({
     'label-output': LabelOutput,
     'custom-input': CustomInput,
     'back-button': BackButton,
+    FileUpload
   },
   props: {
     isDetailPage: {
@@ -310,6 +318,9 @@ export default defineComponent({
     }
 
     const postClaim = async () => {
+      if (values.file) {
+        claimState.value.file = values.file
+      }
       await RepositoryFactory.get(ClaimRepository).create(claimState.value, claimState.value.file ? claimState.value.file : undefined)
     }
 

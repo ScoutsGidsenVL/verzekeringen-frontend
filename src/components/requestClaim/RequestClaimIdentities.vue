@@ -39,13 +39,6 @@
       </div>
     </div>
 
-    <div>
-      <custom-headline-2 text="Bijlage" />
-      <div class="ml-5">
-        <file-upload />
-      </div>
-    </div>
-
     <div class="mb-5">
       <custom-headline-2 text="Slachtoffer" />
 
@@ -211,7 +204,6 @@ import { useForm, ErrorMessage } from 'vee-validate'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import Required from '@/components/semantic/Required.vue'
-import FileUpload from '@/components/semantic/FileUpload.vue'
 import LabelOutput from '@/components/semantic/LabelOutput.vue'
 
 export default defineComponent({
@@ -225,7 +217,6 @@ export default defineComponent({
     'custom-button': CustomButton,
     'multi-select': MultiSelect,
     'custom-input': CustomInput,
-    'file-upload': FileUpload,
     'info-alert': InfoAlert,
     'label-output': LabelOutput,
     ErrorMessage,
