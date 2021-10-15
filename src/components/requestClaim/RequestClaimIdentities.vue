@@ -1,7 +1,20 @@
 <template>
   <form id="RequestClaimIdentities" @submit.prevent="onSubmit">
     <div class="mb-5">
-      <custom-headline-2 text="Aangever" />
+
+      <div class="mt-2">
+        <info-alert>
+          <div>
+            <p>
+              Wat je invult wordt doorgestuurd naar Ethias en (de ouders van) het slachtoffer. 
+              Na deze aangifte neemt Ethias contact op met (de ouders van) het slachtoffer. 
+              Alle verdere communicatie verloopt rechtstreeks tussen hen.
+            </p>
+          </div>
+        </info-alert>
+      </div>
+
+      <custom-headline-2 text="Wie doet de aangifte?" />
 
       <div class="md:ml-20 xs:ml-5 sm:ml-5" style="margin-top: -2em">
         <div style="width: 600px">
@@ -27,20 +40,15 @@
       <div class="md:ml-20 xs:ml-5 sm:ml-5 mt-5">
         <info-alert>
           <p>
-            Is er iets niet juist? pas het dan aan in de <strong><a target="_blank" href="https://groepsadmin.scoutsengidsenvlaanderen.be/">groepsadmin</a></strong> en klik op refresh.<custom-button
-              :loadingSubmit="isRefreshing"
-              type="button"
-              class="ml-20 mt-2"
-              text="Refresh"
-              @click="refreshGroups()"
-            />
+            Staat er een fout in je gegevens? Pas ze dan aan <strong><a target="_blank" href="https://groepsadmin.scoutsengidsenvlaanderen.be/">in de Groepsadministratie</a></strong> en klik vervolgens op Herlaad. 
+            <custom-button :loadingSubmit="isRefreshing" type="button" class="ml-2 mt-2" text="Herlaad" @click="refreshGroups()" />
           </p>
         </info-alert>
       </div>
     </div>
 
     <div class="mb-5">
-      <custom-headline-2 text="Slachtoffer" />
+      <custom-headline-2 text="Wie is het slachtoffer?" />
 
       <div class="md:ml-20 xs:ml-5 sm:ml-5 my-3">
         <div>
@@ -205,6 +213,7 @@ import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import Required from '@/components/semantic/Required.vue'
 import LabelOutput from '@/components/semantic/LabelOutput.vue'
+
 
 export default defineComponent({
   name: 'RequestClaimIdentities',

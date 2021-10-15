@@ -15,7 +15,7 @@
     </div>
 
     <div class="mt-2">
-      <p class="font-semibold">Aangever</p>
+      <p class="font-semibold">Wie doet de aangifte?</p>
 
       <div class="md:ml-20 xs:ml-5 sm:ml-5">
         <label-output v-if="claimState.group" label="" :text="claimState.group.name + ' - ' + claimState.group.id" />
@@ -42,7 +42,7 @@
     
 
     <div class="mt-2">
-      <p class="font-semibold">Slachtoffer</p>
+      <p class="font-semibold">Wie is het slachtoffer?</p>
       <div v-if="claimState.victim" class="md:ml-20 xs:ml-5 sm:ml-5">
         <div>
           <p>
@@ -84,18 +84,18 @@
     </div>
 
     <div class="mt-2">
-      <p class="font-semibold">Gegevens van het ongeval</p>
+      <p class="font-semibold">Wat is er gebeurd?</p>
       <div class="md:ml-20 xs:ml-5 sm:ml-5">
-        <label-output label="Datum ongeval" :text="claimState.dateOfAccident" />
+        <label-output label="Datum van het ongeval" :text="claimState.dateOfAccident" />
         <label-output label="Tijdens welke activiteit het ongeval plaatsvond" :text="claimState.activity" />
         <div class="mt-2">
           <strong>Tijdens welke soort ongeval de activiteit plaatsvond</strong>
         </div>
 
         <div v-if="claimState.activityTypes">
-          <p v-show="claimState.activityTypes.includes(ActivityTypes.REGULAR)">Tijdens een activiteit van de hiervoor vermelde scoutsgroep</p>
+          <p v-show="claimState.activityTypes.includes(ActivityTypes.REGULAR)">tijdens de activiteit van onze groep.</p>
           <div v-show="claimState.activityTypes.includes(ActivityTypes.TRANSPORT)">
-            Verplaatsing van of naar activiteit
+            op de heen- of terugweg van of naar de activiteit.
             <p v-show="claimState.usedTransport">Gebruikt voertuig: {{ claimState.usedTransport }}</p>
           </div>
 

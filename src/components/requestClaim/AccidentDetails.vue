@@ -1,25 +1,16 @@
 <template>
   <form id="RequestInsuranceGeneral" @submit.prevent="onSubmit">
     <div class="mb-5">
-      <custom-headline-2 text="Gegevens van het ongeval" />
+      <custom-headline-2 text="Wat is er gebeurd?" />
 
-      <div style="width: 470px">
-        <custom-input :max="maxDate" class="xs:w-72 md:w-100" :type="InputTypes.DATE" rules="required" name="dateOfAccident" label="Datum ongeval" />
-        <custom-input
-          :textAreaWidth="'xs:w-72 md:w-100 md:min-w-full h-11'"
-          class="mt-3"
-          :type="InputTypes.TEXT_AREA"
-          rules="required"
-          name="activity"
-          label="Tijdens welke activiteit vond het ongeval plaats?"
-        />
-      </div>
-
-      <div class="mt-3">
+      <div style="width: 505px">
+        <custom-input :max="maxDate" class="xs:w-72 md:w-100" :type="InputTypes.DATE" rules="required" name="dateOfAccident" label="Datum van het ongeval" />
+        
+        <div class="mt-3">
         <form>
           <strong>
             <label>
-              Tijdens welke soort ongeval vond de activiteit plaats?
+              Het ongeval gebeurde:
               <required rules="required" />
             </label>
           </strong>
@@ -29,10 +20,10 @@
           <!-- OPTION 1 -->
           <div>
             <input :id="ActivityTypes.REGULAR" v-model="selectedActivityType" class="cursor-pointer" type="radio" :name="ActivityTypes.REGULAR" :value="ActivityTypes.REGULAR" />
-            <label :for="ActivityTypes.REGULAR" class="inline ml-2">Tijdens een activiteit van de hiervoor vermelde scoutsgroep</label>
+            <label :for="ActivityTypes.REGULAR" class="inline ml-2">tijdens de activiteit van onze groep.</label>
           </div>
           <!-- OPTION 2 -->
-          <div>
+          <!-- <div>
             <input
               :id="ActivityTypes.IRREGULAR_LOCATION"
               v-model="selectedActivityType"
@@ -42,38 +33,61 @@
               :value="ActivityTypes.IRREGULAR_LOCATION"
             />
             <label :for="ActivityTypes.IRREGULAR_LOCATION" class="ml-2">Tijdens een activiteit op verplaatsing</label>
-          </div>
+          </div> -->
           <!-- OPTION 3 -->
           <div>
             <div>
               <input :id="ActivityTypes.TRANSPORT" v-model="selectedActivityType" class="cursor-pointer" type="radio" :name="ActivityTypes.TRANSPORT" :value="ActivityTypes.TRANSPORT" />
-              <label :for="ActivityTypes.TRANSPORT" class="ml-2">Verplaatsing van of naar activiteit</label>
+              <label :for="ActivityTypes.TRANSPORT" class="ml-2">op de heen- of terugweg van of naar de activiteit.</label>
               <label class="invisible">
                 <!-- somehow without this code it wont work? -->
                 {{ selectedActivityType }}
               </label>
             </div>
 
-            <div>
-              <custom-input class="xs:w-72 md:w-72" :type="InputTypes.TEXT" placeholder="Gebruikte vervoermiddel" name="usedTransport" />
+            <div style="margin-left:1.3em">
+              <custom-input :type="InputTypes.TEXT" placeholder="Hoe gebeurde de verplaatsing? (te voet, met de fiets...)" name="usedTransport" />
             </div>
           </div>
 
           <ErrorMessage name="activityTypes" class="text-red text-sm block my-2 w-80" />
         </form>
       </div>
+        
+        <custom-input
+          :textAreaWidth="'xs:w-72 md:w-100 md:min-w-full h-11'"
+          class="mt-3"
+          :type="InputTypes.TEXT_AREA"
+          rules="required"
+          name="activity"
+          label="Geef een korte beschrijving van de scoutsactiviteit."
+        />
+      </div>
 
       <div class="mt-3">
         <form>
+          <div class="mb-2">
+            <div style="max-width: 1025px">
+              <custom-input
+                class="mt-3"
+                :type="InputTypes.TEXT_AREA"
+                rules="required"
+                name="description"
+                label="Geef een uitgebreide beschrijving van het ongeval (oorzaken, omstandigheden, gevolgen, opgelopen verwondingen, schade)."
+                :textAreaWidth="'xs:w-72 md:w-100 md:min-w-full h-36'"
+              />
+            </div>
+          </div>
+
           <strong>
-            <label>Schade aan medisch hulpmiddel? bv bril, hoorapparaat, rolstoel</label>
+            <label>Is er schade aan een medisch hulpmiddel? (bril, hoorapparaat, rolstoel...)</label>
           </strong>
 
           <div>
-            <div class="flex gap-5">
-            </div>
-            <div>
-              <custom-input placeholder="Welk hulpmiddel?" class="xs:w-72 md:w-72" :type="InputTypes.TEXT" name="damage" />
+            <!-- <div class="flex gap-5" style="width: 505px;">
+            </div> -->
+            <div style="width: 505px;">
+              <custom-input placeholder="Welk hulpmiddel?" :type="InputTypes.TEXT" name="damage" />
               <label class="invisible">
                 <!-- somehow without this code it wont work? -->
                 {{ isDamage }}
@@ -81,20 +95,6 @@
             </div>
           </div>
         </form>
-      </div>
-    </div>
-
-    <div class="mb-5">
-      <custom-headline-2 text="Beschrijving van het ongeval" />
-      <div style="max-width: 1025px">
-        <custom-input
-          class="mt-3"
-          :type="InputTypes.TEXT_AREA"
-          rules="required"
-          name="description"
-          label="Beschrijving van het ongeval (oorzaken, omstandigheden en gevolgen, opgelopen verwondingen en/of schade)"
-          :textAreaWidth="'xs:w-72 md:w-100 md:min-w-full h-36'"
-        />
       </div>
     </div>
 
