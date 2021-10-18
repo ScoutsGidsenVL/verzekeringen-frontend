@@ -94,6 +94,12 @@
               </label>
             </div>
           </div>
+
+          <display-content-checkbox text="Hield iemand van de leiding toezicht op het moment dat het ongeval plaatsvond?">
+            <div class="md:w-96 xs:w-72">
+              <custom-input :type="InputTypes.TEXT" name="leadershipDescription" placeholder="Naam" />
+            </div>
+          </display-content-checkbox>
         </form>
       </div>
     </div>
@@ -122,10 +128,12 @@ import { InputTypes } from '@/enums/inputTypes'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import moment from 'moment'
+import DisplayContentCheckBox from '@/components/semantic/displayContentCheckbox.vue'
 
 export default defineComponent({
   name: 'AccidentDetails',
   components: {
+    'display-content-checkbox': DisplayContentCheckBox,
     'custom-headline-2': CustomHeadline2,
     'custom-button': CustomButton,
     'custom-input': CustomInput,
@@ -159,6 +167,7 @@ export default defineComponent({
           description: values.description,
           usedTransport: values.usedTransport,
           damage: values.damage,
+          leadershipDescription: values.leadershipDescription ? values.leadershipDescription : undefined,
         })
 
         store.dispatch('setClaimState', { ...claimState.value, ...newClaimState.value })

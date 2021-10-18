@@ -1,12 +1,11 @@
 <template>
   <form id="RequestInsuranceGeneral" @submit.prevent="onSubmit">
     <div class="mb-5">
-      <custom-headline-2 text="Betrokkenheid andere partijen" />
-      <custom-headline-3 style="margin-top: -3.5em" text="Vul deze gegevens enkel in indien van toepassing. Je mag dit ook leeg laten." />
+      <custom-headline-2 text="Zijn er andere personen betrokken?" />
 
       <div>
         <div>
-          <display-content-checkbox text="Is het ongeval te wijten aan een fout van een andere verzekerde of derde?">
+          <display-content-checkbox text="Is het ongeval te wijten aan een fout van iemand anders?">
             <div class="md:w-96 xs:w-72">
               <custom-input :type="InputTypes.TEXT" name="involvedPartyName" label="Naam" rules="fillInCheck:@involvedPartyDescription" />
               <custom-input :type="InputTypes.TEXT" name="involvedPartyDescription" label="Adres" rules="fillInCheck:@involvedPartyBirthdate" />
@@ -21,18 +20,12 @@
             </div>
           </display-content-checkbox>
 
-          <display-content-checkbox text="Waren er getuigen van het ongeval?">
+          <display-content-checkbox text="Was er een getuige?">
             <div class="md:w-96 xs:w-72">
-              <custom-input :type="InputTypes.TEXT" name="witnessName" label="Naam (Namen)" />
+              <custom-input :type="InputTypes.TEXT" name="witnessName" label="Naam" />
             </div>
             <div class="md:w-96 xs:w-72">
-              <custom-input :type="InputTypes.TEXT" name="witnessDescription" label="Adres (Adressen)" />
-            </div>
-          </display-content-checkbox>
-
-          <display-content-checkbox text="Hield iemand van de leiding toezicht op het moment dat het ongeval plaatsvond?">
-            <div class="md:w-96 xs:w-72">
-              <custom-input :type="InputTypes.TEXT" name="leadershipDescription" label="Voornaam en achternaam" />
+              <custom-input :type="InputTypes.TEXT" name="witnessDescription" label="Adres" />
             </div>
           </display-content-checkbox>
         </div>
@@ -50,7 +43,6 @@
 import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRepository'
 import DisplayContentCheckBox from '@/components/semantic/displayContentCheckbox.vue'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
-import CustomHeadline3 from '@/components/customHeadlines/CustomHeadline3.vue'
 import { scrollToFirstError, useScrollToTop } from '@/veeValidate/helpers'
 import BackButton from '@/components/semantic/BackButton.vue'
 import { ClaimHolderStates } from '@/enums/ClaimholderStates'
@@ -68,7 +60,6 @@ export default defineComponent({
   components: {
     'display-content-checkbox': DisplayContentCheckBox,
     'custom-headline-2': CustomHeadline2,
-    'custom-headline-3': CustomHeadline3,
     'custom-button': CustomButton,
     'custom-input': CustomInput,
     'back-button': BackButton,
@@ -97,7 +88,6 @@ export default defineComponent({
           pvNumber: values.pvNumber ? values.pvNumber : undefined,
           witnessName: values.witnessName ? values.witnessName : undefined,
           witnessDescription: values.witnessDescription ? values.witnessDescription : undefined,
-          leadershipDescription: values.leadershipDescription ? values.leadershipDescription : undefined,
         })
 
         store.dispatch('setClaimState', { ...claimState.value, ...newClaimState.value })

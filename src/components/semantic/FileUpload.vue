@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="border border-blue p-2 rounded-lg shadow-sm bg-lighterGreen" >
     <div>
       <div class="mb-2">
         <p>

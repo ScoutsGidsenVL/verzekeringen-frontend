@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-content-center container mt-1">
+  <div class="flex justify-content-center container rounded-lg bg-lightGreen mt-1">
     <div class="p-3" v-if="file">
       <div class="d-flex gap-4 justify-end">
         <div class="hover:text-lightGreen cursor-pointer" v-on:click="downloadFile()">

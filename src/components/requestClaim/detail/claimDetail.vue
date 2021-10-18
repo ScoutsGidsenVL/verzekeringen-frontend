@@ -14,32 +14,31 @@
       </div>
     </div>
 
-    <div class="mt-2">
-      <p class="font-semibold">Wie doet de aangifte?</p>
-
-      <div class="md:ml-20 xs:ml-5 sm:ml-5">
-        <label-output v-if="claimState.group" label="" :text="claimState.group.name + ' - ' + claimState.group.id" />
-
-        <div v-if="claimState.declarant" >
-          <responsible-member-detail title="" :responsible-member="claimState.declarant" />
-        </div>
-      </div>
-    </div>
-
-    <div class="mt-2">
-      <p class="font-semibold">Bijlage</p>
-
-      <div class="md:ml-20 xs:ml-5 sm:ml-5">
+    <div class="mt-2 mb-4">
         <div>
           <custom-headline-2 text="Bijlage" />
           <div>
             <file-upload />
           </div>
         </div>
-      </div>
     </div>
 
-    
+    <custom-headline-2 text="Overzicht" />
+
+    <div class="mt-2">
+      <p class="font-semibold">Wie doet de aangifte?</p>
+      
+      <div class="md:ml-20 xs:ml-5 sm:ml-5">
+        <label-output v-if="claimState.group" label="" :text="claimState.group.name + ' - ' + claimState.group.id" />
+        <label-output v-if="userData.firstName" label="" :text="userData.firstName + ' ' + userData.lastName" />
+        <label-output v-if="userData.email" label="" :text="userData.email" />
+        <label-output v-if="userData.phoneNumber" label="" :text="userData.phoneNumber" />
+
+        <div v-if="claimState.declarant" >
+          <responsible-member-detail title="" :responsible-member="claimState.declarant" />
+        </div>
+      </div>
+    </div>    
 
     <div class="mt-2">
       <p class="font-semibold">Wie is het slachtoffer?</p>
@@ -87,9 +86,9 @@
       <p class="font-semibold">Wat is er gebeurd?</p>
       <div class="md:ml-20 xs:ml-5 sm:ml-5">
         <label-output label="Datum van het ongeval" :text="claimState.dateOfAccident" />
-        <label-output label="Tijdens welke activiteit het ongeval plaatsvond" :text="claimState.activity" />
+        <label-output label="Het ongeval gebeurde:" :text="claimState.activity" />
         <div class="mt-2">
-          <strong>Tijdens welke soort ongeval de activiteit plaatsvond</strong>
+          <strong>Geef een korte beschrijving van de scoutsactiviteit.</strong>
         </div>
 
         <div v-if="claimState.activityTypes">
@@ -102,7 +101,14 @@
           <p v-show="claimState.activityTypes.includes(ActivityTypes.IRREGULAR_LOCATION)">Tijdens een activiteit op verplaatsing</p>
         </div>
 
-        <div class="mt-3" v-show="claimState.isDamage">
+        <div>
+          <p class="font-semibold mb-0">Beschrijving van het ongeval (oorzaken, omstandigheden en gevolgen, opgelopen verwondingen en/of schade</p>
+          <div>
+            <p style="max-width: 725px !important; text-align: justify">{{ claimState.description }}</p>
+          </div>
+        </div>
+
+        <div v-show="claimState.isDamage">
           <strong>Schade aan medisch hulpmiddel</strong>
           <div>
             <label class="block" v-show="claimState.damage">{{ claimState.damage }}</label>
@@ -111,18 +117,11 @@
       </div>
     </div>
 
-    <div class="mt-2">
-      <p class="font-semibold">Beschrijving van het ongeval (oorzaken, omstandigheden en gevolgen, opgelopen verwondingen en/of schade</p>
-      <div class="md:ml-20 xs:ml-5 sm:ml-5">
-        <p style="max-width: 725px !important; text-align: justify">{{ claimState.description }}</p>
-      </div>
-    </div>
-
     <div v-if="claimState.involvedPartyDescription || claimState.officialReportDescription || claimState.witnessDescription || claimState.leadershipDescription" class="mt-2">
-      <p class="font-semibold">Betrokkenheid andere partijen</p>
+      <p class="font-semibold">Zijn er andere personen betrokken?</p>
 
-      <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-5" v-if="claimState.involvedPartyDescription">
-        <strong>Is het ongeval te wijten aan een fout van een andere verzekerde of derde?</strong>
+      <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-1" v-if="claimState.involvedPartyDescription">
+        <strong>Is het ongeval te wijten aan een fout van iemand anders?</strong>
         <div>
           <div v-if="claimState.involvedPartyName">
             <p>
@@ -138,7 +137,7 @@
         </div>
       </div>
 
-      <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-5" v-if="claimState.officialReportDescription">
+      <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-1" v-if="claimState.officialReportDescription">
         <strong>Werd er een vastelling gedaan door een verbaliserende autoriteit?</strong>
         <div v-if="claimState.officialReportDescription">
           <p>
@@ -152,8 +151,8 @@
         </div>
       </div>
 
-      <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-5" v-if="claimState.witnessName">
-        <strong>Waren er getuigen van het ongeval?</strong>
+      <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-1" v-if="claimState.witnessName">
+        <strong>Was er een getuige?</strong>
         <div v-if="claimState.witnessName">
           <p>
             {{ claimState.witnessName }}
@@ -189,8 +188,8 @@
           </div>
         </div>
 
-        <div class="mt-4">
-          <label-output label="Identiteit van de aangever (Achternaam en voornaam)" class="mt-1" :text="userData.lastName + ' ' + userData.firstName" />
+        <div class="mt-3 mb-6">
+          <label-output label="Identiteit van de aangever" class="mt-1" :text="userData.lastName + ' ' + userData.firstName" />
         </div>
       </div>
     </div>
@@ -227,6 +226,7 @@ import { saveAs } from 'file-saver'
 import { useStore } from 'vuex'
 import moment from 'moment'
 import FileUpload from '@/components/semantic/FileUpload.vue'
+import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
 
 
 export default defineComponent({
@@ -238,7 +238,8 @@ export default defineComponent({
     'label-output': LabelOutput,
     'custom-input': CustomInput,
     'back-button': BackButton,
-    FileUpload
+    FileUpload,
+    CustomHeadline2
   },
   props: {
     isDetailPage: {

@@ -171,7 +171,8 @@
         </div>
         <div class="mt-3 md:ml-20 xs:ml-5 sm:ml-5" v-else>
           <info-alert>
-            <p>Dit lid heeft geen lid-nummer en zal als kapoen worden aanschouwen.</p>
+            <p>Enkel manueel invullen in geval van eenmalige activiteit of evenementenverzekering.</p>
+            <!-- Enkel gebruiken in geval van eenmalige activiteit of evenementenverzekering. -->
           </info-alert>
         </div>
       </div>
