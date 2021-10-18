@@ -3,6 +3,7 @@ import { Location, LocationDeserializer, LocationSerializer } from '@/serializer
 import { EventSize, EventSizeDeserializer, EventSizeSerializer } from '@/serializer/EventSize'
 import { ResponsibleMember, ResponsibleMemberDeserializer, ResponsibleMemberSerializer } from '../ResponsibleMember'
 import moment from 'moment'
+import { Status, StatusDeserializer } from '../Status'
 
 export interface EventInsurance {
   readonly id?: number
@@ -19,6 +20,7 @@ export interface EventInsurance {
   readonly location?: Location
   totalCost?: string
   readonly vvksComment?: string
+  status?: Status
 }
 
 export const EventInsuranceDeserializer = (input: any): EventInsurance => {
@@ -37,6 +39,7 @@ export const EventInsuranceDeserializer = (input: any): EventInsurance => {
     location: input.location ? LocationDeserializer(input.location) : undefined,
     eventSize: input.event_size ? (typeof input.event_size === 'object' ? EventSizeDeserializer(input.event_size) : { id: input.event_size }) : undefined,
     vvksComment: input.vvks_comment && input.vvks_comment.length > 0 ? input.vvks_comment : '',
+    status: input.status ? StatusDeserializer(input.status) : undefined
   }
 
   return single

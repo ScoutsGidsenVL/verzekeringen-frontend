@@ -3,7 +3,7 @@
     <div>
       <div class="mb-2">
         <p>
-          Voeg hier optioneel het ingevulde geneeskundig getuigschrift, een rekening of factuur,... toe
+          {{message}}
         </p>
       </div>
       <div>
@@ -45,7 +45,13 @@ export default defineComponent({
     'file-item-component': FileItemComponent,
     ErrorMessage,
   },
-  props: {},
+  props: {
+    message: {
+      type: String,
+      default: 'Voeg hier optioneel het ingevulde geneeskundig getuigschrift, een rekening of factuur,... toe',
+      required: false,
+    }
+  },
   setup() {
 
     const { value: selectedFile } = useField<any>('file', 'fileSize', {})

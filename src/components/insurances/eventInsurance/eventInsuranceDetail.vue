@@ -1,6 +1,18 @@
 <template>
   <base-detail :single-page="singlePage" :data="eventInsuranceState" :repository="EventRepository" title="evenementenverzekering">
     <template #default="{ details }">
+
+      <div v-if="details.status.label === 'Goedgekeurd'">
+        <custom-headline-2 text="Bijlage" />
+        <div class="mb-2">
+          <file-upload :message="'Deelnemerslijst kan hier opgeladen worden.'" />
+        </div>
+
+        <div class="mb-5">
+          <custom-button text="Dien in" />
+        </div>
+      </div>
+
       <div v-if="details" class="mt-1">
         <div v-if="!(holderState === HolderStates.DETAIL)">
           <div v-if="details.comment">
@@ -39,6 +51,9 @@ import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { computed, defineComponent } from 'vue'
 import { useStore } from 'vuex'
+import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
+import FileUpload from '@/components/semantic/FileUpload.vue'
+import CustomButton from '@/components/CustomButton.vue'
 
 export default defineComponent({
   name: 'EventInsuranceDetail',
@@ -47,6 +62,9 @@ export default defineComponent({
     'activity-detail': ActivityDetail,
     'label-output': LabelOutput,
     'base-detail': BaseDetail,
+    CustomHeadline2,
+    FileUpload,
+    CustomButton
   },
   props: {
     singlePage: {
@@ -67,12 +85,14 @@ export default defineComponent({
     })
 
     return {
-      EventRepository,
       eventInsuranceState,
+      EventRepository,
       formatEventDate,
-      InputTypes,
+      CustomHeadline2,
       HolderStates,
       holderState,
+      InputTypes,
+      FileUpload
     }
   },
 })
