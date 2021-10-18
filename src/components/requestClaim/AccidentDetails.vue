@@ -3,7 +3,7 @@
     <div class="mb-5">
       <custom-headline-2 text="Wat is er gebeurd?" />
 
-      <div style="width: 505px">
+      <div style="max-width: 505px">
         <custom-input :max="maxDate" class="xs:w-72 md:w-100" :type="InputTypes.DATE" rules="required" name="dateOfAccident" label="Datum van het ongeval" />
         
         <div class="mt-3">
@@ -22,33 +22,20 @@
             <input :id="ActivityTypes.REGULAR" v-model="selectedActivityType" class="cursor-pointer" type="radio" :name="ActivityTypes.REGULAR" :value="ActivityTypes.REGULAR" />
             <label :for="ActivityTypes.REGULAR" class="inline ml-2">tijdens de activiteit van onze groep.</label>
           </div>
-          <!-- OPTION 2 -->
-          <!-- <div>
-            <input
-              :id="ActivityTypes.IRREGULAR_LOCATION"
-              v-model="selectedActivityType"
-              class="cursor-pointer"
-              type="radio"
-              :name="ActivityTypes.IRREGULAR_LOCATION"
-              :value="ActivityTypes.IRREGULAR_LOCATION"
-            />
-            <label :for="ActivityTypes.IRREGULAR_LOCATION" class="ml-2">Tijdens een activiteit op verplaatsing</label>
-          </div> -->
           <!-- OPTION 3 -->
           <div>
             <div>
               <input :id="ActivityTypes.TRANSPORT" v-model="selectedActivityType" class="cursor-pointer" type="radio" :name="ActivityTypes.TRANSPORT" :value="ActivityTypes.TRANSPORT" />
-              <label :for="ActivityTypes.TRANSPORT" class="ml-2">op de heen- of terugweg van of naar de activiteit.</label>
-              <label class="invisible">
-                <!-- somehow without this code it wont work? -->
-                {{ selectedActivityType }}
-              </label>
+              <label :for="ActivityTypes.TRANSPORT" class="ml-2 xs:max-w-xs xs:pt-5">op de heen- of terugweg van of naar de activiteit.</label>
             </div>
-
             <div style="margin-left:1.3em">
-              <custom-input :type="InputTypes.TEXT" placeholder="Hoe gebeurde de verplaatsing? (te voet, met de fiets...)" name="usedTransport" />
+              <custom-input class="xs:w-64 md:w-100" :type="InputTypes.TEXT" placeholder="Hoe gebeurde de verplaatsing? (te voet, met de fiets...)" name="usedTransport" />
             </div>
           </div>
+          <label class="h-0 invisible">
+            <!-- somehow without this code it wont work? -->
+            {{ selectedActivityType }}
+          </label>
 
           <ErrorMessage name="activityTypes" class="text-red text-sm block my-2 w-80" />
         </form>
@@ -56,7 +43,7 @@
         
         <custom-input
           :textAreaWidth="'xs:w-72 md:w-100 md:min-w-full h-11'"
-          class="mt-3"
+          class="mt-3 xs:w-80 md:w-100"
           :type="InputTypes.TEXT_AREA"
           rules="required"
           name="activity"
@@ -69,7 +56,7 @@
           <div class="mb-2">
             <div style="max-width: 1025px">
               <custom-input
-                class="mt-3"
+                class="mt-3 xs:w-80 md:w-100"
                 :type="InputTypes.TEXT_AREA"
                 rules="required"
                 name="description"
@@ -84,10 +71,8 @@
           </strong>
 
           <div>
-            <!-- <div class="flex gap-5" style="width: 505px;">
-            </div> -->
-            <div style="width: 505px;">
-              <custom-input placeholder="Welk hulpmiddel?" :type="InputTypes.TEXT" name="damage" />
+            <div style="max-width: 505px;">
+              <custom-input class="xs:w-80 md:w-100" placeholder="Welk hulpmiddel?" :type="InputTypes.TEXT" name="damageType" />
               <label class="invisible">
                 <!-- somehow without this code it wont work? -->
                 {{ isDamage }}
@@ -168,6 +153,7 @@ export default defineComponent({
           usedTransport: values.usedTransport,
           damage: values.damage,
           leadershipDescription: values.leadershipDescription ? values.leadershipDescription : undefined,
+          damageType: values.damageType ? values.damageType : undefined,
         })
 
         store.dispatch('setClaimState', { ...claimState.value, ...newClaimState.value })

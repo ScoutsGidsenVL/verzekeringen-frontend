@@ -135,10 +135,13 @@ export class ClaimRepository extends BaseRepository {
     }
 
     //FILE
-    console.log('FILE1: ', file)
     if (file) {
-      console.log('FILE2: ', file)
       fd.append('file', file)
+    }
+
+    //DAMAGE TYPE
+    if (claim.damageType) {
+      fd.append('damage_type', claim.damageType)
     }
 
     const config = {

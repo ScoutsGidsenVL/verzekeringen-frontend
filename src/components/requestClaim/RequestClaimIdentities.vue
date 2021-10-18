@@ -17,7 +17,7 @@
       <custom-headline-2 text="Wie doet de aangifte?" />
 
       <div class="md:ml-20 xs:ml-5 sm:ml-5" style="margin-top: -2em">
-        <div style="width: 600px">
+        <div style="max-width: 600px">
           <multi-select
             id="group"
             :object="true"

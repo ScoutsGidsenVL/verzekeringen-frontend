@@ -45,6 +45,7 @@ export interface Claim {
   readonly victimEmail?: String
   readonly groupNumber?: String
   readonly declarant?: Member
+  damageType?: string
 }
 
 export const ClaimDeserializer = (input: any): Claim => {
@@ -82,6 +83,7 @@ export const ClaimDeserializer = (input: any): Claim => {
     victimEmail: input.victim_email ? input.victim_email : undefined,
     groupNumber: input.group_number ? input.group_number : undefined,
     declarant: input.declarant ? MemberDeserializer(input.declarant) : undefined,
+    damageType: input.damage_type ? input.damage_type : undefined,
   }
 
   return single
@@ -116,6 +118,7 @@ export const ClaimSerializer = (input: any): any => {
     // damage: input.damage ? input.damage : undefined,
     victim: input.victim ? VictimSerializer(input.victim) : undefined,
     file: input.file ? input.file : undefined,
+    damage_type: input.damageType ? input.damageType : undefined,
   }
 
   return single

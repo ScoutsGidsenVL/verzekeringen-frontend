@@ -111,7 +111,7 @@
         <div v-show="claimState.isDamage">
           <strong>Schade aan medisch hulpmiddel</strong>
           <div>
-            <label class="block" v-show="claimState.damage">{{ claimState.damage }}</label>
+            <label class="block" v-show="claimState.damage_type">{{ claimState.damage_type }}</label>
           </div>
         </div>
       </div>
