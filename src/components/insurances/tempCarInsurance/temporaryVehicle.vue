@@ -163,6 +163,7 @@ export default defineComponent({
     })
     const isSavingDraft = ref<boolean>(false)
     const saveAsDraft = () => {
+      console.log('values: ', values.vehicle)
       const draftData = ref<TemporaryVehicleInsurance>({
         ...generalInsuranceState.value,
         ...{

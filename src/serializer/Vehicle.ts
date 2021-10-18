@@ -44,6 +44,7 @@ export const VehicleSerializer = (input: any): any => {
 
 export const DraftVehicleSerializer = (input: any): any => {
   const single: any = {
+    id: input.id ? input.id : undefined,
     type: input.type ? VehicleTypeSerializer(input.type) : undefined,
     brand: input.brand ? input.brand : undefined,
     license_plate: input.licensePlate ? input.licensePlate : undefined,
