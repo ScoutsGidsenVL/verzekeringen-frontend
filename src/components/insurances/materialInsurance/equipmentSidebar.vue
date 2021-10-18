@@ -36,7 +36,7 @@
               </div>
             </div>
 
-            <div v-if="!isBicycle && !values.ownerMember" class="w-100 mt-4">
+            <div v-if="!isBicycle" class="w-100 mt-4">
               <div>
                 <custom-input extra-info="bv: Tent, Geluidsinstallatie" :type="InputTypes.TEXT" name="nature" label="Soort" />
               </div>
