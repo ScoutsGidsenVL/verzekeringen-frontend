@@ -86,38 +86,48 @@
       <p class="font-semibold">Wat is er gebeurd?</p>
       <div class="md:ml-20 xs:ml-5 sm:ml-5">
         <label-output label="Datum van het ongeval" :text="claimState.dateOfAccident" />
-        <label-output label="Het ongeval gebeurde:" :text="claimState.activity" />
-        <div class="mt-2">
-          <strong>Geef een korte beschrijving van de scoutsactiviteit.</strong>
+        <div>
+          <strong>Het ongeval gebeurde:</strong>
         </div>
 
         <div v-if="claimState.activityTypes">
-          <p v-show="claimState.activityTypes.includes(ActivityTypes.REGULAR)">tijdens de activiteit van onze groep.</p>
+          <p class="mb-0" v-show="claimState.activityTypes.includes(ActivityTypes.REGULAR)">tijdens de activiteit van onze groep.</p>
           <div v-show="claimState.activityTypes.includes(ActivityTypes.TRANSPORT)">
             op de heen- of terugweg van of naar de activiteit.
-            <p v-show="claimState.usedTransport">Gebruikt voertuig: {{ claimState.usedTransport }}</p>
+            <p class="mb-0" v-show="claimState.usedTransport">Gebruikt voertuig: {{ claimState.usedTransport }}</p>
           </div>
 
-          <p v-show="claimState.activityTypes.includes(ActivityTypes.IRREGULAR_LOCATION)">Tijdens een activiteit op verplaatsing</p>
+          <p class="mb-0" v-show="claimState.activityTypes.includes(ActivityTypes.IRREGULAR_LOCATION)">Tijdens een activiteit op verplaatsing</p>
         </div>
 
+        <label-output label="Geef een korte beschrijving van de scoutsactiviteit." :text="claimState.activity" />
+
         <div>
-          <p class="font-semibold mb-0">Beschrijving van het ongeval (oorzaken, omstandigheden en gevolgen, opgelopen verwondingen en/of schade</p>
+          <strong>Geef een uitgebreide beschrijving van het ongeval (oorzaken, omstandigheden, gevolgen, opgelopen verwondingen, schade).</strong>
           <div>
             <p style="max-width: 725px !important; text-align: justify">{{ claimState.description }}</p>
           </div>
         </div>
 
-        <div v-show="claimState.isDamage">
+        <div v-show="claimState.damageType">
           <strong>Schade aan medisch hulpmiddel</strong>
           <div>
-            <label class="block" v-show="claimState.damage_type">{{ claimState.damage_type }}</label>
+            <label class="block" v-show="claimState.damageType">{{ claimState.damageType }}</label>
+          </div>
+        </div>
+
+        <div v-if="claimState.leadershipDescription">
+          <strong>Hield iemand van de leiding toezicht op het moment dat het ongeval plaatsvond?</strong>
+          <div v-if="claimState.leadershipDescription">
+            <p>
+              {{ claimState.leadershipDescription }}
+            </p>
           </div>
         </div>
       </div>
     </div>
 
-    <div v-if="claimState.involvedPartyDescription || claimState.officialReportDescription || claimState.witnessDescription || claimState.leadershipDescription" class="mt-2">
+    <div v-if="claimState.involvedPartyDescription || claimState.officialReportDescription || claimState.witnessDescription" class="mt-2">
       <p class="font-semibold">Zijn er andere personen betrokken?</p>
 
       <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-1" v-if="claimState.involvedPartyDescription">
@@ -161,15 +171,6 @@
         <div v-if="claimState.witnessDescription">
           <p>
             {{ claimState.witnessDescription }}
-          </p>
-        </div>
-      </div>
-
-      <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-5" v-if="claimState.leadershipDescription">
-        <strong>Hield iemand van de leiding toezicht op het moment dat het ongeval plaatsvond?</strong>
-        <div v-if="claimState.leadershipDescription">
-          <p>
-            {{ claimState.leadershipDescription }}
           </p>
         </div>
       </div>
