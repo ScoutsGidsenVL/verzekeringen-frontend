@@ -1,6 +1,6 @@
 <template>
-  <div class="border border-blue p-2 rounded-lg shadow-sm bg-lighterGreen" >
-    <div>
+  <div class="border border-blue p-2 rounded-lg shadow-sm bg-lighterGreen" :class="isDisplay ? 'w-64' : 'w-100'">
+    <div v-if="!isDisplay">
       <div class="mb-2">
         <p>
           {{message}}
@@ -20,12 +20,12 @@
       </div>
     </div>
 
-    <div class="mt-4 mb-5">
+    <div class="mt-4 mb-4">
       <div v-if="!selectedFile">
         <i>Geen bijlage geselecteerd</i>
       </div>
       <div class="w-72" v-if="selectedFile">
-        <file-item-component v-on:deleteFile="deleteFile($event)" :file="selectedFile" :isDetailView="isDetailView" />
+        <file-item-component :isDisplay="isDisplay" v-on:deleteFile="deleteFile($event)" :file="selectedFile" :isDetailView="isDetailView" />
         <span :name="id">
           <ErrorMessage :name="'file'" class="text-red text-sm block w-80" />
         </span>
@@ -49,6 +49,11 @@ export default defineComponent({
     message: {
       type: String,
       default: 'Voeg hier optioneel het ingevulde geneeskundig getuigschrift, een rekening of factuur,... toe',
+      required: false,
+    },
+    isDisplay: {
+      type: Boolean,
+      default: false,
       required: false,
     }
   },

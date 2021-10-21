@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-content-center container rounded-lg bg-lightGreen mt-1">
     <div class="p-3" v-if="file">
-      <div class="d-flex gap-4 justify-end">
+      <div class="d-flex gap-4 justify-end" v-if="isDisplay === false">
         <div class="hover:text-lightGreen cursor-pointer" v-on:click="downloadFile()">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
             <path
@@ -48,6 +48,11 @@ export default defineComponent({
       required: false,
       default: false,
     },
+    isDisplay: {
+      type: Boolean,
+      default: false,
+      required: false,
+    }
   },
   setup(props, context) {
     const downloadFile = () => {

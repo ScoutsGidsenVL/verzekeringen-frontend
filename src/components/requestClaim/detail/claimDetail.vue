@@ -14,7 +14,7 @@
       </div>
     </div>
 
-    <div class="mt-2 mb-4">
+    <div class="mt-2 mb-4" v-if="!isEdit">
         <div>
           <custom-headline-2 text="Bijlage" />
           <div>
@@ -174,6 +174,15 @@
           </p>
         </div>
       </div>
+    </div>
+
+    <div class="mt-2 mb-4" v-if="isEdit">
+        <div>
+          <custom-headline-2 text="Bijlage" />
+          <div>
+            <file-upload :isDisplay="isEdit" />
+          </div>
+        </div>
     </div>
 
     <div v-if="!isDetailPage">
