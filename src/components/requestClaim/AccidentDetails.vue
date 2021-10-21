@@ -29,7 +29,7 @@
               <label :for="ActivityTypes.TRANSPORT" class="ml-2 xs:max-w-xs xs:pt-5">op de heen- of terugweg van of naar de activiteit.</label>
             </div>
             <div style="margin-left:1.3em">
-              <custom-input class="xs:w-64 md:w-100" :type="InputTypes.TEXT" placeholder="Hoe gebeurde de verplaatsing? (te voet, met de fiets...)" name="usedTransport" />
+              <custom-input :maxlength="30" class="xs:w-64 md:w-100" :type="InputTypes.TEXT" placeholder="Hoe gebeurde de verplaatsing? (te voet, met de fiets...)" name="usedTransport" />
             </div>
           </div>
           <label class="h-0 invisible">
@@ -42,6 +42,7 @@
       </div>
         
         <custom-input
+          :maxlength="1024"
           :textAreaWidth="'xs:w-72 md:w-100 md:min-w-full h-11'"
           class="mt-3 xs:w-80 md:w-100"
           :type="InputTypes.TEXT_AREA"
@@ -56,6 +57,7 @@
           <div class="mb-2">
             <div style="max-width: 1025px">
               <custom-input
+                :maxlength="1024"
                 class="mt-3 xs:w-80 md:w-100"
                 :type="InputTypes.TEXT_AREA"
                 rules="required"
@@ -72,7 +74,7 @@
 
           <div>
             <div style="max-width: 505px;">
-              <custom-input class="xs:w-80 md:w-100" placeholder="Welk hulpmiddel?" :type="InputTypes.TEXT" name="damageType" />
+              <custom-input :maxlength="128" class="xs:w-80 md:w-100" placeholder="Welk hulpmiddel?" :type="InputTypes.TEXT" name="damageType" />
               <label class="invisible">
                 <!-- somehow without this code it wont work? -->
                 {{ isDamage }}

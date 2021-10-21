@@ -55,8 +55,8 @@ export default abstract class BaseApiRepository {
         // Only return the data of response
         return result.data
       })
-      .catch((error: any) => {
-        return this.processError(error)
+      .catch((error: Error) => {
+        throw error
       })
   }
 

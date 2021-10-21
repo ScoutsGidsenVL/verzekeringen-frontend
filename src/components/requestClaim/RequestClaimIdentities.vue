@@ -76,16 +76,16 @@
       <div v-show="isFieldsVisible">
         <div class="md:ml-20 xs:ml-5 sm:ml-5">
           <div class="sm:flex sm:gap-2 xs:w-72 sm:w-100">
-            <custom-input :disabled="isSelectedVictim" :type="InputTypes.TEXT" rules="required" name="victim.firstName" label="Voornaam" />
-            <custom-input :disabled="isSelectedVictim" :type="InputTypes.TEXT" rules="required" name="victim.lastName" label="Achternaam" />
+            <custom-input :maxlength="15" :disabled="isSelectedVictim" :type="InputTypes.TEXT" rules="required" name="victim.firstName" label="Voornaam" />
+            <custom-input :maxlength="25" :disabled="isSelectedVictim" :type="InputTypes.TEXT" rules="required" name="victim.lastName" label="Achternaam" />
           </div>
 
           <div class="sm:mt-3 sm:flex sm:gap-2 xs:w-72 sm:w-100">
-            <custom-input class="streetInput" :type="InputTypes.TEXT" rules="required" name="victim.street" label="Straat" />
-            <custom-input :type="InputTypes.TEXT" rules="required" name="victim.number" label="Nummer" />
+            <custom-input :maxlength="100" class="streetInput" :type="InputTypes.TEXT" rules="required" name="victim.street" label="Straat" />
+            <custom-input :maxlength="5" :type="InputTypes.TEXT" rules="required" name="victim.number" label="Nummer" />
             <div>
               <strong>Bus</strong>
-              <custom-input class="mt-3" :type="InputTypes.TEXT" name="victim.letterBox" />
+              <custom-input class="mt-3" :maxlength="5" :type="InputTypes.TEXT" name="victim.letterBox" />
             </div>
           </div>
         </div>
@@ -155,7 +155,7 @@
 
         <div class="md:ml-20 xs:ml-5 sm:ml-5 mt-3">
           <div>
-            <custom-input class="input" :type="InputTypes.TEXT" rules="required" name="victim.email" label="E-mail" />
+            <custom-input :maxlength="60" class="input" :type="InputTypes.TEXT" rules="required" name="victim.email" label="E-mail" />
             <p class="input text-2xs mt-1">
               <i> Als het slachtoffer minderjarig is, vul dan het mailadres van de opvoedingsverantwoordelijke (ouders, voogd) in. </i>
             </p>

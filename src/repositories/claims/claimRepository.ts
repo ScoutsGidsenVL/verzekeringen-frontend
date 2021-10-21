@@ -149,14 +149,11 @@ export class ClaimRepository extends BaseRepository {
         'content-type': 'multipart/form-data',
       },
     }
-    // console.log('----------FD----------')
-    // for (const pair of fd.entries()) {
-    //   console.log(pair[0]+ ', ' + pair[1]); 
-    // }
 
     return this.post(this.endpoint, fd, config).then((response: any) => {
-      const res = response
-      return res
+      return response
+    }).catch((err) => {
+      throw err
     })
   }
 }
