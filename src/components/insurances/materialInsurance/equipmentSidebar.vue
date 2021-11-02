@@ -191,6 +191,7 @@ export default defineComponent({
     const owner = ref<any>()
     const lidType = ref<String>()
     const { resetForm, handleSubmit, validate, meta, values, isSubmitting } = useForm<Equipment>()
+    // @ts-ignore
     const { formSendWithSuccess } = useFormSendWithSuccess<Equipment>(meta)
     const { formDiv, scrollToTop } = useScrollToTop()
     const { sideBarState } = toRefs(props)

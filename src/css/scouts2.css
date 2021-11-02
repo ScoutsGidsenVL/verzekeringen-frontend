@@ -42,11 +42,11 @@ a.tabledrag-handle .handle {
   height: 14px;
   margin: -0.4em 0.5em 0;
   padding: 0.42em 0.5em;
-  background: url(/core/themes/stable/css/system/components/../../../images/core/icons/787878/move.svg) no-repeat 6px 7px;
+  /* background: url(/core/themes/stable/css/system/components/../../../images/core/icons/787878/move.svg) no-repeat 6px 7px; */
 }
 a.tabledrag-handle:hover .handle,
 a.tabledrag-handle:focus .handle {
-  background-image: url(/core/themes/stable/css/system/components/../../../images/core/icons/000000/move.svg);
+  /* background-image: url(/core/themes/stable/css/system/components/../../../images/core/icons/000000/move.svg); */
 }
 .touchevents .draggable td {
   padding: 0 10px;
@@ -94,23 +94,23 @@ a.tabledrag-handle:focus .handle {
   background-size: 100%;
 }
 .tablesort--asc {
-  background-image: url(/core/themes/stable/css/system/components/../../../images/core/icons/787878/twistie-down.svg);
+  /* background-image: url(/core/themes/stable/css/system/components/../../../images/core/icons/787878/twistie-down.svg); */
 }
 .tablesort--desc {
-  background-image: url(/core/themes/stable/css/system/components/../../../images/core/icons/787878/twistie-up.svg);
+  /* background-image: url(/core/themes/stable/css/system/components/../../../images/core/icons/787878/twistie-up.svg); */
 }
 div.tree-child {
-  background: url(/core/themes/stable/css/system/components/../../../images/core/tree.png) no-repeat 11px center;
+  /* background: url(/core/themes/stable/css/system/components/../../../images/core/tree.png) no-repeat 11px center; */
 }
 div.tree-child-last {
-  background: url(/core/themes/stable/css/system/components/../../../images/core/tree-bottom.png) no-repeat 11px center;
+  /* background: url(/core/themes/stable/css/system/components/../../../images/core/tree-bottom.png) no-repeat 11px center; */
 }
 [dir='rtl'] div.tree-child,
 [dir='rtl'] div.tree-child-last {
   background-position: -65px center;
 }
 div.tree-child-horizontal {
-  background: url(/core/themes/stable/css/system/components/../../../images/core/tree.png) no-repeat -11px center;
+  /* background: url(/core/themes/stable/css/system/components/../../../images/core/tree.png) no-repeat -11px center; */
 }
 .paragraph--unpublished {
   background-color: #fff4f4;

@@ -88,13 +88,13 @@ table.sticky-header {
   background-size: 20px;
 }
 .system-status-counter__status-icon--error:before {
-  background-image: url(/core/themes/stable/css/system/components/../../../images/core/icons/e32700/error.svg);
+  /* background-image: url(/core/themes/stable/css/system/components/../../../images/core/icons/e32700/error.svg); */
 }
 .system-status-counter__status-icon--warning:before {
-  background-image: url(/core/themes/stable/css/system/components/../../../images/core/icons/e29700/warning.svg);
+  /* background-image: url(/core/themes/stable/css/system/components/../../../images/core/icons/e29700/warning.svg); */
 }
 .system-status-counter__status-icon--checked:before {
-  background-image: url(/core/themes/stable/css/system/components/../../../images/core/icons/73b355/check.svg);
+  /* background-image: url(/core/themes/stable/css/system/components/../../../images/core/icons/73b355/check.svg); */
 }
 .system-status-report-counters__item {
   width: 100%;

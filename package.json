@@ -60,8 +60,7 @@
     "vue-composable-tester": "^0.1.2",
     "vue-jest": "^5.0.0-alpha.7",
     "vue-tsc": "^0.0.24",
-    "webpack": "^4.46.0",
     "sass": "^1.32.12",
-    "sass-loader": "^10.2.0"
+    "sass-loader": "^12.3.0"
   }
 }

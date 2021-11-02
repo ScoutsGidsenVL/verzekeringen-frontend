@@ -165,6 +165,7 @@ export default defineComponent({
     const store = useStore()
     const user = ref<ResponsibleMember>(store.getters.user)
     const { resetForm, errors, handleSubmit, validate, meta, values, isSubmitting } = useForm<NonMember>()
+    // @ts-ignore
     const { formSendWithSuccess } = useFormSendWithSuccess<NonMember>(meta)
     const selected = computed(() => (props.sideBarState.state === 'list' ? 'BestaandNonMember' : 'NieuwNonMember'))
     const selectedNonMembers = ref<NonMember[]>([])

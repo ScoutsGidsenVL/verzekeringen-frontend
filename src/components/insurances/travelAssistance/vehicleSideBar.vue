@@ -138,6 +138,7 @@ export default defineComponent({
     const store = useStore()
     const user = ref<ResponsibleMember>(store.getters.user)
     const { resetForm, handleSubmit, validate, meta, values, isSubmitting } = useForm<Vehicle>({ initialValues: { trailer: { id: '0', value: '0', label: 'Geen' } } })
+    // @ts-ignore
     const { formSendWithSuccess } = useFormSendWithSuccess<Vehicle>(meta)
     const selected = computed(() => (props.sideBarState.state === 'list' ? 'BestaandVehicle' : 'NieuwVehicle'))
     const selectedVehicle = ref<Vehicle>({})
