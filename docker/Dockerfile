@@ -6,7 +6,6 @@ WORKDIR /app
 ENTRYPOINT ["/entrypoint.sh"]
 
 COPY docker/entrypoint*.sh /
-COPY docker/entrypoint*.sh /
 COPY package*.json ./
 
 RUN npm install
