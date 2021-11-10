@@ -1,5 +1,5 @@
 ### Development stage
-FROM node:lts-alpine as development-stage
+FROM  node:16-alpine3.14 as development-stage
 RUN apk add --no-cache git
 
 WORKDIR /app
