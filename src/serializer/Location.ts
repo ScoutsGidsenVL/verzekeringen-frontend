@@ -5,7 +5,6 @@ export interface Location {
 }
 
 export const LocationDeserializer = (input: any): Location => {
-  console.log('loc input: ', input)
   const single: Location = {
     city: input.city ? input.city : undefined,
     postalCode: input.postcode ? input.postcode : undefined,

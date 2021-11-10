@@ -27,7 +27,7 @@ export default class UserModel implements ResponsibleMember {
     const mappedGroups = input.groups.groups.map((group: any) => GroupDeserializer(group))
 
     return new UserModel(
-      input.id,
+      input.group_admin_id,
       input.first_name,
       input.last_name,
       input.permissions,

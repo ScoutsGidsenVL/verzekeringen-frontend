@@ -67,7 +67,6 @@ export default defineComponent({
       document.getElementById('file').value = ''
     }
     const selectFile = (data: any) => {
-      console.log('SELECTED FILE: ', data.target.files[0])
       selectedFile.value = data.target.files[0]
     }
 

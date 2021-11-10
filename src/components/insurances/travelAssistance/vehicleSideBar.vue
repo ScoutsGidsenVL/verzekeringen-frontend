@@ -154,7 +154,6 @@ export default defineComponent({
       handleSubmit(async (values: Vehicle) => {
         if (props.sideBarState.state === 'new' || props.sideBarState.state === 'edit') {
           values.group = generalInsuranceState.value.group.id
-          console.log('INCOMING')
           const vehicle = ref<Vehicle>({
             id: values.id,
             type: values.type,
@@ -167,7 +166,6 @@ export default defineComponent({
           })
 
           if (props.sideBarState.state === 'edit') {
-          console.log('INCOMING 2')
             await updateVehicle(vehicle.value)
           } else {
             await postVehicle(vehicle.value)
@@ -195,7 +193,6 @@ export default defineComponent({
     }
 
     const updateVehicle = async (data: Vehicle) => {
-      console.log('INCOMING 3: ', data)
         await RepositoryFactory.get(VehicleRepository)
           .update(data.id ? data.id : '', data)
           .then((completed: Vehicle) => {

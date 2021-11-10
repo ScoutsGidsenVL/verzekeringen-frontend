@@ -311,7 +311,6 @@ export default defineComponent({
           store.dispatch('setClaimState', { ...claimState.value, ...newClaimState.value }).then(async () => {
             await postClaim()
             .then((result: any) => {
-                console.log('STEP FIVE', result)
                 store.dispatch('setClaimHolderState', ClaimHolderStates.FIVE)
             })
             .catch((err: Error) => {

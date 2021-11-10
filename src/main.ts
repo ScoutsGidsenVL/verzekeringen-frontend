@@ -46,22 +46,9 @@ new StaticFileRepository().getFile('config.json').then((result: any) => {
           ? RepositoryFactory.get(AuthRepository)
               .me()
               .then((user: any) => {
-                if (user.groupAdminId) {
-                  // GET USER BY ID FOR MORE DETAILS
-                  console.log('test 1')
-                  RepositoryFactory.get(MemberRepository)
-                    .getById(user.groupAdminId)
-                    .then((userById) => {
-                      user.city = userById.postCodeCity.city
-                      store.dispatch('setUser', user).then(() => {
-                        next()
-                      })
-                    })
-                } else {
-                  store.dispatch('setUser', user).then(() => {
-                    next()
-                  })
-                }
+                store.dispatch('setUser', user).then(() => {
+                  next()
+                })
               })
           : next()
       } else {

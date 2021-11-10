@@ -10,7 +10,7 @@ export const GroupDeserializer = (input: any): Group => {
     id: input.group_admin_id ? input.group_admin_id : undefined,
     location: input.addresses[0].city ? input.addresses[0].city : undefined,
     name: input.name ? input.name : undefined,
-    fullInfo: input.id && input.name ? `${input.name} - ${input.id}` : undefined,
+    fullInfo: input.group_admin_id  && input.name ? `${input.name} - ${input.group_admin_id}` : undefined,
   }
 
   return single
