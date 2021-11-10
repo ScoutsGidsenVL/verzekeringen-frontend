@@ -20,8 +20,9 @@ export interface Member {
 }
 
 export const MemberDeserializer = (input: any): Member => {
+  console.log('input: ', input )
   const single: Member = {
-    id: input.id ? input.id : undefined,
+    id: input.group_admin_id ? input.group_admin_id : undefined,
     lastName: input.last_name,
     firstName: input.first_name,
     phoneNumber: input.phone_number ? input.phone_number.replace(/ /g, '') : undefined,

@@ -24,7 +24,7 @@ export default class UserModel implements ResponsibleMember {
     // input.scouts_groups.push({ id: 'X1027G', name: 'Personeel Secretariaat', location: ' Borgerhout (Antwerpen)' })
     // input.scouts_groups.push({ id: 'X1123G', name: 'We-Residenten De Winner', location: ' Borgerhout (Antwerpen)' })
 
-    const mappedGroups = input.scouts_groups.map((group: any) => GroupDeserializer(group))
+    const mappedGroups = input.groups.groups.map((group: any) => GroupDeserializer(group))
 
     return new UserModel(
       input.id,

@@ -48,6 +48,7 @@ new StaticFileRepository().getFile('config.json').then((result: any) => {
               .then((user: any) => {
                 if (user.groupAdminId) {
                   // GET USER BY ID FOR MORE DETAILS
+                  console.log('test 1')
                   RepositoryFactory.get(MemberRepository)
                     .getById(user.groupAdminId)
                     .then((userById) => {
