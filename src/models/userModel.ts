@@ -19,12 +19,13 @@ export default class UserModel implements ResponsibleMember {
   }
 
   public static deserialize(input: any): UserModel {
+    console.log('INPUT: ', input)
     // HARDCODED GROUPS ONLY FOR TESTING
     // input.scouts_groups.push({ id: 'X1121G', name: 'We-Residenten De Kluis', location: ' Borgerhout (Antwerpen)' })
     // input.scouts_groups.push({ id: 'X1027G', name: 'Personeel Secretariaat', location: ' Borgerhout (Antwerpen)' })
     // input.scouts_groups.push({ id: 'X1123G', name: 'We-Residenten De Winner', location: ' Borgerhout (Antwerpen)' })
 
-    const mappedGroups = input.groups.groups.map((group: any) => GroupDeserializer(group))
+    const mappedGroups = input.groups.map((group: any) => GroupDeserializer(group))
 
     return new UserModel(
       input.group_admin_id,
