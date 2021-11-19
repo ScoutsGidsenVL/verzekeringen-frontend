@@ -51,6 +51,7 @@ export const oneTimeActivitySerializer = (input: OneTimeActivity): OneTimeActivi
     created_on: input.createdOn ? input.createdOn : undefined,
     comment: input.comment ? input.comment : undefined,
     group: input.group ? GroupSerializer(input.group).id : undefined,
+    group_admin_id: input.group ? GroupSerializer(input.group).id : undefined,
     group_size: input.groupSize ? GroupSizeSerializer(input.groupSize).id : undefined,
     location: input.location ? LocationSerializer(input.location) : undefined,
     nature: input.nature ? input.nature : undefined,

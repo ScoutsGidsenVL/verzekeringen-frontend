@@ -2,7 +2,7 @@
   <base-detail :single-page="singlePage" :data="eventInsuranceState" :repository="EventRepository" title="evenementenverzekering">
     <template #default="{ details }">
 
-      <div v-if="details.status.label === 'Goedgekeurd'">
+      <div v-if="details.status && details.status.label === 'Goedgekeurd'">
         <custom-headline-2 text="Bijlage" />
         <div class="mb-2">
           <file-upload :message="'Deelnemerslijst kan hier opgeladen worden.'" />

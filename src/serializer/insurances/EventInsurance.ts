@@ -52,6 +52,7 @@ export const EventInsuranceSerializer = (input: EventInsurance): EventInsurance 
     comment: input.comment ? input.comment : undefined,
     responsible_phone_number: input.responsibleMember ? ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number : undefined,
     group: input.group ? GroupSerializer(input.group).id : undefined,
+    group_admin_id: input.group ? GroupSerializer(input.group).id : undefined,
     total_cost: input.totalCost ? input.totalCost : undefined,
     nature: input.nature ? input.nature : undefined,
     location: input.location ? LocationSerializer(input.location) : undefined,

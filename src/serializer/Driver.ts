@@ -4,6 +4,7 @@ import { Member } from '@/serializer/Member'
 export interface Driver extends Member {}
 
 export const DriverDeserializer = (input: any): Driver => {
+  console.log('INPUT DRIVER: ', input)
   const single: Driver = {
     id: input.id ? input.id : undefined,
     lastName: input.last_name,
@@ -12,8 +13,8 @@ export const DriverDeserializer = (input: any): Driver => {
     email: input.email ? input.email : undefined,
     birthDate: input.birth_date,
     groupAdminId: input.group_admin_id,
-    street: input.street ? input.street : undefined,
-    number: input.number ? input.number : undefined,
+    street: input.addresses && input.addresses[0].street ? input.addresses[0].street : undefined,
+    number: input.addresses && input.addresses[0].number ? input.addresses[0].number : undefined,
     letterBox: input.letter_box ? input.letter_box : undefined,
     postCodeCity: input.postcode_city ? LocationDeserializer(input.postcode_city) : undefined,
     comment: input.comment,

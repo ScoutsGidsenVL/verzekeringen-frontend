@@ -46,11 +46,13 @@ export const MaterialInsuranceDeserializer = (input: any): MaterialInsurance => 
 }
 
 export const MaterialInsuranceSerializer = (input: MaterialInsurance): MaterialInsurance => {
+  console.log('CHECKINNGGG: ', input)
   const single: any = {
     start_date: input.startDate ? moment(input.startDate).format('YYYY-MM-DDTh:mm:ss') : undefined,
     end_date: input.endDate ? moment(input.endDate).format('YYYY-MM-DDTh:mm:ss') : undefined,
     comment: input.comment ? input.comment : undefined,
     group: input.group ? GroupSerializer(input.group).id : undefined,
+    group_admin_id: input.group ? GroupSerializer(input.group).id : undefined,
     nature: input.nature ? input.nature : undefined,
     responsible_phone_number: input.responsibleMember ? ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number : undefined,
     country: input.country && input.country.name !== 'België' ? CountrySerializer(input.country).id : undefined,
