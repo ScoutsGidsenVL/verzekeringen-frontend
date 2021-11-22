@@ -236,8 +236,6 @@ export default defineComponent({
     const userData = ref<ResponsibleMember>(store.getters.user)
     let data: any = store.getters.getCurrentInsuranceState
     const maxCoverageOptions = ref<Array<Coverage>>()
-    console.log('data: ', data)
-    console.log('user data: ', userData.value)
     const { handleSubmit, values, validate, isSubmitting } = useForm<BaseInsurance>({
       initialValues: {
         startDate: data.startDate ? data.startDate : '',

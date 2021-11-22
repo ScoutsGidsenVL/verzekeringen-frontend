@@ -4,7 +4,6 @@ import { Member } from '@/serializer/Member'
 export interface Driver extends Member {}
 
 export const DriverDeserializer = (input: any): Driver => {
-  console.log('INPUT DRIVER: ', input)
   const single: Driver = {
     id: input.id ? input.id : undefined,
     lastName: input.last_name,

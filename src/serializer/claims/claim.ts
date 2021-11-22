@@ -1,6 +1,6 @@
 import { ActivityTypes } from '@/enums/activityTypes'
 import { Country } from '@/serializer/Country'
-import { Group } from '@/serializer/Group'
+import { Group, GroupDeserializer } from '@/serializer/Group'
 import { Victim, VictimDeserializer, VictimSerializer } from '@/serializer/Victim'
 import { ResponsibleMember } from '../ResponsibleMember'
 import moment from 'moment'
@@ -53,7 +53,7 @@ export const ClaimDeserializer = (input: any): Claim => {
     id: input.id ? input.id : undefined,
     date: input.date ? input.date : undefined,
     person: input.declarant ? input.declarant : undefined,
-    group: input.group ? input.group : undefined,
+    group: input.group ? GroupDeserializer(input.group) : undefined,
     victimMember: input.victim_member ? input.victim_member : undefined,
     victimNonMember: input.victim_non_member ? input.victim_non_member : undefined,
     victimMemberGroupAdminId: input.victim_member_group_admin_id ? input.victim_member_group_admin_id : undefined,
@@ -81,7 +81,7 @@ export const ClaimDeserializer = (input: any): Claim => {
     sex: input.sex ? input.sex : undefined,
     victimBirthDate: input.victim_birth_date ? input.victim_birth_date : undefined,
     victimEmail: input.victim_email ? input.victim_email : undefined,
-    groupNumber: input.group_number ? input.group_number : undefined,
+    groupNumber: input.group_group_admin_id ? input.group_group_admin_id : undefined,
     declarant: input.declarant ? MemberDeserializer(input.declarant) : undefined,
     damageType: input.damage_type ? input.damage_type : undefined,
   }

@@ -11,6 +11,7 @@ export interface ResponsibleMember {
   readonly scoutsGroups?: Group[]
   readonly city?: string
   readonly groupAdminId?: string
+  readonly permissions: Array<string>
 }
 
 export const ResponsibleMemberDeserializer = (input: any): ResponsibleMember => {
@@ -25,6 +26,7 @@ export const ResponsibleMemberDeserializer = (input: any): ResponsibleMember => 
     scoutsGroups: input.scouts_group ? input.scouts_groups.map((group: any) => GroupDeserializer(group)) : undefined,
     city: input.postcode_city && input.postcode_city.city ? input.postcode_city.city : undefined,
     groupAdminId: input.group_admin_id ? input.group_admin_id : undefined,
+    permissions: input.user_permissions ? input.user_permissions : []
   }
 
   return single

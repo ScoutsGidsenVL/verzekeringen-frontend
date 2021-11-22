@@ -2,7 +2,9 @@
   <div>
     <call-to-action link="/aanvraag/schadeaangifte" text="Start een nieuwe aangifte" />
     <div class="container">
-      <claim-list v-if="data && data.results" title="Aangiftes" :items="data.results">
+      <claim-list v-if="data && data.results" title="Aangiftes" :items="can('insurances.list_insuranceclaims') ? data.results : []">
+        <pre>
+        </pre>
           <div class="mb-3">
             <search-input-claims v-model:loading="loading" name="claim" placeholder="Zoek op naam" :repository="ClaimRepository" @fetchedOptions="fetchedOptions($event)" />
           </div>
@@ -29,6 +31,7 @@ import { Group } from '@/serializer/Group'
 // import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 import SearchInputClaims from '@/components/inputs/SearchInputClaims.vue'
+import usePermissions from '../helpers/usePermissions'
 
 export default defineComponent({
   name: 'ClaimsHome',
@@ -40,6 +43,7 @@ export default defineComponent({
     'search-input-claims': SearchInputClaims,
   },
   setup() {
+    const { can } = usePermissions()
     const loading = ref<boolean>(false)
     const isLoading = ref<boolean>(false)
     const store = useStore()
@@ -101,7 +105,8 @@ export default defineComponent({
       userData,
       loading,
       fetchedOptions,
-      ClaimRepository
+      ClaimRepository,
+      can
     }
   },
 })

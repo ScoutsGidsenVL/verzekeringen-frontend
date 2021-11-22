@@ -13,18 +13,19 @@ export default class UserModel implements ResponsibleMember {
     public phoneNumber: string,
     public scoutsGroups: Group[],
     public city: string,
-    public groupAdminId: string
+    public groupAdminId: string,
   ) {
     return this
   }
 
   public static deserialize(input: any): UserModel {
     const mappedGroups = input.scouts_groups.map((group: any) => GroupDeserializer(group))
+    console.log('USER: ', input)
     return new UserModel(
       input.group_admin_id,
       input.first_name,
       input.last_name,
-      input.permissions,
+      input.user_permissions ? input.user_permissions : [],
       input.email,
       input.membership_number,
       input.birth_date,

@@ -34,17 +34,18 @@ export default class FileRepository extends BaseRepository {
     })
   }
 
-  public uploadAttendeesFile(file: any, inscuranceId: string): Promise<FileItem> {
+  public uploadParticipantsFile(file: any, inscuranceId: string): Promise<FileItem> {
     const fd = new FormData()
-    fd.append('insurance_claim', inscuranceId)
     fd.append('file', file)
+    fd.append('event_insurance', inscuranceId)
 
     const config = {
       headers: {
         'content-type': 'multipart/form-data',
       },
     }
-    return this.post(this.endpoint, fd, config).then((response: FileItem) => {
+
+    return this.post('participants', fd, config).then((response: any) => {
       return response
     })
   }

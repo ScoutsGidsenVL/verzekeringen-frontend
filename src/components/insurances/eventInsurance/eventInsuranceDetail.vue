@@ -2,8 +2,7 @@
   <base-detail :single-page="singlePage" :data="eventInsuranceState" :repository="EventRepository" title="evenementenverzekering">
     <template #default="{ details }">
       values: {{values}}
-      <!-- <div v-if="details.status && details.status.label === 'Goedgekeurd'"> -->
-      <div v-if="true">
+      <div v-if="details.status && details.status.label === 'Goedgekeurd'">
         <form id="list" @submit.prevent="onSubmit">
           <custom-headline-2 text="Bijlage" />
           <div class="mb-2">
@@ -105,7 +104,7 @@ export default defineComponent({
     }
 
     const postFile = async (values: any) => {
-      await RepositoryFactory.get(FileRepository).uploadAttendeesFile(values.file, route.params.id.toString())
+      await RepositoryFactory.get(FileRepository).uploadParticipantsFile(values.file, route.params.id.toString())
     }
 
     return {

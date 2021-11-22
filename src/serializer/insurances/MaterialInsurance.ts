@@ -25,7 +25,6 @@ export interface MaterialInsurance {
 }
 
 export const MaterialInsuranceDeserializer = (input: any): MaterialInsurance => {
-  console.log('YOOOOOOOOOO: ', input)
   const single: MaterialInsurance = {
     id: input.id ? input.id : undefined,
     startDate: input.start_date ? moment(input.start_date).format('YYYY-MM-DD') : undefined,
@@ -47,7 +46,6 @@ export const MaterialInsuranceDeserializer = (input: any): MaterialInsurance => 
 }
 
 export const MaterialInsuranceSerializer = (input: MaterialInsurance): MaterialInsurance => {
-  console.log('CHECKINNGGG: ', input)
   const single: any = {
     start_date: input.startDate ? moment(input.startDate).format('YYYY-MM-DDTh:mm:ss') : undefined,
     end_date: input.endDate ? moment(input.endDate).format('YYYY-MM-DDTh:mm:ss') : undefined,

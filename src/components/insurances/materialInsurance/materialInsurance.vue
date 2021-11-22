@@ -103,7 +103,6 @@ export default defineComponent({
     const store = useStore()
     const initialCountry = ref<Country>(CountryDeserializer({ id: '3232', name: 'België' }))
     const data: MaterialInsurance = store.getters.getCurrentInsuranceState
-    console.log('MAT DATA: ', data)
     const { handleSubmit, values, isSubmitting, validate } = useForm<MaterialInsurance>({
       initialValues: {
         nature: data.nature ? data.nature : '',
