@@ -27,4 +27,10 @@ export default class FileRepository extends BaseRepository {
       return response
     })
   }
+
+  public uploadAttendeesFile(file: any, inscuranceId: string): Promise<FileItem> {
+    return this.post('/files/' + inscuranceId, file).then((response: FileItem) => {
+      return response
+    })
+  }
 }

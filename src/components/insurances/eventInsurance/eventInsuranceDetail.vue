@@ -1,16 +1,19 @@
 <template>
   <base-detail :single-page="singlePage" :data="eventInsuranceState" :repository="EventRepository" title="evenementenverzekering">
     <template #default="{ details }">
+      values: {{values}}
+      <!-- <div v-if="details.status && details.status.label === 'Goedgekeurd'"> -->
+      <div v-if="true">
+        <form id="list" @submit.prevent="onSubmit">
+          <custom-headline-2 text="Bijlage" />
+          <div class="mb-2">
+            <file-upload :message="'Deelnemerslijst kan hier opgeladen worden.'" />
+          </div>
 
-      <div v-if="details.status && details.status.label === 'Goedgekeurd'">
-        <custom-headline-2 text="Bijlage" />
-        <div class="mb-2">
-          <file-upload :message="'Deelnemerslijst kan hier opgeladen worden.'" />
-        </div>
-
-        <div class="mb-5">
-          <custom-button text="Dien in" />
-        </div>
+          <div class="mb-5">
+            <custom-button text="Bijlage indienen" />
+          </div>
+        </form>
       </div>
 
       <div v-if="details" class="mt-1">
@@ -54,6 +57,10 @@ import { useStore } from 'vuex'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
 import FileUpload from '@/components/semantic/FileUpload.vue'
 import CustomButton from '@/components/CustomButton.vue'
+import { useForm } from 'vee-validate'
+import RepositoryFactory from '@/repositories/repositoryFactory'
+import FileRepository from '@/repositories/fileRepository'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'EventInsuranceDetail',
@@ -75,6 +82,12 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
+    const route = useRoute()
+
+    const { handleSubmit, values, validate, isSubmitting } = useForm<any>({
+      initialValues: {
+      },
+    })
 
     const eventInsuranceState = computed(() => {
       return store.state.insurance.eventState
@@ -84,6 +97,17 @@ export default defineComponent({
       return store.state.insurance.holderState
     })
 
+    const onSubmit = async () => {
+      handleSubmit(async (values: any) => {
+        console.log("doing submit handle: ", values)
+        postFile(values)
+      })()
+    }
+
+    const postFile = async (values: any) => {
+      await RepositoryFactory.get(FileRepository).uploadAttendeesFile(values.file, route.params.id.toString())
+    }
+
     return {
       eventInsuranceState,
       EventRepository,
@@ -92,7 +116,9 @@ export default defineComponent({
       HolderStates,
       holderState,
       InputTypes,
-      FileUpload
+      FileUpload,
+      onSubmit,
+      values
     }
   },
 })
