@@ -47,9 +47,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { value: nonMembers } = useField<NonMember[]>(props.id, props.rules, {
-      initialValue: [],
-    })
+    const { value: nonMembers } = useField<NonMember[]>(props.id, props.rules, {})
     const sideBarState = ref<sideBarState<NonMember>>({ state: 'hide' })
 
     const openSideBar = () => {

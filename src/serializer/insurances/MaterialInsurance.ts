@@ -25,12 +25,13 @@ export interface MaterialInsurance {
 }
 
 export const MaterialInsuranceDeserializer = (input: any): MaterialInsurance => {
+  console.log('YOOOOOOOOOO: ', input)
   const single: MaterialInsurance = {
     id: input.id ? input.id : undefined,
     startDate: input.start_date ? moment(input.start_date).format('YYYY-MM-DD') : undefined,
     endDate: input.end_date ? moment(input.end_date).format('YYYY-MM-DD') : undefined,
     comment: input.comment ? input.comment : undefined,
-    group: input.group ? GroupDeserializer(input.group) : undefined,
+    group: input.scouts_group ? GroupDeserializer(input.scouts_group) : undefined,
     nature: input.nature ? input.nature : undefined,
     responsibleMember: input.responsible_member ? ResponsibleMemberDeserializer(input.responsible_member) : undefined,
     status: input.status ? StatusDeserializer(input.status) : undefined,

@@ -32,7 +32,7 @@ export const nonMemberInsuranceDeserializer = (input: any): NonMemberInsurance =
     endDate: input.end_date ? moment(input.end_date).format('YYYY-MM-DD') : undefined,
     createdOn: input.created_on ? input.created_on : undefined,
     comment: input.comment ? input.comment : undefined,
-    group: input.group ? GroupDeserializer(input.group) : undefined,
+    group: input.scouts_group ? GroupDeserializer(input.scouts_group) : undefined,
     postCodeCity: input.postcode_city ? LocationDeserializer(input.postcode_city) : undefined,
     nature: input.nature ? input.nature : undefined,
     responsibleMember: input.responsible_member ? ResponsibleMemberDeserializer(input.responsible_member) : undefined,

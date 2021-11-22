@@ -46,7 +46,7 @@ export class ClaimRepository extends BaseRepository {
 
     //GROUP
     if (claim.group && claim.group.id) {
-      fd.append('group', claim.group.id)
+      fd.append('group_group_admin_id', claim.group.id)
     }
 
     //ACTIVITY TYPE

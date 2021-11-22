@@ -93,7 +93,7 @@ export const ClaimSerializer = (input: any): any => {
   input.victim.sex = input.sex
 
   const single: any = {
-    group: input.group.id ? input.group.id : undefined,
+    group_group_admin_id: input.group.id ? input.group.id : undefined,
     victim_member: input.victimMember ? input.victimMember : undefined,
     victim_non_member: input.victimNonMember ? input.victimNonMember : undefined,
     bank_account: input.victim.bankAccount ? input.victim.bankAccount.replace(/ /g, '') : undefined,
