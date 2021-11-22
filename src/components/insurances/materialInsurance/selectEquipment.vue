@@ -43,7 +43,6 @@ export default defineComponent({
   },
   setup(props) {
     const { value: equipment } = useField<any>(props.id, props.rules, {
-      initialValue: [],
     })
     const sideBarState = ref<sideBarState<Equipment>>({ state: 'hide' })
 
