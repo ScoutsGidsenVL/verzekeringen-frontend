@@ -60,8 +60,7 @@
       </div>
     </div>
   </div>
-
-  <members-side-bar v-model:isDisplay="isDisplay" :existing-list="selectDriverField.drivers" title="Lid" @addMemberToList="addMemberToDriverList($event)" />
+  <members-side-bar v-if="generalInsuranceState.group" v-model:isDisplay="isDisplay" :group="generalInsuranceState.group.id" :existing-list="selectDriverField.drivers" title="Lid" @addMemberToList="addMemberToDriverList($event)" />
 </template>
 
 <script lang="ts">
@@ -138,9 +137,14 @@ export default defineComponent({
       return store.state.insurance.isSubmittingState
     })
 
+    const generalInsuranceState = computed(() => {
+      return store.state.insurance.generalInsuranceState
+    })
+
     return {
       BelgianCitySearchRepository,
       addMemberToDriverList,
+      generalInsuranceState,
       deleteMemberFromList,
       selectDriverField,
       IS_NO_DRIVER,

@@ -4,7 +4,7 @@
   </span>
   <a class="cursor-pointer btn-simple-green mb-4" @click="openSideBar()"> + Voeg lid toe </a>
   <member-list :can-be-deleted="true" :members-list="members" @deleteMemberFromList="deleteMemberFromList($event)" />
-  <members-side-bar v-model:isDisplay="isDisplay" :existing-list="members" title="Lid" @addMemberToList="addMemberToList($event)" />
+  <members-side-bar v-if="generalInsuranceState.group" v-model:isDisplay="isDisplay" :group="generalInsuranceState.group.id" :existing-list="members" title="Lid" @addMemberToList="addMemberToList($event)" />
 </template>
 
 <script lang="ts">
@@ -12,7 +12,8 @@ import MemberSiderbar from '@/components/insurances/travelAssistance/membersSide
 import MemberList from '@/components/insurances/travelAssistance/memberList.vue'
 import { ErrorMessage, useField } from 'vee-validate'
 import { Member } from '@/serializer/Member'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'SelectParticipant',
@@ -50,12 +51,19 @@ export default defineComponent({
       members.value.splice(Number(id), 1)
     }
 
+    const store = useStore()
+
+    const generalInsuranceState = computed(() => {
+      return store.state.insurance.generalInsuranceState
+    })
+
     return {
       addMemberToList,
       deleteMemberFromList,
       openSideBar,
       members,
       isDisplay,
+      generalInsuranceState
     }
   },
 })

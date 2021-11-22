@@ -2,7 +2,7 @@
   <base-side-bar :isOverflowHidden="isOverflowHidden" v-model:isDisplay="display" name="Member" :title="title">
     <div class="d-flex flex-col h-full px-4 pt-4">
       <div>
-        <search-input v-model:loading="loading" name="member" placeholder="Zoek op naam" :repository="PersonRepository" @fetchedOptions="fetchedOptions($event)" />
+        <search-input v-model:loading="loading" name="member" placeholder="Zoek op naam" :repository="PersonRepository" @fetchedOptions="fetchedOptions($event)" :group="group ? group : ''" />
       </div>
 
       <div class="h-full overflow-y-scroll mt-4 pb-24">
@@ -82,6 +82,7 @@ export default defineComponent({
       required: false,
       default: true,
     },
+    group: String
   },
   setup(props, context) {
     const store = useStore()

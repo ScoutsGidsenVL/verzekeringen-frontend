@@ -55,7 +55,7 @@
           <strong class="cursor-pointer text-lightGreen hover:text-green" @click="openMemberSideBar()">+ Kies een lid</strong>
           of
           <strong class="cursor-pointer text-lightGreen" @click="displayFields()">vul manueel in</strong>
-          <members-side-bar v-model:isDisplay="isMemberSideBarDisplay" :close-on-add="true" :existing-list="members" title="Lid" @addMemberToList="addMember($event)" />
+          <members-side-bar v-model:isDisplay="isMemberSideBarDisplay" :close-on-add="true" :group="values.group.id" :existing-list="members" title="Lid" @addMemberToList="addMember($event)" />
         </div>
 
         <div v-show="false" class="mt-3">
