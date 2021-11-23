@@ -280,7 +280,6 @@ export default defineComponent({
           details.value = result
           store.dispatch('setClaimState', details.value)
           if (details.value.attachment) {
-            console.log('file: ', details.value.attachment)
             filename.value = details.value.attachment.filename
           }
         })
