@@ -5,11 +5,11 @@
       <navigation-arrow to="/home/schadeaangiftes" text="Terug naar overzicht" />
     </div>
 
-    <div v-if="isEdit">
+    <div v-if="isEdit && (can('insurances.view_insuranceclaim_case_number') || can('insurances.view_insuranceclaim_note'))" >
       <p class="font-semibold">Administratie</p>
       <div class="md:ml-20 xs:ml-5 sm:ml-5">
-        <custom-input :value="claimState.dossierNumber" class="xs:w-72 md:w-96" :type="InputTypes.TEXT" label="Dossiernummer" name="dossierNumber" />
-        <custom-input :value="claimState.note" class="xs:w-72 md:w-96" :type="InputTypes.TEXT_AREA" label="Administratieve commentaar" name="note" />
+        <custom-input v-show="can('insurances.view_insuranceclaim_case_number')" :disabled="!can('insurances.add_insuranceclaim_case_number')" :value="claimState.dossierNumber" class="xs:w-72 md:w-96" :type="InputTypes.TEXT" label="Dossiernummer" name="dossierNumber" />
+        <custom-input v-show="can('insurances.view_insuranceclaim_note')" :disabled="!can('insurances.add_insuranceclaim_note')" :value="claimState.note" class="xs:w-72 md:w-96" :type="InputTypes.TEXT_AREA" label="Administratieve commentaar" name="note" />
         <custom-button text="Opslaan" />
       </div>
     </div>
@@ -237,7 +237,7 @@ import { useStore } from 'vuex'
 import moment from 'moment'
 import FileUpload from '@/components/semantic/FileUpload.vue'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
-
+import usePermissions from '../../../helpers/usePermissions'
 
 export default defineComponent({
   name: 'ClaimDetail',
@@ -265,6 +265,7 @@ export default defineComponent({
     const isEdit = !!route.params.id
     const details = ref<Claim>({})
     const userData = ref<ResponsibleMember>(store.getters.user)
+    const { can } = usePermissions()
 
     const saveFile = (file: any) => {
       saveAs(file, file.name)
@@ -354,7 +355,8 @@ export default defineComponent({
       saveFile,
       isEdit,
       values,
-      moment
+      moment,
+      can
     }
   },
 })
