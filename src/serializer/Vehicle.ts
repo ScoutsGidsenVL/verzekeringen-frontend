@@ -36,7 +36,7 @@ export const VehicleSerializer = (input: any): any => {
     construction_year: input.constructionYear ? input.constructionYear : undefined,
     chassis_number: input.chassisNumber ? input.chassisNumber : undefined,
     trailer: input.trailer ? TrailerSerializer(input.trailer).value : undefined,
-    group: input.group ? input.group : undefined,
+    group_group_admin_id: input.group ? input.group : undefined,
   }
 
   return single

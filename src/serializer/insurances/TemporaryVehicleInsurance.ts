@@ -55,7 +55,7 @@ export const TemporaryVehicleSerializer = (input: TemporaryVehicleInsurance): Te
     end_date: input.endDate ? moment(input.endDate).format('YYYY-MM-DDTh:mm:ss') : undefined,
     comment: input.comment ? input.comment : undefined,
     responsible_phone_number: input.responsibleMember ? ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number : undefined,
-    group: input.group ? GroupSerializer(input.group).id : undefined,
+    group_group_admin_id: input.group ? GroupSerializer(input.group).id : undefined,
     group_admin_id: input.group ? GroupSerializer(input.group).id : undefined,
     vehicle: input.vehicle && input.vehicle.licensePlate ? VehicleSerializer(input.vehicle) : undefined,
     drivers: input.drivers ? input.drivers.map((member: any) => MemberSerializer(member)) : undefined,
