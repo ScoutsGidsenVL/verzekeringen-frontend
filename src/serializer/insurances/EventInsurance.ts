@@ -4,6 +4,7 @@ import { EventSize, EventSizeDeserializer, EventSizeSerializer } from '@/seriali
 import { ResponsibleMember, ResponsibleMemberDeserializer, ResponsibleMemberSerializer } from '../ResponsibleMember'
 import moment from 'moment'
 import { Status, StatusDeserializer } from '../Status'
+import { FileDeserializer, FileItem } from '../FileItem'
 
 export interface EventInsurance {
   readonly id?: number
@@ -21,6 +22,7 @@ export interface EventInsurance {
   totalCost?: string
   readonly vvksComment?: string
   status?: Status
+  participant_list_file?: FileItem
 }
 
 export const EventInsuranceDeserializer = (input: any): EventInsurance => {
@@ -39,7 +41,8 @@ export const EventInsuranceDeserializer = (input: any): EventInsurance => {
     location: input.location ? LocationDeserializer(input.location) : undefined,
     eventSize: input.event_size ? (typeof input.event_size === 'object' ? EventSizeDeserializer(input.event_size) : { id: input.event_size }) : undefined,
     vvksComment: input.vvks_comment && input.vvks_comment.length > 0 ? input.vvks_comment : '',
-    status: input.status ? StatusDeserializer(input.status) : undefined
+    status: input.status ? StatusDeserializer(input.status) : undefined,
+    participant_list_file: input.participant_list_file ? FileDeserializer(input.participant_list_file) : undefined
   }
 
   return single

@@ -25,7 +25,7 @@
         <i>Geen bijlage geselecteerd</i>
       </div>
       <div class="w-72" v-if="selectedFile">
-        <file-item-component :isDisplay="isDisplay" v-on:deleteFile="deleteFile($event)" :file="selectedFile" :isDetailView="isDetailView" />
+        <file-item-component :isDisplay="isDisplay" v-on:downloadFile="downloadFile($event)" v-on:deleteFile="deleteFile($event)" :file="selectedFile" :isDetailView="isDetailView" />
         <span :name="id">
           <ErrorMessage :name="'file'" class="text-red text-sm block w-80" />
         </span>
@@ -35,9 +35,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import FileItemComponent from '@/components/semantic/FileItemComponent.vue'
 import { ErrorMessage, useField } from 'vee-validate'
+import RepositoryFactory from '@/repositories/repositoryFactory'
+import FileRepository from '@/repositories/fileRepository'
+import { saveAs } from 'file-saver'
+import { FileItem } from '@/serializer/FileItem'
 
 export default defineComponent({
   name: 'file-upload',
@@ -55,17 +59,37 @@ export default defineComponent({
       type: Boolean,
       default: false,
       required: false,
+    },
+    file: {
+      type: Object as PropType<FileItem>,
+      required: false,
     }
   },
-  setup() {
+  setup(props) {
 
     const { value: selectedFile } = useField<any>('file', 'fileSize', {})
+
+    if (props.file && props.file.id) {
+      RepositoryFactory.get(FileRepository)
+        .downloadParticipantsFile(props.file.id)
+        .then((res) => {
+          selectedFile.value = res
+          if (props.file && props.file.name) {
+            selectedFile.value.name = props.file.name
+          }
+        })
+    }
+
+    const downloadFile = () => {
+      const savedAsFile = saveAs(selectedFile.value, selectedFile.value.name)
+    }
 
     const deleteFile = () => {
       selectedFile.value = undefined
       //@ts-ignore
       document.getElementById('file').value = ''
     }
+
     const selectFile = (data: any) => {
       selectedFile.value = data.target.files[0]
     }
@@ -74,6 +98,7 @@ export default defineComponent({
       deleteFile,
       selectFile,
       selectedFile,
+      downloadFile
     }
   },
 })

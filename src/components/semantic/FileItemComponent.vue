@@ -23,7 +23,7 @@
         </div>
       </div>
 
-      <div class="mt-3">{{ file.name }}</div>
+      <div class="mt-3 break-all">{{ file.name }}</div>
       <div class="mt-3">{{ (file.size / (1024 * 1024)).toFixed(2) }} MB</div>
     </div>
   </div>
@@ -56,6 +56,7 @@ export default defineComponent({
   },
   setup(props, context) {
     const downloadFile = () => {
+      context.emit('downloadFile', true)
       if (props.file && props.file.id) {
         RepositoryFactory.get(FileRepository)
           .downloadFile(props.file.id)

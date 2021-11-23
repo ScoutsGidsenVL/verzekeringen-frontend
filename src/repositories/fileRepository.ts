@@ -43,4 +43,11 @@ export default class FileRepository extends BaseRepository {
       return response
     })
   }
+
+  // http://localhost:8001/api/participants/9b99bdb3-3a46-4488-9d15-27b3ad8ad499/download
+  public downloadParticipantsFile(id: string): Promise<Blob> {
+    return this.getFile('/participants/' + id + '/download').then((res) => {
+      return res
+    })
+  }
 }

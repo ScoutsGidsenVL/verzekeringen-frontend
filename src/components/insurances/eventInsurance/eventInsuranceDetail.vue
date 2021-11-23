@@ -2,10 +2,13 @@
   <base-detail :single-page="singlePage" :data="eventInsuranceState" :repository="EventRepository" title="evenementenverzekering">
     <template #default="{ details }">
       <div v-if="details && details.status && details.status.label === 'Goedgekeurd'">
+        <!-- <pre>
+          {{details}}
+        </pre> -->
         <form id="list" @submit.prevent="onSubmit">
           <custom-headline-2 text="Bijlage" />
           <div class="mb-2">
-            <file-upload :message="'Deelnemerslijst kan hier opgeladen worden.'" />
+            <file-upload :file="details.participant_list_file" :message="'Deelnemerslijst kan hier opgeladen worden.'" />
           </div>
 
           <div class="mb-5">
@@ -82,10 +85,7 @@ export default defineComponent({
     const store = useStore()
     const route = useRoute()
 
-    const { handleSubmit, values, validate, isSubmitting } = useForm<any>({
-      initialValues: {
-      },
-    })
+    const { handleSubmit, values, validate, isSubmitting } = useForm<any>({})
 
     const eventInsuranceState = computed(() => {
       return store.state.insurance.eventState

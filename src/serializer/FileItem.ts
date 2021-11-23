@@ -11,7 +11,7 @@ export const FileDeserializer = (input: any): FileItem => {
     id: input.id ? input.id.toString() : undefined,
     contentType: input.content_type ? input.content_type : undefined,
     url: input.url ? input.url : undefined,
-    name: input.name ? input.name : undefined,
+    name: input.name ? input.name : input.filename ? input.filename : undefined,
     size: input.size ? input.size : undefined,
   }
 
