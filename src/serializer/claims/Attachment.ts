@@ -1,11 +1,13 @@
 export interface Attachment {
   readonly id: string
+  readonly filename: string
   readonly contentType?: string
 }
 
 export const AttachmentDeserializer = (input: any): Attachment => {
   const single: Attachment = {
     id: input.id ? input.id : undefined,
+    filename: input.filename ? input.filename : 'There has been a file uploaded',
     contentType: input.content_type ? input.content_type : undefined,
   }
 

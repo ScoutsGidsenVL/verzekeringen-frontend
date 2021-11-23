@@ -176,11 +176,11 @@
       </div>
     </div>
 
-    <div class="mt-2 mb-4" v-if="isEdit">
+    <div class="mt-2 mb-4" v-if="isEdit && can('insurances.view_insuranceclaimattachment_filename')">
         <div>
           <custom-headline-2 text="Bijlage" />
           <div>
-            <file-upload :isDisplay="isEdit" />
+            {{filename}}
           </div>
         </div>
     </div>
@@ -271,6 +271,8 @@ export default defineComponent({
       saveAs(file, file.name)
     }
 
+    const filename = ref<string>('')
+
     if (isEdit) {
       RepositoryFactory.get(ClaimRepository)
         .getById(route.params.id.toString())
@@ -278,11 +280,13 @@ export default defineComponent({
           details.value = result
           store.dispatch('setClaimState', details.value)
           if (details.value.attachment) {
-            RepositoryFactory.get(FileRepository)
-              .downloadFile(details.value.attachment.id)
-              .then((res) => {
-                details.value.file = res
-              })
+            console.log('file: ', details.value.attachment)
+            filename.value = details.value.attachment.filename
+            // RepositoryFactory.get(FileRepository)
+            //   .downloadFile(details.value.attachment.id)
+            //   .then((res) => {
+            //     details.value.file = res
+            //   })
           }
         })
     }
@@ -356,7 +360,8 @@ export default defineComponent({
       isEdit,
       values,
       moment,
-      can
+      can,
+      filename
     }
   },
 })

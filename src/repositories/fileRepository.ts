@@ -28,12 +28,6 @@ export default class FileRepository extends BaseRepository {
     })
   }
 
-  public asdasd(file: any, inscuranceId: string): Promise<FileItem> {
-    return this.post('/files/' + inscuranceId, file).then((response: FileItem) => {
-      return response
-    })
-  }
-
   public uploadParticipantsFile(file: any, inscuranceId: string): Promise<FileItem> {
     const fd = new FormData()
     fd.append('file', file)
