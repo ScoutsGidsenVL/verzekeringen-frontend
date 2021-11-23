@@ -20,7 +20,7 @@ export const insuranceDeserializer = (input: any): Insurance => {
     startDate: input.start_date,
     endDate: input.end_date,
     responsibleMember: input.responsible_member ? ResponsibleMemberDeserializer(input.responsible_member) : undefined,
-    group: input.group ? GroupDeserializer(input.group) : undefined,
+    group: input.scouts_group ? GroupDeserializer(input.scouts_group) : undefined,
     status: input.status ? StatusDeserializer(input.status) : undefined,
     type: input.type ? TypeDeserializer(input.type) : undefined,
     createdOn: input.created_on ? input.created_on : undefined,
