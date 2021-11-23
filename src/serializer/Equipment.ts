@@ -27,26 +27,31 @@ export const EquipmentDeserializer = (input: any): Equipment => {
 }
 
 export const EquipmentSerializer = (input: any): any => {
+  console.log('EquipmentSerializer EQUIPMENT: ', input)
   const single: any = {
+    inuits_equipment_id: input.id ? input.id : undefined,
     nature: input.nature ? input.nature : null,
     description: input.description ? input.description : undefined,
     total_value: input.totalValue ? input.totalValue : undefined,
     owner_member: input.ownerMember ? MemberSerializer(input.ownerMember).id : null,
     owner_non_member: input.ownerNonMember ? NonMemberSerializer(input.ownerNonMember).id : null,
-    group_group_admin_id: input.group ? input.group : undefined,
+    owner_group: input.group ? input.group : undefined,
   }
 
   return single
 }
 
 export const EquipmentSerializerToPostInsurance = (input: any): any => {
+  console.log('EquipmentSerializerToPostInsurance EQUIPMENT: ', input)
   const single: any = {
+    inuits_equipment_id: input.id ? input.id : undefined,
     nature: input.nature ? input.nature : undefined,
     description: input.description ? input.description : undefined,
     total_value: input.totalValue ? input.totalValue : undefined,
     owner_member: input.ownerMember ? MemberSerializer(input.ownerMember) : undefined,
     owner_non_member: input.ownerNonMember ? NonMemberSerializer(input.ownerNonMember) : undefined,
     group: input.group ? input.group : undefined,
+    owner_group: input.group ? input.group : undefined,
   }
 
   return single
