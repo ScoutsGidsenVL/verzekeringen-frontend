@@ -1,5 +1,8 @@
 <template>
   <div v-if="equipment" class="w-full shadow-md border-b-2 border-black bg-white p-2 h-full inline-block text-left d-flex flex-col justify-content-between">
+    <pre>
+      {{equipment}}
+    </pre>
     <div class="flex justify-between">
       <div>
         <slot name="top"></slot>

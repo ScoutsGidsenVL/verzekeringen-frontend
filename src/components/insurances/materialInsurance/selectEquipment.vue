@@ -66,6 +66,7 @@ export default defineComponent({
     const isEdit = ref<boolean>(false)
 
     const editEquipment = (editEquipment: Equipment) => {
+      console.log('TESTTTTTT: ', editEquipment)
       sideBarState.value = {
         state: 'edit',
         entity: editEquipment,

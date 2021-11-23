@@ -69,6 +69,7 @@ export default defineComponent({
     }
 
     const editEquipment = (equipment: Equipment) => {
+      console.log('EDIT EQUIP: ', equipment)
       context.emit('editEquipment', equipment)
     }
 
