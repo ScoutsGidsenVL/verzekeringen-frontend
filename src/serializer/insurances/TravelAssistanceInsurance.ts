@@ -47,7 +47,7 @@ export const TravelAssistanceInsuranceSerializer = (input: TravelAssistanceInsur
     comment: input.comment ? input.comment : undefined,
     responsible_phone_number: input.responsiblePhoneNumber ? input.responsiblePhoneNumber : undefined,
     country: input.country ? CountrySerializer(input.country).id : undefined,
-    group: input.group ? GroupSerializer(input.group).id : undefined,
+    group_group_admin_id: input.group ? GroupSerializer(input.group).id : undefined,
     group_admin_id: input.group ? GroupSerializer(input.group).id : undefined,
     vehicle: input.vehicle && input.vehicle.licensePlate ? VehicleSerializer(input.vehicle) : undefined,
     participants: input.participants ? input.participants.map((member: any) => MemberSerializer(member)) : undefined,
