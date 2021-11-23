@@ -104,9 +104,7 @@ export default defineComponent({
 
     const { value: selectDriverField } = useField<any>(props.id, props.rules, {})
 
-    const { value: input } = useField<Owner>('input', 'required', {
-      initialValue: { firstName: '', lastName: '' },
-    })
+    const { value: input } = useField<Owner>('input', 'required', {})
 
     watch(
       () => selectDriverField.value.isDriverOwner,

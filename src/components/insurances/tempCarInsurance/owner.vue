@@ -1,7 +1,7 @@
 <template>
   <div>
-    <label-output :bold="true" v-if="owner.companyName" label="Firma naam" :text="owner.companyName" />
-    <strong v-if="owner.firstName">{{ owner.firstName + ' ' + owner.lastName }}</strong>
+    <p  class="mb-0" v-if="owner.companyName"><strong>Firma naam: </strong>{{owner.companyName}}</p>
+    <p v-if="owner.firstName">{{ owner.firstName + ' ' + owner.lastName }}</p>
     <div>
       <p>{{ owner.street + ' ' + owner.number + (owner.letterBox ? ' Bus ' + owner.letterBox : '') + ', ' + owner.postCodeCity.postalCode + ' ' + owner.postCodeCity.city }}</p>
     </div>
@@ -16,13 +16,11 @@
 <script lang="ts">
 import { Owner } from '@/serializer/Owner'
 import { defineComponent, PropType } from 'vue'
-import LabelOutput from '@/components/semantic/LabelOutput.vue'
 import PhoneNumber from '@/components/semantic/PhoneNumber.vue'
 
 export default defineComponent({
   name: 'Owner',
   components: {
-    'label-output': LabelOutput,
     'phone-number': PhoneNumber,
   },
   props: {
