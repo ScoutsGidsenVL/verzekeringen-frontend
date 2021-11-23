@@ -50,7 +50,7 @@ export const oneTimeActivitySerializer = (input: OneTimeActivity): OneTimeActivi
     end_date: input.endDate ? moment(input.endDate).format('YYYY-MM-DDTh:mm:ss') : undefined,
     created_on: input.createdOn ? input.createdOn : undefined,
     comment: input.comment ? input.comment : undefined,
-    group: input.group ? GroupSerializer(input.group).id : undefined,
+    group_group_admin_id: input.group ? GroupSerializer(input.group).id : undefined,
     group_admin_id: input.group ? GroupSerializer(input.group).id : undefined,
     group_size: input.groupSize ? GroupSizeSerializer(input.groupSize).id : undefined,
     location: input.location ? LocationSerializer(input.location) : undefined,
