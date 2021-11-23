@@ -3,6 +3,7 @@ import { NonMember, NonMemberDeserializer, NonMemberSerializer } from '@/seriali
 
 export interface Equipment {
   readonly id?: string
+  readonly inuits_equipment_id?: string
   readonly nature?: string
   readonly description?: string
   readonly totalValue?: string
@@ -15,6 +16,7 @@ export interface Equipment {
 export const EquipmentDeserializer = (input: any): Equipment => {
   const single: Equipment = {
     id: input.id ? input.id : undefined,
+    inuits_equipment_id: input.inuits_equipment_id ? input.inuits_equipment_id : undefined,
     nature: input.nature ? input.nature : undefined,
     description: input.description ? input.description : undefined,
     totalValue: input.total_value ? input.total_value : undefined,
@@ -29,7 +31,8 @@ export const EquipmentDeserializer = (input: any): Equipment => {
 export const EquipmentSerializer = (input: any): any => {
   console.log('EquipmentSerializer EQUIPMENT: ', input)
   const single: any = {
-    inuits_equipment_id: input.id ? input.id : undefined,
+    id: input.id ? input.id : undefined,
+    inuits_equipment_id: input.inuits_equipment_id ? input.inuits_equipment_id : undefined,
     nature: input.nature ? input.nature : null,
     description: input.description ? input.description : undefined,
     total_value: input.totalValue ? input.totalValue : undefined,
@@ -44,7 +47,8 @@ export const EquipmentSerializer = (input: any): any => {
 export const EquipmentSerializerToPostInsurance = (input: any): any => {
   console.log('EquipmentSerializerToPostInsurance EQUIPMENT: ', input)
   const single: any = {
-    inuits_equipment_id: input.id ? input.id : undefined,
+    id: input.id ? input.id : undefined,
+    inuits_equipment_id: input.inuits_equipment_id ? input.inuits_equipment_id : undefined,
     nature: input.nature ? input.nature : undefined,
     description: input.description ? input.description : undefined,
     total_value: input.totalValue ? input.totalValue : undefined,
