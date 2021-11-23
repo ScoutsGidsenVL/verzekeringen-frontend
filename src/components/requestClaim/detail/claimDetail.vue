@@ -304,10 +304,14 @@ export default defineComponent({
       return store.state.claim.claimState
     })
 
+    const submitting = ref<boolean>(false)
+
     const onSubmit = async () => {
       await validate().then((validation: any) => scrollToFirstError(validation, 'RequestInsuranceGeneral'))
       handleSubmit(async (values: any) => {
-        if (!isEdit) {
+        if (!submitting.value) {
+          submitting.value = true
+          if (!isEdit) {
           const newClaimState = ref<Claim>({
             declarantCity: values.declarantCity ? values.declarantCity : undefined,
             DECLARANT_DATE: values.DECLARANT_DATE ? values.DECLARANT_DATE : undefined,
@@ -317,6 +321,7 @@ export default defineComponent({
             await postClaim()
             .then((result: any) => {
                 store.dispatch('setClaimHolderState', ClaimHolderStates.FIVE)
+                submitting.value = false
             })
             .catch((err: Error) => {
                 window.alert(`Er is iets misgelopen: \n${err.message}`)
@@ -326,7 +331,9 @@ export default defineComponent({
         } else {
           if (claimState.value.id) {
             await patchClaim(claimState.value.id.toString(), { note: values.note, case_number: values.dossierNumber })
+            submitting.value = false
           }
+        }
         }
       })()
     }
