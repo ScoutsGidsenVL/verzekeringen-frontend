@@ -33,7 +33,7 @@ export const EquipmentSerializer = (input: any): any => {
     total_value: input.totalValue ? input.totalValue : undefined,
     owner_member: input.ownerMember ? MemberSerializer(input.ownerMember).id : null,
     owner_non_member: input.ownerNonMember ? NonMemberSerializer(input.ownerNonMember).id : null,
-    group: input.group ? input.group : undefined,
+    group_group_admin_id: input.group ? input.group : undefined,
   }
 
   return single
