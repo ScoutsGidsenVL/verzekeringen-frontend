@@ -29,7 +29,6 @@ export const EquipmentDeserializer = (input: any): Equipment => {
 }
 
 export const EquipmentSerializer = (input: any): any => {
-  console.log('EquipmentSerializer EQUIPMENT: ', input)
   const single: any = {
     id: input.id ? input.id : undefined,
     inuits_equipment_id: input.inuits_equipment_id ? input.inuits_equipment_id : undefined,
@@ -45,7 +44,6 @@ export const EquipmentSerializer = (input: any): any => {
 }
 
 export const EquipmentSerializerToPostInsurance = (input: any): any => {
-  console.log('EquipmentSerializerToPostInsurance EQUIPMENT: ', input)
   const single: any = {
     id: input.id ? input.id : undefined,
     inuits_equipment_id: input.inuits_equipment_id ? input.inuits_equipment_id : undefined,

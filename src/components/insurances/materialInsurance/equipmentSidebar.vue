@@ -222,8 +222,6 @@ export default defineComponent({
 
     const onSubmit = async () => {
       await validate().then((validation: any) => scrollToFirstError(validation, 'addNewEquipment'))
-      console.log('SIDEBAR STATE: ', sideBarState.value)
-      console.log('VALUES: ', values)
       handleSubmit(async (values: Equipment) => {
         if (props.sideBarState.state === 'new' || props.sideBarState.state === 'edit') {
           const equipment = ref<Equipment>({
@@ -236,7 +234,6 @@ export default defineComponent({
             ownerNonMember: values.ownerNonMember && isGroupEquipement.value === false ? values.ownerNonMember : undefined,
             group: generalInsuranceState.value.group.id,
           })
-          console.log('TESTING EQUIPMENT: ', equipment.value)
           if (props.sideBarState.state === 'edit') {
             await updateEquipment(equipment.value)
           } else {

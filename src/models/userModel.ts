@@ -20,7 +20,6 @@ export default class UserModel implements ResponsibleMember {
 
   public static deserialize(input: any): UserModel {
     const mappedGroups = input.scouts_groups.map((group: any) => GroupDeserializer(group))
-    console.log('USER: ', input)
     return new UserModel(
       input.group_admin_id,
       input.first_name,

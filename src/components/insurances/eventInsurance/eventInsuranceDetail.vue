@@ -1,7 +1,6 @@
 <template>
   <base-detail :single-page="singlePage" :data="eventInsuranceState" :repository="EventRepository" title="evenementenverzekering">
     <template #default="{ details }">
-      values: {{values}}
       <div v-if="details && details.status && details.status.label === 'Goedgekeurd'">
         <form id="list" @submit.prevent="onSubmit">
           <custom-headline-2 text="Bijlage" />
@@ -98,7 +97,6 @@ export default defineComponent({
 
     const onSubmit = async () => {
       handleSubmit(async (values: any) => {
-        console.log("doing submit handle: ", values)
         postFile(values)
       })()
     }
