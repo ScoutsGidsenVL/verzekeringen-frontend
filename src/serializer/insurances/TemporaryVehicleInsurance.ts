@@ -35,7 +35,7 @@ export const TemporaryVehicleDeserializer = (input: any): TemporaryVehicleInsura
     endDate: input.end_date ? moment(input.end_date).format('YYYY-MM-DD') : undefined,
     comment: input.comment ? input.comment : undefined,
     responsiblePhoneNumber: input.responsible_phone_number ? input.responsible_phone_number : undefined,
-    group: input.group ? GroupDeserializer(input.group) : undefined,
+    group: input.scouts_group ? GroupDeserializer(input.scouts_group) : undefined,
     vehicle: input.vehicle && input.vehicle.license_plate ? VehicleDeserializer(input.vehicle) : undefined,
     drivers: input.drivers ? input.drivers.map((member: any) => DriverDeserializer(member)) : undefined,
     owner: input.owner ? OwnerDeserializer(input.owner) : undefined,
@@ -74,6 +74,7 @@ export const DraftTemporaryVehicleSerializer = (input: TemporaryVehicleInsurance
     comment: input.comment ? input.comment : undefined,
     responsible_phone_number: input.responsibleMember ? ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number : undefined,
     group: input.group ? GroupSerializer(input.group).id : undefined,
+    scouts_group: input.group ? GroupSerializer(input.group) : undefined, // DRAFT
     vehicle: input.vehicle && input.vehicle.licensePlate ? DraftVehicleSerializer(input.vehicle) : undefined,
     drivers: input.drivers ? input.drivers.map((member: any) => MemberSerializer(member)) : undefined,
     owner: input.owner ? OwnerSerializer(input.owner) : undefined,

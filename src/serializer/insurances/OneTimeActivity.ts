@@ -30,7 +30,7 @@ export const oneTimeActivityDeserializer = (input: any): OneTimeActivity => {
     endDate: input.end_date ? moment(input.end_date).format('YYYY-MM-DD') : undefined,
     createdOn: input.created_on ? input.created_on : undefined,
     comment: input.comment ? input.comment : undefined,
-    group: input.group ? GroupDeserializer(input.group) : undefined,
+    group: input.scouts_group ? GroupDeserializer(input.scouts_group) : undefined,
     groupSize: input.group_size ? (typeof input.group_size === 'object' ? GroupSizeDeserializer(input.group_size) : { id: input.group_size }) : undefined,
     location: input.location ? LocationDeserializer(input.location) : undefined,
     nature: input.nature ? input.nature : undefined,
@@ -52,6 +52,7 @@ export const oneTimeActivitySerializer = (input: OneTimeActivity): OneTimeActivi
     comment: input.comment ? input.comment : undefined,
     group_group_admin_id: input.group ? GroupSerializer(input.group).id : undefined,
     group_admin_id: input.group ? GroupSerializer(input.group).id : undefined,
+    scouts_group: input.group ? GroupSerializer(input.group) : undefined, // DRAFT
     group_size: input.groupSize ? GroupSizeSerializer(input.groupSize).id : undefined,
     location: input.location ? LocationSerializer(input.location) : undefined,
     nature: input.nature ? input.nature : undefined,

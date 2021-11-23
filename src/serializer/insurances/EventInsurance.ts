@@ -33,7 +33,7 @@ export const EventInsuranceDeserializer = (input: any): EventInsurance => {
     comment: input.comment ? input.comment : undefined,
     responsibleMember: input.responsible_member ? ResponsibleMemberDeserializer(input.responsible_member) : undefined,
     responsiblePhoneNumber: input.responsible_phone_number ? input.responsible_phone_number : undefined,
-    group: input.group ? GroupDeserializer(input.group) : undefined,
+    group: input.scouts_group ? GroupDeserializer(input.scouts_group) : undefined,
     totalCost: input.total_cost ? input.total_cost.replace(".", ",") : undefined,
     nature: input.nature ? input.nature : undefined,
     location: input.location ? LocationDeserializer(input.location) : undefined,
@@ -53,6 +53,7 @@ export const EventInsuranceSerializer = (input: EventInsurance): EventInsurance 
     responsible_phone_number: input.responsibleMember ? ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number : undefined,
     group: input.group ? GroupSerializer(input.group).id : undefined,
     group_group_admin_id: input.group ? GroupSerializer(input.group).id : undefined,
+    scouts_group: input.group ? GroupSerializer(input.group) : undefined, // DRAFT
     total_cost: input.totalCost ? input.totalCost : undefined,
     nature: input.nature ? input.nature : undefined,
     location: input.location ? LocationSerializer(input.location) : undefined,

@@ -34,9 +34,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { value: members } = useField<Member[]>(props.id, props.rules, {
-      initialValue: [],
-    })
+    const { value: members } = useField<Member[]>(props.id, props.rules, {})
 
     const isDisplay = ref<boolean>(false)
 

@@ -6,7 +6,6 @@
           <custom-headline-2 text="Bestuurders" />
           <required rules="required" class="mt-3" />
         </div>
-
         <select-drivers id="selectDriverField" rules="RequiredDrivers:selectDriverField" />
       </div>
 

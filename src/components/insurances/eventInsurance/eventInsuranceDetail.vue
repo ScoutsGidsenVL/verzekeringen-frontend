@@ -2,7 +2,7 @@
   <base-detail :single-page="singlePage" :data="eventInsuranceState" :repository="EventRepository" title="evenementenverzekering">
     <template #default="{ details }">
       values: {{values}}
-      <div v-if="details.status && details.status.label === 'Goedgekeurd'">
+      <div v-if="details && details.status && details.status.label === 'Goedgekeurd'">
         <form id="list" @submit.prevent="onSubmit">
           <custom-headline-2 text="Bijlage" />
           <div class="mb-2">

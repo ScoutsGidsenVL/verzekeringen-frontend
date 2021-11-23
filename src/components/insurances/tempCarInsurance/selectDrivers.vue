@@ -102,12 +102,7 @@ export default defineComponent({
   setup(props) {
     const store = useStore()
 
-    const { value: selectDriverField } = useField<SelectDriver>(props.id, props.rules, {
-      initialValue: {
-        drivers: [],
-        isDriverOwner: IS_NO_DRIVER,
-      },
-    })
+    const { value: selectDriverField } = useField<any>(props.id, props.rules, {})
 
     const { value: input } = useField<Owner>('input', 'required', {
       initialValue: { firstName: '', lastName: '' },

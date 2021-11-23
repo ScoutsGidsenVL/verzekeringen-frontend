@@ -39,7 +39,7 @@ export default class FileRepository extends BaseRepository {
       },
     }
 
-    return this.post('participants', fd, config).then((response: any) => {
+    return this.post('/participants/', fd, config).then((response: any) => {
       return response
     })
   }

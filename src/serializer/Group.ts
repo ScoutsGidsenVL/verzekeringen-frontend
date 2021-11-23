@@ -18,10 +18,13 @@ export const GroupDeserializer = (input: any): Group => {
 export const GroupSerializer = (input: any): any => {
   const single: any = {
     id: input.id ? input.id : undefined,
+    group_group_admin_id: input.id ? input.id : undefined, // DRAFT
+    name: input.name ? input.name : undefined, // DRAFT
   }
 
   return single
 }
+
 
 export const orderGroups = (groups: Array<Group>) => {
   return groups.sort((a: any, b: any) => Number(a.id.replace(/\D/g, '')) - Number(b.id.replace(/\D/g, '')))

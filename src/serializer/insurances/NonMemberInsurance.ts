@@ -54,6 +54,7 @@ export const nonMemberInsuranceSerializer = (input: NonMemberInsurance): NonMemb
     created_on: input.createdOn ? input.createdOn : undefined,
     comment: input.comment ? input.comment : undefined,
     group_group_admin_id: input.group ? GroupSerializer(input.group).id : undefined,
+    scouts_group: input.group ? GroupSerializer(input.group) : undefined, // DRAFT
     postcode_city: input.country && input.country.name !== 'België' ? undefined : input.postCodeCity ? LocationSerializer(input.postCodeCity) : undefined,
     nature: input.nature ? input.nature : undefined,
     responsible_phone_number: input.responsibleMember ? ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number : undefined,
