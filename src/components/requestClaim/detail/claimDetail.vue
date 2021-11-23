@@ -176,7 +176,7 @@
       </div>
     </div>
 
-    <div class="mt-2 mb-4" v-if="isEdit && can('insurances.view_insuranceclaimattachment_filename')">
+    <div class="mt-2 mb-4" v-if="isEdit && can('insurances.view_insuranceclaimattachment_filename') && filename">
         <div>
           <custom-headline-2 text="Bijlage" />
           <div>
@@ -282,11 +282,6 @@ export default defineComponent({
           if (details.value.attachment) {
             console.log('file: ', details.value.attachment)
             filename.value = details.value.attachment.filename
-            // RepositoryFactory.get(FileRepository)
-            //   .downloadFile(details.value.attachment.id)
-            //   .then((res) => {
-            //     details.value.file = res
-            //   })
           }
         })
     }

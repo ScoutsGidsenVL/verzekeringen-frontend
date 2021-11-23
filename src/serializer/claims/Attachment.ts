@@ -7,7 +7,7 @@ export interface Attachment {
 export const AttachmentDeserializer = (input: any): Attachment => {
   const single: Attachment = {
     id: input.id ? input.id : undefined,
-    filename: input.filename ? input.filename : 'There has been a file uploaded',
+    filename: input.filename ? input.filename : undefined,
     contentType: input.content_type ? input.content_type : undefined,
   }
 
