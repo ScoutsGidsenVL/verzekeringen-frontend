@@ -1,6 +1,7 @@
 import { Claim, ClaimDeserializer, ClaimSerializer } from '@/serializer/claims/claim'
 import { BaseRepository } from '@/repositories/baseRepository'
 import { ArrayResult } from '@/serializer/ArrayResult'
+import { GroupDeserializer } from '@/serializer/Group'
 
 export class ClaimRepository extends BaseRepository {
   id = '/insurances_claims/'
@@ -29,6 +30,20 @@ export class ClaimRepository extends BaseRepository {
         array.push(this.deserializer(result))
       })
       response.results = array
+
+      return response
+    })
+  }
+  
+  getClaimGroupsByPermissions(): Promise<any> {
+    return this.get('/insurances_claims/data/', {}).then((response: any) => {
+
+      const array: any[] = []
+      response.permitted_scouts_groups.forEach((result: any) => {
+        array.push(GroupDeserializer(result))
+      })
+
+      response = array
 
       return response
     })

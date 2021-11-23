@@ -16,7 +16,7 @@
 
       <custom-headline-2 text="Wie doet de aangifte?" />
 
-      <div class="md:ml-20 xs:ml-5 sm:ml-5" style="margin-top: -2em">
+      <div v-if="claimGroups" class="md:ml-20 xs:ml-5 sm:ml-5" style="margin-top: -2em">
         <div style="max-width: 600px">
           <multi-select
             id="group"
@@ -26,7 +26,7 @@
             placeholder="Groep"
             track-by="fullInfo"
             value-prop="id"
-            :options="userData.scoutsGroups"
+            :options="claimGroups"
             label="Selecteer je groep"
             :loading-submit="isSubmitting"
           />
@@ -197,23 +197,24 @@ import InfoAlert from '@/components/requestInsurance/InfoAlert.vue'
 import { Country, CountryDeserializer } from '@/serializer/Country'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 import RepositoryFactory from '@/repositories/repositoryFactory'
+import LabelOutput from '@/components/semantic/LabelOutput.vue'
 import { ClaimHolderStates } from '@/enums/ClaimholderStates'
 import MultiSelect from '@/components/inputs/MultiSelect.vue'
 import CustomInput from '@/components/inputs/CustomInput.vue'
-import AuthRepository from '@/repositories/authRepository'
-import { sideBarState } from 'vue-3-component-library'
-
-import CustomButton from '@/components/CustomButton.vue'
 import { defineComponent, computed, ref, watch } from 'vue'
+import AuthRepository from '@/repositories/authRepository'
+import Required from '@/components/semantic/Required.vue'
+import CustomButton from '@/components/CustomButton.vue'
+import { sideBarState } from 'vue-3-component-library'
+import { useForm, ErrorMessage } from 'vee-validate'
 import { NonMember } from '@/serializer/NonMember'
 import { Claim } from '@/serializer/claims/claim'
 import { InputTypes } from '@/enums/inputTypes'
 import { Member } from '@/serializer/Member'
-import { useForm, ErrorMessage } from 'vee-validate'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-import Required from '@/components/semantic/Required.vue'
-import LabelOutput from '@/components/semantic/LabelOutput.vue'
+import { ClaimRepository } from '@/repositories/claims/claimRepository'
+
 
 
 export default defineComponent({
@@ -253,6 +254,16 @@ export default defineComponent({
         },
       },
     })
+
+    const claimGroups = ref<Array<any>>([])
+    
+    const getClaimGroups = () => {
+      RepositoryFactory.get(ClaimRepository).getClaimGroupsByPermissions().then((res) => {
+        claimGroups.value = res
+      })
+    }
+
+    getClaimGroups()
 
     const claimState = computed((): Claim => {
       return store.state.claim.claimState
@@ -377,6 +388,7 @@ export default defineComponent({
       isEdit,
       values,
       isSelectedVictim,
+      claimGroups
     }
   },
 })
