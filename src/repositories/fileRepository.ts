@@ -50,4 +50,10 @@ export default class FileRepository extends BaseRepository {
       return res
     })
   }
+
+  public deleteParticipantsFile(id: string): Promise<any> {
+    return this.delete('/participants/' + id).then((res) => {
+      return res
+    })
+  }
 }

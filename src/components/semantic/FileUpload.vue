@@ -35,13 +35,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
 import FileItemComponent from '@/components/semantic/FileItemComponent.vue'
-import { ErrorMessage, useField } from 'vee-validate'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import FileRepository from '@/repositories/fileRepository'
-import { saveAs } from 'file-saver'
+import { ErrorMessage, useField } from 'vee-validate'
 import { FileItem } from '@/serializer/FileItem'
+import { defineComponent, PropType, watch } from 'vue'
+import { saveAs } from 'file-saver'
 
 export default defineComponent({
   name: 'file-upload',
@@ -69,25 +69,44 @@ export default defineComponent({
 
     const { value: selectedFile } = useField<any>('file', 'fileSize', {})
 
-    if (props.file && props.file.id) {
-      RepositoryFactory.get(FileRepository)
+    if (props.file) {
+      watch(() => props.file, () => {
+        if (props.file && props.file.name) {
+          download()
+        }
+      })
+    }
+
+    const download = () => {
+      if (props.file && props.file.id) {
+        RepositoryFactory.get(FileRepository)
         .downloadParticipantsFile(props.file.id)
         .then((res) => {
           selectedFile.value = res
           if (props.file && props.file.name) {
             selectedFile.value.name = props.file.name
+            selectedFile.value.id = props.file.id
           }
         })
+      }
     }
 
+    download()
+
     const downloadFile = () => {
-      const savedAsFile = saveAs(selectedFile.value, selectedFile.value.name)
+      if (props.file && props.file.id) {
+        const savedAsFile = saveAs(selectedFile.value, selectedFile.value.name)
+      }
     }
 
     const deleteFile = () => {
       selectedFile.value = undefined
       //@ts-ignore
       document.getElementById('file').value = ''
+      if (props.file && props.file.id) {
+        RepositoryFactory.get(FileRepository)
+        .deleteParticipantsFile(props.file.id)
+      }
     }
 
     const selectFile = (data: any) => {
@@ -95,10 +114,10 @@ export default defineComponent({
     }
 
     return {
+      selectedFile,
+      downloadFile,
       deleteFile,
       selectFile,
-      selectedFile,
-      downloadFile
     }
   },
 })

@@ -1,10 +1,10 @@
-import { Group, GroupDeserializer, GroupSerializer } from '@/serializer/Group'
-import { Location, LocationDeserializer, LocationSerializer } from '@/serializer/Location'
-import { EventSize, EventSizeDeserializer, EventSizeSerializer } from '@/serializer/EventSize'
 import { ResponsibleMember, ResponsibleMemberDeserializer, ResponsibleMemberSerializer } from '../ResponsibleMember'
-import moment from 'moment'
-import { Status, StatusDeserializer } from '../Status'
+import { EventSize, EventSizeDeserializer, EventSizeSerializer } from '@/serializer/EventSize'
+import { Location, LocationDeserializer, LocationSerializer } from '@/serializer/Location'
+import { Group, GroupDeserializer, GroupSerializer } from '@/serializer/Group'
 import { FileDeserializer, FileItem } from '../FileItem'
+import { Status, StatusDeserializer } from '../Status'
+import moment from 'moment'
 
 export interface EventInsurance {
   readonly id?: number

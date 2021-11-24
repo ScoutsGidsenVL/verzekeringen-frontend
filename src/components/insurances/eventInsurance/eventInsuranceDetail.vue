@@ -2,19 +2,7 @@
   <base-detail :single-page="singlePage" :data="eventInsuranceState" :repository="EventRepository" title="evenementenverzekering">
     <template #default="{ details }">
       <div v-if="details && details.status && details.status.label === 'Goedgekeurd'">
-        <!-- <pre>
-          {{details}}
-        </pre> -->
-        <form id="list" @submit.prevent="onSubmit">
-          <custom-headline-2 text="Bijlage" />
-          <div class="mb-2">
-            <file-upload :file="details.participant_list_file" :message="'Deelnemerslijst kan hier opgeladen worden.'" />
-          </div>
-
-          <div class="mb-5">
-            <custom-button text="Bijlage indienen" />
-          </div>
-        </form>
+        <participants-file-section :details="details"></participants-file-section>
       </div>
 
       <div v-if="details" class="mt-1">
@@ -45,23 +33,19 @@
 </template>
 
 <script lang="ts">
-import { EventRepository } from '@/repositories/insurances/eventRepository'
 import ResponsibleMemberDetail from '@/components/semantic/detail/ResponsibleMemberDetail.vue'
+import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
 import ActivityDetail from '@/components/semantic/detail/ActivityDetail.vue'
+import { EventRepository } from '@/repositories/insurances/eventRepository'
 import BaseDetail from '@/components/semantic/detail/BaseDetail.vue'
+import ParticipantsFileSection from '@/components/semantic/ParticipantsFileSection.vue'
 import LabelOutput from '@/components/semantic/LabelOutput.vue'
+import FileUpload from '@/components/semantic/FileUpload.vue'
 import { formatEventDate } from '@/helpers/formatHelper'
+import { computed, defineComponent } from 'vue'
 import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
-import { computed, defineComponent } from 'vue'
 import { useStore } from 'vuex'
-import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
-import FileUpload from '@/components/semantic/FileUpload.vue'
-import CustomButton from '@/components/CustomButton.vue'
-import { useForm } from 'vee-validate'
-import RepositoryFactory from '@/repositories/repositoryFactory'
-import FileRepository from '@/repositories/fileRepository'
-import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'EventInsuranceDetail',
@@ -70,9 +54,7 @@ export default defineComponent({
     'activity-detail': ActivityDetail,
     'label-output': LabelOutput,
     'base-detail': BaseDetail,
-    CustomHeadline2,
-    FileUpload,
-    CustomButton
+    ParticipantsFileSection
   },
   props: {
     singlePage: {
@@ -83,9 +65,6 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
-    const route = useRoute()
-
-    const { handleSubmit, values, validate, isSubmitting } = useForm<any>({})
 
     const eventInsuranceState = computed(() => {
       return store.state.insurance.eventState
@@ -94,16 +73,6 @@ export default defineComponent({
     const holderState = computed((): HolderStates => {
       return store.state.insurance.holderState
     })
-
-    const onSubmit = async () => {
-      handleSubmit(async (values: any) => {
-        postFile(values)
-      })()
-    }
-
-    const postFile = async (values: any) => {
-      await RepositoryFactory.get(FileRepository).uploadParticipantsFile(values.file, route.params.id.toString())
-    }
 
     return {
       eventInsuranceState,
@@ -114,8 +83,6 @@ export default defineComponent({
       holderState,
       InputTypes,
       FileUpload,
-      onSubmit,
-      values
     }
   },
 })

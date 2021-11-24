@@ -1,9 +1,10 @@
 import { ResponsibleMember, ResponsibleMemberDeserializer, ResponsibleMemberSerializer } from '../ResponsibleMember'
 import { Location, LocationDeserializer, LocationSerializer } from '@/serializer/Location'
-import { Status, StatusDeserializer } from '@/serializer/Status'
-import { Group, GroupDeserializer, GroupSerializer } from '@/serializer/Group'
-import { Type, TypeDeserializer } from '@/serializer/Type'
 import { GroupSize, GroupSizeDeserializer, GroupSizeSerializer } from '../GroupSize'
+import { Group, GroupDeserializer, GroupSerializer } from '@/serializer/Group'
+import { Status, StatusDeserializer } from '@/serializer/Status'
+import { Type, TypeDeserializer } from '@/serializer/Type'
+import { FileDeserializer, FileItem } from '../FileItem'
 import moment from 'moment'
 
 export interface OneTimeActivity {
@@ -21,6 +22,7 @@ export interface OneTimeActivity {
   totalCost?: string
   readonly type?: Type
   readonly vvksComment?: string
+  participant_list_file?: FileItem
 }
 
 export const oneTimeActivityDeserializer = (input: any): OneTimeActivity => {
@@ -39,6 +41,7 @@ export const oneTimeActivityDeserializer = (input: any): OneTimeActivity => {
     totalCost: input.total_cost ? input.total_cost.replace(".", ",") : undefined,
     type: input.type ? TypeDeserializer(input.type) : undefined,
     vvksComment: input.vvks_comment && input.vvks_comment.length > 0 ? input.vvks_comment : '',
+    participant_list_file: input.participant_list_file ? FileDeserializer(input.participant_list_file) : undefined
   }
 
   return single
