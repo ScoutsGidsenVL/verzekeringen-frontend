@@ -31,7 +31,7 @@ export default class FileRepository extends BaseRepository {
   public uploadParticipantsFile(file: any, inscuranceId: string, inscuranceType: string): Promise<FileItem> {
     const fd = new FormData()
     fd.append('file', file)
-    fd.append('event_insurance', inscuranceId)
+    fd.append('insurance', inscuranceId)
 
     const config = {
       headers: {
@@ -45,13 +45,13 @@ export default class FileRepository extends BaseRepository {
   }
 
   // http://localhost:8001/api/participants/9b99bdb3-3a46-4488-9d15-27b3ad8ad499/download
-  public downloadParticipantsFile(inscuranceType: string,id: string): Promise<Blob> {
+  public downloadParticipantsFile(id: string, inscuranceType: string): Promise<Blob> {
     return this.getFile('/' + inscuranceType +'/participants/' + id + '/download').then((res) => {
       return res
     })
   }
 
-  public deleteParticipantsFile(inscuranceType: string, id: string): Promise<any> {
+  public deleteParticipantsFile(id: string, inscuranceType: string): Promise<any> {
     return this.delete('/' + inscuranceType + '/participants/' + id).then((res) => {
       return res
     })

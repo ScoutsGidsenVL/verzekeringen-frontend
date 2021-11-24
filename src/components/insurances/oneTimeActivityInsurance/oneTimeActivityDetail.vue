@@ -1,6 +1,9 @@
 <template>
   <base-detail :single-page="singlePage" :data="oneTimeActivityState" :repository="OneTimeActivityRepository" title="verzekering eenmalige activiteit">
     <template #default="{ details }">
+      <div v-if="details && details.status && details.status.label === 'Goedgekeurd'">
+        <participants-file-section :inscuranceType="'activities'" :details="details"></participants-file-section>
+      </div>
       <div v-if="details" class="mt-1">
         <div v-if="!(holderState === HolderStates.DETAIL)">
           <div v-if="details.comment">
@@ -39,6 +42,7 @@ import { HolderStates } from '@/enums/holderStates'
 import { InputTypes } from '@/enums/inputTypes'
 import { computed, defineComponent } from 'vue'
 import { useStore } from 'vuex'
+import ParticipantsFileSection from '@/components/semantic/ParticipantsFileSection.vue'
 
 export default defineComponent({
   name: 'OneTimeActivityDetail',
@@ -47,6 +51,7 @@ export default defineComponent({
     'activity-detail': ActivityDetail,
     'label-output': LabelOutput,
     'base-detail': BaseDetail,
+    ParticipantsFileSection
   },
   props: {
     singlePage: {

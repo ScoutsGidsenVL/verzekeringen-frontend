@@ -6,7 +6,7 @@
         <file-upload :inscuranceType="inscuranceType" :file="details.participant_list_file" :message="'Deelnemerslijst kan hier opgeladen worden.'" />
       </div>
       <div class="mb-5">
-        <custom-button :loadingSubmit="isUploadingFile" @click="isUploading()" text="Bijlage indienen" />
+        <custom-button :loadingSubmit="isUploadingFile" text="Bijlage indienen" />
       </div>
     </form>
   </div>

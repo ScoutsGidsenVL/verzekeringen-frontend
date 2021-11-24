@@ -244,9 +244,9 @@ export default defineComponent({
     }
 
     const addEquipment = async (equipment: Equipment) => {
-      if (equipment.id) {
+      if (equipment.inuits_equipment_id) {
         await RepositoryFactory.get(EquipmentRepository)
-          .getById(equipment.id)
+          .getById(equipment.inuits_equipment_id)
           .then((result: Equipment) => {
             context.emit('addEquipmentToList', result)
           })
@@ -254,9 +254,9 @@ export default defineComponent({
     }
 
     const updateEquipment = async (data: Equipment) => {
-      if (data.id) {
+      if (data.inuits_equipment_id) {
         await RepositoryFactory.get(EquipmentRepository)
-          .update(data.id, data)
+          .update(data.inuits_equipment_id, data)
           .then((completed: Equipment) => {
             context.emit('updateEquipmentInList', completed)
           })
