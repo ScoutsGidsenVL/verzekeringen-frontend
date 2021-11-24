@@ -3,7 +3,7 @@
     <form id="list" @submit.prevent="onSubmit(details)">
       <custom-headline-2 text="Bijlage" />
       <div class="mb-2">
-        <file-upload :file="details.participant_list_file" :message="'Deelnemerslijst kan hier opgeladen worden.'" />
+        <file-upload :inscuranceType="inscuranceType" :file="details.participant_list_file" :message="'Deelnemerslijst kan hier opgeladen worden.'" />
       </div>
       <div class="mb-5">
         <custom-button :loadingSubmit="isUploadingFile" @click="isUploading()" text="Bijlage indienen" />
@@ -35,6 +35,10 @@ export default defineComponent({
     details: {
       type: Object as PropType<any>,
       required: true
+    },
+    inscuranceType: {
+      type: String,
+      default: ''
     }
   },
   setup(props) {
@@ -53,7 +57,7 @@ export default defineComponent({
     const isUploadingFile = ref<boolean>(false)
 
     const postFile = async (values: any, details: any) => {
-      await RepositoryFactory.get(FileRepository).uploadParticipantsFile(values.file, route.params.id.toString()).then((x) => {
+      await RepositoryFactory.get(FileRepository).uploadParticipantsFile(values.file, route.params.id.toString(), props.inscuranceType).then((x) => {
         details.participant_list_file = FileDeserializer(x)
       })
       isUploadingFile.value = false

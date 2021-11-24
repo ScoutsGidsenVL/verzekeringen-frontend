@@ -2,7 +2,7 @@
   <base-detail :single-page="singlePage" :data="eventInsuranceState" :repository="EventRepository" title="evenementenverzekering">
     <template #default="{ details }">
       <div v-if="details && details.status && details.status.label === 'Goedgekeurd'">
-        <participants-file-section :details="details"></participants-file-section>
+        <participants-file-section :inscuranceType="'events'" :details="details"></participants-file-section>
       </div>
 
       <div v-if="details" class="mt-1">

@@ -63,6 +63,10 @@ export default defineComponent({
     file: {
       type: Object as PropType<FileItem>,
       required: false,
+    },
+    inscuranceType: {
+      type: String,
+      default: ''
     }
   },
   setup(props) {
@@ -80,7 +84,7 @@ export default defineComponent({
     const download = () => {
       if (props.file && props.file.id) {
         RepositoryFactory.get(FileRepository)
-        .downloadParticipantsFile(props.file.id)
+        .downloadParticipantsFile(props.file.id, props.inscuranceType)
         .then((res) => {
           selectedFile.value = res
           if (props.file && props.file.name) {
@@ -105,7 +109,7 @@ export default defineComponent({
       document.getElementById('file').value = ''
       if (props.file && props.file.id) {
         RepositoryFactory.get(FileRepository)
-        .deleteParticipantsFile(props.file.id)
+        .deleteParticipantsFile(props.file.id, props.inscuranceType)
       }
     }
 

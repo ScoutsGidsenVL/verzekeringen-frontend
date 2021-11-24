@@ -28,7 +28,7 @@ export default class FileRepository extends BaseRepository {
     })
   }
 
-  public uploadParticipantsFile(file: any, inscuranceId: string): Promise<FileItem> {
+  public uploadParticipantsFile(file: any, inscuranceId: string, inscuranceType: string): Promise<FileItem> {
     const fd = new FormData()
     fd.append('file', file)
     fd.append('event_insurance', inscuranceId)
@@ -39,20 +39,20 @@ export default class FileRepository extends BaseRepository {
       },
     }
 
-    return this.post('/participants/', fd, config).then((response: any) => {
+    return this.post('/' + inscuranceType +'/participants/', fd, config).then((response: any) => {
       return response
     })
   }
 
   // http://localhost:8001/api/participants/9b99bdb3-3a46-4488-9d15-27b3ad8ad499/download
-  public downloadParticipantsFile(id: string): Promise<Blob> {
-    return this.getFile('/participants/' + id + '/download').then((res) => {
+  public downloadParticipantsFile(inscuranceType: string,id: string): Promise<Blob> {
+    return this.getFile('/' + inscuranceType +'/participants/' + id + '/download').then((res) => {
       return res
     })
   }
 
-  public deleteParticipantsFile(id: string): Promise<any> {
-    return this.delete('/participants/' + id).then((res) => {
+  public deleteParticipantsFile(inscuranceType: string, id: string): Promise<any> {
+    return this.delete('/' + inscuranceType + '/participants/' + id).then((res) => {
       return res
     })
   }
