@@ -29,7 +29,7 @@ export const NonMemberDeserializer = (input: any): NonMember => {
     number: input.number,
     letterBox: input.letter_box,
     comment: input.comment,
-    postCodeCity: LocationDeserializer(input.postcode_city),
+    postCodeCity: LocationDeserializer({ city: input.city, postal_code: input.postal_code }),
     isChecked: false,
   }
 
@@ -48,7 +48,8 @@ export const NonMemberSerializer = (input: any): any => {
     number: input.number,
     letter_box: input.letterBox,
     comment: input.comment,
-    postcode_city: LocationSerializer(input.postCodeCity),
+    postal_code: LocationSerializer(input.postCodeCity).postalCode,
+    city: LocationSerializer(input.postCodeCity).city,
     group_group_admin_id: input.group ? input.group : null,
   }
 
