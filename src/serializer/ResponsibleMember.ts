@@ -12,6 +12,7 @@ export interface ResponsibleMember {
   readonly city?: string
   readonly groupAdminId?: string
   readonly permissions: Array<string>
+  readonly postalCode?: string
 }
 
 export const ResponsibleMemberDeserializer = (input: any): ResponsibleMember => {
@@ -24,9 +25,10 @@ export const ResponsibleMemberDeserializer = (input: any): ResponsibleMember => 
     membershipNumber: input.membership_number ? input.membership_number : undefined,
     phoneNumber: input.phone_number ? input.phone_number.replace(/ /g, '') : undefined,
     scoutsGroups: input.scouts_group ? input.scouts_groups.map((group: any) => GroupDeserializer(group)) : undefined,
-    city: input.postcode_city && input.postcode_city.city ? input.postcode_city.city : undefined,
+    city: input.city ? input.city : undefined,
     groupAdminId: input.group_admin_id ? input.group_admin_id : undefined,
-    permissions: input.user_permissions ? input.user_permissions : []
+    permissions: input.user_permissions ? input.user_permissions : [],
+    postalCode: input.postal_code ? input.postal_code : undefined
   }
 
   return single

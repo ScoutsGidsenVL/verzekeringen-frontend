@@ -14,6 +14,7 @@ export default class UserModel implements ResponsibleMember {
     public scoutsGroups: Group[],
     public city: string,
     public groupAdminId: string,
+    public postalCode?: string
   ) {
     return this
   }
@@ -30,8 +31,9 @@ export default class UserModel implements ResponsibleMember {
       input.birth_date,
       input.phone_number ? input.phone_number.replace(/ /g, '') : undefined,
       mappedGroups,
-      input.postcode_city && input.postcode_city.city ? input.postcode_city.city : undefined,
-      input.group_admin_id ? input.group_admin_id : undefined
+      input.city ? input.city : undefined,
+      input.group_admin_id ? input.group_admin_id : undefined,
+      input.postal_code ? input.postal_code : undefined
     )
   }
 }

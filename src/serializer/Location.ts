@@ -7,8 +7,8 @@ export interface Location {
 export const LocationDeserializer = (input: any): Location => {
   const single: Location = {
     city: input.city ? input.city : undefined,
-    postalCode: input.postcode ? input.postcode : undefined,
-    label: input.postcode && input.city ? input.postcode + ' ' + input.city : undefined,
+    postalCode: input.postal_code ? input.postal_code : undefined,
+    label: input.postal_code && input.city ? input.postal_code + ' ' + input.city : undefined,
   }
 
   return single
@@ -17,7 +17,7 @@ export const LocationDeserializer = (input: any): Location => {
 export const LocationSerializer = (input: any): Location => {
   const single: any = {
     city: input.city ? input.city : undefined,
-    postcode: input.postalCode ? input.postalCode : undefined,
+    postal_code: input.postalCode ? input.postalCode : undefined,
   }
 
   return single
