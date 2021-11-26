@@ -16,7 +16,7 @@ export interface Member {
   isChecked?: boolean
   readonly membershipNumber?: string
   isMember?: boolean
-  sex?: string
+  gender?: string
 }
 
 export const MemberDeserializer = (input: any): Member => {
@@ -31,12 +31,12 @@ export const MemberDeserializer = (input: any): Member => {
     street: input.street ? input.street : undefined,
     number: input.number ? input.number : undefined,
     letterBox: input.letter_box ? input.letter_box : undefined,
-    postCodeCity: input.postcode_city ? LocationDeserializer({ city: input.city, postal_code: input.postal_code }) : undefined,
+    postCodeCity: LocationDeserializer({ city: input.city, postalCode: input.postal_code }),
     comment: input.comment,
     isChecked: false,
     membershipNumber: input.membership_number ? input.membership_number : undefined,
     isMember: input.is_member ? input.is_member : false,
-    sex: input.gender === 'M' || input.gender === 'F' ? input.gender : '', 
+    gender: input.gender === 'M' || input.gender === 'F' ? input.gender : '',
   }
 
   return single

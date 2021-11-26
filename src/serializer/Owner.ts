@@ -17,7 +17,7 @@ export const OwnerDeserializer = (input: any): Owner => {
     street: input.street ? input.street : undefined,
     number: input.number ? input.number : undefined,
     letterBox: input.letter_box ? input.letter_box : undefined,
-    postCodeCity: input.postcode_city ? LocationDeserializer(input.postcode_city) : undefined,
+    postCodeCity: LocationDeserializer({ city: input.city, postal_code: input.postal_code }),
     comment: input.comment,
     isChecked: false,
     companyName: input.company_name ? input.company_name : undefined,
@@ -37,7 +37,8 @@ export const OwnerSerializer = (input: any): any => {
     number: input.number ? input.number : undefined,
     letter_box: input.letterBox ? input.letterBox : undefined,
     comment: input.comment ? input.comment : undefined,
-    postcode_city: input.postCodeCity ? LocationSerializer(input.postCodeCity) : undefined,
+    postal_code: LocationSerializer(input.postCodeCity).postalCode,
+    city: LocationSerializer(input.postCodeCity).city,
     company_name: input.companyName ? input.companyName : undefined,
   }
 

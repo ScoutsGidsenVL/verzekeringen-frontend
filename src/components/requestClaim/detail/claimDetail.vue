@@ -1,44 +1,59 @@
 <template>
   <form id="ClaimDetail" @submit.prevent="onSubmit">
-
     <div v-show="isEdit" class="mt-4 mb-4">
       <navigation-arrow to="/home/schadeaangiftes" text="Terug naar overzicht" />
     </div>
 
-    <div v-if="isEdit && (can('insurances.view_insuranceclaim_case_number') || can('insurances.view_insuranceclaim_note'))" >
+    <div v-if="isEdit && (can('insurances.view_insuranceclaim_case_number') || can('insurances.view_insuranceclaim_note'))">
       <p class="font-semibold">Administratie</p>
       <div class="md:ml-20 xs:ml-5 sm:ml-5">
-        <custom-input v-show="can('insurances.view_insuranceclaim_case_number')" :disabled="!can('insurances.add_insuranceclaim_case_number')" :value="claimState.dossierNumber" class="xs:w-72 md:w-96" :type="InputTypes.TEXT" label="Dossiernummer" name="dossierNumber" />
-        <custom-input v-show="can('insurances.view_insuranceclaim_note')" :disabled="!can('insurances.add_insuranceclaim_note')" :value="claimState.note" class="xs:w-72 md:w-96" :type="InputTypes.TEXT_AREA" label="Administratieve commentaar" name="note" />
+        <custom-input
+          v-show="can('insurances.view_insuranceclaim_case_number')"
+          :disabled="!can('insurances.add_insuranceclaim_case_number')"
+          :value="claimState.dossierNumber"
+          class="xs:w-72 md:w-96"
+          :type="InputTypes.TEXT"
+          label="Dossiernummer"
+          name="dossierNumber"
+        />
+        <custom-input
+          v-show="can('insurances.view_insuranceclaim_note')"
+          :disabled="!can('insurances.add_insuranceclaim_note')"
+          :value="claimState.note"
+          class="xs:w-72 md:w-96"
+          :type="InputTypes.TEXT_AREA"
+          label="Administratieve commentaar"
+          name="note"
+        />
         <custom-button text="Opslaan" />
       </div>
     </div>
 
     <div class="mt-2 mb-4" v-if="!isEdit">
+      <div>
+        <custom-headline-2 text="Bijlage" />
         <div>
-          <custom-headline-2 text="Bijlage" />
-          <div>
-            <file-upload />
-          </div>
+          <file-upload />
         </div>
+      </div>
     </div>
 
     <custom-headline-2 text="Overzicht" />
 
     <div class="mt-2">
       <p class="font-semibold">Wie doet de aangifte?</p>
-      
+
       <div class="md:ml-20 xs:ml-5 sm:ml-5">
         <label-output v-if="claimState.group" label="" :text="claimState.group.name + ' - ' + claimState.group.id" />
         <label-output v-if="userData.firstName" label="" :text="userData.firstName + ' ' + userData.lastName" />
         <label-output v-if="userData.email" label="" :text="userData.email" />
         <label-output v-if="userData.phoneNumber" label="" :text="userData.phoneNumber" />
 
-        <div v-if="claimState.declarant" >
+        <div v-if="claimState.declarant">
           <responsible-member-detail title="" :responsible-member="claimState.declarant" />
         </div>
       </div>
-    </div>    
+    </div>
 
     <div class="mt-2">
       <p class="font-semibold">Wie is het slachtoffer?</p>
@@ -75,10 +90,14 @@
             {{ claimState.victim.email }}
           </p>
         </div>
-        <p class="mb-0"><strong>Geboortedatum</strong> {{moment(claimState.victim.birthDate).format('DD-MM-YYYY')}}</p>
-        <p class="mb-0"><strong>Geslacht</strong> {{claimState.victim.sex ? claimState.victim.sex : claimState.victim.gender}}</p>
+        <p class="mb-0"><strong>Geboortedatum</strong> {{ moment(claimState.victim.birthDate).format('DD-MM-YYYY') }}</p>
+        <p class="mb-0"><strong>Geslacht</strong> {{ claimState.victim.gender ? claimState.victim.gender : '' }}</p>
         <label-output v-if="claimState.victim.membershipNumber" label="Lidnummer" :text="claimState.victim.membershipNumber" />
-        <label-output v-if="claimState.bankAccount || claimState.victim.bankAccount" label="Bankrekeningnummer" :text="claimState.victim.bankAccount ? claimState.victim.bankAccount : claimState.bankAccount" />
+        <label-output
+          v-if="claimState.bankAccount || claimState.victim.bankAccount"
+          label="Bankrekeningnummer"
+          :text="claimState.victim.bankAccount ? claimState.victim.bankAccount : claimState.bankAccount"
+        />
       </div>
     </div>
 
@@ -177,12 +196,12 @@
     </div>
 
     <div class="mt-2 mb-4" v-if="isEdit && can('insurances.view_insuranceclaimattachment_filename') && filename">
+      <div>
+        <custom-headline-2 text="Bijlage" />
         <div>
-          <custom-headline-2 text="Bijlage" />
-          <div>
-            {{filename}}
-          </div>
+          {{ filename }}
         </div>
+      </div>
     </div>
 
     <div v-if="!isDetailPage">
@@ -249,7 +268,7 @@ export default defineComponent({
     'custom-input': CustomInput,
     'back-button': BackButton,
     FileUpload,
-    CustomHeadline2
+    CustomHeadline2,
   },
   props: {
     isDetailPage: {
@@ -306,36 +325,37 @@ export default defineComponent({
         if (!submitting.value) {
           submitting.value = true
           if (!isEdit) {
-          const newClaimState = ref<Claim>({
-            declarantCity: values.declarantCity ? values.declarantCity : undefined,
-            DECLARANT_DATE: values.DECLARANT_DATE ? values.DECLARANT_DATE : undefined,
-          })
+            const newClaimState = ref<Claim>({
+              declarantCity: values.declarantCity ? values.declarantCity : undefined,
+              DECLARANT_DATE: values.DECLARANT_DATE ? values.DECLARANT_DATE : undefined,
+            })
 
-          store.dispatch('setClaimState', { ...claimState.value, ...newClaimState.value }).then(async () => {
-            await postClaim()
-            .then((result: any) => {
-                store.dispatch('setClaimHolderState', ClaimHolderStates.FIVE)
-                submitting.value = false
+            store.dispatch('setClaimState', { ...claimState.value, ...newClaimState.value }).then(async () => {
+              await postClaim()
+                .then((result: any) => {
+                  store.dispatch('setClaimHolderState', ClaimHolderStates.FIVE)
+                  submitting.value = false
+                })
+                .catch((err: Error) => {
+                  window.alert(`Er is iets misgelopen: \n${err.message}`)
+                })
             })
-            .catch((err: Error) => {
-                window.alert(`Er is iets misgelopen: \n${err.message}`)
-            })
-            
-          })
-        } else {
-          if (claimState.value.id) {
-            await patchClaim(claimState.value.id.toString(), { note: values.note, case_number: values.dossierNumber })
-            submitting.value = false
+          } else {
+            if (claimState.value.id) {
+              await patchClaim(claimState.value.id.toString(), { note: values.note, case_number: values.dossierNumber })
+              submitting.value = false
+            }
           }
-        }
         }
       })()
     }
 
     const patchClaim = async (id: string, data: any) => {
-      await RepositoryFactory.get(ClaimRepository).updateInfo(id, data).then((res) => {
-        console.log('patched reuslt: ', res)
-      })
+      await RepositoryFactory.get(ClaimRepository)
+        .updateInfo(id, data)
+        .then((res) => {
+          console.log('patched reuslt: ', res)
+        })
     }
 
     const postClaim = async () => {
@@ -362,7 +382,7 @@ export default defineComponent({
       values,
       moment,
       can,
-      filename
+      filename,
     }
   },
 })

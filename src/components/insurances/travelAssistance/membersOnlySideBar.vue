@@ -2,7 +2,15 @@
   <base-side-bar :isOverflowHidden="isOverflowHidden" v-model:isDisplay="display" name="Member" :title="title">
     <div class="d-flex flex-col h-full px-4 pt-4">
       <div>
-        <search-input v-if="generalInsuranceState.group" :group="generalInsuranceState.group.id" v-model:loading="loading" name="member" placeholder="Zoek op naam" :repository="MemberRepository" @fetchedOptions="fetchedOptions($event)" />
+        <search-input
+          v-if="generalInsuranceState.group"
+          :group="generalInsuranceState.group.id"
+          v-model:loading="loading"
+          name="member"
+          placeholder="Zoek op naam"
+          :repository="MemberRepository"
+          @fetchedOptions="fetchedOptions($event)"
+        />
       </div>
 
       <div class="h-full overflow-y-scroll mt-4 pb-24">
@@ -106,14 +114,14 @@ export default defineComponent({
       selectedMembers.value = []
       options.forEach((member: Member) => {
         if (member.groupAdminId) {
-            RepositoryFactory.get(MemberRepository)
-              .getById(member.groupAdminId)
-              .then((result: Member) => {
-                result.birthDate = member.birthDate
-                result.sex = member.sex
-                result.isMember = true
-                selectedMembers.value.push(result)
-              })
+          RepositoryFactory.get(MemberRepository)
+            .getById(member.groupAdminId)
+            .then((result: Member) => {
+              result.birthDate = member.birthDate
+              result.gender = member.gender
+              result.isMember = true
+              selectedMembers.value.push(result)
+            })
         }
       })
       loading.value = false
@@ -143,7 +151,7 @@ export default defineComponent({
       display,
       loading,
       user,
-      generalInsuranceState
+      generalInsuranceState,
     }
   },
 })

@@ -1,14 +1,12 @@
 <template>
   <form id="RequestClaimIdentities" @submit.prevent="onSubmit">
     <div class="mb-5">
-
       <div class="mt-2">
         <info-alert>
           <div>
             <p>
-              Wat je invult wordt doorgestuurd naar Ethias en (de ouders van) het slachtoffer. 
-              Na deze aangifte neemt Ethias contact op met (de ouders van) het slachtoffer. 
-              Alle verdere communicatie verloopt rechtstreeks tussen hen.
+              Wat je invult wordt doorgestuurd naar Ethias en (de ouders van) het slachtoffer. Na deze aangifte neemt Ethias contact op met (de ouders van) het slachtoffer. Alle verdere communicatie
+              verloopt rechtstreeks tussen hen.
             </p>
           </div>
         </info-alert>
@@ -40,7 +38,8 @@
       <div class="md:ml-20 xs:ml-5 sm:ml-5 mt-5">
         <info-alert>
           <p>
-            Staat er een fout in je gegevens? Pas ze dan aan <strong><a target="_blank" href="https://groepsadmin.scoutsengidsenvlaanderen.be/">in de Groepsadministratie</a></strong> en klik vervolgens op Herlaad. 
+            Staat er een fout in je gegevens? Pas ze dan aan <strong><a target="_blank" href="https://groepsadmin.scoutsengidsenvlaanderen.be/">in de Groepsadministratie</a></strong> en klik
+            vervolgens op Herlaad.
             <custom-button :loadingSubmit="isRefreshing" type="button" class="ml-2 mt-2" text="Herlaad" @click="refreshGroups()" />
           </p>
         </info-alert>
@@ -215,8 +214,6 @@ import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { ClaimRepository } from '@/repositories/claims/claimRepository'
 
-
-
 export default defineComponent({
   name: 'RequestClaimIdentities',
   components: {
@@ -256,11 +253,13 @@ export default defineComponent({
     })
 
     const claimGroups = ref<Array<any>>([])
-    
+
     const getClaimGroups = () => {
-      RepositoryFactory.get(ClaimRepository).getClaimGroupsByPermissions().then((res) => {
-        claimGroups.value = res
-      })
+      RepositoryFactory.get(ClaimRepository)
+        .getClaimGroupsByPermissions()
+        .then((res) => {
+          claimGroups.value = res
+        })
     }
 
     getClaimGroups()
@@ -280,7 +279,7 @@ export default defineComponent({
           victimMember: values.victim.isMember ? values.victimMember : undefined,
           victimNonMember: !values.victim.isMember ? values.victimMember : undefined,
           file: values.file,
-          sex: values.victim.sex,
+          gender: values.victim.gender,
           victimBirthDate: values.victim.birthDate,
           victimEmail: values.victim.email,
         })
@@ -323,13 +322,13 @@ export default defineComponent({
         values.victim.letterBox = member.letterBox
         values.victim.postCodeCity = member.postCodeCity
         values.victim.birthDate = member.birthDate
-        values.victim.gender = member.sex
+        values.victim.gender = member.gender
         values.victim.email = member.email
         values.victim.membershipNumber = member.membershipNumber
         values.victim.isMember = member.isMember
         values.victim.groupAdminId = member.isMember ? member.groupAdminId : undefined
         values.victim.nonMember = !member.isMember ? member.id : undefined
-        selectedGender.value = member.sex
+        selectedGender.value = member.gender
       }
       isSelectedVictim.value = true
     }
@@ -388,7 +387,7 @@ export default defineComponent({
       isEdit,
       values,
       isSelectedVictim,
-      claimGroups
+      claimGroups,
     }
   },
 })

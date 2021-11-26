@@ -22,7 +22,6 @@ export interface Victim {
   isMember?: boolean
   postcode?: string
   city?: string
-  sex?: string
   nonMember?: string
 }
 
@@ -38,14 +37,12 @@ export const VictimDeserializer = (input: any): Victim => {
     street: input.street ? input.street : undefined,
     number: input.number ? input.number : undefined,
     letterBox: input.letter_box ? input.letter_box : undefined,
-    postCodeCity: input.postcode_city ? LocationDeserializer({ city: input.city, postal_code: input.postal_code }) : undefined,
+    postCodeCity: LocationDeserializer({ city: input.city, postal_code: input.postal_code }),
     comment: input.comment,
     isChecked: false,
     membershipNumber: input.membership_number ? input.membership_number : undefined,
     bankAccount: input.bank_account ? input.bank_account : undefined,
-    postcode: input.postal_code ? input.postal_code : undefined,
-    city: input.city ? input.city : undefined,
-    sex: input.sex ? input.sex : undefined,
+    gender: input.gender ? input.gender : undefined,
     nonMember: input.non_member ? input.non_member : undefined,
   }
   return single
@@ -65,9 +62,9 @@ export const VictimSerializer = (input: any): any => {
     group: input.group ? input.group : null,
     comment: input.comment ? input.comment : undefined,
     membership_number: input.membershipNumber ? input.membershipNumber : undefined,
-    postal_code: input.postcode ? input.postcode : input.postCodeCity.postalCode,
-    city: input.city ? input.city : input.postCodeCity.city,
-    sex: input.sex ? input.sex : input.gender ? input.gender : undefined,
+    postal_code: input.postcode ? input.postcode : input.postCodeCity ? LocationSerializer(input.postCodeCity).postalCode : undefined,
+    city: input.city ? input.city : input.postCodeCity ? LocationSerializer(input.postCodeCity).city : undefined,
+    gender: input.gender ? input.gender : undefined,
     non_member: input.nonMember ? input.nonMember : undefined,
     letter_box: input.letterBox ? input.letterBox : undefined,
   }

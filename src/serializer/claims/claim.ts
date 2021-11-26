@@ -40,7 +40,7 @@ export interface Claim {
   file?: any
   readonly declarantCity?: String
   readonly witnessName?: String
-  readonly sex?: String
+  readonly gender?: String
   readonly victimBirthDate?: String
   readonly victimEmail?: String
   readonly groupNumber?: String
@@ -78,7 +78,7 @@ export const ClaimDeserializer = (input: any): Claim => {
     declarantCity: input.declarant_city ? input.declarant_city : undefined,
     witnessName: input.witness_name ? input.witness_name : undefined,
     witnessDescription: input.witness_description ? input.witness_description : undefined,
-    sex: input.sex ? input.sex : undefined,
+    gender: input.gender ? input.gender : undefined,
     victimBirthDate: input.victim_birth_date ? input.victim_birth_date : undefined,
     victimEmail: input.victim_email ? input.victim_email : undefined,
     groupNumber: input.group_group_admin_id ? input.group_group_admin_id : undefined,
@@ -90,7 +90,7 @@ export const ClaimDeserializer = (input: any): Claim => {
 }
 
 export const ClaimSerializer = (input: any): any => {
-  input.victim.sex = input.sex
+  input.victim.gender = input.gender
 
   const single: any = {
     group_group_admin_id: input.group.id ? input.group.id : undefined,
@@ -111,7 +111,7 @@ export const ClaimSerializer = (input: any): any => {
     declarant_city: input.declarantCity ? input.declarantCity : undefined,
     witness_name: input.witnessName ? input.witnessName : undefined,
     witness_description: input.witnessDescription ? input.witnessDescription : undefined,
-    sex: input.sex ? input.sex : undefined,
+    gender: input.gender ? input.gender : undefined,
     victim_birth_date: input.victimBirthDate ? input.victimBirthDate : undefined,
     victim_email: input.victimEmail ? input.victimEmail : undefined,
     // isDamage: input.isDamage ? input.isDamage : undefined,

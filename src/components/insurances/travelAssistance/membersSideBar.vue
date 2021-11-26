@@ -2,7 +2,16 @@
   <base-side-bar :isOverflowHidden="isOverflowHidden" v-model:isDisplay="display" name="Member" :title="title">
     <div class="d-flex flex-col h-full px-4 pt-4">
       <div>
-        <search-input :start="end" :end="end" v-model:loading="loading" name="member" placeholder="Zoek op naam" :repository="PersonRepository" @fetchedOptions="fetchedOptions($event)" :group="group ? group : ''" />
+        <search-input
+          :start="end"
+          :end="end"
+          v-model:loading="loading"
+          name="member"
+          placeholder="Zoek op naam"
+          :repository="PersonRepository"
+          @fetchedOptions="fetchedOptions($event)"
+          :group="group ? group : ''"
+        />
       </div>
 
       <div class="h-full overflow-y-scroll mt-4 pb-24">
@@ -84,7 +93,7 @@ export default defineComponent({
     },
     group: String,
     start: String,
-    end: String
+    end: String,
   },
   setup(props, context) {
     const store = useStore()
@@ -111,7 +120,7 @@ export default defineComponent({
               .getById(member.groupAdminId)
               .then((result: Member) => {
                 result.birthDate = member.birthDate
-                result.sex = member.sex
+                result.gender = member.gender
                 result.isMember = true
                 selectedMembers.value.push(result)
               })
@@ -123,7 +132,7 @@ export default defineComponent({
             .then((result: Member) => {
               result.birthDate = member.birthDate
               result.isMember = false
-              result.sex = member.sex
+              result.gender = member.gender
               selectedMembers.value.push(result)
             })
         }

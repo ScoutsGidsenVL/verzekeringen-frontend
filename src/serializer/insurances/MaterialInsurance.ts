@@ -38,7 +38,7 @@ export const MaterialInsuranceDeserializer = (input: any): MaterialInsurance => 
     type: input.type ? TypeDeserializer(input.type) : undefined,
     vvksComment: input.vvks_comment && input.vvks_comment.length > 0 ? input.vvks_comment : '',
     country: input.country ? CountryDeserializer(input.country) : undefined,
-    postCodeCity: input.postcode_city ? LocationDeserializer(input.postcode_city) : undefined,
+    postCodeCity: LocationDeserializer({ city: input.city, postal_code: input.postal_code }),
     equipment: input.equipment ? input.equipment.map((equipment: any) => EquipmentDeserializer(equipment)) : undefined,
   }
 
@@ -55,7 +55,8 @@ export const MaterialInsuranceSerializer = (input: MaterialInsurance): MaterialI
     nature: input.nature ? input.nature : undefined,
     responsible_phone_number: input.responsibleMember ? ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number : undefined,
     country: input.country && input.country.name !== 'België' ? CountrySerializer(input.country).id : undefined,
-    postcode_city: input.country && input.country.name !== 'België' ? undefined : input.postCodeCity ? LocationSerializer(input.postCodeCity) : undefined,
+    postal_code: LocationSerializer(input.postCodeCity).postalCode,
+    city: LocationSerializer(input.postCodeCity).city,
     equipment: input.equipment ? input.equipment.map((equipment: any) => EquipmentSerializerToPostInsurance(equipment)) : undefined,
   }
 

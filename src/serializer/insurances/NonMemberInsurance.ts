@@ -33,7 +33,7 @@ export const nonMemberInsuranceDeserializer = (input: any): NonMemberInsurance =
     createdOn: input.created_on ? input.created_on : undefined,
     comment: input.comment ? input.comment : undefined,
     group: input.scouts_group ? GroupDeserializer(input.scouts_group) : undefined,
-    postCodeCity: input.postcode_city ? LocationDeserializer(input.postcode_city) : undefined,
+    postCodeCity: LocationDeserializer({ city: input.city, postal_code: input.postal_code }),
     nature: input.nature ? input.nature : undefined,
     responsibleMember: input.responsible_member ? ResponsibleMemberDeserializer(input.responsible_member) : undefined,
     status: input.status ? StatusDeserializer(input.status) : undefined,
@@ -55,7 +55,8 @@ export const nonMemberInsuranceSerializer = (input: NonMemberInsurance): NonMemb
     comment: input.comment ? input.comment : undefined,
     group_group_admin_id: input.group ? GroupSerializer(input.group).id : undefined,
     scouts_group: input.group ? GroupSerializer(input.group) : undefined, // DRAFT
-    postcode_city: input.country && input.country.name !== 'België' ? undefined : input.postCodeCity ? LocationSerializer(input.postCodeCity) : undefined,
+    postal_code: LocationSerializer(input.postCodeCity).postalCode,
+    city: LocationSerializer(input.postCodeCity).city,
     nature: input.nature ? input.nature : undefined,
     responsible_phone_number: input.responsibleMember ? ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number : undefined,
     total_cost: input.totalCost ? input.totalCost : undefined,

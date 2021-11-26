@@ -1,7 +1,7 @@
 import { LocationDeserializer, LocationSerializer } from '@/serializer/Location'
 import { Member } from '@/serializer/Member'
 
-export interface Driver extends Member {}
+export interface Driver extends Member { }
 
 export const DriverDeserializer = (input: any): Driver => {
   const single: Driver = {
@@ -15,7 +15,7 @@ export const DriverDeserializer = (input: any): Driver => {
     street: input.street && input.street ? input.street : undefined,
     number: input.number && input.number ? input.number : undefined,
     letterBox: input.letter_box ? input.letter_box : undefined,
-    postCodeCity: input.postcode_city ? LocationDeserializer({ city: input.city, postal_code: input.postal_code }) : undefined,
+    postCodeCity: LocationDeserializer({ city: input.city, postal_code: input.postal_code }),
     comment: input.comment,
     isChecked: false,
   }
@@ -33,7 +33,7 @@ export const DriverSerializer = (input: any): any => {
     number: input.number ? input.number : undefined,
     comment: input.comment ? input.comment : undefined,
     postal_code: input.postCodeCity ? LocationSerializer(input.postCodeCity).postalCode : undefined,
-    city: input.postCodeCity ? LocationSerializer(input.postCodeCity).city: undefined,
+    city: input.postCodeCity ? LocationSerializer(input.postCodeCity).city : undefined,
   }
 
   return single
