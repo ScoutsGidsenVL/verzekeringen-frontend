@@ -31,7 +31,7 @@ export const MemberDeserializer = (input: any): Member => {
     street: input.street ? input.street : undefined,
     number: input.number ? input.number : undefined,
     letterBox: input.letter_box ? input.letter_box : undefined,
-    postCodeCity: LocationDeserializer({ city: input.city, postalCode: input.postal_code }),
+    postCodeCity: LocationDeserializer({ city: input.city, postal_code: input.postal_code }),
     comment: input.comment,
     isChecked: false,
     membershipNumber: input.membership_number ? input.membership_number : undefined,
@@ -55,7 +55,7 @@ export const MemberSerializer = (input: any): any => {
     number: input.number ? input.number : undefined,
     group: input.group ? input.group : null,
     comment: input.comment ? input.comment : undefined,
-    postal_code: input.postCodeCity ? LocationSerializer(input.postCodeCity).postalCode : undefined,
+    postal_code: input.postCodeCity ? LocationSerializer(input.postCodeCity).postal_code : undefined,
     city: input.postCodeCity ? LocationSerializer(input.postCodeCity).city : undefined,
     membership_number: input.membershipNumber ? input.membershipNumber : undefined,
   }

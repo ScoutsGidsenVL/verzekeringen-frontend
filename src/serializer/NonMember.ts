@@ -48,7 +48,7 @@ export const NonMemberSerializer = (input: any): any => {
     number: input.number,
     letter_box: input.letterBox,
     comment: input.comment,
-    postal_code: LocationSerializer(input.postCodeCity).postalCode,
+    postal_code: LocationSerializer(input.postCodeCity).postal_code,
     city: LocationSerializer(input.postCodeCity).city,
     group_group_admin_id: input.group ? input.group : null,
   }

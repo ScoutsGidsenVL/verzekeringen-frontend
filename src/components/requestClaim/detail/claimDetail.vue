@@ -10,7 +10,7 @@
         <custom-input
           v-show="can('insurances.view_insuranceclaim_case_number')"
           :disabled="!can('insurances.add_insuranceclaim_case_number')"
-          :value="claimState.dossierNumber"
+          :value="details.dossierNumber"
           class="xs:w-72 md:w-96"
           :type="InputTypes.TEXT"
           label="Dossiernummer"
@@ -19,7 +19,7 @@
         <custom-input
           v-show="can('insurances.view_insuranceclaim_note')"
           :disabled="!can('insurances.add_insuranceclaim_note')"
-          :value="claimState.note"
+          :value="details.note"
           class="xs:w-72 md:w-96"
           :type="InputTypes.TEXT_AREA"
           label="Administratieve commentaar"
@@ -298,6 +298,7 @@ export default defineComponent({
         .then((result: any) => {
           details.value = result
           store.dispatch('setClaimState', details.value)
+          console.log('Fetched details: ', details.value)
           if (details.value.attachment) {
             filename.value = details.value.attachment.filename
           }
@@ -314,6 +315,7 @@ export default defineComponent({
     })
 
     const claimState = computed((): Claim => {
+      console.log('CLAIM STATE COMPUTED: ', store.state.claim.claimState)
       return store.state.claim.claimState
     })
 
@@ -375,6 +377,7 @@ export default defineComponent({
       DamageTypes,
       InputTypes,
       claimState,
+      details,
       onSubmit,
       userData,
       saveFile,
