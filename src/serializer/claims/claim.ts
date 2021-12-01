@@ -11,7 +11,7 @@ export interface Claim {
   readonly id?: number
   readonly date?: String
   readonly person?: String
-  readonly group?: Group
+  group?: Group
   groupLeader?: ResponsibleMember
   victimMember?: string
   victimNonMember?: string

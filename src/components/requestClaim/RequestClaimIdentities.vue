@@ -245,7 +245,6 @@ export default defineComponent({
 
     const { handleSubmit, values, validate, isSubmitting } = useForm<Claim>({
       initialValues: {
-        group: userData.value.scoutsGroups && userData.value.scoutsGroups[0] ? userData.value.scoutsGroups[0] : undefined,
         victim: {
           country: initialCountry.value,
         },
@@ -259,6 +258,7 @@ export default defineComponent({
         .getClaimGroupsByPermissions()
         .then((res) => {
           claimGroups.value = res
+          values.group = res[0]
         })
     }
 
