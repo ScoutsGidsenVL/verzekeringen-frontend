@@ -297,8 +297,9 @@ export default defineComponent({
         .getById(route.params.id.toString())
         .then((result: any) => {
           details.value = result
+          values.dossierNumber = details.value.dossierNumber
+          values.note = details.value.note
           store.dispatch('setClaimState', details.value)
-          console.log('Fetched details: ', details.value)
           if (details.value.attachment) {
             filename.value = details.value.attachment.filename
           }
@@ -315,7 +316,6 @@ export default defineComponent({
     })
 
     const claimState = computed((): Claim => {
-      console.log('CLAIM STATE COMPUTED: ', store.state.claim.claimState)
       return store.state.claim.claimState
     })
 
