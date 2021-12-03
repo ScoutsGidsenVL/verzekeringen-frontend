@@ -59,7 +59,8 @@ export const EventInsuranceSerializer = (input: EventInsurance): EventInsurance 
     scouts_group: input.group ? GroupSerializer(input.group) : undefined, // DRAFT
     total_cost: input.totalCost ? input.totalCost : undefined,
     nature: input.nature ? input.nature : undefined,
-    location: input.location ? LocationSerializer(input.location) : undefined,
+    postal_code: input.location ? LocationSerializer(input.location).postal_code : undefined,
+    city: input.location ? LocationSerializer(input.location).city : undefined,
     event_size: input.eventSize ? EventSizeSerializer(input.eventSize).id : undefined,
   }
 

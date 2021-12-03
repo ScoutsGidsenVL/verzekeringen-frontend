@@ -80,7 +80,14 @@
           <div v-show="isGroupEquipement === false && !owner">
             <div class="z-30">
               <strong class="cursor-pointer text-lightGreen" @click="openMemberSideBar()"> Een lid (persoonlijk materiaal) </strong>
-              <members-only-side-bar isOverflowHidden="false" v-model:isDisplay="isMemberSideBarDisplay" :close-on-add="true" :existing-list="members" title="Lid" @addMemberToList="addMember($event)" />
+              <members-only-side-bar
+                isOverflowHidden="false"
+                v-model:isDisplay="isMemberSideBarDisplay"
+                :close-on-add="true"
+                :existing-list="members"
+                title="Lid"
+                @addMemberToList="addMember($event)"
+              />
             </div>
 
             <div class="mt-3 z-30">
@@ -226,7 +233,6 @@ export default defineComponent({
         if (props.sideBarState.state === 'new' || props.sideBarState.state === 'edit') {
           const equipment = ref<Equipment>({
             id: values.id ? values.id : undefined,
-            inuits_equipment_id: values.inuits_equipment_id ? values.inuits_equipment_id : undefined,
             nature: values.nature && values.ownerMember ? '' : values.nature,
             description: values.description ? values.description : undefined,
             totalValue: values.totalValue ? values.totalValue : undefined,
@@ -244,9 +250,9 @@ export default defineComponent({
     }
 
     const addEquipment = async (equipment: Equipment) => {
-      if (equipment.inuits_equipment_id) {
+      if (equipment.id) {
         await RepositoryFactory.get(EquipmentRepository)
-          .getById(equipment.inuits_equipment_id)
+          .getById(equipment.id)
           .then((result: Equipment) => {
             context.emit('addEquipmentToList', result)
           })
@@ -254,9 +260,9 @@ export default defineComponent({
     }
 
     const updateEquipment = async (data: Equipment) => {
-      if (data.inuits_equipment_id) {
+      if (data.id) {
         await RepositoryFactory.get(EquipmentRepository)
-          .update(data.inuits_equipment_id, data)
+          .update(data.id, data)
           .then((completed: Equipment) => {
             context.emit('updateEquipmentInList', completed)
           })
@@ -358,7 +364,6 @@ export default defineComponent({
         resetForm({
           values: {
             id: value.entity.id,
-            inuits_equipment_id: value.entity.inuits_equipment_id,
             nature: value.entity.nature,
             description: value.entity.description,
             totalValue: value.entity.totalValue,
@@ -388,7 +393,6 @@ export default defineComponent({
         resetForm({
           values: {
             id: '',
-            inuits_equipment_id: '',
             nature: '',
             description: '',
             totalValue: '',

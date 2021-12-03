@@ -46,6 +46,7 @@ export const MaterialInsuranceDeserializer = (input: any): MaterialInsurance => 
 }
 
 export const MaterialInsuranceSerializer = (input: MaterialInsurance): MaterialInsurance => {
+  console.log("MATERIAL INSURANCE SERIALIZER INPUT: ", input)
   const single: any = {
     start_date: input.startDate ? moment(input.startDate).format('YYYY-MM-DDTh:mm:ss') : undefined,
     end_date: input.endDate ? moment(input.endDate).format('YYYY-MM-DDTh:mm:ss') : undefined,
@@ -55,10 +56,11 @@ export const MaterialInsuranceSerializer = (input: MaterialInsurance): MaterialI
     nature: input.nature ? input.nature : undefined,
     responsible_phone_number: input.responsibleMember ? ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number : undefined,
     country: input.country && input.country.name !== 'België' ? CountrySerializer(input.country).id : undefined,
-    postal_code: LocationSerializer(input.postCodeCity).postalCode,
-    city: LocationSerializer(input.postCodeCity).city,
+    postal_code: input.postCodeCity ? LocationSerializer(input.postCodeCity).postal_code : undefined,
+    city: input.postCodeCity ? LocationSerializer(input.postCodeCity).city : undefined,
     equipment: input.equipment ? input.equipment.map((equipment: any) => EquipmentSerializerToPostInsurance(equipment)) : undefined,
   }
+  console.log("MATERIAL INSURANCE SERIALIZER OUTPUT: ", single)
 
   return single
 }

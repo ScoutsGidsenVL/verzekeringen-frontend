@@ -7,9 +7,9 @@ export interface Group {
 
 export const GroupDeserializer = (input: any): Group => {
   const single: Group = {
-    id: input.group_group_admin_id ? input.group_group_admin_id : input.group_admin_id,
+    id: input.group_admin_id ? input.group_admin_id : undefined,
     name: input.name ? input.name : undefined,
-    fullInfo: (input.group_admin_id ? input.group_admin_id : input.group_group_admin_id) && input.name ? `${input.name} - ${input.group_admin_id ? input.group_admin_id : input.group_group_admin_id}` : undefined,
+    fullInfo: (input.group_admin_id ? input.group_admin_id : undefined) && input.name ? `${input.name} - ${input.group_admin_id ? input.group_admin_id : undefined}` : undefined,
   }
   return single
 }
@@ -17,7 +17,7 @@ export const GroupDeserializer = (input: any): Group => {
 export const GroupSerializer = (input: any): any => {
   const single: any = {
     id: input.id ? input.id : undefined,
-    group_group_admin_id: input.id ? input.id : undefined, // DRAFT
+    group_admin_id: input.id ? input.id : undefined, // DRAFT
     name: input.name ? input.name : undefined, // DRAFT
   }
 
