@@ -38,7 +38,7 @@ export const EventInsuranceDeserializer = (input: any): EventInsurance => {
     group: input.scouts_group ? GroupDeserializer(input.scouts_group) : undefined,
     totalCost: input.total_cost ? input.total_cost.toString().replace(".", ",") : undefined,
     nature: input.nature ? input.nature : undefined,
-    location: input.location ? LocationDeserializer({ city: input.city, postal_code: input.postal_code }) : undefined,
+    location: input.input.city && input.postal_code ? LocationDeserializer({ city: input.city, postal_code: input.postal_code }) : undefined,
     eventSize: input.event_size ? (typeof input.event_size === 'object' ? EventSizeDeserializer(input.event_size) : { id: input.event_size }) : undefined,
     vvksComment: input.vvks_comment && input.vvks_comment.length > 0 ? input.vvks_comment : '',
     status: input.status ? StatusDeserializer(input.status) : undefined,
