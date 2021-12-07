@@ -34,7 +34,7 @@ export const oneTimeActivityDeserializer = (input: any): OneTimeActivity => {
     comment: input.comment ? input.comment : undefined,
     group: input.scouts_group ? GroupDeserializer(input.scouts_group) : undefined,
     groupSize: input.group_size ? (typeof input.group_size === 'object' ? GroupSizeDeserializer(input.group_size) : { id: input.group_size }) : undefined,
-    location: input.input.city && input.postal_code ? LocationDeserializer({ city: input.city, postal_code: input.postal_code }) : undefined,
+    location: input.city && input.postal_code ? LocationDeserializer({ city: input.city, postal_code: input.postal_code }) : undefined,
     nature: input.nature ? input.nature : undefined,
     responsibleMember: input.responsible_member ? ResponsibleMemberDeserializer(input.responsible_member) : undefined,
     status: input.status ? StatusDeserializer(input.status) : undefined,
