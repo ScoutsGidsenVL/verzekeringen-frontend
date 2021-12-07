@@ -21,7 +21,7 @@ export class TravelAssistanceRepository extends BaseRepository {
   }
 
   editById(id: string, data: any): Promise<any> {
-    return this.put(this.endpoint + 'travel_assistance/' + id + '/', this.serializer(data)).then((response: any) => {
+    return this.patch(this.endpoint + 'travel_assistance/' + id + '/', this.serializer(data)).then((response: any) => {
       return this.deserializer(response)
     })
   }

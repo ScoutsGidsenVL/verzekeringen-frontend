@@ -41,7 +41,7 @@ export abstract class BaseRepository extends BaseApiRepository {
   }
 
   editById(id: string, data: any): Promise<any> {
-    return this.put(this.endpoint + id, data).then((response: any) => {
+    return this.patch(this.endpoint + id, data).then((response: any) => {
       return this.deserializer(response)
     })
   }

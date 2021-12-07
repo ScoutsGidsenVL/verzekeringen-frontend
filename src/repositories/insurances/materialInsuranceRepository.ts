@@ -14,7 +14,7 @@ export class MaterialInsuranceRepository extends BaseRepository {
   }
 
   editById(id: string, data: any): Promise<any> {
-    return this.put(this.endpoint + 'equipment/' + id + '/', this.serializer(data)).then((response: any) => {
+    return this.patch(this.endpoint + 'equipment/' + id + '/', this.serializer(data)).then((response: any) => {
       return this.deserializer(response)
     })
   }
