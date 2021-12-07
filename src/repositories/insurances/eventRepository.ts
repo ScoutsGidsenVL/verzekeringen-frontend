@@ -21,7 +21,7 @@ export class EventRepository extends BaseRepository {
 
   getCalculatedCost = (data: EventInsurance) => {
     return this.post(this.endpoint + 'event/cost/', this.serializer(data)).then((response: any) => {
-      return response.total_cost.replace(".", ",")
+      return response.total_cost.toString().replace(".", ",")
     })
   }
 }

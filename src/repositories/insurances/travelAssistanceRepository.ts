@@ -28,7 +28,7 @@ export class TravelAssistanceRepository extends BaseRepository {
 
   getCalculatedCost = (data: TravelAssistanceInsurance) => {
     return this.post(this.endpoint + 'travel_assistance/cost/', this.serializer(data)).then((response: any) => {
-      return response.total_cost.replace(".", ",")
+      return response.total_cost.toString().replace(".", ",")
     })
   }
 

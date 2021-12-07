@@ -23,7 +23,7 @@ export class TemporaryVehicleRepository extends BaseRepository {
 
   getCalculatedCost = (data: TemporaryVehicleInsurance) => {
     return this.post(this.endpoint + 'temporary_vehicle/cost/', this.serializer(data)).then((response: any) => {
-      return response.total_cost.replace(".", ",")
+      return response.total_cost.toString().replace(".", ",")
     })
   }
 

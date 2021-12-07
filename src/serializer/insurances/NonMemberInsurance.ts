@@ -37,7 +37,7 @@ export const nonMemberInsuranceDeserializer = (input: any): NonMemberInsurance =
     nature: input.nature ? input.nature : undefined,
     responsibleMember: input.responsible_member ? ResponsibleMemberDeserializer(input.responsible_member) : undefined,
     status: input.status ? StatusDeserializer(input.status) : undefined,
-    totalCost: input.total_cost ? input.total_cost.replace(".", ",") : undefined,
+    totalCost: input.total_cost ? input.total_cost.toString().replace(".", ",") : undefined,
     type: input.type ? TypeDeserializer(input.type) : undefined,
     nonMembers: input.non_members ? input.non_members.map((nonMember: any) => NonMemberDeserializer(nonMember)) : undefined,
     country: input.country ? CountryDeserializer(input.country) : undefined,

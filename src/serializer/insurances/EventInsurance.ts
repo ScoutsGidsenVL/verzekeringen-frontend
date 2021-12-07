@@ -36,7 +36,7 @@ export const EventInsuranceDeserializer = (input: any): EventInsurance => {
     responsibleMember: input.responsible_member ? ResponsibleMemberDeserializer(input.responsible_member) : undefined,
     responsiblePhoneNumber: input.responsible_phone_number ? input.responsible_phone_number : undefined,
     group: input.scouts_group ? GroupDeserializer(input.scouts_group) : undefined,
-    totalCost: input.total_cost ? input.total_cost.replace(".", ",") : undefined,
+    totalCost: input.total_cost ? input.total_cost.toString().replace(".", ",") : undefined,
     nature: input.nature ? input.nature : undefined,
     location: input.location ? LocationDeserializer(input.location) : undefined,
     eventSize: input.event_size ? (typeof input.event_size === 'object' ? EventSizeDeserializer(input.event_size) : { id: input.event_size }) : undefined,
