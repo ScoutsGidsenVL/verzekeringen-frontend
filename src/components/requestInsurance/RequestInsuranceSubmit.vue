@@ -89,7 +89,7 @@ export default defineComponent({
             RepositoryFactory.get(DraftRepository).removeById(route.params.id)
           }
         })
-        .catch(() => {
+        .catch((error: any) => {
           error.value = true
         })
     }

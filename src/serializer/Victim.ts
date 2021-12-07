@@ -62,7 +62,7 @@ export const VictimSerializer = (input: any): any => {
     group: input.group ? input.group : null,
     comment: input.comment ? input.comment : undefined,
     membership_number: input.membershipNumber ? input.membershipNumber : undefined,
-    postal_code: input.postcode ? input.postcode : input.postCodeCity ? LocationSerializer(input.postCodeCity).postalCode : undefined,
+    postal_code: input.postcode ? input.postcode : input.postCodeCity ? LocationSerializer(input.postCodeCity).postal_code : undefined,
     city: input.city ? input.city : input.postCodeCity ? LocationSerializer(input.postCodeCity).city : undefined,
     gender: input.gender ? input.gender : undefined,
     non_member: input.nonMember ? input.nonMember : undefined,

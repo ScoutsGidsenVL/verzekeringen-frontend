@@ -32,7 +32,7 @@ export const DriverSerializer = (input: any): any => {
     street: input.street ? input.street : undefined,
     number: input.number ? input.number : undefined,
     comment: input.comment ? input.comment : undefined,
-    postal_code: input.postCodeCity ? LocationSerializer(input.postCodeCity).postalCode : undefined,
+    postal_code: input.postCodeCity ? LocationSerializer(input.postCodeCity).postal_code : undefined,
     city: input.postCodeCity ? LocationSerializer(input.postCodeCity).city : undefined,
   }
 

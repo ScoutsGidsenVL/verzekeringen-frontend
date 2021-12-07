@@ -57,7 +57,8 @@ export const oneTimeActivitySerializer = (input: OneTimeActivity): OneTimeActivi
     group_admin_id: input.group ? GroupSerializer(input.group).id : undefined,
     scouts_group: input.group ? GroupSerializer(input.group) : undefined, // DRAFT
     group_size: input.groupSize ? GroupSizeSerializer(input.groupSize).id : undefined,
-    location: input.location ? LocationSerializer(input.location) : undefined,
+    postal_code: input.location ? LocationSerializer(input.location).postal_code : undefined,
+    city: input.location ? LocationSerializer(input.location).city : undefined,
     nature: input.nature ? input.nature : undefined,
     responsible_phone_number: input.responsibleMember ? ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number : undefined,
     total_cost: input.totalCost ? input.totalCost : undefined,
