@@ -1,12 +1,16 @@
 <template>
-  <div class="mb-1" v-if="(phoneNumber && phoneNumber === '') || phoneNumber === '/'">
-    <p>(Gsm kan toegevoegd worden op de groepsadmin.)</p>
+  <div v-if="hasWarning">
+    <div class="mb-1" v-if="(phoneNumber && phoneNumber === '') || phoneNumber === '/'">
+      <p>(Gsm kan toegevoegd worden op de groepsadmin.)</p>
+    </div>
   </div>
-  <div v-else-if="(phoneNumber && phoneNumber !== '') || phoneNumber !== '/'">
+  <div v-if="(phoneNumber && phoneNumber !== '') || phoneNumber !== '/'">
     <p>{{ phoneNumber }}</p>
   </div>
-  <div class="mb-1" v-if="!phoneNumber">
-    <p>(Gsm kan toegevoegd worden op de groepsadmin.)</p>
+  <div v-if="hasWarning">
+    <div class="mb-1" v-if="!phoneNumber">
+      <p>(Gsm kan toegevoegd worden op de groepsadmin.)</p>
+    </div>
   </div>
 </template>
 
@@ -17,6 +21,7 @@ export default defineComponent({
   name: 'PhoneNumber',
   props: {
     phoneNumber: String,
+    hasWarning: Boolean,
   },
 })
 </script>
