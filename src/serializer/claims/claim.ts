@@ -120,6 +120,5 @@ export const ClaimSerializer = (input: any): any => {
     file: input.file ? input.file : undefined,
     damage_type: input.damageType ? input.damageType : undefined,
   }
-
   return single
 }
