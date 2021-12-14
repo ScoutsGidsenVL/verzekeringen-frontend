@@ -1,5 +1,6 @@
 import { Member, MemberDeserializer, MemberSerializer } from '@/serializer/Member'
 import { NonMember, NonMemberDeserializer, NonMemberSerializer } from '@/serializer/NonMember'
+import { Group, GroupDeserializer, GroupSerializer } from '@/serializer/Group'
 
 export interface Equipment {
   readonly id?: string
@@ -49,7 +50,7 @@ export const EquipmentSerializerToPostInsurance = (input: any): any => {
     owner_member: input.ownerMember ? MemberSerializer(input.ownerMember) : undefined,
     owner_non_member: input.ownerNonMember ? NonMemberSerializer(input.ownerNonMember) : undefined,
     group: input.group ? input.group : undefined,
-    owner_group: input.group ? input.group : undefined,
+    owner_group: input.group ? GroupSerializer(input.group) : undefined,
   }
 
   return single
