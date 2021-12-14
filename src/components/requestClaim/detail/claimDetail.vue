@@ -47,7 +47,7 @@
         <label-output v-if="claimState.group" label="" :text="claimState.group.name + ' - ' + claimState.group.id" />
         <label-output v-if="userData.firstName" label="" :text="userData.firstName + ' ' + userData.lastName" />
         <label-output v-if="userData.email" label="" :text="userData.email" />
-        <label-output v-if="userData.phoneNumber" label="" :text="userData.phoneNumber" />
+        <phone-number :hasWarning="true" :phoneNumber="userData.phoneNumber" />
 
         <div v-if="claimState.declarant">
           <responsible-member-detail title="" :responsible-member="claimState.declarant" />
@@ -257,6 +257,7 @@ import moment from 'moment'
 import FileUpload from '@/components/semantic/FileUpload.vue'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
 import usePermissions from '../../../helpers/usePermissions'
+import PhoneNumber from '@/components/semantic/PhoneNumber.vue'
 
 export default defineComponent({
   name: 'ClaimDetail',
@@ -269,6 +270,7 @@ export default defineComponent({
     'back-button': BackButton,
     FileUpload,
     CustomHeadline2,
+    PhoneNumber
   },
   props: {
     isDetailPage: {
