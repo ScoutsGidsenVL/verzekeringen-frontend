@@ -185,7 +185,7 @@ export default defineComponent({
           const generalInsuranceState = ref<any>(store.getters.generalInsuranceState)
           const nonMember = ref<NonMember>({
             id: values.id,
-            inuitsNonMemberId: values.inuitsNonMemberId ? values.inuitsNonMemberId : undefined, 
+            inuitsNonMemberId: values.inuitsNonMemberId ? values.inuitsNonMemberId : undefined,
             lastName: values.lastName,
             firstName: values.firstName,
             phoneNumber: values.phoneNumber ? values.phoneNumber : '/',
