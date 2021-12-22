@@ -54,7 +54,7 @@
           </div>
 
           <div class="w-100 mt-4">
-            <custom-input :loading-submit="isSubmitting" :type="InputTypes.TEXT" name="letterBox" label="Bus" />
+            <custom-input :loading-submit="isSubmitting" :type="InputTypes.TEXT" maxlength="5" name="letterBox" label="Bus" />
           </div>
 
           <div class="w-100 mt-4">
@@ -185,7 +185,6 @@ export default defineComponent({
           const generalInsuranceState = ref<any>(store.getters.generalInsuranceState)
           const nonMember = ref<NonMember>({
             id: values.id,
-            inuitsNonMemberId: values.inuitsNonMemberId ? values.inuitsNonMemberId : undefined,
             lastName: values.lastName,
             firstName: values.firstName,
             phoneNumber: values.phoneNumber ? values.phoneNumber : '/',
@@ -219,11 +218,10 @@ export default defineComponent({
 
     const editNonMember = async (data: NonMember) => {
       formSendWithSuccess.value = false
-      if (data.inuitsNonMemberId) {
+      if (data.id) {
         await RepositoryFactory.get(NonMemberRepository)
-          .update(data.inuitsNonMemberId, data)
+          .update(data.id, data)
           .then((completed: NonMember) => {
-            completed.inuitsNonMemberId = data.inuitsNonMemberId
             context.emit('updateMemberInList', completed)
             closeSideBar()
           })
@@ -273,7 +271,6 @@ export default defineComponent({
         resetForm({
           values: {
             id: value.entity.id,
-            inuitsNonMemberId: value.entity.inuitsNonMemberId,
             lastName: value.entity.lastName,
             firstName: value.entity.firstName,
             phoneNumber: value.entity.phoneNumber,

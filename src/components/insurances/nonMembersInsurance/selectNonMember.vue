@@ -3,7 +3,13 @@
     <ErrorMessage :name="id" class="text-red text-sm block mt-1 w-80" />
   </span>
   <a class="cursor-pointer btn-simple-green mb-4" @click="openSideBar()"> + Voeg persoon toe </a>
-  <non-member-list :can-be-deleted="true" :non-members-list="nonMembers" @deleteNonMemberFromList="deleteNonMemberFromList($event)" @editNonMember="editNonMember($event)" />
+  <non-member-list
+    :can-be-deleted="true"
+    :non-members-list="nonMembers"
+    @deleteNonMemberFromList="deleteNonMemberFromList($event)"
+    @editNonMember="editNonMember($event)"
+    @selectedIndex="selectedElement($event)"
+  />
 
   <non-member-side-bar
     v-model:side-bar-state="sideBarState"
@@ -49,12 +55,12 @@ export default defineComponent({
   setup(props) {
     const { value: nonMembers } = useField<NonMember[]>(props.id, props.rules, {})
     const sideBarState = ref<sideBarState<NonMember>>({ state: 'hide' })
+    const selectedIndex = ref<number>()
 
     const openSideBar = () => {
       sideBarState.value = { state: 'new' }
     }
     const addCreatedNonMemberToList = (nonMember: NonMember) => {
-      nonMember.inuitsNonMemberId = nonMember.id
       if (nonMember) {
         nonMembers.value.push(nonMember)
       }
@@ -71,11 +77,15 @@ export default defineComponent({
       }
     }
 
+    const selectedElement = (selectedElement: number) => {
+      selectedIndex.value = selectedElement
+    }
+
     const updateMemberInList = (nonMember: NonMember) => {
       const tempArr: Array<NonMember> = []
 
-      nonMembers.value.forEach((listedNonMember) => {
-        if (listedNonMember.inuitsNonMemberId === nonMember.inuitsNonMemberId) {
+      nonMembers.value.forEach((listedNonMember: any, index: number) => {
+        if (index === selectedIndex.value) {
           tempArr.push(nonMember)
         } else {
           tempArr.push(listedNonMember)
@@ -88,6 +98,7 @@ export default defineComponent({
       addCreatedNonMemberToList,
       deleteNonMemberFromList,
       updateMemberInList,
+      selectedElement,
       editNonMember,
       openSideBar,
       nonMembers,
