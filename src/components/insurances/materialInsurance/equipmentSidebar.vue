@@ -233,7 +233,7 @@ export default defineComponent({
         if (props.sideBarState.state === 'new' || props.sideBarState.state === 'edit') {
           const equipment = ref<Equipment>({
             id: values.id ? values.id : undefined,
-            nature: values.nature && values.ownerMember ? '' : values.nature,
+            nature: values.nature ? values.nature : undefined,
             description: values.description ? values.description : undefined,
             totalValue: values.totalValue ? values.totalValue : undefined,
             ownerMember: values.ownerMember && isGroupEquipement.value === false ? values.ownerMember : undefined,
