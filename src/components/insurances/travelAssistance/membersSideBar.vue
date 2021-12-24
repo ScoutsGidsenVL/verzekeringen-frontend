@@ -114,28 +114,29 @@ export default defineComponent({
     const fetchedOptions = (options: any) => {
       selectedMembers.value = []
       options.forEach((member: Member) => {
-        if (member.groupAdminId) {
-          if (member.isMember) {
-            RepositoryFactory.get(MemberRepository)
-              .getById(member.groupAdminId)
-              .then((result: Member) => {
-                result.birthDate = member.birthDate
-                result.gender = member.gender
-                result.isMember = true
-                selectedMembers.value.push(result)
-              })
-          }
-        }
-        if (member.id && !member.isMember) {
-          RepositoryFactory.get(NonMemberRepository)
-            .getById(member.id)
-            .then((result: Member) => {
-              result.birthDate = member.birthDate
-              result.isMember = false
-              result.gender = member.gender
-              selectedMembers.value.push(result)
-            })
-        }
+        // if (member.groupAdminId) {
+        //   if (member.isMember) {
+        //     RepositoryFactory.get(MemberRepository)
+        //       .getById(member.groupAdminId)
+        //       .then((result: Member) => {
+        //         result.birthDate = member.birthDate
+        //         result.gender = member.gender
+        //         result.isMember = true
+        //         selectedMembers.value.push(result)
+        //       })
+        //   }
+        // }
+        // if (member.id && !member.isMember) {
+        //   RepositoryFactory.get(NonMemberRepository)
+        //     .getById(member.id)
+        //     .then((result: Member) => {
+        //       result.birthDate = member.birthDate
+        //       result.isMember = false
+        //       result.gender = member.gender
+        //       selectedMembers.value.push(result)
+        //     })
+        // }
+        selectedMembers.value.push(member)
       })
       loading.value = false
     }
