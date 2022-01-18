@@ -6,7 +6,7 @@
         <pre>
         </pre>
           <div class="mb-3">
-            <search-input-claims v-model:loading="loading" name="claim" placeholder="Zoek op naam" :repository="ClaimRepository" @fetchedOptions="fetchedOptions($event)" />
+            <search-input-claims v-model:loading="loading" name="claim" placeholder="Zoek op naam, lidnummer of groepsnummer" :repository="ClaimRepository" @fetchedOptions="fetchedOptions($event)" />
           </div>
       </claim-list>
       <div class="flex gap-5 pt-1 pb-5 float-right">
