@@ -4,58 +4,60 @@
       <form
         id="addNewVehicle"
         :class="{ 'd-flex': sideBarState.state === 'new' || sideBarState.state === 'edit', 'd-none': sideBarState.state === 'list' }"
-        class="flex-col relative overflow-y-scroll h-full px-4 pt-3"
+        class="flex-col relative overflow-y-scroll overflow-x-hidden h-full"
         @submit.prevent="onSubmit"
       >
-        <div class="w-100">
-          <custom-input :type="InputTypes.TEXT" rules="required" name="brand" label="Merk" />
-        </div>
-        <div class="w-100 mt-4 w-">
-          <custom-input :maxlength="10" :type="InputTypes.TEXT" rules="required" name="licensePlate" label="Nummerplaat" />
-        </div>
-        <div class="w-100 mt-4">
-          <custom-input :type="InputTypes.TEXT" rules="required" name="constructionYear" maxlength="4" label="Bouwjaar">
-            <div class="pb-3">
-              Bouwjaar ouder 10 jaar geleden? Het heeft weinig zin om een oud voertuig te verzekeren. Bij een schade zal de verzekeringsmaatschappij nooit een bedrag uitkeren dat hoger is dan de
-              waarde. (Meestal erg laag voor een oude auto.)
-            </div>
-          </custom-input>
+        <div class="flex-col overflow-y-scroll overflow-x-hidden px-4 h-full">
+          <div class="w-100">
+            <custom-input :type="InputTypes.TEXT" rules="required" name="brand" label="Merk" />
+          </div>
+          <div class="w-100 mt-4 w-">
+            <custom-input :maxlength="10" :type="InputTypes.TEXT" rules="required" name="licensePlate" label="Nummerplaat" />
+          </div>
+          <div class="w-100 mt-4">
+            <custom-input :type="InputTypes.TEXT" rules="required" name="constructionYear" maxlength="4" label="Bouwjaar">
+              <div class="pb-3">
+                Bouwjaar ouder 10 jaar geleden? Het heeft weinig zin om een oud voertuig te verzekeren. Bij een schade zal de verzekeringsmaatschappij nooit een bedrag uitkeren dat hoger is dan de
+                waarde. (Meestal erg laag voor een oude auto.)
+              </div>
+            </custom-input>
+          </div>
+
+          <div class="w-100 mt-4">
+            <custom-input :maxlength="20" :type="InputTypes.TEXT" rules="required" name="chassisNumber" label="Chassisnummer" />
+          </div>
+
+          <div class="w-100">
+            <multi-select
+              id="type"
+              class="custom"
+              :object="true"
+              track-by="label"
+              value-prop="value"
+              :repository="VehicleTypeRepository"
+              :options="vehicleTypes"
+              label="Type"
+              rules="required"
+              placeholder="Selecteer type"
+            />
+          </div>
+
+          <div class="w-100 mb-32">
+            <multi-select
+              id="trailer"
+              :object="true"
+              track-by="label"
+              value-prop="value"
+              :repository="TrailerRepository"
+              :options="trailers"
+              label="Aanhangwagen"
+              rules="required"
+              placeholder="Selecteer aanhangwagen"
+            />
+          </div>
         </div>
 
-        <div class="w-100 mt-4">
-          <custom-input :maxlength="20" :type="InputTypes.TEXT" rules="required" name="chassisNumber" label="Chassisnummer" />
-        </div>
-
-        <div class="w-100">
-          <multi-select
-            id="type"
-            class="custom"
-            :object="true"
-            track-by="label"
-            value-prop="value"
-            :repository="VehicleTypeRepository"
-            :options="vehicleTypes"
-            label="Type"
-            rules="required"
-            placeholder="Selecteer type"
-          />
-        </div>
-
-        <div class="w-100">
-          <multi-select
-            id="trailer"
-            :object="true"
-            track-by="label"
-            value-prop="value"
-            :repository="TrailerRepository"
-            :options="trailers"
-            label="Aanhangwagen"
-            rules="required"
-            placeholder="Selecteer aanhangwagen"
-          />
-        </div>
-
-        <div class="mt-5 py-4 sticky bottom-0 bg-white">
+        <div class="ml-4 py-4 sticky bottom-0 bg-white">
           <custom-button :text="sideBarState.state === 'edit' ? 'Bewerk' : 'Voeg toe'" />
         </div>
       </form>

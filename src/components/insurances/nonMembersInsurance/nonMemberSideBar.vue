@@ -15,11 +15,11 @@
         id="addNewNonMember"
         ref="formDiv"
         :class="{ 'd-flex': sideBarState.state === 'new' || sideBarState.state === 'edit', 'd-none': sideBarState.state === 'list' }"
-        class="flex-col relative overflow-y-scroll h-full px-4 pt-3"
+        class="flex-col relative overflow-y-scroll overflow-x-hidden h-full"
         @submit.prevent="onSubmit"
       >
         <success-toast v-show="formSendWithSuccess" label="Persoon succesvol toegevoegd" />
-        <div class="mt-4">
+        <div class="flex-col overflow-y-scroll overflow-x-hidden px-4 h-full">
           <div class="w-100">
             <custom-input :loading-submit="isSubmitting" :type="InputTypes.TEXT" rules="required" name="firstName" label="Voornaam" />
           </div>
@@ -71,7 +71,7 @@
           </div>
         </div>
 
-        <div class="mt-5 py-4 sticky bottom-0 bg-white pl-3" style="margin-left: -20px; margin-right: -20px">
+        <div class="py-4 sticky bottom-0 bg-white pl-4">
           <custom-button :loading-submit="isSubmitting" :text="sideBarState.state === 'edit' ? 'Bewerk' : 'Voeg toe'" />
         </div>
       </form>
