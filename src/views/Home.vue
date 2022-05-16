@@ -1,13 +1,13 @@
 <template>
   <div class="container">
     <h1 class="ml-0 w-full h1">Welkom {{ user.firstName }}</h1>
-    <div class="flex gap-5">
+    <div class="flex gap-5 xs:flex-col">
       <router-link :to="'/home/verzekeringen'">
-        <custom-button text="Verzekeringen" />
+        <custom-button text="verzekeringsaanvragen" />
       </router-link>
 
       <router-link :to="'/home/schadeaangiftes'">
-        <custom-button text="Schadeaangiftes" />
+        <custom-button class="xs:w-100" text="Schadeaangiftes" />
       </router-link>
     </div>
 
