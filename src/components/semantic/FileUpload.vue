@@ -16,7 +16,7 @@
             <input ref="file" @change="selectFile($event)" type="file" name="file" id="file" class="hidden" />
           </label>
         </div>
-          <span class="text-xs">Enkel pdf, jpg, jpeg, png, webp. <strong>MAX 5MB</strong></span>
+          <span class="text-xs">Max. 1 bestand, max. 5MB, enkel pdf, jpg, jpeg, png, webp.</span>
       </div>
     </div>
 
