@@ -41,7 +41,11 @@ export const TemporaryVehicleDeserializer = (input: any): TemporaryVehicleInsura
     owner: input.owner ? OwnerDeserializer(input.owner) : undefined,
     totalCost: input.total_cost ? input.total_cost.toString().replace(".", ",") : undefined,
     maxCoverage: input.max_coverage ? roundLabel(input.max_coverage) : undefined,
-    insuranceOptions: input.insurance_options ? (typeof input.insurance_options[0] === 'object' ? returnArrayWithValues(input.insurance_options) : input.insurance_options) : undefined,
+    // insuranceOptions: input.insurance_options ? (typeof input.insurance_options[0] === 'object' ? returnArrayWithValues(input.insurance_options) : input.insurance_options) : undefined,
+    insuranceOptions: input.insurance_options ? 
+    String(input.insurance_options).split("").map((num)=>{
+      return Number(num)
+    }) : undefined,
     responsibleMember: input.responsible_member ? ResponsibleMemberDeserializer(input.responsible_member) : undefined,
     vvksComment: input.vvks_comment && input.vvks_comment.length > 0 ? input.vvks_comment : '',
   }

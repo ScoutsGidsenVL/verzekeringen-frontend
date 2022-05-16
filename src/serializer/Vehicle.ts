@@ -13,15 +13,79 @@ export interface Vehicle {
   group?: string
 }
 
+const setObjectType = (type: string) => {
+  if (type === 'PERSONENWAGEN') {
+    return VehicleTypeDeserializer({
+        "id": "PERSONENWAGEN",
+        "value": "PERSONENWAGEN",
+        "label": "Personenwagen (maximum 5 inzittenden)"
+    })
+  }
+
+  if (type === 'MINIBUS') {
+    return VehicleTypeDeserializer({
+        "id": "MINIBUS",
+        "value": "MINIBUS",
+        "label": "Minibus (maximum 8 inzittenden)"
+    })
+  }
+
+  if (type === 'VRACHTWAGEN') {
+    return VehicleTypeDeserializer({
+        "id": "VRACHTWAGEN",
+        "value": "VRACHTWAGEN",
+        "label": "Vrachtwagen tot 3.5 ton (maximum 8 inzittenden)"
+    })
+  }
+
+  return VehicleTypeDeserializer({
+      "id": "PERSONENWAGEN",
+      "value": "PERSONENWAGEN",
+      "label": "Personenwagen (maximum 5 inzittenden)"
+  }) 
+}
+
+const setObjectTrailer = (trailerId: string) => {
+  if (trailerId === '0') {
+   return TrailerDeserializer({
+        "id": "0",
+        "value": "0",
+        "label": "Geen"
+    })
+  }
+
+  if (trailerId === '2') {
+    return TrailerDeserializer({
+      "id": "2",
+      "value": "2",
+      "label": "<750kg"
+  })
+   }
+   if (trailerId === '2') {
+    return TrailerDeserializer({
+      "id": "3",
+      "value": "3",
+      "label": ">750kg"
+  })
+   }
+   return TrailerDeserializer({
+    "id": "0",
+    "value": "0",
+    "label": "Geen"
+})
+}
+
 export const VehicleDeserializer = (input: any): Vehicle => {
   const single: Vehicle = {
     id: input.id ? input.id : undefined,
-    type: input.type ? (typeof input.type === 'object' ? VehicleTypeDeserializer(input.type) : { id: input.type }) : undefined,
+    type: input.type ? 
+    ((typeof input.type === 'object') ? VehicleTypeDeserializer(input.type) : setObjectType(input.type)) 
+    : undefined,
     brand: input.brand ? input.brand : undefined,
     licensePlate: input.license_plate ? input.license_plate : undefined,
     constructionYear: input.construction_year ? moment(input.construction_year.toString()).format('YYYY') : undefined,
     chassisNumber: input.chassis_number ? input.chassis_number : undefined,
-    trailer: input.trailer ? (typeof input.trailer === 'object' ? TrailerDeserializer(input.trailer) : { id: input.trailer }) : undefined,
+    trailer: input.trailer ? (typeof input.trailer === 'object' ? TrailerDeserializer(input.trailer) : setObjectTrailer(input.trailer)) : undefined,
     group: input.group ? input.group : undefined,
   }
 

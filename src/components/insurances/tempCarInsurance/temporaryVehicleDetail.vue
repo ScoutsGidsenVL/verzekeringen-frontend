@@ -24,17 +24,17 @@
 
         <div>
           <p class="font-semibold mb-0">Gekozen verzekering</p>
-          <div v-if="details && details.insuranceOptions" class="md:ml-20 xs:ml-5 sm:ml-5">
-            <div v-if="details.insuranceOptions === 1">
+          <div class="md:ml-20 xs:ml-5 sm:ml-5">
+            <div v-if="details.insuranceOptions.includes(1)">
               <p>Optie 1: Omniumverzekering.</p>
             </div>
 
-            <div v-if="details.insuranceOptions === 2">
+            <div v-if="details.insuranceOptions.includes(2)">
               <p class="mb-0">Optie 2: Vrijstelling van eigen omnium dekken.</p>
               <p>{{ details.maxCoverage.label }}</p>
             </div>
 
-            <div v-if="details.insuranceOptions === 3">
+            <div v-if="details.insuranceOptions.includes(3)">
               <p>Optie 3: Huurvoertuig: vrijstelling verzekering burgerlijke aansprakelijkheid dekken tot 500 euro.</p>
             </div>
           </div>
