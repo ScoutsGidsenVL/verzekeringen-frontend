@@ -91,7 +91,7 @@
           </p>
         </div>
         <p class="mb-0"><strong>Geboortedatum</strong> {{ moment(claimState.victim.birthDate).format('DD-MM-YYYY') }}</p>
-        <p class="mb-0"><strong>Geslacht</strong> {{ claimState.victim.gender ? claimState.victim.gender : '' }}</p>
+        <p class="mb-0"><strong>Geslacht</strong> {{ claimState.victim.gender ? genderDisplay(claimState.victim.gender) : '' }}</p>
         <label-output v-if="claimState.victim.membershipNumber" label="Lidnummer" :text="claimState.victim.membershipNumber" />
         <label-output
           v-if="claimState.bankAccount || claimState.victim.bankAccount"
@@ -371,9 +371,19 @@ export default defineComponent({
 
     scrollToTopOfPage()
 
+    const genderDisplay = (gender: string) => {
+      if (gender === 'M') {
+        return 'M'
+      }
+      if (gender === 'F') {
+        return 'V'
+      }
+    }
+
     return {
       BelgianCitySearchRepository,
       ClaimHolderStates,
+      genderDisplay,
       ActivityTypes,
       isSubmitting,
       DamageTypes,
