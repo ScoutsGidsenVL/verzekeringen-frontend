@@ -13,7 +13,7 @@
             </div>
           </display-content-checkbox>
 
-          <display-content-checkbox text="Werd er een vastelling gedaan door een verbaliserende autoriteit?">
+          <display-content-checkbox text="Werd er een vaststelling gedaan door een verbaliserende autoriteit (bv politie)?">
             <div class="md:w-96 xs:w-72">
               <custom-input :maxlength="1024" :type="InputTypes.TEXT" name="officialReportDescription" label="Welke" rules="fillInCheck:@pvNumber" />
               <custom-input :maxlength="30" class="mt-1" :type="InputTypes.TEXT" name="pvNumber" label="Nummer van proces-verbaal" />

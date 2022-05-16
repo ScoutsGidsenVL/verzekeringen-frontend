@@ -167,7 +167,7 @@
       </div>
 
       <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-1" v-if="claimState.officialReportDescription">
-        <strong>Werd er een vastelling gedaan door een verbaliserende autoriteit?</strong>
+        <strong>Werd er een vaststelling gedaan door een verbaliserende autoriteit (bv politie)?</strong>
         <div v-if="claimState.officialReportDescription">
           <p>
             {{ claimState.officialReportDescription }}
