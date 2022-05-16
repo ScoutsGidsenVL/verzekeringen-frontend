@@ -20,7 +20,7 @@ export interface Claim {
   readonly dateOfAccident?: string
   readonly activity?: string
   activityTypes?: Array<ActivityTypes>
-  readonly usedTransport?: string
+  usedTransport?: string
   readonly isDamage?: boolean
   readonly damage?: string
   readonly description?: string

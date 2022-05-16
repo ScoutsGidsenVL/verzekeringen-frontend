@@ -22,7 +22,7 @@
             <input :id="ActivityTypes.REGULAR" v-model="selectedActivityType" class="cursor-pointer" type="radio" :name="ActivityTypes.REGULAR" :value="ActivityTypes.REGULAR" />
             <label :for="ActivityTypes.REGULAR" class="inline ml-2">tijdens de activiteit van onze groep.</label>
           </div>
-          <!-- OPTION 3 -->
+          <!-- OPTION 2 -->
           <div>
             <div>
               <input :id="ActivityTypes.TRANSPORT" v-model="selectedActivityType" class="cursor-pointer" type="radio" :name="ActivityTypes.TRANSPORT" :value="ActivityTypes.TRANSPORT" />
@@ -178,6 +178,7 @@ export default defineComponent({
       () => selectedActivityType.value,
       () => {
         values.activityTypes = [selectedActivityType.value]
+        values.usedTransport = undefined
       }
     )
 
