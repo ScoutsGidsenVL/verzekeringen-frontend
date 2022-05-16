@@ -78,7 +78,14 @@
 
       <form :class="{ 'd-flex': sideBarState.state === 'list', 'd-none': sideBarState.state === 'new' || sideBarState.state === 'edit' }" class="flex-col h-full px-4 pt-3" @submit.prevent="onSubmit">
         <div>
-          <search-input v-model:loading="loading" name="nonMember" placeholder="Zoek op naam" :repository="NonMemberRepository" @fetchedOptions="fetchedOptions($event)" />
+          <search-input
+          v-if="generalInsuranceState.group"
+          :group="generalInsuranceState.group.id"
+          v-model:loading="loading"
+          name="nonMember" 
+          placeholder="Zoek op naam" 
+          :repository="NonMemberRepository" 
+          @fetchedOptions="fetchedOptions($event)" />
         </div>
 
         <div class="h-full overflow-y-scroll mt-4 pb-36">
@@ -163,6 +170,9 @@ export default defineComponent({
   emits: ['update:sideBarState', 'addCreatedNonMemberToList', 'updateMemberInList'],
   setup(props, context) {
     const store = useStore()
+    const generalInsuranceState = computed(() => {
+      return store.state.insurance.generalInsuranceState
+    })
     const user = ref<ResponsibleMember>(store.getters.user)
     const { resetForm, errors, handleSubmit, validate, meta, values, isSubmitting } = useForm<NonMember>()
     // @ts-ignore
@@ -182,7 +192,6 @@ export default defineComponent({
       await validate().then((validation: any) => scrollToFirstError(validation, 'addNewNonMember'))
       handleSubmit(async (values: NonMember) => {
         if (props.sideBarState.state === 'new' || props.sideBarState.state === 'edit') {
-          const generalInsuranceState = ref<any>(store.getters.generalInsuranceState)
           const nonMember = ref<NonMember>({
             id: values.id,
             lastName: values.lastName,
@@ -306,6 +315,7 @@ export default defineComponent({
 
     return {
       BelgianCitySearchRepository,
+      generalInsuranceState,
       NonMemberRepository,
       formSendWithSuccess,
       selectedNonMembers,

@@ -38,9 +38,9 @@
 import FileItemComponent from '@/components/semantic/FileItemComponent.vue'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import FileRepository from '@/repositories/fileRepository'
+import { defineComponent, PropType, watch } from 'vue'
 import { ErrorMessage, useField } from 'vee-validate'
 import { FileItem } from '@/serializer/FileItem'
-import { defineComponent, PropType, watch } from 'vue'
 import { saveAs } from 'file-saver'
 
 export default defineComponent({
