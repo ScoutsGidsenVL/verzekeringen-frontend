@@ -1,7 +1,7 @@
 <template>
   <form id="TemporaryVehicle" @submit.prevent="onSubmit">
     <div v-if="values">
-      {{values.vehicle}}
+      <!-- {{values.vehicle}} -->
       <div class="mt-3">
         <div class="flex gap-1">
           <custom-headline-2 text="Bestuurders" />
