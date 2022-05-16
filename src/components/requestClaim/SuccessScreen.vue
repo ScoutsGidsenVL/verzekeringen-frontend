@@ -6,8 +6,7 @@
       Een bevestiging van je aangifte vind je in je mailbox.
     </p>
     <p>
-      De aangifte is verstuurd naar Ethias, met (de ouders van) het slachtoffer in cc.
-      Na deze aangifte neemt Ethias contact op met (de ouders van) het slachtoffer. Alle verdere communicatie verloopt rechtstreeks tussen hen.
+      De aangifte is verstuurd naar Ethias, met het slachtoffer in cc. Na deze aangifte neemt Ethias contact op met (de ouders van) het slachtoffer. Alle verdere communicatie verloopt rechtstreeks tussen hen.
     </p>
   </div>
 

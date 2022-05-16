@@ -5,8 +5,7 @@
         <info-alert>
           <div>
             <p>
-              Wat je invult wordt doorgestuurd naar Ethias en (de ouders van) het slachtoffer. Na deze aangifte neemt Ethias contact op met (de ouders van) het slachtoffer. Alle verdere communicatie
-              verloopt rechtstreeks tussen hen.
+              Wat je invult wordt doorgestuurd naar Ethias en het e-mailadres van het slachtoffer. Na deze aangifte neemt Ethias contact op met (de ouders van) het slachtoffer. Alle verdere communicatie verloopt rechtstreeks tussen hen.
             </p>
           </div>
         </info-alert>
