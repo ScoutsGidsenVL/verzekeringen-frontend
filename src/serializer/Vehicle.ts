@@ -19,7 +19,7 @@ export const VehicleDeserializer = (input: any): Vehicle => {
     type: input.type ? (typeof input.type === 'object' ? VehicleTypeDeserializer(input.type) : { id: input.type }) : undefined,
     brand: input.brand ? input.brand : undefined,
     licensePlate: input.license_plate ? input.license_plate : undefined,
-    constructionYear: input.construction_year ? moment(input.construction_year).format('YYYY') : undefined,
+    constructionYear: input.construction_year ? moment(input.construction_year.toString()).format('YYYY') : undefined,
     chassisNumber: input.chassis_number ? input.chassis_number : undefined,
     trailer: input.trailer ? (typeof input.trailer === 'object' ? TrailerDeserializer(input.trailer) : { id: input.trailer }) : undefined,
     group: input.group ? input.group : undefined,
