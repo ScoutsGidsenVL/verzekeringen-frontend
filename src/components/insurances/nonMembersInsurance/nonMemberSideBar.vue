@@ -88,6 +88,8 @@
           @fetchedOptions="fetchedOptions($event)" />
         </div>
 
+        <!-- {{selectedNonMembers}} -->
+
         <div class="h-full overflow-y-scroll mt-4 pb-36">
           <hr v-if="selectedNonMembers.length > 0" class="mt-4 border-t-2 w-100 border-black" />
           <div v-for="nonMember in selectedNonMembers" :key="nonMember.id" class="w-100">

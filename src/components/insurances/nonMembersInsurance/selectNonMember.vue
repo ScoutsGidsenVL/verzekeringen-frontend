@@ -3,6 +3,8 @@
     <ErrorMessage :name="id" class="text-red text-sm block mt-1 w-80" />
   </span>
   <a class="cursor-pointer btn-simple-green mb-4" @click="openSideBar()"> + Voeg persoon toe </a>
+
+  <!-- {{nonMembers}} -->
   <non-member-list
     :can-be-deleted="true"
     :non-members-list="nonMembers"

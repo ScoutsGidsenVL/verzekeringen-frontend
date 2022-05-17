@@ -29,6 +29,7 @@ export const NonMemberDeserializer = (input: any): NonMember => {
     comment: input.comment,
     postCodeCity: LocationDeserializer({ city: input.city, postal_code: input.postal_code }),
     isChecked: false,
+    group: input.group_admin_id ? input.group_admin_id : input.group_group_admin_id ? input.group_group_admin_id : undefined,
   }
 
   return single
