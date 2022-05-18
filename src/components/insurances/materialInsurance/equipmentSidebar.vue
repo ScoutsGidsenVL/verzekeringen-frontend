@@ -10,6 +10,9 @@
       @options="changeSideBar"
       @hideSidebar="closeSideBar"
     >
+      <!-- <pre>
+        {{values}}
+      </pre> -->
       <form
         id="addNewEquipment"
         ref="formDiv"
@@ -243,6 +246,7 @@ export default defineComponent({
           if (props.sideBarState.state === 'edit') {
             await updateEquipment(equipment.value)
           } else {
+            console.log('@@@@@@@@@@@@@ EQUIPMENT: ', equipment.value)
             await postEquipment(equipment.value)
           }
         }

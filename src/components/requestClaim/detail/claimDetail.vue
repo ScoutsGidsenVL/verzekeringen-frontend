@@ -33,7 +33,7 @@
       <div>
         <custom-headline-2 text="Bijlage" />
         <div>
-          <file-upload />
+          <file-upload :allowedFiles="'application/pdf,.jpg,.jpeg,.png'" />
         </div>
       </div>
     </div>

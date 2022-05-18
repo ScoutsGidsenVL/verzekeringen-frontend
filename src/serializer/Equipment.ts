@@ -28,15 +28,18 @@ export const EquipmentDeserializer = (input: any): Equipment => {
 }
 
 export const EquipmentSerializer = (input: any): any => {
+  console.log('INPUT: ', input)
   const single: any = {
     id: input.id ? input.id : undefined,
     nature: input.nature ? input.nature : null,
     description: input.description ? input.description : undefined,
     total_value: input.totalValue ? input.totalValue : undefined,
-    owner_member: input.ownerMember ? MemberSerializer(input.ownerMember).id : null,
+    owner_member: input.ownerMember ? input.ownerMember.groupAdminId : null,
     owner_non_member: input.ownerNonMember ? NonMemberSerializer(input.ownerNonMember).id : null,
     owner_group: input.group ? input.group : undefined,
   }
+
+  console.log('SINGLE: ', single)
 
   return single
 }
