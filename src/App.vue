@@ -18,6 +18,7 @@ export default defineComponent({
     'base-page': basePage,
   },
   setup() {
+    document.title = 'Verzekeringen'
     const store = useStore()
     defineRules(store)
   },
