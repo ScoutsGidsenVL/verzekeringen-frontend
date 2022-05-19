@@ -164,6 +164,15 @@ export default defineComponent({
 
             store.dispatch('setTravelAssistanceState', travelAssistance)
             store.dispatch('setHolderState', HolderStates.DETAIL)
+          }).catch((err: Error) => {
+            if (travelAssistance.value.vehicle && travelAssistance.value.vehicle.trailer) {
+              if (travelAssistance.value.vehicle.trailer.value === '2') {
+                window.alert(`Deze aanhangswagen keuze kan niet gekozen worden voor deze verzekering, gelieve de aanhangswagen te veranderen.`)
+              }
+              if (travelAssistance.value.vehicle.trailer.value === '3') {
+                window.alert(`Deze aanhangswagen keuze kan niet gekozen worden voor deze verzekering, gelieve de aanhangswagen te veranderen.`)
+              }
+            }
           })
       })()
     }
