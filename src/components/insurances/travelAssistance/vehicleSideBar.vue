@@ -42,7 +42,8 @@
             />
           </div>
 
-          <div class="w-100 mb-32">
+          <!-- {{trailers}} -->
+          <div v-if="insuranceTypeState !== 'REIS_BIJSTAND'" class="w-100 mb-32">
             <multi-select
               id="trailer"
               :object="true"
@@ -50,6 +51,20 @@
               value-prop="value"
               :repository="TrailerRepository"
               :options="trailers"
+              label="Aanhangwagen"
+              rules="required"
+              placeholder="Selecteer aanhangwagen"
+            />
+          </div>
+
+          <div v-else class="w-100 mb-32">
+            <multi-select
+              id="trailer"
+              :object="true"
+              track-by="label"
+              value-prop="value"
+              :repository="TrailerRepository"
+              :options="trailersReisbijstand"
               label="Aanhangwagen"
               rules="required"
               placeholder="Selecteer aanhangwagen"
@@ -103,6 +118,7 @@ import { Vehicle } from '@/serializer/Vehicle'
 import { useForm } from 'vee-validate'
 import { useStore } from 'vuex'
 import { BaseSideBar, sideBarState, option } from 'vue-3-component-library'
+import { InsuranceTypes } from '@/enums/insuranceTypes'
 
 export interface vehicleSideBar {
   vehicle: Vehicle
@@ -150,6 +166,10 @@ export default defineComponent({
     })
     const loading = ref<boolean>(false)
     const { sideBarState } = toRefs(props)
+
+    const insuranceTypeState = computed((): InsuranceTypes => {
+      return store.state.insurance.insuranceTypeState
+    })
 
     const onSubmit = async () => {
       await validate().then((validation: any) => scrollToFirstError(validation, 'addNewVehicle'))
@@ -237,6 +257,11 @@ export default defineComponent({
     }
 
     const trailers = ref<VehicleType[]>([])
+    const trailersReisbijstand = ref<any>(
+      [ 
+        { 'id': '0', 'value': '0', 'label': 'Geen' }, 
+        { 'id': '1', 'value': '1', 'label': 'Aanhangwagen (zonder meerprijs)' }
+      ])
 
     const getTrailers = () => {
       RepositoryFactory.get(TrailerRepository)
@@ -251,7 +276,7 @@ export default defineComponent({
               trailers.value = result
             })
         })
-    }
+      }
 
     const fetchedOptions = (options: any) => {
       fetchedVehicles.value = []
@@ -314,6 +339,7 @@ export default defineComponent({
     })
 
     return {
+      insuranceTypeState,
       VehicleTypeRepository,
       TrailerRepository,
       VehicleRepository,
@@ -334,6 +360,7 @@ export default defineComponent({
       changeSideBar,
       closeSideBar,
       options,
+      trailersReisbijstand
     }
   },
 })

@@ -146,6 +146,10 @@ export default defineComponent({
           },
         })
 
+        const insuranceTypeState = computed((): InsuranceTypes => {
+          return store.state.insurance.insuranceTypeState
+        })
+
         //@ts-ignore
         await RepositoryFactory.get(InsuranceTypeRepos[store.getters.insuranceTypeState])
           //@ts-ignore
@@ -155,6 +159,18 @@ export default defineComponent({
 
             store.dispatch('setTemporaryVehicleState', temporaryVehicleInsurance)
             store.dispatch('setHolderState', HolderStates.DETAIL)
+          }).catch((err: Error) => {
+            if (temporaryVehicleInsurance.value.vehicle && temporaryVehicleInsurance.value.vehicle.trailer) {
+              if (temporaryVehicleInsurance.value.vehicle.trailer.value === '1' && insuranceTypeState.value === 'TIJDELIJKE_AUTO_VERZEKERING') {
+                window.alert(`Deze aanhangswagen keuze kan niet gekozen worden voor deze verzekering, gelieve de aanhangswagen te veranderen.`)
+              }
+              if (temporaryVehicleInsurance.value.vehicle.trailer.value === '2' && insuranceTypeState.value === 'REIS_BIJSTAND') {
+                window.alert(`Deze aanhangswagen keuze kan niet gekozen worden voor deze verzekering, gelieve de aanhangswagen te veranderen.`)
+              }
+              if (temporaryVehicleInsurance.value.vehicle.trailer.value === '3' && insuranceTypeState.value === 'REIS_BIJSTAND') {
+                window.alert(`Deze aanhangswagen keuze kan niet gekozen worden voor deze verzekering, gelieve de aanhangswagen te veranderen.`)
+              }
+            }
           })
       })()
     }
