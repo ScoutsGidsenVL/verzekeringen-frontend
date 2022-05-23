@@ -225,7 +225,7 @@
 
     <div v-show="!isEdit" class="flex gap-3 mt-2 items-center">
       <back-button stateName="setClaimHolderState" :backToState="ClaimHolderStates.THREE" />
-      <custom-button text="Verstuur je aanvraag" />
+      <custom-button text="Verstuur je aangifte" />
     </div>
   </form>
 </template>
