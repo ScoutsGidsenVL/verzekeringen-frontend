@@ -64,12 +64,6 @@
           </p>
         </div>
 
-        <div v-if="claimState.victim.country">
-          <p>
-            {{ claimState.victim.country.name }}
-          </p>
-        </div>
-
         <div>
           <p>
             {{
@@ -80,7 +74,9 @@
               ', ' +
               (claimState.victim.postcode ? claimState.victim.postcode : claimState.victim.postCodeCity.postalCode) +
               ' ' +
-              (claimState.victim.city ? claimState.victim.city : claimState.victim.postCodeCity.city)
+              (claimState.victim.city ? claimState.victim.city : claimState.victim.postCodeCity.city) +
+              ' ' +
+              (claimState.victim.country ? claimState.victim.country.name : '')
             }}
           </p>
         </div>
@@ -162,7 +158,7 @@
               {{ claimState.involvedPartyDescription }}
             </p>
           </div>
-          <label-output v-if="claimState.involvedPartyBirthdate" label="Geboortedatum" :text="claimState.involvedPartyBirthdate" />
+        <p  v-if="claimState.involvedPartyBirthdate" class="mb-0"><strong>Geboortedatum</strong> {{ moment(claimState.involvedPartyBirthdate).format('DD-MM-YYYY') }}</p>
         </div>
       </div>
 
