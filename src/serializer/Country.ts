@@ -8,7 +8,6 @@ export const CountryDeserializer = (input: any): Country => {
     id: input.id,
     name: input.name,
   }
-  length
   return single
 }
 

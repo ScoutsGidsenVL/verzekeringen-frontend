@@ -54,6 +54,14 @@ const setObjectTrailer = (trailerId: string) => {
     })
   }
 
+  if (trailerId === '1') {
+    return TrailerDeserializer({
+         "id": "1",
+         "value": "1",
+         "label": "Aanhangwagen (zonder meerprijs)"
+     })
+   }
+
   if (trailerId === '2') {
     return TrailerDeserializer({
       "id": "2",
@@ -61,7 +69,7 @@ const setObjectTrailer = (trailerId: string) => {
       "label": "<750kg"
   })
    }
-   if (trailerId === '2') {
+   if (trailerId === '3') {
     return TrailerDeserializer({
       "id": "3",
       "value": "3",
@@ -85,7 +93,7 @@ export const VehicleDeserializer = (input: any): Vehicle => {
     licensePlate: input.license_plate ? input.license_plate : undefined,
     constructionYear: input.construction_year ? moment(input.construction_year.toString()).format('YYYY') : undefined,
     chassisNumber: input.chassis_number ? input.chassis_number : undefined,
-    trailer: input.trailer ? (typeof input.trailer === 'object' ? TrailerDeserializer(input.trailer) : setObjectTrailer(input.trailer)) : undefined,
+    trailer: input.trailer !== null ? (typeof input.trailer === 'object' ? TrailerDeserializer(input.trailer) : setObjectTrailer(input.trailer.toString())) : undefined,
     group: input.group ? input.group : undefined,
   }
 

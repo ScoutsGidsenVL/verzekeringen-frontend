@@ -17,7 +17,7 @@ export const TrailerDeserializer = (input: any): Trailer => {
 export const TrailerSerializer = (input: any): any => {
   const single: any = {
     id: input.id,
-    value: input.value,
+    value: Number(input.value),
     label: input.label,
   }
 
