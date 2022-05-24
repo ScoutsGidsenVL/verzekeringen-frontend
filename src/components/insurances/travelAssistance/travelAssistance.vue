@@ -3,7 +3,7 @@
     <div v-if="values">
       <div>
         <custom-headline-2 text="Bestemming" />
-        <div class="md:ml-20 xs:ml-5 sm:ml-5 xs:w-72 md:w-96">
+        <div v-if="typeof values.country === 'object' || !values.country" class="md:ml-20 xs:ml-5 sm:ml-5 xs:w-72 md:w-96">
           <multi-select
             id="country"
             rules="required|checkForbiddenCountriesTravelInscuranceWithCar:@forbiddenCountriesVehicle,@vehicle"

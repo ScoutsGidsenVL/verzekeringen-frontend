@@ -4,7 +4,7 @@
     <div v-if="values" class="md:ml-20 xs:ml-5 sm:ml-5">
       <custom-input :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" />
 
-      <div class="xs:w-72 md:w-96">
+      <div v-if="typeof values.country === 'object'" class="xs:w-72 md:w-96">
         <multi-select
           id="country"
           rules="required"

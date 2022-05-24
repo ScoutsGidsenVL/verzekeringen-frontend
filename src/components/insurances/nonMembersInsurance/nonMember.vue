@@ -3,8 +3,7 @@
     <custom-headline-2 text="Activiteit" />
     <div v-if="values" class="md:ml-20 xs:ml-5 sm:ml-5">
       <custom-input :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" />
-
-      <div class="md:w-96 xs:w-72">
+      <div v-if="typeof values.country === 'object'" class="md:w-96 xs:w-72">
         <multi-select
           id="country"
           rules="required"
@@ -206,8 +205,13 @@ export default defineComponent({
       }
     }
 
+    function stringContainsNumber(x: string) {
+    return /\d/.test(x);
+  }
+
     return {
       BelgianCitySearchRepository,
+      stringContainsNumber,
       CountryRepository,
       isSavingDraft,
       HolderStates,
