@@ -11,7 +11,7 @@ export interface TravelAssistanceInsurance {
   readonly endDate?: string
   readonly comment?: string
   readonly responsiblePhoneNumber?: string
-  readonly country?: Country
+  country?: Country
   readonly group?: Group
   readonly vehicle?: Vehicle
   readonly participants?: Member[]
@@ -28,7 +28,8 @@ export const TravelAssistanceInsuranceDeserializer = (input: any): TravelAssista
     endDate: input.end_date ? moment(input.end_date).format('YYYY-MM-DD') : undefined,
     comment: input.comment ? input.comment : undefined,
     responsiblePhoneNumber: input.responsible_phone_number ? input.responsible_phone_number : undefined,
-    country: input.country ? CountryDeserializer(input.country) : undefined,
+    // country: input.country ? CountryDeserializer(input.country) : undefined, USED TO BE LIKE THIS...
+    country: input.country ? input.country.toString() : undefined,
     group: input.scouts_group ? GroupDeserializer(input.scouts_group) : undefined,
     vehicle: input.vehicle && input.vehicle.license_plate ? VehicleDeserializer(input.vehicle) : undefined,
     participants: input.participants ? input.participants.map((member: any) => MemberDeserializer(member)) : undefined,

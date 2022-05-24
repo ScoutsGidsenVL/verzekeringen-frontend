@@ -130,6 +130,25 @@ export default defineComponent({
       }
     )
 
+    const allCountries = ref<Country[]>([])
+
+    if (data.country !== undefined) { 
+      RepositoryFactory.get(CountryRepository)
+      .getArray('/countries_by_type/3/?page_size=1000')
+      .then((res: any) => {
+        allCountries.value = res.results
+        if (isEdit) {
+          var countryById
+          allCountries.value.forEach((country:any) => {
+            if (country.id.toString() === values.country) {
+              countryById = country
+            }
+          })
+          values.country = countryById
+        }
+      })
+    }
+
     const onSubmit = async () => {
       await validate().then((validation: any) => scrollToFirstError(validation, 'NonMember'))
       handleSubmit(async (values: any) => {

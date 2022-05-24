@@ -120,6 +120,16 @@ export default defineComponent({
       .getArray('/countries_by_type/3/?page_size=1000')
       .then((res: any) => {
         allCountries.value = res.results
+        if (isEdit) {
+          var countryById
+          allCountries.value.forEach((country:any) => {
+            // console.log(country.id, values.country)
+            if (country.id.toString() === values.country) {
+              countryById = country
+            }
+          })
+          values.country = countryById
+        }
       })
       .then(() => {
         RepositoryFactory.get(CountryRepository)

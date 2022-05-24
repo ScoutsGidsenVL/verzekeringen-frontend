@@ -22,7 +22,7 @@ export interface NonMemberInsurance {
   readonly type?: Type
   readonly vvksComment?: string
   readonly nonMembers?: NonMember[]
-  readonly country?: Country
+  country?: Country
 }
 
 export const nonMemberInsuranceDeserializer = (input: any): NonMemberInsurance => {
@@ -40,7 +40,8 @@ export const nonMemberInsuranceDeserializer = (input: any): NonMemberInsurance =
     totalCost: input.total_cost ? input.total_cost.toString().replace(".", ",") : undefined,
     type: input.type ? TypeDeserializer(input.type) : undefined,
     nonMembers: input.non_members ? input.non_members.map((nonMember: any) => NonMemberDeserializer(nonMember)) : undefined,
-    country: input.country ? CountryDeserializer(input.country) : undefined,
+    // country: input.country ? CountryDeserializer(input.country) : undefined,
+    country: input.country ? input.country.toString() : undefined,
     vvksComment: input.vvks_comment && input.vvks_comment.length > 0 ? input.vvks_comment : '',
   }
 

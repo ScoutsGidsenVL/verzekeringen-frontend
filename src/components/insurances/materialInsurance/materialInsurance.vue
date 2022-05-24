@@ -14,7 +14,7 @@
           value-prop="name"
           :repository="CountryRepository"
           :resolve-on-load="true"
-          :options="[values.country.city ? values.country : undefined]"
+          :options="values.country.city ? [values.country] : [{ id: '3232', name: 'België' }]"
           :extra-option="{ id: '3232', name: 'België' }"
           :searchable="true"
           label="Land"
@@ -119,6 +119,24 @@ export default defineComponent({
       return store.state.insurance.generalInsuranceState
     })
 
+    const allCountries = ref<Country[]>([])
+
+    if (data.country !== undefined) { 
+      RepositoryFactory.get(CountryRepository)
+      .getArray('/countries_by_type/3/?page_size=1000')
+      .then((res: any) => {
+        allCountries.value = res.results
+        if (isEdit) {
+          var countryById
+          allCountries.value.forEach((country:any) => {
+            if (country.id.toString() === values.country) {
+              countryById = country
+            }
+          })
+          values.country = countryById
+        }
+      })
+    }
     const onSubmit = async () => {
       await validate().then((validation: any) => scrollToFirstError(validation, 'MaterialInsurance'))
       handleSubmit(async (values: any) => {

@@ -19,7 +19,7 @@ export interface MaterialInsurance {
   totalCost?: string
   readonly type?: Type
   readonly vvksComment?: string
-  readonly country?: Country
+  country?: Country
   readonly postCodeCity?: Location
   readonly equipment?: Equipment[]
 }
@@ -37,7 +37,8 @@ export const MaterialInsuranceDeserializer = (input: any): MaterialInsurance => 
     totalCost: input.total_cost ? input.total_cost.toString().replace(".", ",") : undefined,
     type: input.type ? TypeDeserializer(input.type) : undefined,
     vvksComment: input.vvks_comment && input.vvks_comment.length > 0 ? input.vvks_comment : '',
-    country: input.country ? CountryDeserializer(input.country) : undefined,
+    // country: input.country ? CountryDeserializer(input.country) : undefined,
+    country: input.country ? input.country.toString() : undefined,
     postCodeCity: LocationDeserializer({ city: input.city, postal_code: input.postal_code }),
     equipment: input.equipment ? input.equipment.map((equipment: any) => EquipmentDeserializer(equipment)) : undefined,
   }
