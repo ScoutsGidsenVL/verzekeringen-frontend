@@ -11,7 +11,7 @@ export interface NonMember {
   readonly letterBox: string
   readonly comment: string
   readonly postCodeCity: Location
-  readonly group?: string
+  group?: string
   isChecked?: boolean
   isMember?: boolean
 }

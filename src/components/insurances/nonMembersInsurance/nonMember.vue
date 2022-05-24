@@ -88,6 +88,7 @@ import { useForm } from 'vee-validate'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import router from '@/router'
+import { NonMember } from '@/serializer/NonMember'
 
 export default defineComponent({
   name: 'NonMember',
@@ -107,6 +108,16 @@ export default defineComponent({
     const store = useStore()
     const initialCountry = ref<Country>(CountryDeserializer({ id: '3232', name: 'België' }))
     const data: NonMemberInsurance = store.getters.getCurrentInsuranceState
+    const generalInsuranceState = computed(() => {
+      return store.state.insurance.generalInsuranceState
+    })
+
+    const setGroupOnNonMembers = (list: any) => {
+      list.forEach((nm: NonMember) => {
+        nm.group = generalInsuranceState.value.group.id
+      })
+      return list
+    }
     const { handleSubmit, values, isSubmitting, validate } = useForm<NonMemberInsurance>({
       initialValues: {
         nature: data.nature ? data.nature : '',
@@ -116,10 +127,6 @@ export default defineComponent({
         comment: data.comment ? data.comment : '',
         vvksComment: data.vvksComment ? data.vvksComment : '',
       },
-    })
-
-    const generalInsuranceState = computed(() => {
-      return store.state.insurance.generalInsuranceState
     })
 
     watch(
@@ -157,7 +164,7 @@ export default defineComponent({
             nature: values.nature,
             postCodeCity: values.postCodeCity ? values.postCodeCity : undefined,
             country: values.country ? values.country : undefined,
-            nonMembers: values.nonMembers ? values.nonMembers : [],
+            nonMembers: values.nonMembers ? setGroupOnNonMembers(values.nonMembers) : [],
             comment: values.comment ? values.comment : '',
             vvksComment: values.vvksComment ? values.vvksComment : '',
           },
