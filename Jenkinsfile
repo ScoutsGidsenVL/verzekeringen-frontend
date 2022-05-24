@@ -9,7 +9,7 @@ pipeline {
     stage('build') {
       steps {
         sh "npm prune --ignore-scripts"
-        sh "rm -rf node_modules/inuits-vuejs-oidc node_modules/vue-3-component-library"
+        sh "rm -rf node_modules/inuits-* node_modules/vue-3-component-library"
         sh "npm install --ignore-scripts"
         sh "rm -rf dist verzekeringen.zip"
         sh "npm run build"
@@ -18,24 +18,29 @@ pipeline {
     }
 
     stage('archive') {
+      when {
+        anyOf {
+          branch "production"
+          branch "staging"
+        }
+      }
       steps {
         archiveArtifacts 'verzekeringen.zip'
 
         script{
-            def artifactory = Artifactory.server 'artifactory'
+          def artifactory = Artifactory.server 'artifactory'
 
-            def uploadSpec = '''{
-              "files": [
-                {
-                  "pattern": "verzekeringen.zip",
-                  "target": "verzekeringen-frontend/${BRANCH_NAME}/${BUILD_ID}/"
-                }
-             ]
-            }'''
+          def uploadSpec = '''{
+            "files": [
+              {
+                "pattern": "verzekeringen.zip",
+                "target": "verzekeringen-frontend/${BRANCH_NAME}/${BUILD_ID}/"
+              }
+            ]
+          }'''
 
-            def buildInfo = artifactory.upload spec: uploadSpec
-
-            artifactory.publishBuildInfo buildInfo
+          def buildInfo = artifactory.upload spec: uploadSpec
+          artifactory.publishBuildInfo buildInfo
         }
       }
     }
