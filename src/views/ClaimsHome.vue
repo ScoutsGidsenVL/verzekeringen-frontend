@@ -2,7 +2,7 @@
   <div>
     <call-to-action link="/aanvraag/schadeaangifte" text="Start een nieuwe aangifte" />
     <div class="container">
-      <claim-list v-if="data && data.results" title="Aangiftes" :items="can('insurances.list_insuranceclaims') ? data.results : []">
+      <claim-list v-if="data" title="Aangiftes" :items="can('insurances.list_insuranceclaims') ? data.results : []">
         <pre>
         </pre>
           <div class="mb-3">

@@ -113,5 +113,7 @@ export default abstract class BaseApiRepository {
       })
   }
 
-  private processError(error: any): void { }
+  private processError(error: any): void {
+    return error  
+  }
 }
