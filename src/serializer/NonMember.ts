@@ -2,6 +2,7 @@ import { Location, LocationDeserializer, LocationSerializer } from '@/serializer
 
 export interface NonMember {
   id?: string
+  inuitsId?: string
   readonly lastName: string
   readonly firstName: string
   readonly phoneNumber: string
@@ -18,6 +19,7 @@ export interface NonMember {
 
 export const NonMemberDeserializer = (input: any): NonMember => {
   const single: NonMember = {
+    inuitsId: input.inuits_id ? input.inuits_id : undefined,
     id: input.id ? input.id : undefined,
     lastName: input.last_name,
     firstName: input.first_name,
@@ -50,6 +52,7 @@ export const NonMemberSerializer = (input: any): any => {
     city: LocationSerializer(input.postCodeCity).city,
     group_group_admin_id: input.group ? input.group : null,
     group_admin_id: input.group ? input.group : null,
+    inuits_id: input.inuitsId ? input.inuitsId : null,
   }
 
   return single

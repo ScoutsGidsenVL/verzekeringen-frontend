@@ -194,8 +194,10 @@ export default defineComponent({
       await validate().then((validation: any) => scrollToFirstError(validation, 'addNewNonMember'))
       handleSubmit(async (values: NonMember) => {
         if (props.sideBarState.state === 'new' || props.sideBarState.state === 'edit') {
+          console.log('VALUES:', values)
           const nonMember = ref<NonMember>({
             id: values.id,
+            inuitsId: values.inuitsId,
             lastName: values.lastName,
             firstName: values.firstName,
             phoneNumber: values.phoneNumber ? values.phoneNumber : '/',
@@ -229,9 +231,10 @@ export default defineComponent({
 
     const editNonMember = async (data: NonMember) => {
       formSendWithSuccess.value = false
-      if (data.id) {
+      console.log('data to edit: ', data)
+      if (data.inuitsId) {
         await RepositoryFactory.get(NonMemberRepository)
-          .update(data.id, data)
+          .update(data.inuitsId, data)
           .then((completed: NonMember) => {
             context.emit('updateMemberInList', completed)
             closeSideBar()
@@ -244,6 +247,7 @@ export default defineComponent({
       await RepositoryFactory.get(NonMemberRepository)
         .create(data)
         .then((completed: NonMember) => {
+          completed.inuitsId = completed.id
           context.emit('addCreatedNonMemberToList', completed)
           formSendWithSuccess.value = true
           scrollToTop()
@@ -282,6 +286,7 @@ export default defineComponent({
         resetForm({
           values: {
             id: value.entity.id,
+            inuitsId: value.entity.inuitsId,
             lastName: value.entity.lastName,
             firstName: value.entity.firstName,
             phoneNumber: value.entity.phoneNumber,
@@ -300,6 +305,7 @@ export default defineComponent({
         resetForm({
           values: {
             id: '',
+            inuitsId: '',
             lastName: '',
             firstName: '',
             phoneNumber: '',
