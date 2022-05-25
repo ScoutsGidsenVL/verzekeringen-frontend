@@ -46,6 +46,7 @@ export interface Claim {
   readonly groupNumber?: String
   readonly declarant?: Member
   damageType?: string
+  readonly createdOn?: string
 }
 
 export const ClaimDeserializer = (input: any): Claim => {
@@ -84,6 +85,7 @@ export const ClaimDeserializer = (input: any): Claim => {
     groupNumber: input.group_group_admin_id ? input.group_group_admin_id : undefined,
     declarant: input.declarant ? MemberDeserializer(input.declarant) : undefined,
     damageType: input.damage_type ? input.damage_type : undefined,
+    createdOn: input.created_on ? moment(input.created_on).format('DD MMM YYYY') : undefined,
   }
 
   return single

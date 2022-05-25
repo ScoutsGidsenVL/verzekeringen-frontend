@@ -219,6 +219,10 @@
       </div>
     </div>
 
+    <div v-if="isDetailPage" class="mt-4">
+      <strong>Datum van de aangifte:</strong> {{claimState.createdOn}}
+    </div>
+
     <div v-show="!isEdit" class="flex gap-3 mt-2 items-center">
       <back-button stateName="setClaimHolderState" :backToState="ClaimHolderStates.THREE" />
       <custom-button text="Verstuur je aangifte" />

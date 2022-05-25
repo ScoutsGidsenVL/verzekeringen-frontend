@@ -14,7 +14,7 @@ export class ClaimRepository extends BaseRepository {
 
     return this.get(this.endpoint + paginationUrl, {}).then((response: ArrayResult) => {
       const array: any[] = []
-      if (response.response.status === 403) {
+      if (response.response && response.response.status === 403) {
         console.log('RESPONSE: ', response.response)
         return array
       }
