@@ -3,7 +3,7 @@
     <div class="d-flex flex-col h-full px-4 pt-4">
       <div>
         <search-input
-          :start="end"
+          :start="start"
           :end="end"
           v-model:loading="loading"
           name="member"

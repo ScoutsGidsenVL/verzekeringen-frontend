@@ -42,7 +42,7 @@ export const nonMemberInsuranceDeserializer = (input: any): NonMemberInsurance =
     nonMembers: input.non_members ? input.non_members.map((nonMember: any) => NonMemberDeserializer(nonMember)) : undefined,
     // country: input.country ? CountryDeserializer(input.country) : undefined,
     country: input.country ? input.country.toString() : undefined,
-    vvksComment: input.vvks_comment && input.vvks_comment.length > 0 ? input.vvks_comment : '',
+    vvksComment: input.vvksm_comment && input.vvksm_comment.length > 0 ? input.vvksm_comment : '',
   }
 
   return single
@@ -64,6 +64,7 @@ export const nonMemberInsuranceSerializer = (input: NonMemberInsurance): NonMemb
     total_cost: input.totalCost ? input.totalCost : undefined,
     non_members: input.nonMembers ? input.nonMembers.map((nonMember: any) => NonMemberSerializer(nonMember)) : undefined,
     country: input.country && input.country.name !== 'België' ? CountrySerializer(input.country).id : undefined,
+    vvksm_comment: input.vvksComment ? input.vvksComment : undefined
   }
 
   return single

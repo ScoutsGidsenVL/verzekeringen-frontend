@@ -35,7 +35,7 @@ export const TravelAssistanceInsuranceDeserializer = (input: any): TravelAssista
     participants: input.participants ? input.participants.map((member: any) => MemberDeserializer(member)) : undefined,
     responsibleMember: input.responsible_member ? ResponsibleMemberDeserializer(input.responsible_member) : undefined,
     totalCost: input.total_cost ? input.total_cost.toString().replace(".", ",") : undefined,
-    vvksComment: input.vvks_comment && input.vvks_comment.length > 0 ? input.vvks_comment : '',
+    vvksComment: input.vvksm_comment && input.vvksm_comment.length > 0 ? input.vvksm_comment : '',
   }
 
   return single
@@ -53,6 +53,7 @@ export const TravelAssistanceInsuranceSerializer = (input: TravelAssistanceInsur
     vehicle: input.vehicle && input.vehicle.licensePlate ? VehicleSerializer(input.vehicle) : undefined,
     participants: input.participants ? input.participants.map((member: any) => MemberSerializer(member)) : undefined,
     total_cost: input.totalCost ? input.totalCost : undefined,
+    vvksm_comment: input.vvksComment ? input.vvksComment : undefined
   }
 
   return single
@@ -70,6 +71,7 @@ export const DraftTravelAssistanceInsuranceSerializer = (input: TravelAssistance
     vehicle: input.vehicle && input.vehicle.licensePlate ? DraftVehicleSerializer(input.vehicle) : undefined,
     participants: input.participants ? input.participants.map((member: any) => MemberSerializer(member)) : undefined,
     total_cost: input.totalCost ? input.totalCost : undefined,
+    vvksm_comment: input.vvksComment ? input.vvksComment : undefined
   }
 
   return single

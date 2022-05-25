@@ -26,6 +26,7 @@ export interface EventInsurance {
 }
 
 export const EventInsuranceDeserializer = (input: any): EventInsurance => {
+  console.log('INPUT: ', input)
   const single: EventInsurance = {
     id: input.id ? input.id : undefined,
     startDate: input.start_date ? moment(input.start_date).format('YYYY-MM-DD') : undefined,
@@ -40,7 +41,7 @@ export const EventInsuranceDeserializer = (input: any): EventInsurance => {
     nature: input.nature ? input.nature : undefined,
     location: input.city && input.postal_code ? LocationDeserializer({ city: input.city, postal_code: input.postal_code }) : undefined,
     eventSize: input.event_size ? (typeof input.event_size === 'object' ? EventSizeDeserializer(input.event_size) : { id: input.event_size }) : undefined,
-    vvksComment: input.vvks_comment && input.vvks_comment.length > 0 ? input.vvks_comment : '',
+    vvksComment: input.vvksm_comment && input.vvksm_comment.length > 0 ? input.vvksm_comment : '',
     status: input.status ? StatusDeserializer(input.status) : undefined,
     participant_list_file: input.participant_list_file ? FileDeserializer(input.participant_list_file) : undefined
   }
@@ -62,6 +63,7 @@ export const EventInsuranceSerializer = (input: EventInsurance): EventInsurance 
     postal_code: input.location ? LocationSerializer(input.location).postal_code : undefined,
     city: input.location ? LocationSerializer(input.location).city : undefined,
     event_size: input.eventSize ? EventSizeSerializer(input.eventSize).id : undefined,
+    vvksm_comment: input.vvksComment ? input.vvksComment : undefined
   }
 
   return single

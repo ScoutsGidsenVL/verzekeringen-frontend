@@ -40,7 +40,7 @@ export const oneTimeActivityDeserializer = (input: any): OneTimeActivity => {
     status: input.status ? StatusDeserializer(input.status) : undefined,
     totalCost: input.total_cost ? input.total_cost.toString().replace(".", ",") : undefined,
     type: input.type ? TypeDeserializer(input.type) : undefined,
-    vvksComment: input.vvks_comment && input.vvks_comment.length > 0 ? input.vvks_comment : '',
+    vvksComment: input.vvksm_comment && input.vvksm_comment.length > 0 ? input.vvks_comment : '',
     participant_list_file: input.participant_list_file ? FileDeserializer(input.participant_list_file) : undefined
   }
 
@@ -62,6 +62,7 @@ export const oneTimeActivitySerializer = (input: OneTimeActivity): OneTimeActivi
     nature: input.nature ? input.nature : undefined,
     responsible_phone_number: input.responsibleMember ? ResponsibleMemberSerializer(input.responsibleMember).responsible_phone_number : undefined,
     total_cost: input.totalCost ? input.totalCost : undefined,
+    vvksm_comment: input.vvksComment ? input.vvksComment : undefined
   }
 
   return single
