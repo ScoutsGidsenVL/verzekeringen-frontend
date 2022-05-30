@@ -36,6 +36,9 @@ export abstract class BaseRepository extends BaseApiRepository {
 
   getById(id: string): Promise<any> {
     return this.get(this.endpoint + id, {}).then((response: any) => {
+      if (response.response && response.response.status === 403) {
+        return response
+      }
       return this.deserializer(response)
     })
   }

@@ -1,5 +1,9 @@
 <template>
-  <form id="ClaimDetail" @submit.prevent="onSubmit">
+  <div v-if="isForbidden">
+    <forbidden />      
+  </div>
+
+  <form v-if="!isForbidden && details.id" id="ClaimDetail" @submit.prevent="onSubmit">
     <div v-show="isEdit" class="mt-4 mb-4">
       <navigation-arrow to="/home/schadeaangiftes" text="Terug naar overzicht" />
     </div>
@@ -258,6 +262,7 @@ import FileUpload from '@/components/semantic/FileUpload.vue'
 import CustomHeadline2 from '@/components/customHeadlines/CustomHeadline2.vue'
 import usePermissions from '../../../helpers/usePermissions'
 import PhoneNumber from '@/components/semantic/PhoneNumber.vue'
+import Forbidden from '../../semantic/Forbidden.vue'
 
 export default defineComponent({
   name: 'ClaimDetail',
@@ -270,7 +275,8 @@ export default defineComponent({
     'back-button': BackButton,
     FileUpload,
     CustomHeadline2,
-    PhoneNumber
+    PhoneNumber,
+    Forbidden
   },
   props: {
     isDetailPage: {
@@ -293,11 +299,15 @@ export default defineComponent({
     }
 
     const filename = ref<string>('')
+    const isForbidden = ref<boolean>(false)
 
     if (isEdit) {
       RepositoryFactory.get(ClaimRepository)
         .getById(route.params.id.toString())
         .then((result: any) => {
+          if (result.response && result.response.status === 403) {
+            isForbidden.value = true
+          }
           details.value = result
           values.dossierNumber = details.value.dossierNumber
           values.note = details.value.note
@@ -398,6 +408,7 @@ export default defineComponent({
       moment,
       can,
       filename,
+      isForbidden
     }
   },
 })
