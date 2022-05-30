@@ -236,6 +236,7 @@ export default defineComponent({
         await RepositoryFactory.get(NonMemberRepository)
           .update(data.inuitsId, data)
           .then((completed: NonMember) => {
+            completed.inuitsId = data.inuitsId
             context.emit('updateMemberInList', completed)
             closeSideBar()
           })

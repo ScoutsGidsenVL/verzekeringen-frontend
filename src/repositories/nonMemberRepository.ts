@@ -13,6 +13,7 @@ export class NonMemberRepository extends BaseRepository {
       const array: any[] = []
       response.results.forEach((result: NonMember) => {
         result = NonMemberDeserializer(result)
+        result.inuitsId = result.id
         array.push({ value: result, name: result.firstName + ' ' + result.lastName })
       })
       return array
