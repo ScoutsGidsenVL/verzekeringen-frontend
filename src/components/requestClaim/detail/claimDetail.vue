@@ -3,7 +3,7 @@
     <forbidden />      
   </div>
 
-  <form v-if="!isForbidden && details.id" id="ClaimDetail" @submit.prevent="onSubmit">
+  <form v-if="checkVisibility()" id="ClaimDetail" @submit.prevent="onSubmit">
     <div v-show="isEdit" class="mt-4 mb-4">
       <navigation-arrow to="/home/schadeaangiftes" text="Terug naar overzicht" />
     </div>
@@ -298,6 +298,18 @@ export default defineComponent({
       saveAs(file, file.name)
     }
 
+    const checkVisibility = () => {
+      if (isEdit && !details.value.id) {
+        return false
+      }
+
+      if (isForbidden.value) {
+        return false 
+      }
+
+      return true
+    }
+
     const filename = ref<string>('')
     const isForbidden = ref<boolean>(false)
 
@@ -408,7 +420,8 @@ export default defineComponent({
       moment,
       can,
       filename,
-      isForbidden
+      isForbidden,
+      checkVisibility
     }
   },
 })
