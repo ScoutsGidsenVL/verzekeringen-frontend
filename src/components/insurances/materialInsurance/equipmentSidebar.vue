@@ -153,7 +153,6 @@ import CustomButton from '@/components/CustomButton.vue'
 import { NonMember } from '@/serializer/NonMember'
 import { Equipment } from '@/serializer/Equipment'
 import { InputTypes } from '@/enums/inputTypes'
-import { Member } from '@/serializer/Member'
 import { useStore } from 'vuex'
 
 export default defineComponent({
@@ -259,6 +258,7 @@ export default defineComponent({
         await RepositoryFactory.get(EquipmentRepository)
           .getById(equipment.id)
           .then((result: Equipment) => {
+            result.inuitsId = result.id
             context.emit('addEquipmentToList', result)
           })
       }

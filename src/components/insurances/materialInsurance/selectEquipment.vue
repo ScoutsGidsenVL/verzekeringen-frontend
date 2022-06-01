@@ -76,7 +76,7 @@ export default defineComponent({
       const tempArr: Array<Equipment> = []
 
       equipment.value.forEach((listedEquipment: Equipment) => {
-        if (listedEquipment.id === material.id) {
+        if (listedEquipment.inuitsId === material.inuitsId) {
           tempArr.push(material)
         } else {
           tempArr.push(listedEquipment)
