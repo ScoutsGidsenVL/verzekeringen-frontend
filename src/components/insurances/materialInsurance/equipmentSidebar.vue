@@ -269,6 +269,7 @@ export default defineComponent({
         await RepositoryFactory.get(EquipmentRepository)
           .update(data.inuitsId, data)
           .then((completed: Equipment) => {
+            completed.inuitsId = data.inuitsId
             context.emit('updateEquipmentInList', completed)
           })
       }
