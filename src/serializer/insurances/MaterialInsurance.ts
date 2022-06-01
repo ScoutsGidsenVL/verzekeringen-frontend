@@ -40,7 +40,7 @@ export const MaterialInsuranceDeserializer = (input: any): MaterialInsurance => 
     // country: input.country ? CountryDeserializer(input.country) : undefined,
     country: input.country ? input.country.toString() : undefined,
     postCodeCity: LocationDeserializer({ city: input.city, postal_code: input.postal_code }),
-    equipment: input.equipment ? input.equipment.map((equipment: any) => EquipmentDeserializer(equipment)) : undefined,
+    equipment: input.equipment ? input.equipment.map((equipment: any) => EquipmentDeserializer(equipment, GroupDeserializer(input.scouts_group).id)) : undefined,
   }
 
   return single
