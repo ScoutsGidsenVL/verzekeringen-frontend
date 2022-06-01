@@ -1,9 +1,9 @@
 import { Member, MemberDeserializer, MemberSerializer } from '@/serializer/Member'
 import { NonMember, NonMemberDeserializer, NonMemberSerializer } from '@/serializer/NonMember'
-import { Group, GroupDeserializer, GroupSerializer } from '@/serializer/Group'
 
 export interface Equipment {
   readonly id?: string
+  inuitsId?: string
   readonly nature?: string
   readonly description?: string
   readonly totalValue?: string
@@ -16,6 +16,7 @@ export interface Equipment {
 export const EquipmentDeserializer = (input: any): Equipment => {
   const single: Equipment = {
     id: input.id ? input.id : undefined,
+    inuitsId: input.inuits_id ? input.inuits_id : undefined,
     nature: input.nature ? input.nature : undefined,
     description: input.description ? input.description : undefined,
     totalValue: input.total_value ? input.total_value : undefined,
@@ -28,7 +29,6 @@ export const EquipmentDeserializer = (input: any): Equipment => {
 }
 
 export const EquipmentSerializer = (input: any): any => {
-  console.log('INPUT: ', input)
   const single: any = {
     id: input.id ? input.id : undefined,
     nature: input.nature ? input.nature : null,
@@ -38,8 +38,6 @@ export const EquipmentSerializer = (input: any): any => {
     owner_non_member: input.ownerNonMember ? NonMemberSerializer(input.ownerNonMember).id : null,
     owner_group: input.group ? input.group : undefined,
   }
-
-  console.log('SINGLE: ', single)
 
   return single
 }
