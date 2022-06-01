@@ -63,7 +63,7 @@ export class ClaimRepository extends BaseRepository {
   create(data: any, file?: any) {
     const claim: Claim = data
     const fd = new FormData()
-
+    console.log('CLAIM: ', claim)
     //GROUP
     if (claim.group && claim.group.id) {
       fd.append('group_group_admin_id', claim.group.id)
@@ -110,18 +110,21 @@ export class ClaimRepository extends BaseRepository {
 
     //DECLARENT CITY
     if (claim.declarantCity) {
-
       fd.append('declarant_city', claim.declarantCity.toString())
     }
 
     //INVOLVED PARTY NAME
     if (claim.involvedPartyName) {
       fd.append('involved_party_name', claim.involvedPartyName.toString())
+    } else {
+      fd.append('involved_party_name', '')
     }
 
     //INVOLVED PARTY DESCRIPTION
     if (claim.involvedPartyDescription) {
       fd.append('involved_party_description', claim.involvedPartyDescription.toString())
+    } else {
+      fd.append('involved_party_description', '')
     }
 
     //INVOLVED PARTY BIRTHDATE
@@ -132,26 +135,36 @@ export class ClaimRepository extends BaseRepository {
     //OFFICIAL REPORT DESCRIPTION
     if (claim.officialReportDescription) {
       fd.append('official_report_description', claim.officialReportDescription.toString())
+    } else {
+      fd.append('official_report_description', '')
     }
 
     //PV NUMBER
     if (claim.pvNumber) {
       fd.append('pv_number', claim.pvNumber.toString())
+    } else {
+      fd.append('pv_number', '')
     }
 
     //WITNESS NAME
     if (claim.witnessName) {
       fd.append('witness_name', claim.witnessName.toString())
+    } else {
+      fd.append('witness_name', '')
     }
 
     //WITNESS DESCRIPTION
     if (claim.witnessDescription) {
       fd.append('witness_description', claim.witnessDescription.toString())
+    } else {
+      fd.append('witness_description', '')
     }
 
     //LEADERSHIP DESCRIPTION
     if (claim.leadershipDescription) {
       fd.append('leadership_description', claim.leadershipDescription.toString())
+    } else {
+      fd.append('leadership_description', '')
     }
 
     //FILE
@@ -162,6 +175,8 @@ export class ClaimRepository extends BaseRepository {
     //DAMAGE TYPE
     if (claim.damageType) {
       fd.append('damage_type', claim.damageType)
+    } else {
+      fd.append('damage_type', '')
     }
 
     const config = {
