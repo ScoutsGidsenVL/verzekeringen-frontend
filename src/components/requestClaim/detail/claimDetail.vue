@@ -94,9 +94,8 @@
         <p class="mb-0"><strong>Geslacht</strong> {{ claimState.victim.gender ? genderDisplay(claimState.victim.gender) : '' }}</p>
         <label-output v-if="claimState.victim.membershipNumber" label="Lidnummer" :text="claimState.victim.membershipNumber" />
         <label-output
-          v-if="claimState.bankAccount || claimState.victim.bankAccount"
           label="Bankrekeningnummer"
-          :text="claimState.victim.bankAccount ? claimState.victim.bankAccount : claimState.bankAccount"
+          :text="claimState.victim.bankAccount ? claimState.victim.bankAccount : claimState.bankAccount ? claimState.bankAccount : 'Leeg'"
         />
       </div>
     </div>
@@ -135,22 +134,28 @@
           </div>
         </div>
 
-        <div v-if="claimState.leadershipDescription">
+        <div>
           <strong>Hield iemand van de leiding toezicht op het moment dat het ongeval plaatsvond?</strong>
           <div v-if="claimState.leadershipDescription">
             <p>
               {{ claimState.leadershipDescription }}
             </p>
           </div>
+          <div v-else>
+            Neen
+          </div>
         </div>
       </div>
     </div>
 
-    <div v-if="claimState.involvedPartyDescription || claimState.officialReportDescription || claimState.witnessDescription" class="mt-2">
+    <div class="mt-2">
       <p class="font-semibold">Zijn er andere personen betrokken?</p>
 
-      <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-1" v-if="claimState.involvedPartyDescription">
+      <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-1">
         <strong>Is het ongeval te wijten aan een fout van iemand anders?</strong>
+        <div v-if="!claimState.involvedPartyDescription">
+          Neen
+        </div>
         <div>
           <div v-if="claimState.involvedPartyName">
             <p>
@@ -166,8 +171,11 @@
         </div>
       </div>
 
-      <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-1" v-if="claimState.officialReportDescription">
+      <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-1">
         <strong>Werd er een vaststelling gedaan door een verbaliserende autoriteit (bv politie)?</strong>
+        <div v-if="!claimState.officialReportDescription">
+          Neen
+        </div>
         <div v-if="claimState.officialReportDescription">
           <p>
             {{ claimState.officialReportDescription }}
@@ -180,8 +188,11 @@
         </div>
       </div>
 
-      <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-1" v-if="claimState.witnessName">
+      <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-1">
         <strong>Was er een getuige?</strong>
+        <div v-if="!claimState.witnessName">
+          Neen
+        </div>
         <div v-if="claimState.witnessName">
           <p>
             {{ claimState.witnessName }}

@@ -39,7 +39,7 @@ export default defineComponent({
     initialState: String
   },
   setup(props) {
-    const isChecked = ref<string>(props.initialState ? props.initialState : '')
+    const isChecked = ref<string>(props.initialState ? props.initialState : 'no')
     // TRIGGER EVENT TO NOT SET VALUES IF CHOICE IS NO
     return {
       isChecked
