@@ -2,7 +2,7 @@
   <div class="container">
     <request-bread-crumb />
     <div v-if="data.vvksComment && holderState !== HolderStates.COMPLETED && holderState !== HolderStates.DETAIL">
-      <important-message :message="data.vvksComment" />
+      <!-- <important-message :message="data.vvksComment" /> -->
     </div>
   </div>
 
@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import RequestBreadCrumb from '@/components/requestInsurance/requestBreadCrumb/RequestBreadCrumbInsurance.vue'
-import ImportantMessage from '@/components/semantic/ImportantMessage.vue'
+// import ImportantMessage from '@/components/semantic/ImportantMessage.vue'
 import StateFormHolder from '@/components/semantic/HolderStateForm.vue'
 import { computed, defineComponent } from 'vue'
 import { useStore } from 'vuex'
@@ -23,7 +23,7 @@ export default defineComponent({
   name: 'RequestInsurance',
   components: {
     'request-bread-crumb': RequestBreadCrumb,
-    'important-message': ImportantMessage,
+    // 'important-message': ImportantMessage,
     'state-form-holder': StateFormHolder,
   },
   setup() {

@@ -13,7 +13,7 @@
     </div>
 
     <div v-if="detail && details.vvksComment && holderState !== HolderStates.COMPLETED">
-      <important-message :message="details.vvksComment" />
+      <!-- <important-message :message="details.vvksComment" /> -->
     </div>
 
     <custom-headline-sticker v-if="details && holderState !== HolderStates.COMPLETED" :text="'Totaalprijs: ' + '&euro; ' + details.totalCost"> </custom-headline-sticker>
@@ -36,7 +36,7 @@ import { BaseRepository } from '@/repositories/baseRepository'
 import { HolderStates } from '@/enums/holderStates'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
-import ImportantMessage from '@/components/semantic/ImportantMessage.vue'
+// import ImportantMessage from '@/components/semantic/ImportantMessage.vue'
 import InscuranceSucces from '@/components/insurances/messages/InscuranceSucces.vue'
 
 export default defineComponent({
@@ -44,7 +44,7 @@ export default defineComponent({
   components: {
     'custom-headline-sticker': CustomHeadlineSticker,
     'navigation-arrow': NavigationArrow,
-    'important-message': ImportantMessage,
+    // 'important-message': ImportantMessage,
     InscuranceSucces,
   },
   props: {
