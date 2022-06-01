@@ -236,6 +236,7 @@ export default defineComponent({
         if (props.sideBarState.state === 'new' || props.sideBarState.state === 'edit') {
           const equipment = ref<Equipment>({
             id: values.id ? values.id : undefined,
+            inuitsId: values.inuitsId ? values.inuitsId : undefined,
             nature: values.nature ? values.nature : undefined,
             description: values.description ? values.description : undefined,
             totalValue: values.totalValue ? values.totalValue : undefined,
@@ -264,9 +265,9 @@ export default defineComponent({
     }
 
     const updateEquipment = async (data: Equipment) => {
-      if (data.id) {
+      if (data.inuitsId) {
         await RepositoryFactory.get(EquipmentRepository)
-          .update(data.id, data)
+          .update(data.inuitsId, data)
           .then((completed: Equipment) => {
             context.emit('updateEquipmentInList', completed)
           })
@@ -278,6 +279,7 @@ export default defineComponent({
       await RepositoryFactory.get(EquipmentRepository)
         .create(data)
         .then((completed: Equipment) => {
+          completed.inuitsId = completed.id
           context.emit('addEquipmentToList', completed)
           resetForm()
           owner.value = undefined
@@ -368,6 +370,7 @@ export default defineComponent({
         resetForm({
           values: {
             id: value.entity.id,
+            inuitsId: value.entity.inuitsId,
             nature: value.entity.nature,
             description: value.entity.description,
             totalValue: value.entity.totalValue,
@@ -397,6 +400,7 @@ export default defineComponent({
         resetForm({
           values: {
             id: '',
+            inuitsId: '',
             nature: '',
             description: '',
             totalValue: '',
