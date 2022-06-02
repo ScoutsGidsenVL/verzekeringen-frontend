@@ -24,7 +24,7 @@
           :nature="details.nature"
           :location="details.postCodeCity"
           :country="details.country ? (typeof details.country === 'object' ? details.country.id : details.country) : undefined"
-          :insurance-type="'6'"
+          :insuranceType="'6'"
         />
 
         <p class="font-semibold mb-0">Materiaal</p>

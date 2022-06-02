@@ -43,7 +43,7 @@
         
         <custom-input
           :maxlength="1024"
-          :text-area-width="'xs:w-72 md:w-100 md:min-w-full h-11'"
+          :textAreaWidth="'xs:w-72 md:w-100 md:min-w-full h-11'"
           class="mt-3 xs:w-80 md:w-100"
           :type="InputTypes.TEXT_AREA"
           rules="required"
@@ -63,7 +63,7 @@
                 rules="required"
                 name="description"
                 label="Geef een uitgebreide beschrijving van het ongeval (oorzaken, omstandigheden, gevolgen, opgelopen verwondingen, schade)."
-                :text-area-width="'xs:w-72 md:w-100 md:min-w-full h-36'"
+                :textAreaWidth="'xs:w-72 md:w-100 md:min-w-full h-36'"
               />
             </div>
           </div>
@@ -92,7 +92,7 @@
     </div>
 
     <div class="flex gap-3 mt-5 items-center">
-      <back-button state-name="setClaimHolderState" :back-to-state="ClaimHolderStates.ONE" />
+      <back-button stateName="setClaimHolderState" :backToState="ClaimHolderStates.ONE" />
       <custom-button text="Volgende" />
     </div>
   </form>

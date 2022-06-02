@@ -1,22 +1,22 @@
 <template>
   <div class="py-2">
-    <choice-help-item id="0" v-model:choice="choices[0]" text="Heb je de auto gehuurd?" />
+    <choice-help-item id="0" text="Heb je de auto gehuurd?" v-model:choice="choices[0]" />
   </div>
 
   <div v-if="choices[0] === true" class="py-2">
-    <choice-help-item id="1" v-model:choice="choices[1]" text="Is er een vrijstelling (franchise) op de wettelijk verplichte verzekering voor burgerlijke aansprakelijkheid (BA)?" />
+    <choice-help-item id="1" text="Is er een vrijstelling (franchise) op de wettelijk verplichte verzekering voor burgerlijke aansprakelijkheid (BA)?" v-model:choice="choices[1]" />
   </div>
 
   <div v-if="choices[1] === true" class="py-2">
-    <choice-help-item id="2" v-model:choice="choices[2]" text="Wil je de vrijstelling van de verzekering voor burgerlijke aansprakelijkheid afkopen?" />
+    <choice-help-item id="2" text="Wil je de vrijstelling van de verzekering voor burgerlijke aansprakelijkheid afkopen?" v-model:choice="choices[2]" />
   </div>
 
   <div v-if="choices[2] === true || choices[0] === false || (choices[0] === true && choices[1] === false) || (choices[0] === true && choices[1] === true && choices[2] === false)" class="py-2">
-    <choice-help-item id="3" v-model:choice="choices[3]" text="Is de auto omnium verzekerd?" />
+    <choice-help-item id="3" text="Is de auto omnium verzekerd?" v-model:choice="choices[3]" />
   </div>
 
   <div v-if="choices[3] === true" class="py-2">
-    <choice-help-item id="4" v-model:choice="choices[4]" text="Wil je de vrijstelling (franchise) van deze verzekering afkopen?" />
+    <choice-help-item id="4" text="Wil je de vrijstelling (franchise) van deze verzekering afkopen?" v-model:choice="choices[4]" />
   </div>
 
   <div
@@ -28,7 +28,7 @@
     "
     class="py-2"
   >
-    <choice-help-item id="5" v-model:choice="choices[5]" text="Wil je een omnium verzekering afsluiten?" />
+    <choice-help-item id="5" text="Wil je een omnium verzekering afsluiten?" v-model:choice="choices[5]" />
   </div>
 
   <div v-if="displayText() !== ''" class="mt-2">

@@ -18,11 +18,11 @@
             id="group"
             :object="true"
             placeholder="Filter op groep"
+            @addSelection="addSelectionInsurances($event)"
             track-by="fullInfo"
             value-prop="id"
             :options="userData.scoutsGroups"
             :loading-submit="isSubmitting"
-            @addSelection="addSelectionInsurances($event)"
           />
         </div>
       </custom-list>

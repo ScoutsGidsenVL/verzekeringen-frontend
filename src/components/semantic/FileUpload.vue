@@ -13,7 +13,7 @@
               <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
             </svg>
             <span class="mt-2 text-base leading-normal">{{!selectedFile ? 'Selecteer bestand' : 'Vervang bestand'}}</span>            
-            <input id="file" ref="file" :accept="allowedFiles" type="file" name="file" class="hidden" @change="selectFile($event)" />
+            <input ref="file" :accept="allowedFiles" @change="selectFile($event)" type="file" name="file" id="file" class="hidden" />
           </label>
         </div>
           <span class="text-xs">Max. 1 bestand, max. 5MB, enkel pdf, jpg, jpeg, png.</span>
@@ -24,8 +24,8 @@
       <div v-if="!selectedFile">
         <i>Geen bijlage geselecteerd</i>
       </div>
-      <div v-if="selectedFile" class="w-72">
-        <file-item-component :is-display="isDisplay" :file="selectedFile" :is-detail-view="isDetailView" @downloadFile="downloadFile($event)" @deleteFile="deleteFile($event)" />
+      <div class="w-72" v-if="selectedFile">
+        <file-item-component :isDisplay="isDisplay" v-on:downloadFile="downloadFile($event)" v-on:deleteFile="deleteFile($event)" :file="selectedFile" :isDetailView="isDetailView" />
         <span :name="id">
           <ErrorMessage :name="'file'" class="text-red text-sm block w-80" />
         </span>
@@ -44,7 +44,7 @@ import { FileItem } from '@/serializer/FileItem'
 import { saveAs } from 'file-saver'
 
 export default defineComponent({
-  name: 'FileUpload',
+  name: 'file-upload',
   components: {
     'file-item-component': FileItemComponent,
     ErrorMessage,

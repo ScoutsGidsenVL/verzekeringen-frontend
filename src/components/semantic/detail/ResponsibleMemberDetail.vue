@@ -11,7 +11,7 @@
       <p>{{ responsibleMember.email }}</p>
     </div>
 
-    <phone-number :phone-number="responsibleMember.phoneNumber" />
+    <phone-number :phoneNumber="responsibleMember.phoneNumber" />
 
     <label-output v-if="responsibleMember.membershipNumber" label="Lidnummer" :text="responsibleMember.membershipNumber" />
   </div>

@@ -33,7 +33,7 @@
     </div>
 
     <div class="flex gap-3 mt-5 items-center">
-      <back-button state-name="setClaimHolderState" :back-to-state="ClaimHolderStates.TWO" />
+      <back-button stateName="setClaimHolderState" :backToState="ClaimHolderStates.TWO" />
       <custom-button text="Volgende" />
     </div>
   </form>

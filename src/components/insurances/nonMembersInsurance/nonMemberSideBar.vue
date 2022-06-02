@@ -1,7 +1,7 @@
 <template>
   <div>
     <base-side-bar
-      :is-overflow-hidden="isOverflowHidden"
+      :isOverflowHidden="isOverflowHidden"
       :selection="selected"
       :is-display="sideBarState.state !== 'hide'"
       :is-edit="sideBarState.state === 'edit'"
@@ -80,8 +80,8 @@
         <div>
           <search-input
           v-if="generalInsuranceState.group"
-          v-model:loading="loading"
           :group="generalInsuranceState.group.id"
+          v-model:loading="loading"
           name="nonMember" 
           placeholder="Zoek op naam" 
           :repository="NonMemberRepository" 

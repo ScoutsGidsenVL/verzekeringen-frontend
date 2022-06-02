@@ -10,12 +10,12 @@
 
     <div class="flex gap-5">
       <div>
-        <input id="yes" v-model="isChecked" type="radio" value="yes">
+        <input type="radio" id="yes" value="yes" v-model="isChecked">
         <label class="ml-1" for="yes">Ja</label>
       </div>
 
       <div>
-        <input id="no" v-model="isChecked" type="radio" value="no">
+        <input type="radio" id="no" value="no" v-model="isChecked">
         <label class="ml-1" for="no">Neen</label>
       </div>
     </div>
