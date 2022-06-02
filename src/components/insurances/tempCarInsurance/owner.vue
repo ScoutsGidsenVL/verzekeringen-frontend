@@ -1,11 +1,11 @@
 <template>
   <div>
-    <p  v-if="owner.companyName" class="mb-0"><strong>Firma naam: </strong>{{owner.companyName}}</p>
+    <p  class="mb-0" v-if="owner.companyName"><strong>Firma naam: </strong>{{owner.companyName}}</p>
     <p v-if="owner.firstName">{{ owner.firstName + ' ' + owner.lastName }}</p>
     <div>
       <p>{{ owner.street + ' ' + owner.number + (owner.letterBox ? ' Bus ' + owner.letterBox : '') + ', ' + owner.postCodeCity.postalCode + ' ' + owner.postCodeCity.city }}</p>
     </div>
-    <phone-number :phone-number="owner.phoneNumber" />
+    <phone-number :phoneNumber="owner.phoneNumber" />
 
     <div>
       <p v-if="!owner.companyName">{{ owner.birthDate }}</p>

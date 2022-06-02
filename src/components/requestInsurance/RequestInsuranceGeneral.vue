@@ -84,7 +84,7 @@
       <div class="md:ml-20 xs:ml-5 sm:ml-5 md:flex md:gap-4">
         <div class="flex gap-4" :class="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING ? 'w-96' : 'w-70'">
           <custom-input
-            on-invalid="this.setCustomValidity('De verzekering moet minstens 1 dag op voorhand aangevraagd worden.')"
+            onInvalid="this.setCustomValidity('De verzekering moet minstens 1 dag op voorhand aangevraagd worden.')"
             :loading-submit="isSubmitting"
             :min="minDate"
             :type="InputTypes.DATE"
@@ -104,7 +104,7 @@
         </div>
         <div class="flex xs:mt-5 md:mt-0 gap-4" :class="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING ? 'w-96' : 'w-80'">
           <custom-input
-            on-invalid="this.setCustomValidity('De verzekering moet minstens 1 dag op voorhand aangevraagd worden.')"
+            onInvalid="this.setCustomValidity('De verzekering moet minstens 1 dag op voorhand aangevraagd worden.')"
             :loading-submit="isSubmitting"
             :min="minDate"
             :type="InputTypes.DATE"
@@ -160,7 +160,7 @@
       <info-alert>
         <p>
           Staat er een fout in je gegevens? Pas ze dan aan <strong><a target="_blank" href="https://groepsadmin.scoutsengidsenvlaanderen.be/">in de Groepsadministratie</a></strong> en klik vervolgens op Herlaad. 
-          <custom-button :loading-submit="isRefreshing" type="button" class="ml-2 mt-2" text="Herlaad" @click="refreshGroups()" />
+          <custom-button :loadingSubmit="isRefreshing" type="button" class="ml-2 mt-2" text="Herlaad" @click="refreshGroups()" />
         </p>
       </info-alert>
     </div>

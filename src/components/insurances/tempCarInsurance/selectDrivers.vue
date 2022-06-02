@@ -60,7 +60,7 @@
       </div>
     </div>
   </div>
-  <members-side-bar v-if="generalInsuranceState.group" v-model:isDisplay="isDisplay" :start="generalInsuranceState.startDate" :end="generalInsuranceState.endDate" :group="generalInsuranceState.group.id" :existing-list="selectDriverField.drivers" title="Lid" @addMemberToList="addMemberToDriverList($event)" />
+  <members-side-bar :start="generalInsuranceState.startDate" :end="generalInsuranceState.endDate" v-if="generalInsuranceState.group" v-model:isDisplay="isDisplay" :group="generalInsuranceState.group.id" :existing-list="selectDriverField.drivers" title="Lid" @addMemberToList="addMemberToDriverList($event)" />
 </template>
 
 <script lang="ts">

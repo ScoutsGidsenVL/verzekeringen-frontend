@@ -9,12 +9,12 @@
         <form>
           <div class="flex">
             <div class="px-3">
-              <input :id="'yes' + id" v-model="isChecked" class="h-7 w-7 mr-2" type="radio" :name="'yes' + id" :value="true" @change="emit(true)" />
+              <input class="h-7 w-7 mr-2" v-model="isChecked" type="radio" :id="'yes' + id" :name="'yes' + id" :value="true" @change="emit(true)" />
               <label :for="'yes' + id"><strong>Ja</strong></label>
             </div>
 
             <div class="px-3">
-              <input :id="'no' + id" v-model="isChecked" class="h-7 w-7 mr-2" type="radio" :name="'no' + id" :value="false" @change="emit(false)" />
+              <input class="h-7 w-7 mr-2" v-model="isChecked" type="radio" :id="'no' + id" :name="'no' + id" :value="false" @change="emit(false)" />
               <label :for="'no' + id"><strong>Nee</strong></label>
             </div>
           </div>

@@ -1,16 +1,16 @@
 <template>
-  <base-side-bar v-model:isDisplay="display" :is-overflow-hidden="isOverflowHidden" name="Member" :title="title">
+  <base-side-bar :isOverflowHidden="isOverflowHidden" v-model:isDisplay="display" name="Member" :title="title">
     <div class="d-flex flex-col h-full px-4 pt-4">
       <div>
         <search-input
-          v-model:loading="loading"
           :start="start"
           :end="end"
+          v-model:loading="loading"
           name="member"
           placeholder="Zoek op naam"
           :repository="PersonRepository"
-          :group="group ? group : ''"
           @fetchedOptions="fetchedOptions($event)"
+          :group="group ? group : ''"
         />
       </div>
 

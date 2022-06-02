@@ -14,13 +14,13 @@
     </request-insurance-detail>
 
     <call-to-action v-if="data" class="mt-4">
-      <template #info>
+      <template v-slot:info>
         <custom-button text="Verstuur je aanvraag" />
       </template>
     </call-to-action>
 
     <div class="flex gap-3 md:ml-20 xs:ml-5 sm:ml-5 mt-5">
-      <back-button state-name="setHolderState" :back-to-state="HolderStates.TYPE" />
+      <back-button stateName="setHolderState" :backToState="HolderStates.TYPE" />
     </div>
   </form>
 </template>
