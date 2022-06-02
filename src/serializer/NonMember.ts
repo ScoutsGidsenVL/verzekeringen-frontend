@@ -42,7 +42,7 @@ export const NonMemberSerializer = (input: any): any => {
     id: input.id ? input.id : undefined,
     last_name: input.lastName,
     first_name: input.firstName,
-    phone_number: input.phoneNumber ? input.phoneNumber.replace(/ /g, '') : '/',
+    phone_number: input.phoneNumber ? input.phoneNumber.replace(/ /g, '') : '',
     birth_date: input.birthDate ? input.birthDate : undefined,
     street: input.street,
     number: input.number,

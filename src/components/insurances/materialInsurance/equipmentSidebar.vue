@@ -241,7 +241,7 @@ export default defineComponent({
             totalValue: values.totalValue ? values.totalValue : undefined,
             ownerMember: values.ownerMember && isGroupEquipement.value === false ? values.ownerMember : undefined,
             ownerNonMember: values.ownerNonMember && isGroupEquipement.value === false ? values.ownerNonMember : undefined,
-            group: generalInsuranceState.value.group.id,
+            group: isGroupEquipement.value ? generalInsuranceState.value.group.id : null,
           })
           if (props.sideBarState.state === 'edit') {
             await updateEquipment(equipment.value)
