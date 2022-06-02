@@ -23,7 +23,7 @@ export const EquipmentDeserializer = (input: any, group?: any): Equipment => {
     ownerMember: input.owner_member ? MemberDeserializer(input.owner_member) : undefined,
     ownerNonMember: input.owner_non_member ? NonMemberDeserializer(input.owner_non_member) : undefined,
     // group: input.owner_group ? input.owner_group : undefined,
-    group: group ? group : undefined,
+    group: group ? group : input.owner_group ? input.owner_group : undefined,
   }
 
   return single
