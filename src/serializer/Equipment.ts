@@ -37,7 +37,7 @@ export const EquipmentSerializer = (input: any): any => {
     total_value: input.totalValue ? input.totalValue : undefined,
     owner_member: input.ownerMember ? input.ownerMember.groupAdminId : null,
     owner_non_member: input.ownerNonMember ? NonMemberSerializer(input.ownerNonMember).id : null,
-    owner_group: input.group ? input.group : undefined,
+    owner_group: input.group ? input.group : null,
   }
 
   return single
@@ -49,9 +49,9 @@ export const EquipmentSerializerToPostInsurance = (input: any): any => {
     nature: input.nature ? input.nature : undefined,
     description: input.description ? input.description : undefined,
     total_value: input.totalValue ? input.totalValue : undefined,
-    owner_member: input.ownerMember ? MemberSerializer(input.ownerMember) : undefined,
-    owner_non_member: input.ownerNonMember ? NonMemberSerializer(input.ownerNonMember) : undefined,
-    owner_group: input.group ? input.group : undefined,
+    owner_member: input.ownerMember ? MemberSerializer(input.ownerMember) : null,
+    owner_non_member: input.ownerNonMember ? NonMemberSerializer(input.ownerNonMember) : null,
+    owner_group: input.group ? input.group : null,
   }
 
   return single
