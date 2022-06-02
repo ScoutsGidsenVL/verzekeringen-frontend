@@ -20,7 +20,7 @@
 
         <phone-number :phoneNumber="person.phoneNumber" />
 
-        <div v-if="person.postCodeCity">
+        <div v-if="person.postCodeCity && !equipment.ownerMember">
           <p>
             {{ person.street + ' ' + person.number + (person.letterBox ? ' Bus ' + person.letterBox : '') + ', ' + person.postCodeCity.postalCode + ' ' + person.postCodeCity.city }}
           </p>
