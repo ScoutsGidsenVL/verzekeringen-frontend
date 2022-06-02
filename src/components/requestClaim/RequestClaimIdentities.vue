@@ -39,7 +39,7 @@
           <p>
             Staat er een fout in je gegevens? Pas ze dan aan <strong><a target="_blank" href="https://groepsadmin.scoutsengidsenvlaanderen.be/">in de Groepsadministratie</a></strong> en klik
             vervolgens op Herlaad.
-            <custom-button :loadingSubmit="isRefreshing" type="button" class="ml-2 mt-2" text="Herlaad" @click="refreshGroups()" />
+            <custom-button :loading-submit="isRefreshing" type="button" class="ml-2 mt-2" text="Herlaad" @click="refreshGroups()" />
           </p>
         </info-alert>
       </div>
@@ -61,8 +61,8 @@
             <strong class="cursor-pointer text-lightGreen" @click="openNonMemberSideBar()"> Kies een niet-lid</strong>
           </div>
           <non-member-side-bar
-            isOverflowHidden="false"
             v-model:side-bar-state="nonMemberSideBarState"
+            is-overflow-hidden="false"
             :close-on-add="true"
             :existing-list="nonMembers"
             title="Niet lid"
@@ -167,7 +167,7 @@
         <div v-if="values.victim && values.victim.membershipNumber" class="mt-3 md:ml-20 xs:ml-5 sm:ml-5 w-72">
           <custom-input :disabled="true" :type="InputTypes.TEXT" name="victim.membershipNumber" label="Lidnummer" />
         </div>
-        <div class="mt-3 md:ml-20 xs:ml-5 sm:ml-5" v-else>
+        <div v-else class="mt-3 md:ml-20 xs:ml-5 sm:ml-5">
           <info-alert>
             <p>Enkel manueel invullen in geval van eenmalige activiteit of evenementenverzekering.</p>
             <!-- Enkel gebruiken in geval van eenmalige activiteit of evenementenverzekering. -->

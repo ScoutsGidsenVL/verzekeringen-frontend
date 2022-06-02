@@ -33,11 +33,11 @@
       </div>
     </div>
 
-    <div class="mt-2 mb-4" v-if="!isEdit">
+    <div v-if="!isEdit" class="mt-2 mb-4">
       <div>
         <custom-headline-2 text="Bijlage" />
         <div>
-          <file-upload :allowedFiles="'application/pdf,.jpg,.jpeg,.png'" />
+          <file-upload :allowed-files="'application/pdf,.jpg,.jpeg,.png'" />
         </div>
       </div>
     </div>
@@ -51,7 +51,7 @@
         <label-output v-if="claimState.group" label="" :text="claimState.group.name + ' - ' + claimState.group.id" />
         <label-output v-if="userData.firstName" label="" :text="userData.firstName + ' ' + userData.lastName" />
         <label-output v-if="userData.email" label="" :text="userData.email" />
-        <phone-number :hasWarning="true" :phoneNumber="userData.phoneNumber" />
+        <phone-number :has-warning="true" :phone-number="userData.phoneNumber" />
 
         <div v-if="claimState.declarant">
           <responsible-member-detail title="" :responsible-member="claimState.declarant" />
@@ -109,13 +109,13 @@
         </div>
 
         <div v-if="claimState.activityTypes">
-          <p class="mb-0" v-show="claimState.activityTypes.includes(ActivityTypes.REGULAR)">tijdens de activiteit van onze groep.</p>
+          <p v-show="claimState.activityTypes.includes(ActivityTypes.REGULAR)" class="mb-0">tijdens de activiteit van onze groep.</p>
           <div v-show="claimState.activityTypes.includes(ActivityTypes.TRANSPORT)">
             op de heen- of terugweg van of naar de activiteit.
-            <p class="mb-0" v-show="claimState.usedTransport">Gebruikt voertuig: {{ claimState.usedTransport }}</p>
+            <p v-show="claimState.usedTransport" class="mb-0">Gebruikt voertuig: {{ claimState.usedTransport }}</p>
           </div>
 
-          <p class="mb-0" v-show="claimState.activityTypes.includes(ActivityTypes.IRREGULAR_LOCATION)">Tijdens een activiteit op verplaatsing</p>
+          <p v-show="claimState.activityTypes.includes(ActivityTypes.IRREGULAR_LOCATION)" class="mb-0">Tijdens een activiteit op verplaatsing</p>
         </div>
 
         <label-output label="Geef een korte beschrijving van de scoutsactiviteit." :text="claimState.activity" />
@@ -130,7 +130,7 @@
         <div v-show="claimState.damageType">
           <strong>Schade aan medisch hulpmiddel</strong>
           <div>
-            <label class="block" v-show="claimState.damageType">{{ claimState.damageType }}</label>
+            <label v-show="claimState.damageType" class="block">{{ claimState.damageType }}</label>
           </div>
         </div>
 
@@ -206,7 +206,7 @@
       </div>
     </div>
 
-    <div class="mt-2 mb-4" v-if="isEdit && can('insurances.view_insuranceclaimattachment_filename') && filename">
+    <div v-if="isEdit && can('insurances.view_insuranceclaimattachment_filename') && filename" class="mt-2 mb-4">
       <div>
         <custom-headline-2 text="Bijlage" />
         <div>
@@ -239,7 +239,7 @@
     </div>
 
     <div v-show="!isEdit" class="flex gap-3 mt-2 items-center">
-      <back-button stateName="setClaimHolderState" :backToState="ClaimHolderStates.THREE" />
+      <back-button state-name="setClaimHolderState" :back-to-state="ClaimHolderStates.THREE" />
       <custom-button text="Verstuur je aangifte" />
     </div>
   </form>

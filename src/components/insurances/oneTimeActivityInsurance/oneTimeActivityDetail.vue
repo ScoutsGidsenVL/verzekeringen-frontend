@@ -2,7 +2,7 @@
   <base-detail :single-page="singlePage" :data="oneTimeActivityState" :repository="OneTimeActivityRepository" title="verzekering eenmalige activiteit">
     <template #default="{ details }">
       <div v-if="details && details.status && details.status.label === 'Goedgekeurd'">
-        <participants-file-section :inscuranceType="'activities'" :details="details"></participants-file-section>
+        <participants-file-section :inscurance-type="'activities'" :details="details"></participants-file-section>
       </div>
       <div v-if="details" class="mt-1">
         <div v-if="!(holderState === HolderStates.DETAIL)">

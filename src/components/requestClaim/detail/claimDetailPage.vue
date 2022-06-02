@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     
-    <claim-detail :isDetailPage="true" />
+    <claim-detail :is-detail-page="true" />
 
   </div>
 </template>

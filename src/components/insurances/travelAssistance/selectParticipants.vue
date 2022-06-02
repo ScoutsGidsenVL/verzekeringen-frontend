@@ -4,7 +4,7 @@
   </span>
   <a class="cursor-pointer btn-simple-green mb-4" @click="openSideBar()"> + Voeg lid toe </a>
   <member-list :can-be-deleted="true" :members-list="members" @deleteMemberFromList="deleteMemberFromList($event)" />
-  <members-side-bar :start="generalInsuranceState.startDate" :end="generalInsuranceState.endDate" v-if="generalInsuranceState.group" v-model:isDisplay="isDisplay" :group="generalInsuranceState.group.id" :existing-list="members" title="Lid" @addMemberToList="addMemberToList($event)" />
+  <members-side-bar v-if="generalInsuranceState.group" v-model:isDisplay="isDisplay" :start="generalInsuranceState.startDate" :end="generalInsuranceState.endDate" :group="generalInsuranceState.group.id" :existing-list="members" title="Lid" @addMemberToList="addMemberToList($event)" />
 </template>
 
 <script lang="ts">

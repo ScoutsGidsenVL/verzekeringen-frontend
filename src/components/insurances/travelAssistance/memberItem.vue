@@ -14,7 +14,7 @@
         <p>{{ member.email !== '' ? member.email : '/' }}</p>
       </div>
 
-      <phone-number :phoneNumber="member.phoneNumber" />
+      <phone-number :phone-number="member.phoneNumber" />
 
       <div v-if="member.postCodeCity">
         <p>

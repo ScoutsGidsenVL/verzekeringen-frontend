@@ -1,6 +1,6 @@
 <template>
   <div v-if="hasWarning">
-    <div class="mb-1" v-if="(phoneNumber && phoneNumber === '') || phoneNumber === '/'">
+    <div v-if="(phoneNumber && phoneNumber === '') || phoneNumber === '/'" class="mb-1">
       <p>(Gsm kan toegevoegd worden op de groepsadmin.)</p>
     </div>
   </div>
@@ -8,7 +8,7 @@
     <p>{{ phoneNumber }}</p>
   </div>
   <div v-if="hasWarning">
-    <div class="mb-1" v-if="!phoneNumber">
+    <div v-if="!phoneNumber" class="mb-1">
       <p>(Gsm kan toegevoegd worden op de groepsadmin.)</p>
     </div>
   </div>

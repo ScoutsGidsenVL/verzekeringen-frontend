@@ -84,8 +84,8 @@
             <div class="z-30">
               <strong class="cursor-pointer text-lightGreen" @click="openMemberSideBar()"> Een lid (persoonlijk materiaal) </strong>
               <members-only-side-bar
-                isOverflowHidden="false"
                 v-model:isDisplay="isMemberSideBarDisplay"
+                is-overflow-hidden="false"
                 :close-on-add="true"
                 :existing-list="members"
                 title="Lid"
@@ -96,8 +96,8 @@
             <div class="mt-3 z-30">
               <strong class="cursor-pointer text-lightGreen" @click="openNonMemberSideBar()"> Een niet-lid (gehuurd of geleend materiaal) </strong>
               <non-member-side-bar
-                isOverflowHidden="false"
                 v-model:side-bar-state="nonMemberSideBarState"
+                is-overflow-hidden="false"
                 :close-on-add="true"
                 :existing-list="nonMembers"
                 title="Niet lid"
