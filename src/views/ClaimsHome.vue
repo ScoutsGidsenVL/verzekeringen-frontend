@@ -12,7 +12,7 @@
       <div class="flex gap-5 pt-1 pb-5 float-right">
         <a v-if="data.previous && !isLoading" class="link-inline cursor-pointer" @click="getPreviousClaims(data.previous)">Vorige pagina</a>
         <a v-if="data.next && !isLoading" class="link-inline cursor-pointer" @click="getNextClaims(data.next)">Volgende pagina</a>
-        <loader :isLoading="isLoading" color="black" />
+        <loader :is-loading="isLoading" color="black" />
       </div>
     </div>
   </div>

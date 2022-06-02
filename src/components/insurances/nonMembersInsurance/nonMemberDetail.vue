@@ -22,7 +22,7 @@
           </div>
         </div>
 
-        <activity-detail :nature="details.nature" :location="details.postCodeCity" :country="details.country ? (typeof details.country === 'object' ? details.country.id : details.country) : undefined" :insuranceType="'2'" />
+        <activity-detail :nature="details.nature" :location="details.postCodeCity" :country="details.country ? (typeof details.country === 'object' ? details.country.id : details.country) : undefined" :insurance-type="'2'" />
 
         <div class="mb-3">
           <p class="font-semibold mb-0">Deelnemers</p>

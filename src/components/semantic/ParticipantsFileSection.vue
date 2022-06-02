@@ -3,10 +3,10 @@
     <form id="list" @submit.prevent="onSubmit(details)">
       <custom-headline-2 text="Bijlage" />
       <div class="mb-2">
-        <file-upload :inscuranceType="inscuranceType" :file="details.participant_list_file" :message="'Deelnemerslijst kan hier opgeladen worden.'" />
+        <file-upload :inscurance-type="inscuranceType" :file="details.participant_list_file" :message="'Deelnemerslijst kan hier opgeladen worden.'" />
       </div>
       <div class="mb-5">
-        <custom-button :loadingSubmit="isUploadingFile" text="Bijlage indienen" />
+        <custom-button :loading-submit="isUploadingFile" text="Bijlage indienen" />
       </div>
     </form>
   </div>

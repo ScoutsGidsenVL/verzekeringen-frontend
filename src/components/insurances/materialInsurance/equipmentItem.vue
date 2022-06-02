@@ -10,15 +10,15 @@
     </div>
     <div class="py-3 flex-grow">
       <div v-if="person">
-        <div class="mb-1" v-if="person.firstName">
+        <div v-if="person.firstName" class="mb-1">
           <strong>{{ person.firstName + ' ' + person.lastName }}</strong>
         </div>
-
-        <div class="mb-1" v-if="person.email">
+        
+        <div v-if="person.email" class="mb-1">
           <p>{{ person.email !== '' ? person.email : '/' }}</p>
         </div>
 
-        <phone-number :phoneNumber="person.phoneNumber" />
+        <phone-number :phone-number="person.phoneNumber" />
 
         <div v-if="person.postCodeCity">
           <p>

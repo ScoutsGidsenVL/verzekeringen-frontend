@@ -15,7 +15,7 @@
       </div>
     </router-link>
 
-    <div class="hover:underline cursor-pointer hover:text-darkGreen" @click="goToDraft(item.id, item.type.name)" v-if="isDraft">
+    <div v-if="isDraft" class="hover:underline cursor-pointer hover:text-darkGreen" @click="goToDraft(item.id, item.type.name)">
       <div>
         <div class="date-normal">
           <p>{{ item.startDate && item.endDate ? formatDate(item.startDate, item.endDate) : '' }}</p>
@@ -53,7 +53,7 @@
                 clip-rule="evenodd"
               />
             </svg>
-            <loader :isLoading="isDeletingDraft" />
+            <loader :is-loading="isDeletingDraft" />
           </div>
         </div>
         <div v-if="!isDraft && item.status.label !== 'Goedgekeurd'" @click="fetchInsuranceById(item.id, item.type.name)">

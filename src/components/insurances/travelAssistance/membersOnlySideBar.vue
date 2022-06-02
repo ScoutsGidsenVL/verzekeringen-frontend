@@ -1,11 +1,11 @@
 <template>
-  <base-side-bar :isOverflowHidden="isOverflowHidden" v-model:isDisplay="display" name="Member" :title="title">
+  <base-side-bar v-model:isDisplay="display" :is-overflow-hidden="isOverflowHidden" name="Member" :title="title">
     <div class="d-flex flex-col h-full px-4 pt-4">
       <div>
         <search-input
           v-if="generalInsuranceState.group"
-          :group="generalInsuranceState.group.id"
           v-model:loading="loading"
+          :group="generalInsuranceState.group.id"
           name="member"
           placeholder="Zoek op naam"
           :repository="MemberRepository"

@@ -2,7 +2,7 @@
   <div>
     <strong>{{ label }}</strong>
     <div :class="textWidth">
-      <p class="mb-0" v-if="!bold">{{ text }}</p>
+      <p v-if="!bold" class="mb-0">{{ text }}</p>
       <strong v-if="bold">{{ text }}</strong>
     </div>
   </div>

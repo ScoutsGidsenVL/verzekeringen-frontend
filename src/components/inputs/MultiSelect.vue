@@ -4,7 +4,7 @@
       <strong>
         {{ label }}
       </strong>
-      <strong><required class="inline" v-if="label" :rules="rules" /></strong>
+      <strong><required v-if="label" class="inline" :rules="rules" /></strong>
     </div>
     <div
       class="min-w-0"

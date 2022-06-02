@@ -3,9 +3,9 @@
     <form action="">
       <div v-for="(insuranceType, index) in insuranceTypes" :key="insuranceType.id" class="py-1">
         <input
-          :disabled="disabled"
           :id="index"
           v-model="selection"
+          :disabled="disabled"
           class="cursor-pointer"
           type="radio"
           :name="index"

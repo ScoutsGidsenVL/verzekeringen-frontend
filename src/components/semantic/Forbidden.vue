@@ -13,7 +13,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'forbidden',
+  name: 'Forbidden',
   setup() {},
 })
 </script>

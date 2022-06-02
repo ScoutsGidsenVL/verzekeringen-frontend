@@ -1,8 +1,8 @@
 <template>
   <div class="flex justify-content-center container rounded-lg bg-lightGreen mt-1">
-    <div class="p-3" v-if="file">
-      <div class="d-flex gap-4 justify-end" v-if="isDisplay === false">
-        <div class="hover:text-lightGreen cursor-pointer" v-on:click="downloadFile()">
+    <div v-if="file" class="p-3">
+      <div v-if="isDisplay === false" class="d-flex gap-4 justify-end">
+        <div class="hover:text-lightGreen cursor-pointer" @click="downloadFile()">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
             <path
               fill-rule="evenodd"
@@ -12,7 +12,7 @@
           </svg>
         </div>
 
-        <div class="hover:text-red cursor-pointer" v-on:click="deleteFromArray()">
+        <div class="hover:text-red cursor-pointer" @click="deleteFromArray()">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
             <path
               fill-rule="evenodd"
@@ -37,7 +37,7 @@ import { defineComponent, PropType } from 'vue'
 import { saveAs } from 'file-saver'
 
 export default defineComponent({
-  name: 'file-item-component',
+  name: 'FileItemComponent',
   props: {
     file: {
       type: Object as PropType<FileItem>,

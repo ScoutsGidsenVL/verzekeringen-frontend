@@ -7,7 +7,7 @@
     <p>{{ user.email }}</p>
   </div>
 
-  <phone-number :hasWarning="true" :phoneNumber="user.phoneNumber" />
+  <phone-number :has-warning="true" :phone-number="user.phoneNumber" />
   
   <label-output label="Lidnummer" :text="user.membershipNumber" />
 </template>
