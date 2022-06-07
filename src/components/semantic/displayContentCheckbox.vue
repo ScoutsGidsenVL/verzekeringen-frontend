@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 
 export default defineComponent({
   name: 'DisplayContentCheckBox',
@@ -38,8 +38,23 @@ export default defineComponent({
     },
     initialState: String
   },
-  setup(props) {
-    const isChecked = ref<string>(props.initialState ? props.initialState : 'no')
+  setup(props, { emit}) {
+    const isChecked = ref<string>(props.initialState ? props.initialState : '')
+
+    watch(
+      () => isChecked.value,
+      () => {
+        if (isChecked.value === 'yes') {
+          emit('checkChanged', "true")
+
+        } else if (isChecked.value === 'no') {
+          emit('checkChanged', "false")
+
+        } else {
+          emit('checkChanged', null)
+        }
+      }
+    )
     // TRIGGER EVENT TO NOT SET VALUES IF CHOICE IS NO
     return {
       isChecked

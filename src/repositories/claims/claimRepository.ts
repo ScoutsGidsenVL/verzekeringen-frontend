@@ -179,6 +179,32 @@ export class ClaimRepository extends BaseRepository {
       fd.append('damage_type', '')
     }
 
+    //BOOLEANS
+
+    if (claim.isInvolvedPartyChecked) {
+      fd.append('involved_party', claim.isInvolvedPartyChecked)
+    } else {
+      fd.append('involved_party', '')
+    }
+
+    if (claim.isLeadershipChecked) {
+      fd.append('leadership', claim.isLeadershipChecked)
+    } else {
+      fd.append('leadership', '')
+    }
+
+    if (claim.isOfficialReportChecked) {
+      fd.append('official_report', claim.isOfficialReportChecked)
+    } else {
+      fd.append('official_report', '')
+    }
+
+    if (claim.isWitnessChecked) {
+      fd.append('witness', claim.isWitnessChecked)
+    } else {
+      fd.append('witness', '')
+    }
+
     const config = {
       headers: {
         'content-type': 'multipart/form-data',

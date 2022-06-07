@@ -82,7 +82,7 @@
             </div>
           </div>
 
-          <display-content-checkbox text="Hield iemand van de leiding toezicht op het moment dat het ongeval plaatsvond?">
+          <display-content-checkbox @checkChanged="leaderShipCheck($event)" text="Hield iemand van de leiding toezicht op het moment dat het ongeval plaatsvond?">
             <div class="md:w-96 xs:w-72">
               <custom-input :type="InputTypes.TEXT" name="leadershipDescription" placeholder="Naam" />
             </div>
@@ -156,6 +156,7 @@ export default defineComponent({
           damage: values.damage,
           leadershipDescription: values.leadershipDescription ? values.leadershipDescription : undefined,
           damageType: values.damageType ? values.damageType : undefined,
+          isLeadershipChecked: values.isLeadershipChecked ? values.isLeadershipChecked : null
         })
 
         store.dispatch('setClaimState', { ...claimState.value, ...newClaimState.value })
@@ -194,6 +195,10 @@ export default defineComponent({
         }
       }
     )
+
+    const leaderShipCheck = (e: any) => {
+      values.isLeadershipChecked = e
+    }
     return {
       selectedActivityType,
       ClaimHolderStates,
@@ -206,7 +211,8 @@ export default defineComponent({
       isDamage,
       isEdit,
       values,
-      maxDate
+      maxDate,
+      leaderShipCheck
     }
   },
 })

@@ -48,10 +48,12 @@
       <p class="font-semibold">Wie doet de aangifte?</p>
 
       <div class="md:ml-20 xs:ml-5 sm:ml-5">
-        <label-output v-if="claimState.group" label="" :text="claimState.group.name + ' - ' + claimState.group.id" />
-        <label-output v-if="userData.firstName" label="" :text="userData.firstName + ' ' + userData.lastName" />
-        <label-output v-if="userData.email" label="" :text="userData.email" />
-        <phone-number :hasWarning="true" :phoneNumber="userData.phoneNumber" />
+        <div v-if="!isEdit">
+          <label-output v-if="claimState.group" label="" :text="claimState.group.name + ' - ' + claimState.group.id" />
+          <label-output v-if="userData.firstName" label="" :text="userData.firstName + ' ' + userData.lastName" />
+          <label-output v-if="userData.email" label="" :text="userData.email" />
+          <phone-number :hasWarning="true" :phoneNumber="userData.phoneNumber" />
+        </div>
 
         <div v-if="claimState.declarant">
           <responsible-member-detail title="" :responsible-member="claimState.declarant" />
@@ -136,13 +138,17 @@
 
         <div>
           <strong>Hield iemand van de leiding toezicht op het moment dat het ongeval plaatsvond?</strong>
-          <div v-if="claimState.leadershipDescription">
-            <p>
+          <div v-if="claimState.isLeadershipChecked === 'true'">
+            Ja
+            <p v-if="claimState.leadershipDescription">
               {{ claimState.leadershipDescription }}
             </p>
           </div>
-          <div v-else>
+          <div v-if="claimState.isLeadershipChecked === 'false'">
             Neen
+          </div>
+          <div v-if="claimState.isLeadershipChecked === null">
+            Leeg
           </div>
         </div>
       </div>
@@ -153,12 +159,21 @@
 
       <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-1">
         <strong>Is het ongeval te wijten aan een fout van iemand anders?</strong>
-        <div v-if="!claimState.involvedPartyDescription">
+
+        <div v-if="claimState.isInvolvedPartyChecked === 'true'">
+          Ja
+        </div>
+        <div v-if="claimState.isInvolvedPartyChecked === 'false'">
           Neen
         </div>
+
+        <div v-if="claimState.isInvolvedPartyChecked === null">
+          Leeg
+        </div>
+
         <div>
-          <div v-if="claimState.involvedPartyName">
-            <p>
+          <div v-if="claimState.isInvolvedPartyChecked === 'true'">
+            <p v-if="claimState.involvedPartyName">
               {{ claimState.involvedPartyName }}
             </p>
           </div>
@@ -173,11 +188,21 @@
 
       <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-1">
         <strong>Werd er een vaststelling gedaan door een verbaliserende autoriteit (bv politie)?</strong>
-        <div v-if="!claimState.officialReportDescription">
+        
+        <div v-if="claimState.isOfficialReportChecked === 'true'">
+          Ja
+        </div>
+
+        <div v-if="claimState.isOfficialReportChecked === 'false'">
           Neen
         </div>
-        <div v-if="claimState.officialReportDescription">
-          <p>
+
+        <div v-if="claimState.isOfficialReportChecked === null">
+            Leeg
+          </div>
+
+        <div v-if="claimState.isOfficialReportChecked === 'true'">
+          <p v-if="claimState.officialReportDescription">
             {{ claimState.officialReportDescription }}
           </p>
         </div>
@@ -190,11 +215,20 @@
 
       <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-1">
         <strong>Was er een getuige?</strong>
-        <div v-if="!claimState.witnessName">
+        <div v-if="claimState.isWitnessChecked === 'true'">
+          Ja
+        </div>
+
+        <div v-if="claimState.isWitnessChecked === 'false'">
           Neen
         </div>
-        <div v-if="claimState.witnessName">
-          <p>
+
+        <div  v-if="claimState.isWitnessChecked === null">
+          Leeg
+        </div>
+
+        <div v-if="claimState.isWitnessChecked === 'true'">
+          <p v-if="claimState.witnessName">
             {{ claimState.witnessName }}
           </p>
         </div>
