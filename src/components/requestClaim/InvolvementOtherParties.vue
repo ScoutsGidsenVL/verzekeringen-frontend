@@ -5,7 +5,7 @@
 
       <div>
         <div>
-          <display-content-checkbox text="Is het ongeval te wijten aan een fout van iemand anders?">
+          <display-content-checkbox @checkChanged="involvedPartyCheck($event)" text="Is het ongeval te wijten aan een fout van iemand anders?">
             <div class="md:w-96 xs:w-72">
               <custom-input :maxlength="1024" :type="InputTypes.TEXT" name="involvedPartyName" label="Naam" rules="fillInCheck:@involvedPartyDescription" />
               <custom-input :maxlength="1024" :type="InputTypes.TEXT" name="involvedPartyDescription" label="Adres" rules="fillInCheck:@involvedPartyBirthdate" />
@@ -13,14 +13,14 @@
             </div>
           </display-content-checkbox>
 
-          <display-content-checkbox text="Werd er een vaststelling gedaan door een verbaliserende autoriteit (bv politie)?">
+          <display-content-checkbox @checkChanged="officialReportCheck($event)" text="Werd er een vaststelling gedaan door een verbaliserende autoriteit (bv politie)?">
             <div class="md:w-96 xs:w-72">
               <custom-input :maxlength="1024" :type="InputTypes.TEXT" name="officialReportDescription" label="Welke" rules="fillInCheck:@pvNumber" />
               <custom-input :maxlength="30" class="mt-1" :type="InputTypes.TEXT" name="pvNumber" label="Nummer van proces-verbaal" />
             </div>
           </display-content-checkbox>
 
-          <display-content-checkbox text="Was er een getuige?">
+          <display-content-checkbox @checkChanged="witnessCheck($event)" text="Was er een getuige?">
             <div class="md:w-96 xs:w-72">
               <custom-input :maxlength="1024" :type="InputTypes.TEXT" name="witnessName" label="Naam" />
             </div>
@@ -88,6 +88,9 @@ export default defineComponent({
           pvNumber: values.pvNumber ? values.pvNumber : undefined,
           witnessName: values.witnessName ? values.witnessName : undefined,
           witnessDescription: values.witnessDescription ? values.witnessDescription : undefined,
+          isWitnessChecked: values.isWitnessChecked ? values.isWitnessChecked : null,
+          isOfficialReportChecked: values.isOfficialReportChecked ? values.isOfficialReportChecked : null,
+          isInvolvedPartyChecked: values.isInvolvedPartyChecked ? values.isInvolvedPartyChecked : null
         })
 
         store.dispatch('setClaimState', { ...claimState.value, ...newClaimState.value })
@@ -96,6 +99,17 @@ export default defineComponent({
     }
 
     scrollToTopOfPage()
+
+    const involvedPartyCheck = (e: any) => {
+      values.isInvolvedPartyChecked = e
+
+    }
+    const officialReportCheck = (e: any) => {
+      values.isOfficialReportChecked = e
+    }
+    const witnessCheck = (e: any) => {
+      values.isWitnessChecked = e
+    }
 
     return {
       BelgianCitySearchRepository,
@@ -106,6 +120,9 @@ export default defineComponent({
       onSubmit,
       isEdit,
       values,
+      witnessCheck,
+      officialReportCheck,
+      involvedPartyCheck
     }
   },
 })

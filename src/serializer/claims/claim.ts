@@ -47,6 +47,10 @@ export interface Claim {
   readonly declarant?: Member
   damageType?: string
   readonly createdOn?: string
+  isInvolvedPartyChecked?: string,
+  isLeadershipChecked?: string,
+  isOfficialReportChecked?: string,
+  isWitnessChecked?: string
 }
 
 export const ClaimDeserializer = (input: any): Claim => {
@@ -86,6 +90,10 @@ export const ClaimDeserializer = (input: any): Claim => {
     declarant: input.declarant ? MemberDeserializer(input.declarant) : undefined,
     damageType: input.damage_type ? input.damage_type : undefined,
     createdOn: input.created_on ? moment(input.created_on).format('DD MMM YYYY') : undefined,
+    isWitnessChecked: input.witness ? input.witness : null,
+    isInvolvedPartyChecked: input.involved_party ? input.involved_party : null,
+    isLeadershipChecked: input.leadership ? input.leadership : null,
+    isOfficialReportChecked: input.official_report ? input.official_report : null,
   }
 
   return single
@@ -121,6 +129,10 @@ export const ClaimSerializer = (input: any): any => {
     victim: input.victim ? VictimSerializer(input.victim) : undefined,
     file: input.file ? input.file : undefined,
     damage_type: input.damageType ? input.damageType : undefined,
+    witness: input.isWitnessChecked ? input.isWitnessChecked : null,
+    official_report: input.isOfficialReportChecked ? input.isOfficialReportChecked : null,
+    leadership: input.isLeadershipChecked ? input.isLeadershipChecked : null,
+    involved_party: input.isInvolvedPartyChecked ? input.isInvolvedPartyChecked : null
   }
   return single
 }
