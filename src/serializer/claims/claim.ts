@@ -51,6 +51,7 @@ export interface Claim {
   isLeadershipChecked?: string,
   isOfficialReportChecked?: string,
   isWitnessChecked?: string
+  readonly attachmentName?: string
 }
 
 export const ClaimDeserializer = (input: any): Claim => {
@@ -94,6 +95,7 @@ export const ClaimDeserializer = (input: any): Claim => {
     isInvolvedPartyChecked: input.involved_party ? input.involved_party : null,
     isLeadershipChecked: input.leadership ? input.leadership : null,
     isOfficialReportChecked: input.official_report ? input.official_report : null,
+    attachmentName: input.attachment_name ? input.attachment_name : undefined,
   }
 
   return single
