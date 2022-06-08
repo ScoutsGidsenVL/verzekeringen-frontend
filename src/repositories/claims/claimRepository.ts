@@ -181,26 +181,50 @@ export class ClaimRepository extends BaseRepository {
 
     //BOOLEANS
 
+    //isInvolvedPartyChecked
     if (claim.isInvolvedPartyChecked) {
-      fd.append('involved_party', claim.isInvolvedPartyChecked)
+      if ( claim.isInvolvedPartyChecked === 'True') {
+        fd.append('involved_party', 'yes')
+      }
+      if ( claim.isInvolvedPartyChecked === 'False') {
+        fd.append('involved_party', 'no')
+      }
     } else {
       fd.append('involved_party', '')
     }
 
+    //isLeadershipChecked
     if (claim.isLeadershipChecked) {
-      fd.append('leadership', claim.isLeadershipChecked)
+      if (claim.isLeadershipChecked === 'True') {
+        fd.append('leadership', 'yes')
+      }
+      if (claim.isLeadershipChecked === 'False') {
+        fd.append('leadership', 'no')
+      }
     } else {
       fd.append('leadership', '')
     }
 
+    //isOfficialReportChecked
     if (claim.isOfficialReportChecked) {
-      fd.append('official_report', claim.isOfficialReportChecked)
+      if (claim.isOfficialReportChecked === 'True') {
+        fd.append('official_report', 'yes')
+      }
+      if (claim.isOfficialReportChecked === 'False') {
+        fd.append('official_report', 'no')
+      }
     } else {
       fd.append('official_report', '')
     }
 
+    //isWitnessChecked
     if (claim.isWitnessChecked) {
-      fd.append('witness', claim.isWitnessChecked)
+      if (claim.isWitnessChecked === 'True') {
+        fd.append('witness', 'yes')
+      }
+      if (claim.isWitnessChecked === 'False') {
+        fd.append('witness', 'no')
+      }
     } else {
       fd.append('witness', '')
     }
