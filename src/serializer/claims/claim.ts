@@ -131,10 +131,10 @@ export const ClaimSerializer = (input: any): any => {
     victim: input.victim ? VictimSerializer(input.victim) : undefined,
     file: input.file ? input.file : undefined,
     damage_type: input.damageType ? input.damageType : undefined,
-    witness: input.isWitnessChecked ? input.isWitnessChecked : 'None',
-    official_report: input.isOfficialReportChecked ? input.isOfficialReportChecked : 'None',
-    leadership: input.isLeadershipChecked ? input.isLeadershipChecked : 'None',
-    involved_party: input.isInvolvedPartyChecked ? input.isInvolvedPartyChecked : 'None'
+    witness: input.isWitnessChecked ? input.isWitnessChecked : null,
+    official_report: input.isOfficialReportChecked ? input.isOfficialReportChecked : null,
+    leadership: input.isLeadershipChecked ? input.isLeadershipChecked : null,
+    involved_party: input.isInvolvedPartyChecked ? input.isInvolvedPartyChecked : null
   }
   return single
 }
