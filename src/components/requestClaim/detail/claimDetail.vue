@@ -240,11 +240,11 @@
       </div>
     </div>
 
-    <div class="mt-2 mb-4" v-if="isEdit && can('insurances.view_insuranceclaimattachment_filename') && filename">
+    <div class="mt-2 mb-4" v-if="claimState.attachmentName">
       <div>
         <custom-headline-2 text="Bijlage" />
         <div>
-          {{ filename }}
+          {{ claimState.attachmentName }}
         </div>
       </div>
     </div>
