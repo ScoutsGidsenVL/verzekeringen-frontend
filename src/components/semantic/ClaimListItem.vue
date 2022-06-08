@@ -11,6 +11,10 @@
     <div>
       <p>{{ item.group && item.group.name ? item.group.name : '' }} - {{ item.group && item.group.id ? item.group.id : '' }}</p>
     </div>
+
+    <div>
+      <p>{{ item.declarant && item.declarant.firstName ? item.declarant.firstName : '' }} {{item.declarant && item.declarant.lastName ? item.declarant.lastName : '' }}</p>
+    </div>
     
     <div>
       <div class="float-right">
@@ -52,6 +56,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+
+.md\:grid-cols-claims {
+    grid-template-columns: 20% 25% 30% 15% 10% !important;
+}
+
 .date-under {
   display: none !important;
 }
