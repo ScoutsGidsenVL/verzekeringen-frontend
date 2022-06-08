@@ -14,6 +14,10 @@
       <p class="font-semibold">Groep</p>
     </div>
 
+    <div>
+      <p class="font-semibold">Aangever</p>
+    </div>
+
     <div></div>
   </div>
   <div v-if="items">
@@ -49,3 +53,9 @@ export default defineComponent({
   },
 })
 </script>
+
+<style>
+.grid-cols-claims {
+    grid-template-columns: 20% 25% 30% 15% 10% !important;
+}
+</style>

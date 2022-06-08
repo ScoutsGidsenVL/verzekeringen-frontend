@@ -45,10 +45,10 @@ export default defineComponent({
       () => isChecked.value,
       () => {
         if (isChecked.value === 'yes') {
-          emit('checkChanged', "true")
+          emit('checkChanged', "True")
 
         } else if (isChecked.value === 'no') {
-          emit('checkChanged', "false")
+          emit('checkChanged', "False")
 
         } else {
           emit('checkChanged', null)
