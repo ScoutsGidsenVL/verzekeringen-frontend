@@ -25,23 +25,17 @@ pipeline {
         }
       }
       steps {
-        archiveArtifacts 'verzekeringen.zip'
-
-        script{
-          def artifactory = Artifactory.server 'artifactory'
-
-          def uploadSpec = '''{
+        rtUpload (
+          serverId: 'artifactory',
+          spec: '''{
             "files": [
               {
                 "pattern": "verzekeringen.zip",
                 "target": "verzekeringen-frontend/${BRANCH_NAME}/${BUILD_ID}/"
               }
-            ]
+           ]
           }'''
-
-          def buildInfo = artifactory.upload spec: uploadSpec
-          artifactory.publishBuildInfo buildInfo
-        }
+        )
       }
     }
 
