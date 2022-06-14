@@ -36,7 +36,7 @@ export const EquipmentSerializer = (input: any): any => {
     description: input.description ? input.description : undefined,
     total_value: input.totalValue ? input.totalValue : undefined,
     owner_member: input.ownerMember ? input.ownerMember.groupAdminId : null,
-    owner_non_member: input.ownerNonMember ? NonMemberSerializer(input.ownerNonMember).inuits_id : null,
+    owner_non_member: input.ownerNonMember ? NonMemberSerializer(input.ownerNonMember).inuits_id ? NonMemberSerializer(input.ownerNonMember).inuits_id : NonMemberSerializer(input.ownerNonMember).id : null,
     owner_group: input.group ? input.group : null,
   }
 
