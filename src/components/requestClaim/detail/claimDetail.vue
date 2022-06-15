@@ -138,13 +138,13 @@
 
         <div>
           <strong>Hield iemand van de leiding toezicht op het moment dat het ongeval plaatsvond?</strong>
-          <div v-if="claimState.isLeadershipChecked === 'True'">
+          <div v-if="claimState.isLeadershipChecked === 'yes'">
             Ja
             <p v-if="claimState.leadershipDescription">
               {{ claimState.leadershipDescription }}
             </p>
           </div>
-          <div v-if="claimState.isLeadershipChecked === 'False'">
+          <div v-if="claimState.isLeadershipChecked === 'no'">
             Neen
           </div>
           <div v-if="claimState.isLeadershipChecked === null">
@@ -160,10 +160,10 @@
       <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-1">
         <strong>Is het ongeval te wijten aan een fout van iemand anders?</strong>
 
-        <div v-if="claimState.isInvolvedPartyChecked === 'True'">
+        <div v-if="claimState.isInvolvedPartyChecked === 'yes'">
           Ja
         </div>
-        <div v-if="claimState.isInvolvedPartyChecked === 'False'">
+        <div v-if="claimState.isInvolvedPartyChecked === 'no'">
           Neen
         </div>
 
@@ -172,7 +172,7 @@
         </div>
 
         <div>
-          <div v-if="claimState.isInvolvedPartyChecked === 'True'">
+          <div v-if="claimState.isInvolvedPartyChecked === 'yes'">
             <p v-if="claimState.involvedPartyName">
               {{ claimState.involvedPartyName }}
             </p>
@@ -189,11 +189,11 @@
       <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-1">
         <strong>Werd er een vaststelling gedaan door een verbaliserende autoriteit (bv politie)?</strong>
         
-        <div v-if="claimState.isOfficialReportChecked === 'True'">
+        <div v-if="claimState.isOfficialReportChecked === 'yes'">
           Ja
         </div>
 
-        <div v-if="claimState.isOfficialReportChecked === 'False'">
+        <div v-if="claimState.isOfficialReportChecked === 'no'">
           Neen
         </div>
 
@@ -201,7 +201,7 @@
             Leeg
           </div>
 
-        <div v-if="claimState.isOfficialReportChecked === 'True'">
+        <div v-if="claimState.isOfficialReportChecked === 'yes'">
           <p v-if="claimState.officialReportDescription">
             {{ claimState.officialReportDescription }}
           </p>
@@ -215,11 +215,11 @@
 
       <div class="md:ml-20 xs:ml-5 sm:ml-5 mb-1">
         <strong>Was er een getuige?</strong>
-        <div v-if="claimState.isWitnessChecked === 'True'">
+        <div v-if="claimState.isWitnessChecked === 'yes'">
           Ja
         </div>
 
-        <div v-if="claimState.isWitnessChecked === 'False'">
+        <div v-if="claimState.isWitnessChecked === 'no'">
           Neen
         </div>
 
@@ -227,7 +227,7 @@
           Leeg
         </div>
 
-        <div v-if="claimState.isWitnessChecked === 'True'">
+        <div v-if="claimState.isWitnessChecked === 'yes'">
           <p v-if="claimState.witnessName">
             {{ claimState.witnessName }}
           </p>
