@@ -162,7 +162,7 @@ export default defineComponent({
           }).catch((err: Error) => {
             if (temporaryVehicleInsurance.value.vehicle && temporaryVehicleInsurance.value.vehicle.trailer) {
               if (temporaryVehicleInsurance.value.vehicle.trailer.value === '1') {
-                window.alert(` Pas het veld "aanhangwagen" aan via de knop Bewerken bij het voertuig.`)
+                window.alert(`Opgelet: Pas het veld "aanhangwagen" aan via de knop Bewerken bij het voertuig.`)
               }
             }
           })

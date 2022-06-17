@@ -177,10 +177,10 @@ export default defineComponent({
           }).catch((err: Error) => {
             if (travelAssistance.value.vehicle && travelAssistance.value.vehicle.trailer) {
               if (travelAssistance.value.vehicle.trailer.value === '2') {
-                window.alert(` Pas het veld "aanhangwagen" aan via de knop Bewerken bij het voertuig.`)
+                window.alert(`Opgelet: Pas het veld "aanhangwagen" aan via de knop Bewerken bij het voertuig.`)
               }
               if (travelAssistance.value.vehicle.trailer.value === '3') {
-                window.alert(` Pas het veld "aanhangwagen" aan via de knop Bewerken bij het voertuig.`)
+                window.alert(`Opgelet: Pas het veld "aanhangwagen" aan via de knop Bewerken bij het voertuig.`)
               }
             }
           })
