@@ -58,7 +58,7 @@
           </div>
 
           <div class="w-100 mt-4">
-            <custom-input :loading-submit="isSubmitting" :type="InputTypes.DATE" name="birthDate" label="Geboortedatum" />
+            <custom-input :loading-submit="isSubmitting" :type="InputTypes.DATE" name="birthDate" label="Geboortedatum" rules="required" />
           </div>
 
           <div class="w-100 mt-4">
