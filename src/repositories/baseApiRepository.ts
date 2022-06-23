@@ -56,11 +56,7 @@ export default abstract class BaseApiRepository {
         return result.data
       })
       .catch((error: any) => {
-        console.log('ERROR POST: ', error.response.data.__all__[0]);
-        if (error.response.data.__all__[0] === 'Birth date, phone number and email need to be either filled in or blank together') {
-          alert("Birth date, phone number and email need to be either filled in or blank together");
-        }
-        throw error
+        throw this.processError(error)
       })
   }
 
@@ -118,7 +114,14 @@ export default abstract class BaseApiRepository {
   }
 
   private processError(error: any): void {
-    console.log('processError: ', error)
+    console.log('processError: ', error.response)
+    if (error.response.status === 500) {
+      alert("Er is iets mis gelopen!");
+    }
+
+    if (error.response.data.__all__[0] === 'Birth date, phone number and email need to be either filled in or blank together') {
+      alert("Birth date, phone number and email need to be either filled in or blank together");
+    }
     return error
   }
 }
