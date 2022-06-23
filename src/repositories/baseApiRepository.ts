@@ -55,7 +55,11 @@ export default abstract class BaseApiRepository {
         // Only return the data of response
         return result.data
       })
-      .catch((error: Error) => {
+      .catch((error: any) => {
+        console.log('ERROR POST: ', error.response.data.__all__[0]);
+        if (error.response.data.__all__[0] === 'Birth date, phone number and email need to be either filled in or blank together') {
+          alert("Birth date, phone number and email need to be either filled in or blank together");
+        }
         throw error
       })
   }
@@ -114,6 +118,7 @@ export default abstract class BaseApiRepository {
   }
 
   private processError(error: any): void {
+    console.log('processError: ', error)
     return error
   }
 }
