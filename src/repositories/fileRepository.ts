@@ -12,22 +12,6 @@ export default class FileRepository extends BaseRepository {
   deserializer = null
   serializer = null
 
-  // UPLOAD FILE
-  public uploadFile(file: any, claimId: string): Promise<FileItem> {
-    const fd = new FormData()
-    fd.append('insurance_claim', claimId)
-    fd.append('file', file)
-
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data',
-      },
-    }
-    return this.post(this.endpoint, fd, config).then((response: FileItem) => {
-      return response
-    })
-  }
-
   public uploadParticipantsFile(file: any, inscuranceId: string, inscuranceType: string): Promise<FileItem> {
     const fd = new FormData()
     fd.append('file', file)
