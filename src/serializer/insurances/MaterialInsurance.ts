@@ -59,7 +59,8 @@ export const MaterialInsuranceSerializer = (input: MaterialInsurance): MaterialI
     postal_code: input.postCodeCity ? LocationSerializer(input.postCodeCity).postal_code : undefined,
     city: input.postCodeCity ? LocationSerializer(input.postCodeCity).city : undefined,
     equipment: input.equipment ? input.equipment.map((equipment: any) => EquipmentSerializerToPostInsurance(equipment)) : undefined,
-    vvksm_comment: input.vvksComment ? input.vvksComment : undefined
+    vvksm_comment: input.vvksComment ? input.vvksComment : undefined,
+    scouts_group: input.group ? GroupSerializer(input.group) : undefined, // DRAFT
   }
 
   return single

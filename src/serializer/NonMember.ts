@@ -1,4 +1,5 @@
 import { Location, LocationDeserializer, LocationSerializer } from '@/serializer/Location'
+import { GroupSerializer } from './Group'
 
 export interface NonMember {
   id?: string
@@ -53,6 +54,7 @@ export const NonMemberSerializer = (input: any): any => {
     group_group_admin_id: input.group ? input.group : null,
     group_admin_id: input.group ? input.group : null,
     inuits_id: input.inuitsId ? input.inuitsId : null,
+    scouts_group: input.group ? GroupSerializer(input.group) : undefined, // DRAFT
   }
 
   return single
