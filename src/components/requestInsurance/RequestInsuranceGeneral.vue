@@ -168,6 +168,7 @@
     <div class="flex gap-3 md:ml-20 xs:ml-5 sm:ml-5 mt-5 items-center">
       <custom-button text="Volgende" />
       <a v-if="!isEdit" class="link-inline cursor-pointer" @click="saveAsDraft()">Opslaan als concept</a>
+      <a v-if="isDraftEdit" class="link-inline cursor-pointer" @click="patchDraft()">Opslaan als concept</a>
       <loader :is-loading="isSavingDraft" />
     </div>
   </form>
@@ -233,6 +234,7 @@ export default defineComponent({
     const route = useRoute()
     const store = useStore()
     const isEdit = !!route.params.id
+    const isDraftEdit = ref<boolean>(route.path.includes('draft-bewerken'))
     const userData = ref<ResponsibleMember>(store.getters.user)
     let data: any = store.getters.getCurrentInsuranceState
     const maxCoverageOptions = ref<Array<Coverage>>()
@@ -295,6 +297,32 @@ export default defineComponent({
     }
 
     const isSavingDraft = ref<boolean>(false)
+
+    const patchDraft = () => {
+        const draftData = ref<BaseInsurance>({
+        startDate: values.startDate,
+        startTime: values.startTime ? values.startTime : undefined,
+        endDate: values.endDate,
+        endTime: values.endTime ? values.endTime : undefined,
+        group: values.group,
+        responsibleMember: values.responsibleMember ? values.responsibleMember : userData.value,
+        totalCost: '1.00',
+        insuranceOptions: values.insuranceOptions ? values.insuranceOptions : [],
+        maxCoverage: values.maxCoverage ? values.maxCoverage : undefined,
+      })
+
+      if (!isSavingDraft.value) {
+        isSavingDraft.value = true
+        //@ts-ignore
+        RepositoryFactory.get(InsuranceTypeRepos[insuranceTypeState.value])
+          //@ts-ignore
+          .patchDraft(draftData.value, insuranceTypeState.value, route.params.id)
+          .then(() => {
+            router.push('/home/verzekeringen')
+          })
+      }
+    }
+
     const saveAsDraft = () => {
       const draftData = ref<BaseInsurance>({
         startDate: values.startDate,
@@ -360,6 +388,8 @@ export default defineComponent({
       isEdit,
       values,
       data,
+      isDraftEdit,
+      patchDraft
     }
   },
 })

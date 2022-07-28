@@ -66,7 +66,8 @@ export const TemporaryVehicleSerializer = (input: TemporaryVehicleInsurance): Te
     owner: input.owner ? OwnerSerializer(input.owner) : undefined,
     max_coverage: input.maxCoverage ? CoverageSerializer(input.maxCoverage).value : undefined,
     insurance_options: input.insuranceOptions ? input.insuranceOptions.sort() : undefined,
-    vvksm_comment: input.vvksComment ? input.vvksComment : undefined
+    vvksm_comment: input.vvksComment ? input.vvksComment : undefined,
+    scouts_group: input.group ? GroupSerializer(input.group) : undefined, // DRAFT
   }
 
   return single
@@ -85,7 +86,7 @@ export const DraftTemporaryVehicleSerializer = (input: TemporaryVehicleInsurance
     owner: input.owner ? OwnerSerializer(input.owner) : undefined,
     max_coverage: input.maxCoverage ? input.maxCoverage : undefined,
     insurance_options: input.insuranceOptions ? input.insuranceOptions.sort() : undefined,
-    vvksm_comment: input.vvksComment ? input.vvksComment : undefined
+    vvksm_comment: input.vvksComment ? input.vvksComment : undefined,
   }
 
   return single
