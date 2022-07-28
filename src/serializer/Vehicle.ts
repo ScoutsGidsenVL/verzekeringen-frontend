@@ -18,7 +18,7 @@ const setObjectType = (type: string) => {
     return VehicleTypeDeserializer({
         "id": "PERSONENWAGEN",
         "value": "PERSONENWAGEN",
-        "label": "Personenwagen (maximum 5 inzittenden)"
+        "label": "Personenwagen (max. 4+1 inzittenden)"
     })
   }
 
@@ -26,7 +26,7 @@ const setObjectType = (type: string) => {
     return VehicleTypeDeserializer({
         "id": "MINIBUS",
         "value": "MINIBUS",
-        "label": "Minibus (maximum 8 inzittenden)"
+        "label": "Minibus (max. 8+1 inzittenden)"
     })
   }
 
@@ -34,7 +34,7 @@ const setObjectType = (type: string) => {
     return VehicleTypeDeserializer({
         "id": "VRACHTWAGEN",
         "value": "VRACHTWAGEN",
-        "label": "Vrachtwagen tot 3.5 ton (maximum 8 inzittenden)"
+        "label": "Lichte vrachtauto tot 3,5 ton (max. 8+1 inzittenden)"
     })
   }
 
