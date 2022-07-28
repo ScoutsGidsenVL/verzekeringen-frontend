@@ -146,7 +146,7 @@ export default defineComponent({
   setup(props, context) {
     const options = ref<option[]>([
       { text: 'Nieuw', value: 'Nieuw' },
-      { text: 'Uit eerdere aanvragen', value: 'Bestaand' },
+      // { text: 'Uit eerdere aanvragen', value: 'Bestaand' },
     ])
     const store = useStore()
     const user = ref<ResponsibleMember>(store.getters.user)
