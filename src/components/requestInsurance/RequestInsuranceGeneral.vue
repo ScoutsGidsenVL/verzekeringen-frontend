@@ -167,7 +167,7 @@
 
     <div class="flex gap-3 md:ml-20 xs:ml-5 sm:ml-5 mt-5 items-center">
       <custom-button text="Volgende" />
-      <a v-if="!isEdit" class="link-inline cursor-pointer" @click="saveAsDraft()">Opslaan</a>
+      <a v-if="!isEdit" class="link-inline cursor-pointer" @click="saveAsDraft()">Opslaan als concept</a>
       <loader :is-loading="isSavingDraft" />
     </div>
   </form>

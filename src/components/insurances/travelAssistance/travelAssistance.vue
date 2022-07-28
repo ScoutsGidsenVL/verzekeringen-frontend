@@ -49,7 +49,7 @@
         <back-button stateName="setHolderState" :backToState="HolderStates.GENERAL" />
 
         <custom-button text="Volgende" />
-        <a v-if="!isEdit" class="link-inline cursor-pointer" @click="saveAsDraft()">Opslaan</a>
+        <a v-if="!isEdit" class="link-inline cursor-pointer" @click="saveAsDraft()">Opslaan als concept</a>
         <loader :is-loading="isSavingDraft" />
       </div>
     </div>

@@ -29,7 +29,7 @@
           label="Administratieve commentaar"
           name="note"
         />
-        <custom-button text="Opslaan" />
+        <custom-button text="Opslaan als concept" />
       </div>
     </div>
 
