@@ -31,6 +31,7 @@
         <back-button stateName="setHolderState" :backToState="HolderStates.GENERAL" />
         <custom-button text="Volgende" />
         <a v-if="!isEdit" class="link-inline cursor-pointer" @click="saveAsDraft()">Opslaan als concept</a>
+        <a v-if="isDraftEdit" class="link-inline cursor-pointer" @click="patchDraft()">Opslaan als concept</a>
         <loader :is-loading="isSavingDraft" />
       </div>
     </div>
@@ -81,6 +82,7 @@ export default defineComponent({
     const store = useStore()
     const data: TemporaryVehicleInsurance = store.getters.getCurrentInsuranceState
     const isEdit = !!route.params.id
+    const isDraftEdit = ref<boolean>(route.path.includes('draft-bewerken'))
 
     const checkIfOwnerIsDriver = (owner: Owner, drivers: Driver[]) => {
       let status = IS_NO_DRIVER
@@ -172,6 +174,42 @@ export default defineComponent({
       return store.state.insurance.insuranceTypeState
     })
     const isSavingDraft = ref<boolean>(false)
+
+    const patchDraft = () => {
+      const draftData = ref<TemporaryVehicleInsurance>({
+        ...generalInsuranceState.value,
+        ...{
+          vehicle: values.vehicle ? values.vehicle : undefined,
+          drivers: values.selectDriverField && values.selectDriverField.drivers ? values.selectDriverField.drivers : [],
+          selectDriverField: values.selectDriverField,
+          owner:
+            values.selectDriverField && values.selectDriverField.isDriverOwner === IS_NO_DRIVER
+              ? values.input
+              : values.selectDriverField &&
+                values.selectDriverField.drivers.find((driver: Driver) => {
+                  // Nescescarry for a put request
+                  if (driver.firstName && driver.lastName) {
+                    if (values.selectDriverField && driver.firstName + driver.lastName + driver.birthDate === values.selectDriverField.isDriverOwner) {
+                      return driver
+                    }
+                  }
+                }),
+          comment: values.comment ? values.comment : '',
+        },
+      })
+
+      if (!isSavingDraft.value) {
+        isSavingDraft.value = true
+        //@ts-ignore
+        RepositoryFactory.get(InsuranceTypeRepos[insuranceTypeState.value])
+          //@ts-ignore
+          .patchDraft(draftData.value, insuranceTypeState.value,route.params.id)
+          .then(() => {
+            router.push('/home/verzekeringen')
+          })
+      }
+    }
+
     const saveAsDraft = () => {
       const draftData = ref<TemporaryVehicleInsurance>({
         ...generalInsuranceState.value,
@@ -217,6 +255,8 @@ export default defineComponent({
       onSubmit,
       values,
       isEdit,
+      isDraftEdit,
+      patchDraft
     }
   },
 })

@@ -57,6 +57,7 @@
       <back-button stateName="setHolderState" :backToState="HolderStates.GENERAL" />
       <custom-button text="Volgende" />
       <a v-if="!isEdit" class="link-inline cursor-pointer" @click="saveAsDraft()">Opslaan als concept</a>
+      <a v-if="isDraftEdit" class="link-inline cursor-pointer" @click="patchDraft()">Opslaan als concept</a>
       <loader :is-loading="isSavingDraft" />
     </div>
   </form>
@@ -114,6 +115,7 @@ export default defineComponent({
       },
     })
     const isEdit = !!route.params.id
+    const isDraftEdit = ref<boolean>(route.path.includes('draft-bewerken'))
 
     const generalInsuranceState = computed(() => {
       return store.state.insurance.generalInsuranceState
@@ -170,6 +172,32 @@ export default defineComponent({
     })
 
     const isSavingDraft = ref<boolean>(false)
+
+    const patchDraft = () => {
+      const draftData = ref<MaterialInsurance>({
+        ...generalInsuranceState.value,
+        ...{
+          nature: values.nature,
+          postCodeCity: values.postCodeCity ? values.postCodeCity : undefined,
+          country: values.country ? values.country : undefined,
+          comment: values.comment ? values.comment : '',
+          equipment: values.equipment ? values.equipment : undefined,
+        },
+      })
+
+      if (!isSavingDraft.value) {
+        isSavingDraft.value = true
+        //@ts-ignore
+        RepositoryFactory.get(InsuranceTypeRepos[insuranceTypeState.value])
+          //@ts-ignore
+          .patchDraft(draftData.value, insuranceTypeState.value, route.params.id)
+          .then(() => {
+            router.push('/home/verzekeringen')
+          })
+      }
+    }
+
+    
     const saveAsDraft = () => {
       const draftData = ref<MaterialInsurance>({
         ...generalInsuranceState.value,
@@ -213,6 +241,8 @@ export default defineComponent({
       values,
       isEdit,
       data,
+      patchDraft,
+      isDraftEdit
     }
   },
 })

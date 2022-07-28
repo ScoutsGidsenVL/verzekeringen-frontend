@@ -60,6 +60,7 @@
       <back-button stateName="setHolderState" :backToState="HolderStates.GENERAL" />
       <custom-button text="Volgende" />
       <a v-if="!isEdit" class="link-inline cursor-pointer" @click="saveAsDraft()">Opslaan als concept</a>
+      <a v-if="isDraftEdit" class="link-inline cursor-pointer" @click="patchDraft()">Opslaan als concept</a>
       <loader :is-loading="isSavingDraft" />
     </div>
   </form>
@@ -105,6 +106,7 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const isEdit = !!route.params.id
+    const isDraftEdit = ref<boolean>(route.path.includes('draft-bewerken'))
     const store = useStore()
     const initialCountry = ref<Country>(CountryDeserializer({ id: '3232', name: 'België' }))
     const data: NonMemberInsurance = store.getters.getCurrentInsuranceState
@@ -188,6 +190,31 @@ export default defineComponent({
     })
 
     const isSavingDraft = ref<boolean>(false)
+    
+    const patchDraft = () => {
+      const draftData = ref<NonMemberInsurance>({
+        ...generalInsuranceState.value,
+        ...{
+          nature: values.nature,
+          postCodeCity: values.postCodeCity ? values.postCodeCity : undefined,
+          country: values.country ? values.country : undefined,
+          nonMembers: values.nonMembers ? values.nonMembers : [],
+          comment: values.comment ? values.comment : '',
+        },
+      })
+
+      if (!isSavingDraft.value) {
+        isSavingDraft.value = true
+        //@ts-ignore
+        RepositoryFactory.get(InsuranceTypeRepos[insuranceTypeState.value])
+          //@ts-ignore
+          .patchDraft(draftData.value, insuranceTypeState.value,route.params.id)
+          .then(() => {
+            router.push('/home/verzekeringen')
+          })
+      }
+    }
+
     const saveAsDraft = () => {
       const draftData = ref<NonMemberInsurance>({
         ...generalInsuranceState.value,
@@ -229,6 +256,8 @@ export default defineComponent({
       values,
       isEdit,
       data,
+      patchDraft,
+      isDraftEdit
     }
   },
 })

@@ -87,6 +87,14 @@ export abstract class BaseRepository extends BaseApiRepository {
     })
   }
 
+  patchDraft(data: any, type: InsuranceTypes, id: string) {
+    const draft: draft = { insurance_type: InsuranceTypeId[type], data: this.serializer(data) }
+
+    return this.put(`/insurance_drafts/${id}/`, draft).then((response: any) => {
+      return this.deserializer(response)
+    })
+  }
+
   getDraftById(id: string): Promise<any> {
     return this.get('/insurance_drafts/' + id, {}).then((response: any) => {
       const userData = ref<ResponsibleMember>(store.getters.user)

@@ -53,7 +53,8 @@ export const TravelAssistanceInsuranceSerializer = (input: TravelAssistanceInsur
     vehicle: input.vehicle && input.vehicle.licensePlate ? VehicleSerializer(input.vehicle) : undefined,
     participants: input.participants ? input.participants.map((member: any) => MemberSerializer(member)) : undefined,
     total_cost: input.totalCost ? input.totalCost : undefined,
-    vvksm_comment: input.vvksComment ? input.vvksComment : undefined
+    vvksm_comment: input.vvksComment ? input.vvksComment : undefined,
+    scouts_group: input.group ? GroupSerializer(input.group) : undefined, // DRAFT
   }
 
   return single
