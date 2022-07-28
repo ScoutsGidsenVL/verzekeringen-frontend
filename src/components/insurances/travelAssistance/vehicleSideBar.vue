@@ -15,12 +15,7 @@
             <custom-input :maxlength="10" :type="InputTypes.TEXT" rules="required" name="licensePlate" label="Nummerplaat" />
           </div>
           <div class="w-100 mt-4">
-            <custom-input :type="InputTypes.TEXT" rules="required" name="constructionYear" maxlength="4" label="Bouwjaar">
-              <div class="pb-3">
-                Bouwjaar ouder 10 jaar geleden? Het heeft weinig zin om een oud voertuig te verzekeren. Bij een schade zal de verzekeringsmaatschappij nooit een bedrag uitkeren dat hoger is dan de
-                waarde. (Meestal erg laag voor een oude auto.)
-              </div>
-            </custom-input>
+            <custom-input :type="InputTypes.TEXT" rules="required" name="constructionYear" maxlength="4" label="Bouwjaar" />
           </div>
 
           <div class="w-100 mt-4">
