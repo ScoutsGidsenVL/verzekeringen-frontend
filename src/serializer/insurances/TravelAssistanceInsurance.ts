@@ -22,6 +22,11 @@ export interface TravelAssistanceInsurance {
 }
 
 export const TravelAssistanceInsuranceDeserializer = (input: any): TravelAssistanceInsurance => {
+
+  if (typeof input.country === 'object' && input.country !== null) {
+    input.country = input.country.id
+  }
+
   const single: TravelAssistanceInsurance = {
     id: input.id ? input.id : undefined,
     startDate: input.start_date ? moment(input.start_date).format('YYYY-MM-DD') : undefined,
