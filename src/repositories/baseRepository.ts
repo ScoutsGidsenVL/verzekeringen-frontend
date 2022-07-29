@@ -90,7 +90,7 @@ export abstract class BaseRepository extends BaseApiRepository {
   patchDraft(data: any, type: InsuranceTypes, id: string) {
     const draft: draft = { insurance_type: InsuranceTypeId[type], data: this.serializer(data) }
 
-    return this.put(`/insurance_drafts/${id}/`, draft).then((response: any) => {
+    return this.patch(`/insurance_drafts/${id}/`, draft).then((response: any) => {
       return this.deserializer(response)
     })
   }

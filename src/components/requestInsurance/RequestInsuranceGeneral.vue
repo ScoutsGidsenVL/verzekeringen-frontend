@@ -238,6 +238,7 @@ export default defineComponent({
     const userData = ref<ResponsibleMember>(store.getters.user)
     let data: any = store.getters.getCurrentInsuranceState
     const maxCoverageOptions = ref<Array<Coverage>>()
+    console.log('INITIAL DRAFT DATA: ', data)
     const { handleSubmit, values, validate, isSubmitting } = useForm<BaseInsurance>({
       initialValues: {
         startDate: data.startDate ? data.startDate : '',
@@ -316,7 +317,7 @@ export default defineComponent({
         //@ts-ignore
         RepositoryFactory.get(InsuranceTypeRepos[insuranceTypeState.value])
           //@ts-ignore
-          .patchDraft(draftData.value, insuranceTypeState.value, route.params.id)
+          .patchDraft({...draftData.value, ...data}, insuranceTypeState.value, route.params.id)
           .then(() => {
             router.push('/home/verzekeringen')
           })
