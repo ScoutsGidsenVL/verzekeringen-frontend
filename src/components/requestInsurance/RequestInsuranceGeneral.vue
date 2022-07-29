@@ -316,8 +316,9 @@ export default defineComponent({
         isSavingDraft.value = true
         //@ts-ignore
         RepositoryFactory.get(InsuranceTypeRepos[insuranceTypeState.value])
+
           //@ts-ignore
-          .patchDraft({...draftData.value, ...data}, insuranceTypeState.value, route.params.id)
+          .patchDraft({...data, ...draftData.value}, insuranceTypeState.value, route.params.id)
           .then(() => {
             router.push('/home/verzekeringen')
           })
