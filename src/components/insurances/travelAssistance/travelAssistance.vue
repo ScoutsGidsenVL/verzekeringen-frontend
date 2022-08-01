@@ -125,8 +125,7 @@ export default defineComponent({
         if (isEdit) {
           var countryById
           allCountries.value.forEach((country:any) => {
-            // console.log(country.id, values.country)
-            if (country.id.toString() === values.country) {
+            if (country.name.toString() === values.country || country.id.toString() === values.country) {
               countryById = country
             }
           })
