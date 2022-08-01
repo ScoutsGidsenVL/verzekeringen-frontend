@@ -298,7 +298,7 @@ export default defineComponent({
       let text = 'Maximum te verzekeren bedrag per tent 2500 EUR. Vrijstelling 250 EUR'
 
       if (values.ownerMember) {
-        text = 'Maximum te verzekeren bedrag per persoon 2000 EUR'
+        text = 'Is automatisch verzekerd via de tentenpolis tot 3500 EUR. Vrijstelling 350 EUR'
       }
 
       if (values.ownerNonMember) {
