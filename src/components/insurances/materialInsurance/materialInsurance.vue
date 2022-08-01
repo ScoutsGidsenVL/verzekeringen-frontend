@@ -131,7 +131,7 @@ export default defineComponent({
         if (isEdit) {
           var countryById
           allCountries.value.forEach((country:any) => {
-            if (country.id.toString() === values.country) {
+            if (country.id.toString() === values.country || country.name.toString() === values.country) {
               countryById = country
             }
           })

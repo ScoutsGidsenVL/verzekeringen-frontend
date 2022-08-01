@@ -3,7 +3,7 @@
     <custom-headline-2 text="Activiteit" />
     <div v-if="values" class="md:ml-20 xs:ml-5 sm:ml-5">
       <custom-input :type="InputTypes.TEXT_AREA" rules="required" name="nature" label="Aard van de activiteit" />
-      <div v-if="typeof values.country === 'object'" class="md:w-96 xs:w-72">
+      <div v-if="typeof values.country === 'object' || !values.country" class="md:w-96 xs:w-72">
         <multi-select
           id="country"
           rules="required"
@@ -148,7 +148,7 @@ export default defineComponent({
         if (isEdit) {
           var countryById
           allCountries.value.forEach((country:any) => {
-            if (country.id.toString() === values.country) {
+            if (country.id.toString() === values.country || country.name.toString() === values.country) {
               countryById = country
             }
           })
