@@ -7,7 +7,7 @@
       </label>
     </strong>
     <div v-if="extraInfo" style="font-size: 13px">
-      <label>{{ extraInfo }}</label>
+      <label  v-html= "extraInfo"></label>
     </div>
     <div>
       <slot />

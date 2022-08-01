@@ -298,7 +298,7 @@ export default defineComponent({
       let text = 'Maximum te verzekeren bedrag per tent 2500 EUR. Vrijstelling 250 EUR'
 
       if (values.ownerMember) {
-        text = 'Is automatisch verzekerd via de tentenpolis tot 3500 EUR. Vrijstelling 350 EUR'
+        text = 'Is automatisch verzekerd via de <a target="_blank" href="https://www.scoutsengidsenvlaanderen.be/sites/default/files/files/POLIS%2045.460.065%20-%20speciale%20voorwaarden-BIJLAGE%2000%20-%2014.06.2022.pdf">tentenpolis</a> tot 3500 EUR. Vrijstelling 350 EUR'
       }
 
       if (values.ownerNonMember) {
