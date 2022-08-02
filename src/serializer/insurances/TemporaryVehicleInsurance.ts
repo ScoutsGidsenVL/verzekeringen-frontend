@@ -62,7 +62,7 @@ export const TemporaryVehicleSerializer = (input: TemporaryVehicleInsurance): Te
     group_group_admin_id: input.group ? GroupSerializer(input.group).id : undefined,
     group_admin_id: input.group ? GroupSerializer(input.group).id : undefined,
     vehicle: input.vehicle && input.vehicle.licensePlate ? VehicleSerializer(input.vehicle) : undefined,
-    drivers: input.drivers ? input.drivers.map((member: any) => MemberSerializer(member)) : undefined,
+    drivers: input.drivers ? input.drivers.map((driver: any) => OwnerSerializer(driver)) : undefined,
     owner: input.owner ? OwnerSerializer(input.owner) : undefined,
     max_coverage: input.maxCoverage ? CoverageSerializer(input.maxCoverage).value : undefined,
     insurance_options: input.insuranceOptions ? input.insuranceOptions.sort() : undefined,
