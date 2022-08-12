@@ -294,22 +294,34 @@ export default defineComponent({
       loading.value = false
     }
 
+    const specialText = 'Gehuurde of geleende tenten: maximum te verzekeren bedrag per tent 2500 EUR. Vrijstelling 250 EUR. <br> Eigen tenten of van een andere scoutsgroep: is automatisch verzekerd via de <a target="_blank" href="https://www.scoutsengidsenvlaanderen.be/sites/default/files/files/POLIS%2045.460.065%20-%20speciale%20voorwaarden-BIJLAGE%2000%20-%2014.06.2022.pdf">tentenpolis</a> tot 3500 EUR. Vrijstelling 350 EUR'
+
     const setTotalValueInfo = () => {
+
       let text = 'Maximum te verzekeren bedrag per tent 2500 EUR. Vrijstelling 250 EUR'
 
-      if (values.ownerMember) {
-        text = 'Is automatisch verzekerd via de <a target="_blank" href="https://www.scoutsengidsenvlaanderen.be/sites/default/files/files/POLIS%2045.460.065%20-%20speciale%20voorwaarden-BIJLAGE%2000%20-%2014.06.2022.pdf">tentenpolis</a> tot 3500 EUR. Vrijstelling 350 EUR'
+      if (values.ownerNonMember) {
+        text = specialText
       }
 
-      if (values.ownerNonMember) {
-        text = 'Maximum te verzekeren bedrag per tent 2500 EUR. Vrijstelling 250 EUR'
+      if (isGroupEquipement) {
+        text = specialText
       }
 
       if (isBicycle.value) {
         text = 'Maximum te verzekeren bedrag per fiets 500 EUR'
       }
 
+      if (!isBicycle.value) {
+        text = specialText
+      }
+
+      if (values.ownerMember) {
+        text = 'Maximum te verzekeren bedrag per persoon 2000 EUR'
+      }
+
       return text
+      // text = 'Is automatisch verzekerd via de <a target="_blank" href="https://www.scoutsengidsenvlaanderen.be/sites/default/files/files/POLIS%2045.460.065%20-%20speciale%20voorwaarden-BIJLAGE%2000%20-%2014.06.2022.pdf">tentenpolis</a> tot 3500 EUR. Vrijstelling 350 EUR'
     }
 
     const openMemberSideBar = () => {
