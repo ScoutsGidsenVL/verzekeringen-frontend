@@ -308,10 +308,6 @@ export default defineComponent({
         text = specialText
       }
 
-      if (isBicycle.value) {
-        text = 'Maximum te verzekeren bedrag per fiets 500 EUR'
-      }
-
       if (!isBicycle.value) {
         text = specialText
       }
@@ -320,8 +316,11 @@ export default defineComponent({
         text = 'Maximum te verzekeren bedrag per persoon 2000 EUR'
       }
 
+      if (isBicycle.value) {
+        text = 'Maximum te verzekeren bedrag per fiets 500 EUR'
+      }
+
       return text
-      // text = 'Is automatisch verzekerd via de <a target="_blank" href="https://www.scoutsengidsenvlaanderen.be/sites/default/files/files/POLIS%2045.460.065%20-%20speciale%20voorwaarden-BIJLAGE%2000%20-%2014.06.2022.pdf">tentenpolis</a> tot 3500 EUR. Vrijstelling 350 EUR'
     }
 
     const openMemberSideBar = () => {
