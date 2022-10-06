@@ -74,7 +74,7 @@ export default defineComponent({
       required: false
     }
   },
-  setup(props) {
+  setup(props, { emit}) {
 
     const { value: selectedFile } = useField<any>('file', 'fileSize', {})
 
@@ -116,10 +116,12 @@ export default defineComponent({
         RepositoryFactory.get(FileRepository)
         .deleteParticipantsFile(props.file.id, props.inscuranceType)
       }
+      emit('removeUploadedFile')
     }
 
     const selectFile = (data: any) => {
       selectedFile.value = data.target.files[0]
+      emit('removeUploadedFile')
     }
 
     return {
