@@ -51,6 +51,7 @@ export default defineComponent({
 
     const removeUploadedFile = () => {
       det.value.participant_list_file = undefined;
+      displayMessage.value = false;
     }
     
     const onSubmit = async (details: any) => {
