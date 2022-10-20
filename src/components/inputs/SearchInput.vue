@@ -23,9 +23,11 @@
 </template>
 
 <script lang="ts">
+import { InsuranceTypes, InsuranceTypeId } from '@/enums/insuranceTypes'
 import { BaseRepository } from '@/repositories/baseRepository'
 import RepositoryFactory from '@/repositories/repositoryFactory'
-import { defineComponent, PropType, ref, watch } from 'vue'
+import { defineComponent, PropType, ref, watch, computed } from 'vue'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'SearchInput',
@@ -58,14 +60,18 @@ export default defineComponent({
     let debounce: any
     const query = ref<string>('')
     const options = ref<any>([])
-
+    const store = useStore()
+    const insuranceTypeState = computed((): InsuranceTypes => {
+      return store.state.insurance.insuranceTypeState
+    })
     const search = () => {
       context.emit('update:loading', true)
       clearTimeout(debounce)
       debounce = setTimeout(() => {
         if (query.value) {
+          const type = InsuranceTypeId[insuranceTypeState.value];
           RepositoryFactory.get(props.repository)
-            .search(query.value, props.group, props.start, props.end)
+            .search(query.value + `&type=${type}`, props.group ,props.start, props.end,)
             .then((results: any) => {
               options.value = results
               context.emit('fetchedOptions', options.value)
