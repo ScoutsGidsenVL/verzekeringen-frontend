@@ -80,6 +80,8 @@
         <div>
           <search-input
           v-if="generalInsuranceState.group"
+          :start="generalInsuranceState.startDate"
+          :end="generalInsuranceState.endDate"
           :group="generalInsuranceState.group.id"
           v-model:loading="loading"
           name="nonMember" 

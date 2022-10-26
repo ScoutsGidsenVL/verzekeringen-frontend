@@ -8,8 +8,8 @@ export class NonMemberRepository extends BaseRepository {
   deserializer = NonMemberDeserializer
   serializer = NonMemberSerializer
 
-  search(query: string, group_admin_id: string): Promise<any> {
-    return this.get(this.endpoint + '?term=' + query + '&group=' + group_admin_id, {}).then((response: ArrayResult) => {
+  search(query: string, group_admin_id: string, start?: string, end?: string): Promise<any> {
+    return this.get(this.endpoint + '?term=' + query + '&group=' + group_admin_id + (start ? '&start=' + start : '') + (end ? '&end=' + end : ''), {}).then((response: ArrayResult) => {
       const array: any[] = []
       response.results.forEach((result: NonMember) => {
         result = NonMemberDeserializer(result)
