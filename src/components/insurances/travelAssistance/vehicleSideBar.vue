@@ -74,7 +74,7 @@
 
       <form :class="{ 'd-flex': sideBarState.state === 'list', 'd-none': sideBarState.state === 'new' || sideBarState.state === 'edit' }" class="flex-col h-full px-4 pt-3" @submit.prevent="onSubmit">
         <div>
-          <search-input v-model:loading="loading" name="search" placeholder="Zoek op merk" :repository="VehicleRepository" @fetchedOptions="fetchedOptions($event)" />
+          <search-input v-model:loading="loading" name="search" placeholder="Zoek op merk" :repository="VehicleRepository" @fetchedOptions="fetchedOptions($event)"    :group="generalInsuranceState.group.id"/>
         </div>
 
         <div class="h-full overflow-y-scroll mt-4 pb-44">

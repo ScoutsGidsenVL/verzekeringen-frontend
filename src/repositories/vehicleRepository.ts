@@ -8,8 +8,8 @@ export class VehicleRepository extends BaseRepository {
   deserializer = VehicleDeserializer
   serializer = VehicleSerializer
 
-  search(query: string): Promise<any> {
-    return this.get(this.endpoint + '?term=' + query, {}).then((response: ArrayResult) => {
+  search(query: string, group_admin_id: string ): Promise<any> {
+    return this.get(this.endpoint + '?term=' + query + '&group=' + group_admin_id, {}).then((response: ArrayResult) => {
       const array: any[] = []
       response.results.forEach((result: Vehicle) => {
         result = VehicleDeserializer(result)
