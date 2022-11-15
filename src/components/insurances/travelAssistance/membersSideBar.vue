@@ -45,17 +45,14 @@
 <script lang="ts">
 import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRepository'
 import MemberItem from '@/components/insurances/travelAssistance/memberItem.vue'
-import { MemberRepository } from '@/repositories/memberRepository'
 import { PersonRepository } from '@/repositories/personRepository'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
-import RepositoryFactory from '@/repositories/repositoryFactory'
 import SearchInput from '@/components/inputs/SearchInput.vue'
 import CustomButton from '@/components/CustomButton.vue'
 import { defineComponent, ref, watch } from 'vue'
 import { InputTypes } from '@/enums/inputTypes'
 import { Member } from '@/serializer/Member'
 import { useStore } from 'vuex'
-import { NonMemberRepository } from '@/repositories/nonMemberRepository'
 import { BaseSideBar } from 'vue-3-component-library'
 
 export default defineComponent({
@@ -114,28 +111,6 @@ export default defineComponent({
     const fetchedOptions = (options: any) => {
       selectedMembers.value = []
       options.forEach((member: Member) => {
-        // if (member.groupAdminId) {
-        //   if (member.isMember) {
-        //     RepositoryFactory.get(MemberRepository)
-        //       .getById(member.groupAdminId)
-        //       .then((result: Member) => {
-        //         result.birthDate = member.birthDate
-        //         result.gender = member.gender
-        //         result.isMember = true
-        //         selectedMembers.value.push(result)
-        //       })
-        //   }
-        // }
-        // if (member.id && !member.isMember) {
-        //   RepositoryFactory.get(NonMemberRepository)
-        //     .getById(member.id)
-        //     .then((result: Member) => {
-        //       result.birthDate = member.birthDate
-        //       result.isMember = false
-        //       result.gender = member.gender
-        //       selectedMembers.value.push(result)
-        //     })
-        // }
         selectedMembers.value.push(member)
       })
       loading.value = false
@@ -157,7 +132,6 @@ export default defineComponent({
 
     return {
       BelgianCitySearchRepository,
-      MemberRepository,
       PersonRepository,
       selectedMembers,
       fetchedOptions,

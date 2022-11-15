@@ -3,12 +3,14 @@
     <div class="d-flex flex-col h-full px-4 pt-4">
       <div>
         <search-input
+          :start="start"
+          :end="end"
           v-if="generalInsuranceState.group"
           :group="generalInsuranceState.group.id"
           v-model:loading="loading"
           name="member"
           placeholder="Zoek op naam"
-          :repository="MemberRepository"
+          :repository="PersonRepository"
           @fetchedOptions="fetchedOptions($event)"
         />
       </div>
@@ -44,7 +46,6 @@
 <script lang="ts">
 import { BelgianCitySearchRepository } from '@/repositories/belgianCitySearchRepository'
 import MemberItem from '@/components/insurances/travelAssistance/memberItem.vue'
-import { MemberRepository } from '@/repositories/memberRepository'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import SearchInput from '@/components/inputs/SearchInput.vue'
@@ -53,8 +54,9 @@ import { defineComponent, ref, watch, computed } from 'vue'
 import { InputTypes } from '@/enums/inputTypes'
 import { Member } from '@/serializer/Member'
 import { useStore } from 'vuex'
-import { NonMemberRepository } from '@/repositories/nonMemberRepository'
 import { BaseSideBar } from 'vue-3-component-library'
+import { PersonRepository } from '@/repositories/personRepository'
+import { MemberRepository } from '@/repositories/memberRepository'
 
 export default defineComponent({
   name: 'MembersOnlySideBar',
@@ -89,6 +91,8 @@ export default defineComponent({
       required: false,
       default: true,
     },
+    start: String,
+    end: String,
   },
   setup(props, context) {
     const store = useStore()
@@ -113,7 +117,7 @@ export default defineComponent({
     const fetchedOptions = (options: any) => {
       selectedMembers.value = []
       options.forEach((member: Member) => {
-        if (member.groupAdminId) {
+        if (member.groupAdminId && !member.id) {
           RepositoryFactory.get(MemberRepository)
             .getById(member.groupAdminId)
             .then((result: Member) => {
@@ -122,6 +126,8 @@ export default defineComponent({
               result.isMember = true
               selectedMembers.value.push(result)
             })
+        } else {
+          selectedMembers.value.push(member)
         }
       })
       loading.value = false
@@ -143,7 +149,7 @@ export default defineComponent({
 
     return {
       BelgianCitySearchRepository,
-      MemberRepository,
+      PersonRepository,
       selectedMembers,
       fetchedOptions,
       InputTypes,
