@@ -24,7 +24,7 @@
         :min="min"
         :max="max"
         :type="type"
-        step="1"
+        :step="step"
         :maxlength="maxlength"
         :name="name"
         :class="{ 'opacity-0': loadingSubmit || isSubmitting }"
