@@ -57,7 +57,7 @@
           </div>
 
           <div class="w-100 mt-4">
-            <custom-input :extra-info="setTotalValueInfo()" :type="InputTypes.TEXT" rules="required" name="totalValue" label="Nieuwwaarde" />
+            <custom-input :extra-info="setTotalValueInfo()" :type="InputTypes.NUMBER" :min="0" :step="0.01" rules="required" name="totalValue" label="Nieuwwaarde" />
           </div>
 
           <div class="w-100 mt-3">
