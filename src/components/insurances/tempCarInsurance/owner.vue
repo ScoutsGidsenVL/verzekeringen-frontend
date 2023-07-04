@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p  class="mb-0" v-if="owner.companyName"><strong>Firma naam: </strong>{{owner.companyName}}</p>
+    <p  class="mb-0" v-if="owner.companyName"><strong>Firmanaam:</strong> {{owner.companyName}}</p>
     <p v-if="owner.firstName">{{ owner.firstName + ' ' + owner.lastName }}</p>
     <div>
       <p>{{ owner.street + ' ' + owner.number + (owner.letterBox ? ' Bus ' + owner.letterBox : '') + ', ' + owner.postCodeCity.postalCode + ' ' + owner.postCodeCity.city }}</p>
