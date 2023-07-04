@@ -14,7 +14,7 @@
     </div>
     <div v-show="selectDriverField.isDriverOwner === IS_NO_DRIVER" class="md:ml-5">
       <div v-if="!input.firstName && !input.lastName" class="xs:w-72 md:w-96 mt-3">
-        <custom-input :type="InputTypes.TEXT" name="input.companyName" label="Firma naam" :rules="'customRequired'" />
+        <custom-input :type="InputTypes.TEXT" name="input.companyName" label="Firmanaam" :rules="'customRequired'" :maxlength="25" />
       </div>
 
       <div v-if="!input.companyName">
