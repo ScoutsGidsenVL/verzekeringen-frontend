@@ -10,6 +10,9 @@
         <a v-if="drafts.next" class="link-inline cursor-pointer" @click="getNextDrafts(drafts.next)">Volgende pagina</a>
       </div>
     </div>
+    <custom-button v-if="!drafts" @click="getDrafts()" text="Onvoltooide verzekeringen" />
+    <br v-if="!drafts">
+    <br v-if="!drafts">
 
     <div v-if="data">
       <custom-list :items="data.results" title="Recent aangevraagd">
@@ -32,6 +35,7 @@
         <a v-if="data.next" class="link-inline cursor-pointer" @click="getNextInsurances(data.next)">Volgende pagina</a>
       </div>
     </div>
+    <custom-button v-if="!data" @click="getInsurances()" text="Recent aangevraagde verzekeringen" />
   </div>
  </div>
 </template>
@@ -40,6 +44,7 @@
 import { InsuranceRepository } from '@/repositories/insurances/insuranceRepository'
 import { DraftRepository } from '@/repositories/insurances/draftRepository'
 import CallToAction from '../components/customHeadlines/CallToAction.vue'
+import CustomButton from '../components/CustomButton.vue'
 import { ResponsibleMember } from '@/serializer/ResponsibleMember'
 import RepositoryFactory from '@/repositories/repositoryFactory'
 import customList from '../components/semantic/CustomList.vue'
@@ -53,6 +58,7 @@ export default defineComponent({
   name: 'InsurancesHome',
   components: {
     'call-to-action': CallToAction,
+    'custom-button': CustomButton,
     'multi-select': MultiSelect,
     'custom-list': customList,
   },
@@ -60,10 +66,16 @@ export default defineComponent({
     const store = useStore()
     store.dispatch('resetStates')
     const data = ref<ArrayResult>()
+    const dataDisabled = ref(false);
     const drafts = ref<ArrayResult>()
+    const draftsDisabled = ref(false);
     const userData = ref<ResponsibleMember>(store.getters.user)
 
     const getInsurances = () => {
+      if (dataDisabled.value) {
+        return;
+      }
+      dataDisabled.value = true;
       RepositoryFactory.get(InsuranceRepository)
         .getArray('/insurances/?page=1&page_size=10')
         .then((res: ArrayResult) => {
@@ -88,6 +100,10 @@ export default defineComponent({
     }
 
     const getDrafts = () => {
+      if (draftsDisabled.value) {
+        return;
+      }
+      draftsDisabled.value = true;
       RepositoryFactory.get(DraftRepository)
         .getArray('/insurance_drafts/?page=1&page_size=10')
         .then((res: ArrayResult) => {
@@ -123,13 +139,12 @@ export default defineComponent({
         })
     }
 
-    getInsurances()
-    getDrafts()
-
     return {
       addSelectionInsurances,
+      getInsurances,
       getPreviousInsurances,
       getNextInsurances,
+      getDrafts,
       getPreviousDrafts,
       getNextDrafts,
       removeDraft,
