@@ -22,6 +22,7 @@ pipeline {
         anyOf {
           branch "production"
           branch "staging"
+          branch "dev"
         }
       }
       steps {
