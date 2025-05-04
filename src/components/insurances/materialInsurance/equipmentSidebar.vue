@@ -90,6 +90,8 @@
                 :existing-list="members"
                 title="Lid"
                 @addMemberToList="addMember($event)"
+                :start="generalInsuranceState.startDate"
+                :end="generalInsuranceState.endDate"
               />
             </div>
 
@@ -462,6 +464,7 @@ export default defineComponent({
       options,
       values,
       owner,
+      generalInsuranceState
     }
   },
 })
