@@ -16,7 +16,7 @@
             <input ref="file" :accept="allowedFiles" @change="selectFile($event)" type="file" name="file" id="file" class="hidden" />
           </label>
         </div>
-          <span class="text-xs">Max. 1 bestand, max. 5MB, enkel pdf, jpg, jpeg, png.</span>
+          <span class="text-xs">Max. 1 bestand, max. 5MB, enkel pdf, jpg, jpeg, png, webp, xlsx, ods.</span>
       </div>
     </div>
 
