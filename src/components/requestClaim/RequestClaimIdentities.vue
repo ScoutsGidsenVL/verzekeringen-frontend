@@ -50,7 +50,7 @@
 
       <div class="md:ml-20 xs:ml-5 sm:ml-5 my-3">
         <div>
-          <strong class="cursor-pointer text-lightGreen hover:text-green" @click="openMemberSideBar()">+ Kies een lid</strong>
+          <strong class="cursor-pointer text-lightGreen hover:text-green" @click="openMemberSideBar()">Kies een lid</strong>
           of
           <strong class="cursor-pointer text-lightGreen" @click="displayFields()">vul manueel in</strong>
           <members-side-bar v-if="values.group" v-model:isDisplay="isMemberSideBarDisplay" :close-on-add="true" :group="values.group.id" :existing-list="members" title="Lid" @addMemberToList="addMember($event)" />
@@ -69,6 +69,15 @@
             @addCreatedNonMemberToList="addCreatedNonMember($event)"
           />
         </div>
+      </div>
+
+      <div v-show="!isSelectedVictim" class="my-3 md:ml-20 xs:ml-5 sm:ml-5">
+        <info-alert>
+          <p>
+            Manueel invullen doe je enkel wanneer het slachtoffer verzekerd werd door een eenmalige activiteit
+            of met een evenementenverzekering, of wanneer het slachtoffer een derde is.
+          </p>
+        </info-alert>
       </div>
 
       <div v-show="isFieldsVisible">
@@ -166,12 +175,6 @@
 
         <div v-if="values.victim && values.victim.membershipNumber" class="mt-3 md:ml-20 xs:ml-5 sm:ml-5 w-72">
           <custom-input :disabled="true" :type="InputTypes.TEXT" name="victim.membershipNumber" label="Lidnummer" />
-        </div>
-        <div class="mt-3 md:ml-20 xs:ml-5 sm:ml-5" v-else>
-          <info-alert>
-            <p>Enkel manueel invullen in geval van eenmalige activiteit of evenementenverzekering.</p>
-            <!-- Enkel gebruiken in geval van eenmalige activiteit of evenementenverzekering. -->
-          </info-alert>
         </div>
       </div>
     </div>
