@@ -74,8 +74,8 @@
       <div v-show="isFieldsVisible">
         <div class="md:ml-20 xs:ml-5 sm:ml-5">
           <div class="sm:flex sm:gap-2 xs:w-72 sm:w-100">
-            <custom-input :maxlength="15" :disabled="isSelectedVictim" :type="InputTypes.TEXT" rules="required" name="victim.firstName" label="Voornaam" />
-            <custom-input :maxlength="25" :disabled="isSelectedVictim" :type="InputTypes.TEXT" rules="required" name="victim.lastName" label="Achternaam" />
+            <custom-input :maxlength="60" :disabled="isSelectedVictim" :type="InputTypes.TEXT" rules="required" name="victim.firstName" label="Voornaam" />
+            <custom-input :maxlength="60" :disabled="isSelectedVictim" :type="InputTypes.TEXT" rules="required" name="victim.lastName" label="Achternaam" />
           </div>
 
           <div class="sm:mt-3 sm:flex sm:gap-2 xs:w-72 sm:w-100">
