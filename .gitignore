@@ -62,4 +62,4 @@ db.sqlite3
 
 # CDT-specific
 .cproject
-
+package-lock.json
