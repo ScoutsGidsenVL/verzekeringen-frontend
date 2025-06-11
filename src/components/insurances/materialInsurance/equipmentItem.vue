@@ -26,9 +26,7 @@
           </p>
         </div>
 
-        <div v-if="person.birthDate">
-          <p>{{ person.birthDate }}</p>
-        </div>
+        <DateLocale :date="person.birthDate"/>
       </div>
 
       <div>
@@ -57,6 +55,7 @@ import { Member } from '@/serializer/Member'
 import { NonMember } from '@/serializer/NonMember'
 import { defineComponent, PropType, ref, watch } from 'vue'
 import PhoneNumber from '@/components/semantic/PhoneNumber.vue'
+import DateLocale from "@/components/semantic/DateLocale.vue";
 
 export default defineComponent({
   props: {
@@ -66,6 +65,7 @@ export default defineComponent({
     },
   },
   components: {
+    DateLocale,
     'phone-number': PhoneNumber,
   },
   setup(props) {
