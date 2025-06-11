@@ -6,9 +6,6 @@
         <div>
             <info-alert>
               Geef hieronder het land door waar je het meest aantal dagen op kamp bent. Geef bijkomende landen door via "Opmerkingen".
-              Een buitenlands kamp is dikwijls in meerdere landen, bv Albanië en Montenegro.
-              Leiding belt/mailt dan met de boodschap dat ze maar 1 land kunnen ingeven.
-              Een verduidelijkende zin toevoegen onder de Titel "Bestemming" reduceert hopelijk de extra vragen voor personeel.
             </info-alert>
         </div>
         <div v-if="typeof values.country === 'object' || !values.country" class="md:ml-20 xs:ml-5 sm:ml-5 xs:w-72 md:w-96">
