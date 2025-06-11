@@ -26,7 +26,7 @@
           </p>
         </div>
 
-        <DateLocale date="person.birthDate"/>
+        <DateLocale :date="person.birthDate"/>
       </div>
 
       <div>

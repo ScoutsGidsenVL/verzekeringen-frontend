@@ -22,7 +22,7 @@
         </p>
       </div>
 
-        <DateLocale date="member.birthDate"/>
+        <DateLocale :date="member.birthDate"/>
     </div>
     <slot />
   </div>
