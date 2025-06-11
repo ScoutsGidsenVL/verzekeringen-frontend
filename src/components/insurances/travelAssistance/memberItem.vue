@@ -22,9 +22,7 @@
         </p>
       </div>
 
-      <div>
-        <p>{{ member.birthDate }}</p>
-      </div>
+        <DateLocale date="member.birthDate"/>
     </div>
     <slot />
   </div>
@@ -34,6 +32,7 @@
 import { Member } from '@/serializer/Member'
 import { defineComponent, PropType } from 'vue'
 import PhoneNumber from '@/components/semantic/PhoneNumber.vue'
+import DateLocale from "@/components/semantic/DateLocale.vue";
 
 export default defineComponent({
   props: {
@@ -43,6 +42,7 @@ export default defineComponent({
     },
   },
   components: {
+    DateLocale,
     'phone-number': PhoneNumber,
   },
 })
