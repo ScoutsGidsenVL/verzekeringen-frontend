@@ -17,7 +17,7 @@
         </p>
       </div>
 
-      <DateLocale date="nonMember.birthDate"/>
+      <DateLocale :date="nonMember.birthDate"/>
 
       <div class="mt-1">
         <strong v-if="nonMember.comment">Opmerking</strong>
