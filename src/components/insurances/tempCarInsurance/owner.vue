@@ -8,7 +8,7 @@
     <phone-number :phoneNumber="owner.phoneNumber" />
 
     <div>
-      <p v-if="!owner.companyName">{{ owner.birthDate }}</p>
+      <p v-if="!owner.companyName">{{ new Date(owner.birthDate).toLocaleDateString() }}</p>
     </div>
   </div>
 </template>

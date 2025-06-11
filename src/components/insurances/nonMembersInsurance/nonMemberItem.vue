@@ -17,9 +17,7 @@
         </p>
       </div>
 
-      <div>
-        <p>{{ nonMember.birthDate }}</p>
-      </div>
+      <DateLocale date="nonMember.birthDate"/>
 
       <div class="mt-1">
         <strong v-if="nonMember.comment">Opmerking</strong>
@@ -32,8 +30,10 @@
 <script lang="ts">
 import { NonMember } from '@/serializer/NonMember'
 import { defineComponent, PropType } from 'vue'
+import DateLocale from "@/components/semantic/DateLocale.vue";
 
 export default defineComponent({
+  components: {DateLocale},
   props: {
     nonMember: {
       type: Object as PropType<NonMember>,
