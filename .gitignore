@@ -40,6 +40,7 @@ public/config.json
 ################################
 /api
 /frontend
+/backend
 
 ################################
 # Eclipse Specific GitIgnore   #
