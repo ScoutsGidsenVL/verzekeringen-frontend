@@ -14,14 +14,14 @@
           value-prop="name"
           :repository="CountryRepository"
           :resolve-on-load="true"
-          :options="values.country.city ? [values.country] : [{ id: '3232', name: 'België' }]"
+          :options="values.country && values.country.city ? [values.country] : [{ id: '3232', name: 'België' }]"
           :extra-option="{ id: '3232', name: 'België' }"
           :searchable="true"
           label="Land"
           placeholder="Zoek op naam"
         />
       </div>
-      <div v-if="values.country.name === '' || values.country.name === 'België'" class="xs:w-72 md:w-96">
+      <div v-if="values.country && (values.country.name === '' || values.country.name === 'België')" class="xs:w-72 md:w-96">
         <multi-select
           id="postCodeCity"
           :object="true"
