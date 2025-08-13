@@ -170,12 +170,23 @@ export default defineComponent({
       }
     }
 
+    const correctHoursInputValue = (newValue: string) => {
+      // Corrects the input value for time inputs with step 3600.
+      // This way, minutes can not be filled in.
+      if (props.type === InputTypes.TIME && props.step === '3600' && newValue) {
+        const [hour] = newValue.split(':');
+        inputValue.value = `${hour.padStart(2, '0')}:00`;
+      }
+    }
+
     watch(
       () => inputValue.value,
-      () => {
+      (newValue) => {
         cardNumberSpace()
+        correctHoursInputValue(newValue)
       }
     )
+
 
     return {
       InputTypes,
