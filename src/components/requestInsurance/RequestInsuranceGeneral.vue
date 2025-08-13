@@ -94,7 +94,7 @@
           />
           <custom-input
             v-if="insuranceTypeState === InsuranceTypes.EVENEMENTEN_VERZEKERING"
-            :oading-submit="isSubmitting"
+            :loading-submit="isSubmitting"
             rules="required"
             :type="InputTypes.TIME"
             name="startTime"
