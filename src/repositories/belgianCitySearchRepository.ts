@@ -8,7 +8,8 @@ export class BelgianCitySearchRepository extends BaseRepository {
   serializer = null
 
   search(query: string): Promise<any> {
-    return this.get(this.endpoint + '?term=' + query, {}).then((response: Location[]) => {
+    const term = query ? '&term=' + query : ''
+    return this.get(this.endpoint + term, {}).then((response: Location[]) => {
       const array: any[] = []
       response.forEach((result: Location) => {
         result = LocationDeserializer(result)

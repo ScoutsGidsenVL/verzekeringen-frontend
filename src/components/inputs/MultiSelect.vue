@@ -32,7 +32,7 @@
         :options="
           searchable
             ? async function (query) {
-                return fetchSearchData(query)
+                return searchData(query)
               }
             : options
         "
@@ -140,26 +140,33 @@ export default defineComponent({
   },
   setup(props, context) {
     const multiselect = ref()
+    const allData = ref<any[]>([])
     const { value: inputValue } = useField(props.id, props.rules, {
       initialValue: props.value,
     })
 
-    const fetchSearchData = async (query: string) => {
-      let data: any = []
-
-      if (query) {
-        await RepositoryFactory.get(props.repository)
-          .search(query, props.insuranceTypeId)
-          .then((res: any) => {
-            data = props.extraOption ? [...[props.extraOption], ...res] : res
-            context.emit('fetchedOptions', data)
-          })
-      } else {
-        if (props.resolveOnLoad) {
-          data = props.options
-        }
+    const fetchData = async () => {
+      if (props.searchable) {
+        const res = await RepositoryFactory.get(props.repository).search('', props.insuranceTypeId)
+        let data = props.extraOption ? [...[props.extraOption], ...res] : res
+        allData.value = data
+        context.emit('fetchedOptions', data)
       }
+    }
 
+    const searchData = async (query: string) => {
+      let data = []
+      if (allData.value.length === 0) {
+        await fetchData()
+      }
+      if (!query) {
+        data = allData.value
+      } else {
+        data = allData.value.filter((item: any) => {
+          return item[props.trackBy].toLowerCase().includes(query.toLowerCase())
+        })
+      }
+      context.emit('fetchedOptions', data)
       return data
     }
 
@@ -179,7 +186,7 @@ export default defineComponent({
     return {
       inputValue,
       multiselect,
-      fetchSearchData,
+      searchData,
       isSubmitting,
     }
   },
