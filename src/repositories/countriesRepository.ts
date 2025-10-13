@@ -9,7 +9,8 @@ export class CountryRepository extends BaseRepository {
   serializer = CountrySerializer
 
   search(query: string, insuranceTypeId?: string): Promise<any> {
-    return this.get(this.endpoint + insuranceTypeId + '/?page_size=1000&term=' + query, {}).then((response: ArrayResult) => {
+    const term = query ? '&term=' + query : ''
+    return this.get(this.endpoint + insuranceTypeId + '/?page_size=1000' + term, {}).then((response: ArrayResult) => {
       const array: any[] = []
       response.results.forEach((result: Country) => {
         result = CountryDeserializer(result)
