@@ -71,6 +71,14 @@
         </div>
       </div>
 
+      <div v-show="!isSelectedVictim" class="my-3 md:ml-20 xs:ml-5 sm:ml-5">
+        <info-alert>
+          <p>
+             Manueel invullen gebruik je enkel als het slachtoffer werd verzekerd via een tijdelijke verzekering.
+          </p>
+        </info-alert>
+      </div>
+
       <div v-show="isFieldsVisible">
         <div class="md:ml-20 xs:ml-5 sm:ml-5">
           <div class="sm:flex sm:gap-2 xs:w-72 sm:w-100">
@@ -167,14 +175,6 @@
         <div v-if="values.victim && values.victim.membershipNumber" class="mt-3 md:ml-20 xs:ml-5 sm:ml-5 w-72">
           <custom-input :disabled="true" :type="InputTypes.TEXT" name="victim.membershipNumber" label="Lidnummer" />
         </div>
-      </div>
-
-      <div v-show="!isSelectedVictim" class="my-3 md:ml-20 xs:ml-5 sm:ml-5">
-        <info-alert>
-          <p>
-             Manueel invullen gebruik je enkel als het slachtoffer werd verzekerd via een tijdelijke verzekering.
-          </p>
-        </info-alert>
       </div>
     </div>
 
