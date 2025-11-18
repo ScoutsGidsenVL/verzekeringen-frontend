@@ -74,7 +74,7 @@
       <div v-show="!isSelectedVictim" class="my-3 md:ml-20 xs:ml-5 sm:ml-5">
         <info-alert>
           <p>
-             Manueel invullen gebruik je enkel als het slachtoffer werd verzekerd via een tijdelijke verzekering.
+             Enkel manueel invullen in geval van eenmalige activiteit of evenementenverzekering.
           </p>
         </info-alert>
       </div>
