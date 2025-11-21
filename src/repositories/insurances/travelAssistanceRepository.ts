@@ -27,7 +27,15 @@ export class TravelAssistanceRepository extends BaseRepository {
   }
 
   getCalculatedCost = (data: TravelAssistanceInsurance) => {
-    return this.post(this.endpoint + 'travel_assistance/cost/', this.serializer(data)).then((response: any) => {
+    const start = new Date(data.startDate || Date.now())
+    const end = new Date(data.endDate || Date.now())
+    const days = end.getDate() - start.getDate()
+    const values = {
+      "days_amount": days,
+      "person_amount": data.participants? data.participants.length : 0,
+      "vehicle_amount": data.vehicle ? 1 : 0,
+    }
+    return this.post(this.endpoint + 'travel_assistance/cost/', values).then((response: any) => {
       return response.total_cost.toString().replace(".", ",")
     })
   }
