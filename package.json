@@ -15,7 +15,7 @@
     "@vue/cli-service": "^4.5.13",
     "@vueform/multiselect": "^1.5.0",
     "autoprefixer": "^9",
-    "axios": "^0.21.1",
+    "axios": "^1.13.5",
     "core-js": "^3.6.5",
     "vue-3-component-library": "git+https://github.com/ScoutsGidsenVL/vue-3-component-library.git#master",
     "inuits-vuejs-oidc": "git+https://github.com/inuits/inuits-vuejs-oidc.git#next",
