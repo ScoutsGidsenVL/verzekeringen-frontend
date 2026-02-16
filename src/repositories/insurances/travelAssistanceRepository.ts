@@ -29,7 +29,7 @@ export class TravelAssistanceRepository extends BaseRepository {
   getCalculatedCost = (data: TravelAssistanceInsurance) => {
     const start = new Date(data.startDate || Date.now())
     const end = new Date(data.endDate || Date.now())
-    const days = end.getDate() - start.getDate()
+    const days = 1 + end.getDate() - start.getDate()
     const values = {
       "days_amount": days,
       "person_amount": data.participants? data.participants.length : 0,
