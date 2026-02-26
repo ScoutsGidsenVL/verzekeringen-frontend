@@ -34,18 +34,21 @@
         oninput="this.setCustomValidity('')"
       />
 
-      <input
+      <select
         v-if="type === InputTypes.TIME"
         :id="name"
         v-model="inputValue"
         class="bg-lightGray p-2 min-w-0 w-100"
         style="max-width: 100px"
-        type="time"
         :name="name"
         :class="{ 'opacity-0': loadingSubmit || isSubmitting }"
         :disabled="disabled || loadingSubmit || isSubmitting"
-        :step="step"
-      />
+      >
+        <option value="" disabled>--:--</option>
+        <option v-for="hour in hourOptions" :key="hour" :value="hour">
+          {{ hour }}
+        </option>
+      </select>
     </div>
     <textarea
       v-if="type === InputTypes.TEXT_AREA && !hideInput && type !== InputTypes.TIME"
@@ -170,28 +173,22 @@ export default defineComponent({
       }
     }
 
-    const correctHoursInputValue = (newValue: string) => {
-      // Corrects the input value for time inputs with step 3600.
-      // This way, minutes can not be filled in.
-      if (props.type === InputTypes.TIME && props.step === '3600' && newValue) {
-        const [hour] = newValue.split(':');
-        inputValue.value = `${hour.padStart(2, '0')}:00`;
-      }
-    }
+    const hourOptions = computed(() => {
+      return Array.from({ length: 24 }, (_, i) => `${String(i).padStart(2, '0')}:00`)
+    })
 
     watch(
       () => inputValue.value,
-      (newValue) => {
+      () => {
         cardNumberSpace()
-        correctHoursInputValue(newValue)
       }
     )
-
 
     return {
       InputTypes,
       inputValue,
       isSubmitting,
+      hourOptions,
     }
   },
 })
