@@ -6,6 +6,8 @@ node_modules
 /dist
 .npmrc
 .docker
+.claude
+CLAUDE.md
 __pycache__
 
 ################################
