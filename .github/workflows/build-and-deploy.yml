@@ -1,0 +1,76 @@
+name: Build and deploy
+run-name: >
+  "${{ github.event.head_commit.message }}" ${{ github.event_name }}ed by ${{ github.actor }}
+
+on:
+  push:
+    branches:
+      - production
+      - staging
+      - dev
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "12"
+
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Install dependencies
+        run: npm install --ignore-scripts
+
+      - name: Build frontend
+        run: npm run build
+
+      - name: Create frontend.zip
+        run: zip -r frontend.zip dist/*
+
+      - name: Generate branch-specific tag
+        id: tag
+        run: |
+          BRANCH=${{ github.ref_name }}
+          TAG="frontend-${BRANCH//\//-}-latest"
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+      - name: Delete existing tag (if exists)
+        run: |
+          git push origin :refs/tags/${{ steps.tag.outputs.tag }} || true
+
+      - name: Zzzz...
+        uses: GuillaumeFalourd/wait-sleep-action@v1
+        with:
+          time: "60" # for 60 seconds
+
+      - name: Create a release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "frontend.zip"
+          makeLatest: true
+          tag: ${{ steps.tag.outputs.tag }}
+
+      - name: Deploy
+        uses: appleboy/ssh-action@v1
+        env:
+          BRANCH_NAME: ${{ github.ref_name }}
+        with:
+          proxy_host: ${{ secrets.PROXYHOST }}
+          proxy_username: ${{ secrets.USER }}
+          proxy_key: ${{ secrets.KEY }}
+          proxy_port: ${{ secrets.PROXYPORT }}
+          host: ${{ secrets.SSHHOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.SSHPORT }}
+          envs: BRANCH_NAME
+          script: |
+            echo "Branch $BRANCH_NAME"
+            sudo -u ansible /opt/deploy-verzekeringen.sh frontend $BRANCH_NAME
