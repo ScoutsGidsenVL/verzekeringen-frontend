@@ -14,15 +14,15 @@
     "@vueform/multiselect": "^1.5.0",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
-    "vue-3-component-library": "git+https://github.com/ScoutsGidsenVL/vue-3-component-library.git#master",
+    "file-saver": "^2.0.5",
     "inuits-vuejs-oidc": "git+https://github.com/inuits/inuits-vuejs-oidc.git#next",
     "moment": "^2.31.0",
     "vee-validate": "^4.4.0-alpha.2",
-    "vue": "^3.0.5",
+    "vue": "~3.2.47",
+    "vue-3-component-library": "git+https://github.com/ScoutsGidsenVL/vue-3-component-library.git#master",
     "vue-router": "^4.0.8",
     "vuex": "^4.0.0",
-    "yup": "0.29.3",
-    "file-saver": "^2.0.5"
+    "yup": "0.29.3"
   },
   "devDependencies": {
     "@babel/helper-function-name": "^7.14.2",
@@ -37,7 +37,7 @@
     "@vue/cli-plugin-eslint": "5.0.0-beta.1",
     "@vue/cli-plugin-typescript": "5.0.0-beta.1",
     "@vue/cli-service": "^4.5.13",
-    "@vue/compiler-sfc": "^3.0.5",
+    "@vue/compiler-sfc": "~3.2.47",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
     "@vue/test-utils": "^2.0.0-rc.4",
