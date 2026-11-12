@@ -42,7 +42,6 @@
     "@vue/cli-plugin-babel": "5.0.0-beta.1",
     "@vue/cli-plugin-eslint": "5.0.0-beta.1",
     "@vue/cli-plugin-typescript": "5.0.0-beta.1",
-    "@vue/cli-service": "5.0.0-beta.1",
     "@vue/compiler-sfc": "^3.0.5",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
@@ -59,8 +58,6 @@
     "vue-cli-plugin-tailwind": "~2.0.6",
     "vue-composable-tester": "^0.1.2",
     "vue-jest": "^5.0.0-alpha.7",
-    "vue-tsc": "^0.0.24",
-    "sass": "^1.32.12",
-    "sass-loader": "^12.3.0"
+    "vue-tsc": "^0.0.24"
   }
 }
