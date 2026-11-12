@@ -12,7 +12,7 @@
     "@vee-validate/rules": "^4.1.20",
     "@vue-composable/axios": "1.0.0-beta.23",
     "@vueform/multiselect": "^1.5.0",
-    "axios": "^0.21.1",
+    "axios": "^0.35.0",
     "core-js": "^3.6.5",
     "file-saver": "^2.0.5",
     "inuits-vuejs-oidc": "git+https://github.com/inuits/inuits-vuejs-oidc.git#next",
