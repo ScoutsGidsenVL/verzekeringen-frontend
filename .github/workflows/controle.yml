@@ -1,0 +1,23 @@
+name: Controle
+
+# Geen concurrency: een aangeroepen workflow deelt github.workflow met de aanroeper
+# en zou zichzelf blokkeren.
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  controle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          # zelfde versie als build-and-deploy.yml. Node 12 kent --openssl-legacy-provider niet
+          node-version: "12"
+      - name: Installeren
+        run: npm ci --ignore-scripts
+      - name: Build
+        run: npm run build

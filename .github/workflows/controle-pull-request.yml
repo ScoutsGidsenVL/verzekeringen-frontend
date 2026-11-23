@@ -1,0 +1,16 @@
+name: Controle pull request
+
+on:
+  pull_request:
+    branches: [ "staging" ]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  controle:
+    uses: ./.github/workflows/controle.yml
